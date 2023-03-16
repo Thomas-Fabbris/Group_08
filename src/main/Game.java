@@ -10,6 +10,8 @@ public class Game {
 		
 		System.out.println(player1.id);
 		System.out.println(player2.id);
+		TileType tile = TileType.BOOKS;
+		System.out.println(tile);
 	}
 
 }
