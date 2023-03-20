@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class BoardFrame extends JFrame {
 	final int tiles_config_level;
 	
-	public BoardFrame(String title, int tiles_config_level) { //tiles_config_level referes to the number of players
+	public BoardFrame(String title, int tiles_config_level) { //tiles_config_level refers to the number of players
 		super(title);
 		Init();
 		this.tiles_config_level = tiles_config_level;	
