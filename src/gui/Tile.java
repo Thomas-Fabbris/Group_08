@@ -8,33 +8,41 @@ import javax.swing.JLabel;
 
 public class Tile extends JLabel {
 	public final TileType type;
+	private String folder_path = "Assets/tiles/";
+	ImageIcon image;
+	
+	//informazioni sulla posizione del tile
 	private int x_pos;
 	private int y_pos;
 	private int column;
 	private int row;
-	private String folder_path = "Assets/tiles/";
-	public static int SIDE_LENGTH = 11;
-	public static final int delta = SIDE_LENGTH + SIDE_LENGTH/8; //distanza tra due tiles
-	public static final int delta_y = SIDE_LENGTH + SIDE_LENGTH/8;
-	ImageIcon image;
 	
-	public Tile(TileType tile_type, int row, int column) {
+	//dimensioni del tile
+	private final int tile_length;
+	private final int offset_top;
+	private final int offset_left;
+	private final int tile_cell_width;
+	private final int tile_cell_height;	
+	
+	public Tile(TileType tile_type, int row, int column, Dimension board_size) {
 		this.type = tile_type;
-		
 		this.row = row;
 		this.column = column;
+		this.tile_length = board_size.height/12;
+		this.offset_top = board_size.height/18;
+		this.offset_left = board_size.width/18;
+		this.tile_cell_width = board_size.width / 10;
+		this.tile_cell_height = board_size.height / 10;
 		this.x_pos = convertColumnToXCoords(column);
 		this.y_pos = convertRowToYCoords(row);
-		
 		Init();
 	}
 	
 	private void Init() {
 		this.folder_path = GetImagePath(this.type); 
-		this.image = LoadImageAsIcon(folder_path, SIDE_LENGTH, SIDE_LENGTH); //92x92
+		this.image = LoadImageAsIcon(folder_path, tile_length, tile_length);
 		this.setIcon(image);
-		Dimension size = this.getPreferredSize();
-		this.setBounds(this.x_pos, this.y_pos, size.width, size.height);
+		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
 	}
 	
 	private String GetImagePath(TileType tile_type) {		
@@ -57,9 +65,7 @@ public class Tile extends JLabel {
 	 * @return the location in pixels of the row on the GUI
 	 */
 	private int convertRowToYCoords(int row) {
-		row -= 1;
-		int d = 22;
-		return d+row*Tile.delta; //
+		return offset_top+((row - 1) * tile_cell_height);
 	}
 	
 	/***
@@ -68,9 +74,7 @@ public class Tile extends JLabel {
 	 * @return the location in pixels of the column on the GUI
 	 */
 	private int convertColumnToXCoords(int column) {
-		column -= 1;
-		int d = 38;
-		return column*Tile.delta + d;
+		return offset_left+((column - 1) * tile_cell_width);
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {

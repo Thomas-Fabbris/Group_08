@@ -15,16 +15,17 @@ public class Board extends JLabel {
 	private Tile[][] tiles = new Tile[11][11];
 	private final int[] valid_positions = {1,4, 1,5, 2,4, 2,5, 2,6, 3,3, 3,4, 3,5, 3,6, 3,7, 4,2, 4,3, 4,4, 4,5, 4,6, 4,7, 4,8, 4,9, 5,1, 5,2, 5,3, 5,4, 5,5, 5,6, 5,7, 5,8, 5,9, 6,1, 6,2, 6,3, 6,4, 6,5, 6,6, 6,7, 6,8, 7,3, 7,4, 7,5, 7,6, 7,7, 8,4, 8,5, 8,6, 9,5, 9,6};
 	public static final String BOARD_IMAGE_PATH = "Assets/Board.png";
+	private Dimension boardframe_size;
 	private Dimension size;
 	private ImageIcon image;
 	
-	public Board(Dimension size) {
-		this.size = new Dimension(size.height-40, size.height-40);
+	protected Board(Dimension boardframe_size) {
+		this.boardframe_size = boardframe_size;
+		this.size = new Dimension(boardframe_size.height-40, boardframe_size.height-40);
 		Init();
 	}
-	
+
 	private void Init() {
-		//change all dimensions based on size
 		System.out.println("[Board.java: Init()] Generating board");
 		image = LoadImageAsIcon(BOARD_IMAGE_PATH, size.width, size.height);
 		this.setIcon(image);
@@ -47,11 +48,11 @@ public class Board extends JLabel {
 	 */
 	public Tile addTile(TileType tile_type, int row, int column) {
 		
-		if(!isValidTilePosition(row, column)) {
-			throw new InvalidBoardPositionException(row, column);			
-		}
+//		if(!isValidTilePosition(row, column)) {
+//			throw new InvalidBoardPositionException(row, column);			
+//		}
 		
-		Tile tile = new Tile(tile_type, row, column);
+		Tile tile = new Tile(tile_type, row, column, size);
 		tiles[row][column] = tile;
 		this.add(tile);
 		return tile;
@@ -64,7 +65,7 @@ public class Board extends JLabel {
 	 * @param column
 	 */
 	private void initTile(TileType tile_type, int row, int column) {
-		Tile tile = new Tile(tile_type, row, column);
+		Tile tile = new Tile(tile_type, row, column, size);
 		tiles[row][column] = tile;
 		this.add(tile);
 	}

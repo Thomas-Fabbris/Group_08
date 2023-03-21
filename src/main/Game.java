@@ -23,9 +23,12 @@ public class Game {
 		//----------------------------------
 		System.out.println("Creating JFrame");
 		BoardFrame board_frame = new BoardFrame("MyShelfie", 3); //Creates game window
+		Board board = board_frame.getBoard(); //Gets a reference to the board
 		
-		Board board = new Board(board_frame.getSize()); //Creates the board label
-		board_frame.add(board); //Adds the board label to the game window
+//		board.addTile(TileType.randomType(), 1, 4);
+//		board.addTile(TileType.randomType(), 1, 5);
+//		board.addTile(TileType.randomType(), 5, 9);
+//		board.addTile(TileType.randomType(), 9, 6);
 		
 		board_frame.setVisible(true); //Sets the game window to visible
 	}
