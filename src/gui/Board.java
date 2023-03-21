@@ -1,7 +1,9 @@
 package gui;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -9,30 +11,23 @@ import javax.swing.JLabel;
 
 //TO-DO: add board.removeTile(row, column)
 
-//Singleton
 public class Board extends JLabel {
-	private static Board instance = null;
 	private Tile[][] tiles = new Tile[11][11];
 	private final int[] valid_positions = {1,4, 1,5, 2,4, 2,5, 2,6, 3,3, 3,4, 3,5, 3,6, 3,7, 4,2, 4,3, 4,4, 4,5, 4,6, 4,7, 4,8, 4,9, 5,1, 5,2, 5,3, 5,4, 5,5, 5,6, 5,7, 5,8, 5,9, 6,1, 6,2, 6,3, 6,4, 6,5, 6,6, 6,7, 6,8, 7,3, 7,4, 7,5, 7,6, 7,7, 8,4, 8,5, 8,6, 9,5, 9,6};
 	public static final String BOARD_IMAGE_PATH = "Assets/Board.png";
+	private Dimension size;
 	private ImageIcon image;
 	
-	private Board() {
+	public Board(Dimension size) {
+		this.size = new Dimension(size.height-40, size.height-40);
 		Init();
 	}
 	
-	public static Board GetInstance() {
-		if (instance == null)
-				instance = new Board();
-		return instance;
-	}
-	
 	private void Init() {
+		//change all dimensions based on size
 		System.out.println("[Board.java: Init()] Generating board");
-		image = LoadImageAsIcon(BOARD_IMAGE_PATH, 1000, 1000);
+		image = LoadImageAsIcon(BOARD_IMAGE_PATH, size.width, size.height);
 		this.setIcon(image);
-		Dimension size = this.getPreferredSize();
-		this.setBounds(50, 30, size.width, size.height);
 		this.fill();
 	}
 	

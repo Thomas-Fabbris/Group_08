@@ -12,9 +12,10 @@ public class Tile extends JLabel {
 	private int y_pos;
 	private int column;
 	private int row;
-	public static final int delta_x = 92 + 10; //92 is the width of a tile cell when the board is 1000x1000
-	public static final int delta_y = 92 + 9;
 	private String folder_path = "Assets/tiles/";
+	public static int SIDE_LENGTH = 11;
+	public static final int delta = SIDE_LENGTH + SIDE_LENGTH/8; //distanza tra due tiles
+	public static final int delta_y = SIDE_LENGTH + SIDE_LENGTH/8;
 	ImageIcon image;
 	
 	public Tile(TileType tile_type, int row, int column) {
@@ -30,7 +31,7 @@ public class Tile extends JLabel {
 	
 	private void Init() {
 		this.folder_path = GetImagePath(this.type); 
-		this.image = LoadImageAsIcon(folder_path, 92, 92);
+		this.image = LoadImageAsIcon(folder_path, SIDE_LENGTH, SIDE_LENGTH); //92x92
 		this.setIcon(image);
 		Dimension size = this.getPreferredSize();
 		this.setBounds(this.x_pos, this.y_pos, size.width, size.height);
@@ -57,7 +58,8 @@ public class Tile extends JLabel {
 	 */
 	private int convertRowToYCoords(int row) {
 		row -= 1;
-		return 27+row*Tile.delta_y;
+		int d = 22;
+		return d+row*Tile.delta; //
 	}
 	
 	/***
@@ -67,7 +69,8 @@ public class Tile extends JLabel {
 	 */
 	private int convertColumnToXCoords(int column) {
 		column -= 1;
-		return 40+column*Tile.delta_x;
+		int d = 38;
+		return column*Tile.delta + d;
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {
