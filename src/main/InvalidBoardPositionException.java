@@ -1,4 +1,4 @@
-package gui;
+package main;
 
 public class InvalidBoardPositionException extends RuntimeException{	
 	public InvalidBoardPositionException(int row, int column) {

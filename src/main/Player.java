@@ -11,9 +11,17 @@ public class Player {
 		this.id = idgenerator.getNewId();
 	}
 	
-	@Override
-	public boolean equals(Object object) {
-		return this.id == ((Player)object).id;
+	public boolean equals(Player player) {
+		return this.id == player.id;
 	}
+	
+	public String getNome() {
+		return this.nome;
+	}
+	
+//	@Override
+//	public boolean equals(Object object) {
+//		return this.id == ((Player)object).id;
+//	}
 	
 }

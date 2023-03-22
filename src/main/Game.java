@@ -1,11 +1,7 @@
 package main;
 
-import java.awt.Container;
 
-import gui.BoardFrame;
-import gui.Board;
-import gui.Tile;
-import gui.TileType;
+import gui.BoardWindow;
 
 public class Game {
 
@@ -22,9 +18,9 @@ public class Game {
 		
 		//----------------------------------
 		System.out.println("Creating JFrame");
-		BoardFrame board_frame = new BoardFrame("MyShelfie", 3); //Creates game window
-		Board board = board_frame.getBoard(); //Gets a reference to the board
+		BoardWindow board_frame = new BoardWindow("MyShelfie"); //Creates game window
 		
+		Board board = board_frame.getBoard(); //Gets a reference to the board
 //		board.addTile(TileType.randomType(), 1, 4);
 //		board.addTile(TileType.randomType(), 1, 5);
 //		board.addTile(TileType.randomType(), 5, 9);

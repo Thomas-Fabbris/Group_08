@@ -7,19 +7,19 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import main.Board;
 
-public class BoardFrame extends JFrame {
-	final int tiles_config_level;
+
+public class BoardWindow extends JFrame {
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 //	private final Dimension screen_size = new Dimension(1280, 720); //used for debugging
 	private final Board board;
 	
-	public BoardFrame(String title, int tiles_config_level) { //tiles_config_level refers to the number of players
+	public BoardWindow(String title) {
 		super(title);
-		this.tiles_config_level = tiles_config_level;
 		Init();
 		this.board = new Board(this.getSize());
-		this.add(board);
+		this.add(board.getLabel());
 	}
 	
 	public Board getBoard() {
@@ -31,6 +31,7 @@ public class BoardFrame extends JFrame {
 		this.setSize(screen_size.width/2, screen_size.height*2/3);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBackground(Color.RED); //not working
+//		this.getContentPane().setBackground(Color.DARK_GRAY);
+		this.getContentPane().setBackground(Color.RED);
 	}
 }
