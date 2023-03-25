@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,7 +10,7 @@ import javax.swing.JLabel;
 import main.TileType;
 
 public class TileLabel extends JLabel {
-	private String folder_path = "Assets/tiles/";
+	private final String folder_path = "Assets/tiles/";
 	ImageIcon image;
 	
 	//informazioni sulla posizione del tile in pixels
@@ -28,9 +29,7 @@ public class TileLabel extends JLabel {
 		this.x_pos = convertColumnToXCoords(column);
 		this.y_pos = convertRowToYCoords(row);
 		
-		this.folder_path = GetImagePath(tile_type);
-		this.image = LoadImageAsIcon(folder_path, tile_length, tile_length);
-		this.setIcon(image);
+		setType(tile_type);
 		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
 	}
 	
@@ -40,11 +39,16 @@ public class TileLabel extends JLabel {
 		return this.folder_path + image_name.charAt(0) + image_substring.toLowerCase() + ".png"; //'Assets/tiles/' + 'B' + 'ooks' + '.png'
 	}
 	
-	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {
+	private ImageIcon LoadImageAsIcon(String image_path) {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+		tmp_image = tmp_image.getScaledInstance(this.tile_length, this.tile_length, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
+	}
+	
+	public void setType(TileType type) {
+		this.image = LoadImageAsIcon(GetImagePath(type));
+		setIcon(this.image);
 	}
 	
 	/***

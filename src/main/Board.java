@@ -11,8 +11,8 @@ public class Board {
 	private final int[] valid_positions = {1,4, 1,5, 2,4, 2,5, 2,6, 3,3, 3,4, 3,5, 3,6, 3,7, 4,2, 4,3, 4,4, 4,5, 4,6, 4,7, 4,8, 4,9, 5,1, 5,2, 5,3, 5,4, 5,5, 5,6, 5,7, 5,8, 5,9, 6,1, 6,2, 6,3, 6,4, 6,5, 6,6, 6,7, 6,8, 7,3, 7,4, 7,5, 7,6, 7,7, 8,4, 8,5, 8,6, 9,5, 9,6};
 	private BoardLabel label;
 	
-	public Board(Dimension boardframe_size) {
-		this.label = new BoardLabel(boardframe_size);
+	public Board(Dimension boardwindow_size) {
+		this.label = new BoardLabel(boardwindow_size);
 		this.fill();
 	}
 	
@@ -27,16 +27,38 @@ public class Board {
 	 * @param column 1 to 9
 	 * @return reference to the new tile
 	 */
-	public Tile addTile(TileType tile_type, int row, int column) {
+	public void setTile(int row, int column, TileType tile_type) {
 		
-		if(!isValidTilePosition(row, column)) {
+		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);			
-		}
+					
+//		Tile tile = new Tile(tile_type, row, column, label.getSize());
+//		tiles[row][column] = tile;
+//		this.label.add(tile.getLabel());
 		
-		Tile tile = new Tile(tile_type, row, column, label.getSize());
-		tiles[row][column] = tile;
-		this.label.add(tile.getLabel());
-		return tile;
+		tiles[row][column].getLabel().setType(tile_type);
+		tiles[row][column].setVisible(true);
+	}
+	
+	/***
+	 * Sets whether the tile at row/col is visible on the board GUI
+	 * @param row
+	 * @param column
+	 * @param isVisible
+	 */
+	public void setTileVisible(int row, int column, boolean isVisible) {
+		
+		if(!isValidPosition(row, column))
+			throw new InvalidBoardPositionException(row, column);			
+		
+		tiles[row][column].setVisible(isVisible);
+	}
+	
+	public boolean isTileVisible(int row, int column) {
+		if(!isValidPosition(row, column))
+			throw new InvalidBoardPositionException(row, column);			
+		
+		return tiles[row][column].isVisible();
 	}
 	
 	/***
@@ -52,21 +74,21 @@ public class Board {
 	}
 	
 	/***
-	 * Gets the tile at the specified position
+	 * Gets the TyleType of the tile at the specified position
 	 * @param row
 	 * @param column
 	 * @return the tile at specified row / column
 	 */
-	public Tile tileAt(int row, int column) {
-		if(!isValidTilePosition(row, column)) {
+	public TileType getTileType(int row, int column) {
+		if(!isValidPosition(row, column)) {
 			throw new InvalidBoardPositionException(row, column);			
 		}
 		
-		return tiles[row][column];
+		return tiles[row][column].getType();
 	}
 	
 	//Returns whether the specified row/col position is valid
-	public boolean isValidTilePosition(int row, int column) {
+	public boolean isValidPosition(int row, int column) {
 		return tiles[row][column] != null;
 	}
 	

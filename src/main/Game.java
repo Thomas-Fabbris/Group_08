@@ -26,6 +26,10 @@ public class Game {
 //		board.addTile(TileType.randomType(), 5, 9);
 //		board.addTile(TileType.randomType(), 9, 6);
 		
+		System.out.println(board.getTileType(4, 4));
+		board.setTileVisible(4, 4, false);
+		board.setTile(4, 4, TileType.GAMES);
+//		System.out.println(board.tileAt(4, 4));
 		board_frame.setVisible(true); //Sets the game window to visible
 	}
 

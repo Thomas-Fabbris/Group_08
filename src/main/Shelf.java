@@ -1,6 +1,5 @@
 package main;
 
-
 public class Shelf {
 	
 	public Shelf() {
