@@ -7,7 +7,7 @@ import gui.TileLabel;
 
 public class Tile {
 	private TileType type;
-	protected TileLabel label; //image displayed on the GUI
+	private TileLabel label; //image displayed on the GUI
 	private boolean isVisible;
 	
 	private int column;
@@ -36,6 +36,10 @@ public class Tile {
 	
 	public TileType getType() {
 		return type;
+	}
+	
+	public void setType(TileType tile_type) {
+		this.type = tile_type ;
 	}
 	
 	public int getRow() {

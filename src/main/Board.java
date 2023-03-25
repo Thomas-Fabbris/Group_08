@@ -27,7 +27,7 @@ public class Board {
 	 * @param column 1 to 9
 	 * @return reference to the new tile
 	 */
-	public void setTile(int row, int column, TileType tile_type) {
+	public void setTileType(int row, int column, TileType tile_type) {
 		
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);			
@@ -36,8 +36,28 @@ public class Board {
 //		tiles[row][column] = tile;
 //		this.label.add(tile.getLabel());
 		
+		tiles[row][column].setType(tile_type);
 		tiles[row][column].getLabel().setType(tile_type);
 		tiles[row][column].setVisible(true);
+	}
+	
+	/***
+	 * Gets the TyleType of the tile at the specified position
+	 * @param row
+	 * @param column
+	 * @return the tile at specified row / column
+	 */
+	public TileType getTileType(int row, int column) {
+		if(!isValidPosition(row, column)) {
+			throw new InvalidBoardPositionException(row, column);			
+		}
+		
+		return tiles[row][column].getType();
+	}
+	
+	//Returns whether the specified row/col position is valid
+	public boolean isValidPosition(int row, int column) {
+		return tiles[row][column] != null;
 	}
 	
 	/***
@@ -74,25 +94,6 @@ public class Board {
 	}
 	
 	/***
-	 * Gets the TyleType of the tile at the specified position
-	 * @param row
-	 * @param column
-	 * @return the tile at specified row / column
-	 */
-	public TileType getTileType(int row, int column) {
-		if(!isValidPosition(row, column)) {
-			throw new InvalidBoardPositionException(row, column);			
-		}
-		
-		return tiles[row][column].getType();
-	}
-	
-	//Returns whether the specified row/col position is valid
-	public boolean isValidPosition(int row, int column) {
-		return tiles[row][column] != null;
-	}
-	
-	/***
 	 * Generates a random tile on every cell of the board
 	 */
 	private void fill() {
@@ -107,11 +108,31 @@ public class Board {
 		}
 	}
 	
-	//TO-DO check if cell is already occupied
 	/***
 	 * Regenerates the missing tiles on the board
 	 */
 	public void refill() {
-		throw new UnsupportedOperationException();
+		int row = 0;
+		int column = 0;		
+		
+		for (int i = 0; i < valid_positions.length; i+=2) {
+			row = valid_positions[i];
+			column = valid_positions[i+1];
+			
+			if(!tiles[row][column].isVisible()) {
+				setTileType(row, column, TileType.randomType());
+			}
+		}
+	}
+	
+	public void hideAllTiles() {
+		int row = 0;
+		int column = 0;		
+		
+		for (int i = 0; i < valid_positions.length; i+=2) {
+			row = valid_positions[i];
+			column = valid_positions[i+1];
+			tiles[row][column].setVisible(false);
+		}
 	}
 }

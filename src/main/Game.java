@@ -21,16 +21,29 @@ public class Game {
 		BoardWindow board_frame = new BoardWindow("MyShelfie"); //Creates game window
 		
 		Board board = board_frame.getBoard(); //Gets a reference to the board
-//		board.addTile(TileType.randomType(), 1, 4);
-//		board.addTile(TileType.randomType(), 1, 5);
-//		board.addTile(TileType.randomType(), 5, 9);
-//		board.addTile(TileType.randomType(), 9, 6);
 		
-		System.out.println(board.getTileType(4, 4));
-		board.setTileVisible(4, 4, false);
-		board.setTile(4, 4, TileType.GAMES);
-//		System.out.println(board.tileAt(4, 4));
+
 		board_frame.setVisible(true); //Sets the game window to visible
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		board.hideAllTiles();
+		board.setTileType(1, 4, TileType.GAMES);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		board.refill();
+		System.out.println(board.getTileType(1, 4));
 	}
 
 }
