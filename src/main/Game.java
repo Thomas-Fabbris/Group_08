@@ -2,6 +2,9 @@ package main;
 
 
 import gui.BoardWindow;
+import gui.CommonObjectiveCardWindow;
+import sharedgamearea.Board;
+import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
 
@@ -18,32 +21,31 @@ public class Game {
 		
 		//----------------------------------
 		System.out.println("Creating JFrame");
-		BoardWindow board_frame = new BoardWindow("MyShelfie"); //Creates game window
 		
-		Board board = board_frame.getBoard(); //Gets a reference to the board
+		Board board = new Board(); //Gets a reference to the board
+		CommonObjectiveCard card1 = new CommonObjectiveCard(3);
+		CommonObjectiveCard card2 = new CommonObjectiveCard(5);
 		
-
-		board_frame.setVisible(true); //Sets the game window to visible
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		board.hideAllTiles();
-		board.setTileType(1, 4, TileType.GAMES);
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		board.refill();
-		System.out.println(board.getTileType(1, 4));
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		board.hideAllTiles();
+//		board.setTileType(1, 4, TileType.GAMES);
+//		
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		board.refill();
+//		System.out.println(board.getTileType(1, 4));
 	}
 
 }

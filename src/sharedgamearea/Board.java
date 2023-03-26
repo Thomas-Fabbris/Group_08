@@ -1,19 +1,18 @@
-package main;
-
-import java.awt.Dimension;
+package sharedgamearea;
 
 import gui.BoardLabel;
-
-//TO-DO: add board.removeTile(row, column)
+import gui.BoardWindow;
+import main.TileType;
 
 public class Board {
-	private Tile[][] tiles = new Tile[11][11];
+	private BoardTile[][] tiles = new BoardTile[11][11];
 	private final int[] valid_positions = {1,4, 1,5, 2,4, 2,5, 2,6, 3,3, 3,4, 3,5, 3,6, 3,7, 4,2, 4,3, 4,4, 4,5, 4,6, 4,7, 4,8, 4,9, 5,1, 5,2, 5,3, 5,4, 5,5, 5,6, 5,7, 5,8, 5,9, 6,1, 6,2, 6,3, 6,4, 6,5, 6,6, 6,7, 6,8, 7,3, 7,4, 7,5, 7,6, 7,7, 8,4, 8,5, 8,6, 9,5, 9,6};
 	private BoardLabel label;
 	
-	public Board(Dimension boardwindow_size) {
-		this.label = new BoardLabel(boardwindow_size);
+	public Board() {
+		this.label = new BoardLabel(BoardWindow.getInstance().getSize());
 		this.fill();
+		BoardWindow.getInstance().setVisible(true);
 	}
 	
 	public BoardLabel getLabel() {
@@ -31,10 +30,6 @@ public class Board {
 		
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);			
-					
-//		Tile tile = new Tile(tile_type, row, column, label.getSize());
-//		tiles[row][column] = tile;
-//		this.label.add(tile.getLabel());
 		
 		tiles[row][column].setType(tile_type);
 		tiles[row][column].getLabel().setType(tile_type);
@@ -55,7 +50,11 @@ public class Board {
 		return tiles[row][column].getType();
 	}
 	
-	//Returns whether the specified row/col position is valid
+	/**
+	 * @param row
+	 * @param column
+	 * @return Returns whether the specified row/col position is valid
+	 */
 	public boolean isValidPosition(int row, int column) {
 		return tiles[row][column] != null;
 	}
@@ -88,7 +87,7 @@ public class Board {
 	 * @param column
 	 */
 	private void initTile(TileType tile_type, int row, int column) {
-		Tile tile = new Tile(tile_type, row, column, label.getSize());
+		BoardTile tile = new BoardTile(tile_type, row, column, label.getSize());
 		tiles[row][column] = tile;
 		this.label.add(tile.getLabel());
 	}

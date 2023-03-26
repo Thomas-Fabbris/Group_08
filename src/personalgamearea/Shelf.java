@@ -1,4 +1,6 @@
-package main;
+package personalgamearea;
+
+import main.Tile;
 
 public class Shelf {
 	

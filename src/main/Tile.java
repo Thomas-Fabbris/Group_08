@@ -1,8 +1,5 @@
 package main;
 
-import java.awt.Dimension;
-import javax.swing.JLabel;
-
 import gui.TileLabel;
 
 public class Tile {
@@ -10,19 +7,16 @@ public class Tile {
 	private TileLabel label; //image displayed on the GUI
 	private boolean isVisible;
 	
-	private int column;
-	private int row;
-	
-	public Tile(TileType tile_type, int row, int column, Dimension board_size) {
+	public Tile(TileType tile_type) {
 		this.type = tile_type;
-		this.row = row;
-		this.column = column;
-		this.label = new TileLabel(type, row, column, board_size);
-		this.isVisible = true;
 	}
 
 	public TileLabel getLabel() {
 		return label;
+	}
+	
+	protected void setLabel(TileLabel label) {
+		this.label = label;
 	}
 	
 	public boolean isVisible() {
@@ -40,13 +34,5 @@ public class Tile {
 	
 	public void setType(TileType tile_type) {
 		this.type = tile_type ;
-	}
-	
-	public int getRow() {
-		return this.row;
-	}
-	
-	public int getColumn() {
-		return this.column;
 	}
 }

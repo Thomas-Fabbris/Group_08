@@ -16,6 +16,7 @@ public class BoardLabel extends JLabel {
 		this.setSize(size.height-38, size.height-38);
 		image = LoadImageAsIcon(BOARD_IMAGE_PATH, getSize().width, getSize().height);
 		this.setIcon(image);
+		BoardWindow.getInstance().add(this);
 	}
 
 	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {

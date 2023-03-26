@@ -1,4 +1,4 @@
-package main;
+package sharedgamearea;
 
 public class InvalidBoardPositionException extends RuntimeException{	
 	public InvalidBoardPositionException(int row, int column) {
