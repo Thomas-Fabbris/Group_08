@@ -2,9 +2,6 @@ package main;
 
 import javax.swing.JLabel;
 
-import gui.CommonObjectiveCardLabel;
-import gui.CommonObjectiveCardWindow;
-
 public abstract class Card {
 	protected JLabel label;
 	protected int card_id;

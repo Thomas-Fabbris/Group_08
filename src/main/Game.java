@@ -1,8 +1,7 @@
 package main;
 
 
-import gui.BoardWindow;
-import gui.CommonObjectiveCardWindow;
+import gui.MainMenu;
 import sharedgamearea.Board;
 import sharedgamearea.CommonObjectiveCard;
 
@@ -22,9 +21,11 @@ public class Game {
 		//----------------------------------
 		System.out.println("Creating JFrame");
 		
-		Board board = new Board(); //Gets a reference to the board
-		CommonObjectiveCard card1 = new CommonObjectiveCard(3);
-		CommonObjectiveCard card2 = new CommonObjectiveCard(5);
+		MainMenu main_menu = new MainMenu();
+		
+//		Board board = new Board(); //Gets a reference to the board
+//		CommonObjectiveCard card1 = new CommonObjectiveCard(3);
+//		CommonObjectiveCard card2 = new CommonObjectiveCard(5);
 		
 		
 //		try {

@@ -2,7 +2,6 @@ package sharedgamearea;
 
 import java.awt.Dimension;
 
-import gui.BoardLabel;
 import gui.TileLabel;
 import main.Tile;
 import main.TileType;

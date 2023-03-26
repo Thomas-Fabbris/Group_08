@@ -4,13 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.util.Random;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import sharedgamearea.CommonObjectiveCard;
 
 //This is a singleton
 public class CommonObjectiveCardWindow extends JFrame {
@@ -28,6 +24,10 @@ public class CommonObjectiveCardWindow extends JFrame {
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 	}
 	
+	/**
+	 * Adds a card's label to the window and saves its reference in this object for later use
+	 * @param card_label
+	 */
 	public void registerCard(JLabel card_label) {
 		card_labels[0] = (CommonObjectiveCardLabel) card_label;
 		this.add(card_label);

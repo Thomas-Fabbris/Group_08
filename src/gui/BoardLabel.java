@@ -6,8 +6,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import main.TileType;
-
 public class BoardLabel extends JLabel {
 	private ImageIcon image;
 	private static final String BOARD_IMAGE_PATH = "Assets/Board.png";

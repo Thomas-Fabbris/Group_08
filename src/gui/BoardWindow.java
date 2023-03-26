@@ -3,11 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Random;
 
 import javax.swing.JFrame;
-
-import sharedgamearea.Board;
 
 //Singleton
 public class BoardWindow extends JFrame {
@@ -30,7 +27,7 @@ public class BoardWindow extends JFrame {
 		this.board_size = new Dimension(screen_size.getSize().width/2, screen_size.getSize().height*2/3);
 		this.setResizable(false);
 		this.setSize(screen_size.width/2, screen_size.height*2/3);
-		this.setLocationRelativeTo(null);
+//		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);
