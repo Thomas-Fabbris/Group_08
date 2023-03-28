@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Iterator;
+
 public class Player {
 	private String name;
 	private static int number_of_players;
@@ -12,11 +14,25 @@ public class Player {
 	}
 	
 	public static void setNumberOfPlayers(int count) {
-		number_of_players = count;
+		if(number_of_players == 0)
+			number_of_players = count;
 	}
 	
 	public static int getNumberOfPlayers() {
 		return number_of_players;
+	}
+	
+	/**
+	 * Get player with specified id
+	 * @param id
+	 * @return Player
+	 */
+	public static Player getPlayer(int id) {
+		for (int i = 0; i < players.length; i++) {
+			if(players[i].id == id) return players[i];
+		}
+		
+		return null;
 	}
 	
 	public boolean equals(Player player) {

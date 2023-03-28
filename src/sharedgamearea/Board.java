@@ -2,6 +2,7 @@ package sharedgamearea;
 
 import gui.BoardLabel;
 import gui.BoardWindow;
+import gui.MainMenuWindow;
 import main.TileType;
 
 public class Board {
@@ -10,6 +11,7 @@ public class Board {
 	private BoardLabel label;
 	
 	public Board() {
+		MainMenuWindow main_menu = new MainMenuWindow();
 		this.label = new BoardLabel(BoardWindow.getInstance().getSize());
 		this.fill();
 		BoardWindow.getInstance().setVisible(true);

@@ -6,36 +6,30 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import main.Main;
-import main.Game;
 import main.IdGenerator;
 import main.Player;
 
-public class MainMenu extends JFrame {
-	
+public class MainMenuWindow extends JDialog{
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
-	private JComboBox<Integer> number_of_players = new JComboBox<Integer>(new Integer[] {2, 3, 4});
+	private JComboBox<Integer> number_of_players_seletion = new JComboBox<Integer>(new Integer[] {2, 3, 4});
 	private JLabel number_of_players_text = new JLabel("Number of players:");
 	private JTextField[] player_names = new JTextField[4];
-//	private JTextField player1 = new JTextField("Player 1");
-//	private JTextField player2 = new JTextField("Player 2");
-//	private JTextField player3 = new JTextField("Player 3");
-//	private JTextField player4 = new JTextField("Player 4");
-	private ArrayList<Player> players = new ArrayList<Player>();
+
 	private JButton start = new JButton("Start Game");
 	
-	public MainMenu() {
-		super("MyShelfie Main Menu");
+	public MainMenuWindow() {
+//		super("MyShelfie Main Menu");
+		this.setModal(true);
 		InitWindow();
 		InitComponents();
 		this.setVisible(true);
@@ -46,16 +40,16 @@ public class MainMenu extends JFrame {
 		number_of_players_text.setFont(new Font("Dialog", Font.BOLD, 20));
 		number_of_players_text.setForeground(Color.WHITE);
 		
-		number_of_players.setMaximumSize(new Dimension(500, 30));
-		number_of_players.setSize(new Dimension(500, 30));
-		number_of_players.setToolTipText("Number of players");
-		number_of_players.setFont(new Font("Dialog", Font.PLAIN, 16));
-		number_of_players.setSelectedIndex(-1);
+		number_of_players_seletion.setMaximumSize(new Dimension(500, 30));
+		number_of_players_seletion.setSize(new Dimension(500, 30));
+		number_of_players_seletion.setToolTipText("Number of players");
+		number_of_players_seletion.setFont(new Font("Dialog", Font.PLAIN, 16));
+		number_of_players_seletion.setSelectedIndex(-1);
 		
 		this.add(number_of_players_text);
-		this.add(number_of_players);
+		this.add(number_of_players_seletion);
 		
-		//create emtpy spaces
+		//create empty spaces
 		empty_space1.setBackground(Color.DARK_GRAY);
 		empty_space2.setBackground(Color.DARK_GRAY);
 		
@@ -69,9 +63,9 @@ public class MainMenu extends JFrame {
 	
 	private void initActionListeners() {
 		
-		number_of_players.addActionListener(new ActionListener() {
+		number_of_players_seletion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int count = (int)number_of_players.getSelectedItem(); //where should we store this?
+				int count = (int)number_of_players_seletion.getSelectedItem(); //where should we store this?
 				Player.setNumberOfPlayers(count);
 				hideUnusedTextFields(count);
 			}
@@ -80,11 +74,7 @@ public class MainMenu extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createPlayers();
-				
-				//Starts the game's execution
-				MainMenu.this.dispose();
-				Game game = new Game();
-				game.StartGame();
+				MainMenuWindow.this.dispose();
 			}
 		});
 	}
@@ -120,12 +110,26 @@ public class MainMenu extends JFrame {
 		
 		for(int i = 0; i < Player.getNumberOfPlayers(); i++) {
 			Player.players[i] = new Player(player_names[i].getText(), idgenerator);
-//			players.add(new Player(player_names[i].getText(), idgenerator));
 		}
 	}
 	
-	public ArrayList<Player> getPlayers() {
-		return players;
+//	public String[] getPlayerNames() {
+//		ArrayList<String> names = new ArrayList<String>();
+//		
+//		for (int i = 0; i < player_names.length; i++) {
+//			if(player_names[i].isVisible())
+//				names.add(player_names[i].getText());
+//		}
+//		return (String[])names.toArray(new String[0]);
+//	}
+	
+	/**
+	 * @param number of the text field to get the name from (0 to 4)
+	 * @return the name specified text field
+	 */
+	public String getPlayerNameInTextfield(int text_field) {
+		if(!player_names[text_field].isVisible()) throw new IndexOutOfBoundsException();
+		return player_names[text_field].getText();
 	}
 	
 	private void InitWindow() {

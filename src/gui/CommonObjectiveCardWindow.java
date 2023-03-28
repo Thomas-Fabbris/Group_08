@@ -8,12 +8,13 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//This is a singleton
+//Singleton
 public class CommonObjectiveCardWindow extends JFrame {
 	
 	private static CommonObjectiveCardWindow instance = null;
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 	private final CommonObjectiveCardLabel[] card_labels = new CommonObjectiveCardLabel[2];
+	private static int index = 0;
 	
 	private CommonObjectiveCardWindow() {
 		super("Common Objective Cards");
@@ -29,7 +30,7 @@ public class CommonObjectiveCardWindow extends JFrame {
 	 * @param card_label
 	 */
 	public void registerCard(JLabel card_label) {
-		card_labels[0] = (CommonObjectiveCardLabel) card_label;
+		card_labels[index++] = (CommonObjectiveCardLabel) card_label;
 		this.add(card_label);
 	}
 	
