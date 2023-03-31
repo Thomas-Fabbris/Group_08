@@ -23,8 +23,12 @@ public class BoardWindow extends JFrame {
 		return instance;
 	}
 	
+	public Dimension getBoardSize() {
+		return board_size;
+	}
+	
 	private void Init() {
-		this.board_size = new Dimension(screen_size.getSize().width/2, screen_size.getSize().height*2/3);
+		this.board_size = new Dimension(screen_size.getSize().height*2/3, screen_size.getSize().height*2/3);
 		this.setResizable(false);
 		this.setSize(screen_size.width/2, screen_size.height*2/3);
 //		this.setLocationRelativeTo(null);

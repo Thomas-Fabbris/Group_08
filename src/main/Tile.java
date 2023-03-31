@@ -2,7 +2,7 @@ package main;
 
 import gui.TileLabel;
 
-public class Tile {
+public abstract class Tile {
 	private TileType type;
 	private TileLabel label; //image displayed on the GUI
 	private boolean isVisible;
