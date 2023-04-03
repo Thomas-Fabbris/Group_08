@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import gui.BoardLabel;
-import gui.BoardWindow;
+import gui.SharedGameAreaWindow;
 import gui.MainMenuWindow;
 import main.TileType;
 
@@ -22,9 +22,9 @@ public class Board {
 	public Board() {
 		MainMenuWindow main_menu = new MainMenuWindow();
 		valid_positions = readValidBoardPositionsFile(new File(VALID_POSITIONS_FILE_PATH));
-		this.label = new BoardLabel(BoardWindow.getInstance().getBoardSize(), this);
+		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
 		this.fill();
-		BoardWindow.getInstance().setVisible(true);
+		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	
 	public BoardLabel getLabel() {
@@ -134,7 +134,6 @@ public class Board {
 				c = line.charAt(j);
 				if(c == '1') positions[i][j] = true;
 				else positions[i][j] = false;
-//				positions[i][j] = (boolean)c-'0';
 			}
 		}
 		
@@ -158,9 +157,9 @@ public class Board {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
 				if(valid_positions[i][j])
-					tiles[i][j] = new BoardTile(TileType.randomType(), i+1, j+1, boardlabel_size);
+					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, boardlabel_size);
 				else {
-					tiles[i][j] = new BoardTile(TileType.BOOKS, i+1, j+1, boardlabel_size);
+					tiles[i][j] = new BoardTile(TileType.NULL, i, j, boardlabel_size);
 					tiles[i][j].setVisible(false);
 				}
 				

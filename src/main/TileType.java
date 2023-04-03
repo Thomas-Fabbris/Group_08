@@ -10,7 +10,8 @@ public enum TileType {
 	PLANTS,
 	TROPHIES,
 	POINTS,
-	GAME_END;
+	GAME_END,
+	NULL;
 	
 	private static TileType[] types = {BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES};
 	

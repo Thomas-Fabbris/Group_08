@@ -13,8 +13,8 @@ public class TileLabel extends JLabel {
 	ImageIcon image;
 	
 	//informazioni sulla posizione del tile in pixels
-//	private int x_pos;
-//	private int y_pos;
+	private int x_pos;
+	private int y_pos;
 	
 	//dimensioni del tile in pixels
 	private final int tile_length;
@@ -23,14 +23,14 @@ public class TileLabel extends JLabel {
 	
 	public TileLabel(TileType tile_type, int row, int column, Dimension board_size) {
 		this.tile_length = board_size.height/12;
-		this.offset = board_size.height/18;
+		this.offset = board_size.height/17;
 		this.tile_cell_length = board_size.width / 10;
-//		this.x_pos = convertColumnToXCoords(column);
-//		this.y_pos = convertRowToYCoords(row);
+		this.x_pos = convertColumnToXCoords(column);
+		this.y_pos = convertRowToYCoords(row);
 		
 		setType(tile_type);
-//		this.setSize(tile_length, tile_length);
-//		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
+		this.setSize(tile_length, tile_length);
+		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
 	}
 	
 	private String GetImagePath(TileType tile_type) {		
@@ -47,6 +47,7 @@ public class TileLabel extends JLabel {
 	}
 	
 	public void setType(TileType type) {
+		if(type == TileType.NULL) return;
 		this.image = LoadImageAsIcon(GetImagePath(type));
 		setIcon(this.image);
 	}
@@ -56,16 +57,16 @@ public class TileLabel extends JLabel {
 	 * @param row
 	 * @return the location in pixels of the row on the GUI
 	 */
-//	private int convertRowToYCoords(int row) {
-//		return offset+((row - 1) * tile_cell_length);
-//	}
+	private int convertRowToYCoords(int row) {
+		return offset+((row - 1) * tile_cell_length);
+	}
 	
 	/***
 	 * Converts the column number to the actual x coordinate
 	 * @param column
 	 * @return the location in pixels of the column on the GUI
 	 */
-//	private int convertColumnToXCoords(int column) {
-//		return offset+((column - 1) * tile_cell_length);
-//	}
+	private int convertColumnToXCoords(int column) {
+		return offset+((column - 1) * tile_cell_length);
+	}
 }

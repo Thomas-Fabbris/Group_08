@@ -1,23 +1,23 @@
 package main;
 
 
+import gui.SharedGameAreaWindow;
 import sharedgamearea.Board;
 import sharedgamearea.CommonObjectiveCard;
 
 public class Main {
 
 	public static void main(String[] args) {
-//		MainMenu main_menu = new MainMenu();
-		
-//		Thread main_menu_thread = new Thread(new MainMenu(Thread.currentThread()));
-//		MainMenuWindow window = new MainMenuWindow();
-		
 		Board board = new Board(); //Gets a reference to the board
+		
 		CommonObjectiveCard card1 = new CommonObjectiveCard(3);
 		CommonObjectiveCard card2 = new CommonObjectiveCard(5);
 		
+		SharedGameAreaWindow.getInstance().getCards().addCard(card1);
+		SharedGameAreaWindow.getInstance().getCards().addCard(card2);
+		
 		for (int i = 0; i < Player.getNumberOfPlayers(); i++) {
-			System.out.println(Player.players[i].getName() + " - " + Player.players[i].id);
+			System.out.println(Player.players[i].getName() + " - id: " + Player.players[i].id);
 		}
 		
 		try {

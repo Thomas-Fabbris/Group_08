@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -12,8 +13,8 @@ public class CommonObjectiveCardLabel extends JLabel {
 	private int card_height;
 	private int card_width;
 	
-	public CommonObjectiveCardLabel(int card_number) {
-		this.card_height = CommonObjectiveCardWindow.getInstance().getSize().height*2/3;
+	public CommonObjectiveCardLabel(int card_number, Dimension container_size) {
+		this.card_height = container_size.height*2/3;
 		this.card_width = card_height+card_height/2;
 		
 		this.image = LoadImageAsIcon(GetImagePath(card_number));

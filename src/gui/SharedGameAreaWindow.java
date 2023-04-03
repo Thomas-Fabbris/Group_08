@@ -2,24 +2,33 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
 //Singleton
-public class BoardWindow extends JFrame {
-	private static BoardWindow instance = null;
+public class SharedGameAreaWindow extends JFrame {
+	private static SharedGameAreaWindow instance = null;
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 	private Dimension board_size;
+	private BoardLabel board;
+	private CommonObjectiveCardContainer cards;
 	
-	public BoardWindow() {
+	public SharedGameAreaWindow() {
 		super("MyShelfie");
+		this.setLayout(new FlowLayout());
 		Init();
+		
+		cards = new CommonObjectiveCardContainer();
+//		cards.addCard(1);
+//		cards.addCard(5);
+		this.add(cards);
 	}
 	
-	public static BoardWindow getInstance() {
+	public static SharedGameAreaWindow getInstance() {
 		if(instance == null)
-			instance = new BoardWindow();
+			instance = new SharedGameAreaWindow();
 		return instance;
 	}
 	
@@ -27,11 +36,14 @@ public class BoardWindow extends JFrame {
 		return board_size;
 	}
 	
+	public CommonObjectiveCardContainer getCards() {
+		return cards;
+	}
+	
 	private void Init() {
 		this.board_size = new Dimension(screen_size.getSize().height*2/3, screen_size.getSize().height*2/3);
 		this.setResizable(false);
-		this.setSize(screen_size.width/2, screen_size.height*2/3);
-//		this.setLocationRelativeTo(null);
+		this.setSize(screen_size.width/2, screen_size.height-40);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);

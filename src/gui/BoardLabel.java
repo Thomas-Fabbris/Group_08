@@ -13,15 +13,12 @@ public class BoardLabel extends JLabel {
 	private ImageIcon image;
 	private static final String BOARD_IMAGE_PATH = "Assets/Board.png";
 	
-	private static final int gap = BoardWindow.getInstance().getSize().height/11;
-//	private static final int vgap =
-	
-	public BoardLabel(Dimension size, Board board) {
+	public BoardLabel(Dimension size) {
 		this.setSize(size.height-38, size.height-38);
 		image = LoadImageAsIcon(BOARD_IMAGE_PATH, getSize().width, getSize().height);
 		this.setIcon(image);
-		this.setLayout(new GridLayout(11, 11, 8, 8));
-		BoardWindow.getInstance().add(this);
+		this.setLayout(null);
+		SharedGameAreaWindow.getInstance().add(this);
 	}
 
 	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {
