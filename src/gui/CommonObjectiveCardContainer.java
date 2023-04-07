@@ -37,7 +37,7 @@ public class CommonObjectiveCardContainer extends JPanel {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		CommonObjectiveCardLabel label = new CommonObjectiveCardLabel(card_id, this.getSize());
+		CommonObjectiveCardLabel label = new CommonObjectiveCardLabel(card_id);
 		registerCardLabel(label);
 	}
 	

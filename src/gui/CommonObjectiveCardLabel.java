@@ -13,9 +13,9 @@ public class CommonObjectiveCardLabel extends JLabel {
 	private int card_height;
 	private int card_width;
 	
-	public CommonObjectiveCardLabel(int card_number, Dimension container_size) {
-		this.card_height = container_size.height*2/3;
-		this.card_width = card_height+card_height/2;
+	public CommonObjectiveCardLabel(int card_number) {
+		this.card_height = SharedGameAreaWindow.getInstance().getCards().getSize().height*2/3;
+		this.card_width = card_height*3/2;
 		
 		this.image = LoadImageAsIcon(GetImagePath(card_number));
 		this.setIcon(image);

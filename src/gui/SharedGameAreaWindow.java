@@ -12,7 +12,6 @@ public class SharedGameAreaWindow extends JFrame {
 	private static SharedGameAreaWindow instance = null;
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 	private Dimension board_size;
-	private BoardLabel board;
 	private CommonObjectiveCardContainer cards;
 	
 	public SharedGameAreaWindow() {
@@ -21,8 +20,6 @@ public class SharedGameAreaWindow extends JFrame {
 		Init();
 		
 		cards = new CommonObjectiveCardContainer();
-//		cards.addCard(1);
-//		cards.addCard(5);
 		this.add(cards);
 	}
 	

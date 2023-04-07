@@ -18,7 +18,6 @@ public class BoardLabel extends JLabel {
 		image = LoadImageAsIcon(BOARD_IMAGE_PATH, getSize().width, getSize().height);
 		this.setIcon(image);
 		this.setLayout(null);
-		SharedGameAreaWindow.getInstance().add(this);
 	}
 
 	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {

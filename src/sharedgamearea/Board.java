@@ -14,13 +14,11 @@ public class Board {
 	private final static int BOARD_LENGTH = 11;
 	
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
-//	private final int[] valid_positions = {1,4, 1,5, 2,4, 2,5, 2,6, 3,3, 3,4, 3,5, 3,6, 3,7, 4,2, 4,3, 4,4, 4,5, 4,6, 4,7, 4,8, 4,9, 5,1, 5,2, 5,3, 5,4, 5,5, 5,6, 5,7, 5,8, 5,9, 6,1, 6,2, 6,3, 6,4, 6,5, 6,6, 6,7, 6,8, 7,3, 7,4, 7,5, 7,6, 7,7, 8,4, 8,5, 8,6, 9,5, 9,6};
 	private boolean[][] valid_positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions.txt";
 	private BoardLabel label;
 	
 	public Board() {
-		MainMenuWindow main_menu = new MainMenuWindow();
 		valid_positions = readValidBoardPositionsFile(new File(VALID_POSITIONS_FILE_PATH));
 		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
 		this.fill();
@@ -49,10 +47,10 @@ public class Board {
 	}
 	
 	/***
-	 * Gets the TyleType of the tile at the specified position
+	 * Gets the TileType of the tile at the specified position
 	 * @param row
 	 * @param column
-	 * @return the tile at specified row / column
+	 * @return the type of the tile at specified row / column
 	 */
 	public TileType getTileType(int row, int column) {
 		if(!isValidPosition(row, column)) {
@@ -60,6 +58,17 @@ public class Board {
 		}
 		
 		return tiles[row][column].getType();
+	}
+	
+	
+	/***
+	 * Gets the tile at the specified position
+	 * @param row
+	 * @param column
+	 * @return the tile at specified row / column
+	 */
+	public BoardTile getTile(int row, int column) {
+		return tiles[row][column];
 	}
 	
 	/**
@@ -91,21 +100,6 @@ public class Board {
 		
 		return tiles[row][column].isVisible();
 	}
-	
-//	private int[] readBoardPositionsFile(File file) {
-//		Scanner scanner = new Scanner(file);
-//		
-//		for (int i = 0; i < BOARD_LENGTH; i++) {
-//			for (int j = 0; i < BOARD_LENGTH; j++) {
-//				valid_positions[i][j] = scanner.nextLine();
-//			}
-//		}
-//		
-//		while(scanner.hasNext()) {
-//			numbers[i] = scanner.nextInt();
-//			i++;
-//		}
-//	}
 	
 	/**
 	 * Fills the valid_positions array according to the contents of the file
@@ -172,17 +166,7 @@ public class Board {
 	 * Generates a random tile on every valid cell of the board
 	 */
 	private void fill() {
-		int row = 0;
-		int column = 0;
-		
 		initTiles();
-		
-		//for each valid position, create a new tile there
-//		for (int i = 0; i < valid_positions.length; i+=2) {
-//			row = valid_positions[i];
-//			column = valid_positions[i+1];
-//			initTile(TileType.randomType(), row, column);
-//		}
 	}
 	
 	/***
@@ -200,16 +184,14 @@ public class Board {
 //				setTileType(row, column, TileType.randomType());
 //			}
 //		}
+		throw new UnsupportedOperationException();
 	}
 	
 	public void hideAllTiles() {
-//		int row = 0;
-//		int column = 0;		
-//		
-//		for (int i = 0; i < valid_positions.length; i+=2) {
-//			row = valid_positions[i];
-//			column = valid_positions[i+1];
-//			tiles[row][column].setVisible(false);
-//		}
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles.length; j++) {
+				tiles[i][j].setVisible(false);
+			}
+		}
 	}
 }
