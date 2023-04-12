@@ -2,7 +2,7 @@ package sharedgamearea;
 
 import java.awt.Dimension;
 
-import gui.TileLabel;
+import gui.BoardTileLabel;
 import main.Tile;
 import main.TileType;
 
@@ -14,7 +14,7 @@ public class BoardTile extends Tile {
 		super(tile_type);
 		this.row = row;
 		this.column = column;
-		this.setLabel(new TileLabel(tile_type, row, column, board_size));
+		this.setLabel(new BoardTileLabel(tile_type, row, column, board_size));
 		this.setVisible(true);
 	}
 	

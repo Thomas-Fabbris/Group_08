@@ -2,9 +2,6 @@ package main;
 
 
 import gui.MainMenuWindow;
-import gui.SharedGameAreaWindow;
-import sharedgamearea.Board;
-import sharedgamearea.CommonObjectiveCard;
 
 public class Main {
 

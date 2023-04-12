@@ -1,13 +1,10 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import sharedgamearea.Board;
 
 public class BoardLabel extends JLabel {
 	private ImageIcon image;

@@ -1,16 +1,23 @@
 package main;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
+
+import javax.swing.JPanel;
+
 import gui.MainMenuWindow;
 import gui.SharedGameAreaWindow;
 import sharedgamearea.Board;
 import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
-	
-	Board board;
+
 	Player[] players;
-	
-	CommonObjectiveCard[] common_objective_cards = { new CommonObjectiveCard(3), new CommonObjectiveCard(5) };
+
+	//shared game area stuff
+	Board board;
+	CommonObjectiveCard card1 = new CommonObjectiveCard(4);
+	CommonObjectiveCard card2 = new CommonObjectiveCard(6);
 	
 	public Game(MainMenuWindow main_menu) {
 		this.board = new Board();
@@ -18,11 +25,18 @@ public class Game {
 		this.players = main_menu.getPlayers();
 		main_menu.dispose();
 
-//		SharedGameAreaWindow.getInstance().add(board.getLabel());
-		SharedGameAreaWindow.getInstance().getCards().addCard(common_objective_cards[0]);
-		SharedGameAreaWindow.getInstance().getCards().addCard(common_objective_cards[1]);
-		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
+		//Create the common objective cards container and add it to the window
+		JPanel cards = new JPanel();
+		cards.setLayout(new FlowLayout(0, 10, 10));
+		cards.setSize(SharedGameAreaWindow.getInstance().getSize().width/2, SharedGameAreaWindow.getInstance().getSize().height*1/3);
+		cards.setBackground(Color.DARK_GRAY);
+		cards.add(card1.getLabel());
+		cards.add(card2.getLabel());
 		
+		SharedGameAreaWindow.getInstance().add(board.getLabel());
+		SharedGameAreaWindow.getInstance().add(cards);
+		
+		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
 		Start();
 	}
 	
@@ -32,7 +46,7 @@ public class Game {
 			System.out.println(players[i].getName() + " - id: " + players[i].id);
 		}
 		
-//		board.hideAllTiles();
+//		board.hideAllTiles(); //need to implement this method
 		board.setTileType(1, 4, TileType.GAMES);
 		
 //		board.refill();

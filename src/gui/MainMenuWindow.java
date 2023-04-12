@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import main.Game;
 import main.IdGenerator;
 import main.Player;
-import sharedgamearea.Board;
 
 public class MainMenuWindow extends JDialog{
 	private JPanel empty_space1 = new JPanel();
@@ -78,6 +77,7 @@ public class MainMenuWindow extends JDialog{
 		
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Player.setNumberOfPlayers(number_of_players);
 				startGame();
 			}
 		});

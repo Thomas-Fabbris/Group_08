@@ -1,21 +1,21 @@
 package main;
 
-import gui.TileLabel;
+import gui.BoardTileLabel;
 
 public abstract class Tile {
 	private TileType type;
-	private TileLabel label; //image displayed on the GUI
+	private BoardTileLabel label; //image displayed on the GUI
 	private boolean isVisible;
 	
 	public Tile(TileType tile_type) {
 		this.type = tile_type;
 	}
 
-	public TileLabel getLabel() {
+	public BoardTileLabel getLabel() {
 		return label;
 	}
 	
-	protected void setLabel(TileLabel label) {
+	protected void setLabel(BoardTileLabel label) {
 		this.label = label;
 	}
 	

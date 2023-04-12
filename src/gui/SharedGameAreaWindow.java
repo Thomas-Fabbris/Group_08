@@ -12,15 +12,11 @@ public class SharedGameAreaWindow extends JFrame {
 	private static SharedGameAreaWindow instance = null;
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 	private Dimension board_size;
-	private CommonObjectiveCardContainer cards;
 	
 	public SharedGameAreaWindow() {
 		super("MyShelfie");
 		this.setLayout(new FlowLayout());
 		Init();
-		
-		cards = new CommonObjectiveCardContainer();
-		this.add(cards);
 	}
 	
 	public static SharedGameAreaWindow getInstance() {
@@ -31,10 +27,6 @@ public class SharedGameAreaWindow extends JFrame {
 	
 	public Dimension getBoardSize() {
 		return board_size;
-	}
-	
-	public CommonObjectiveCardContainer getCards() {
-		return cards;
 	}
 	
 	private void Init() {

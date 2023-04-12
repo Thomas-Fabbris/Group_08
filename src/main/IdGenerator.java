@@ -2,6 +2,8 @@ package main;
 
 import java.util.Random;
 
+import sharedgamearea.CommonObjectiveCard;
+
 public class IdGenerator {
 	private static int COUNTER = 0;
 	private static int LAST_COMMON_OBJ_CARD_ID = 0;
@@ -18,13 +20,13 @@ public class IdGenerator {
 	 */
 	public int getNewCommonObjCardId() {
 		Random rd = new Random();
-		int rand = rd.nextInt(Card.MAX_CARD_ID-1);
+		int rand = rd.nextInt(CommonObjectiveCard.MAX_CARD_ID-1);
 		
 		if(LAST_COMMON_OBJ_CARD_ID >= 12)
 			throw new IllegalStateException(); //You should not be able to generate a number over 12
 		
 		while(rand == LAST_COMMON_OBJ_CARD_ID)
-			rand = rd.nextInt(Card.MAX_CARD_ID-1); //Keep generating until the number is different
+			rand = rd.nextInt(CommonObjectiveCard.MAX_CARD_ID-1); //Keep generating until the number is different
 
 		return rand+1;
 	}

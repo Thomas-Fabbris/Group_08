@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import main.TileType;
 
-public class TileLabel extends JLabel {
+public class BoardTileLabel extends JLabel {
 	private final String folder_path = "Assets/tiles/";
 	ImageIcon image;
 	
@@ -21,7 +21,7 @@ public class TileLabel extends JLabel {
 	private final int tile_cell_length;
 	private final int offset;
 	
-	public TileLabel(TileType tile_type, int row, int column, Dimension board_size) {
+	public BoardTileLabel(TileType tile_type, int row, int column, Dimension board_size) {
 		this.tile_length = board_size.height/12;
 		this.offset = board_size.height/17;
 		this.tile_cell_length = board_size.width / 10;
@@ -29,7 +29,7 @@ public class TileLabel extends JLabel {
 		this.y_pos = convertRowToYCoords(row);
 		
 		setType(tile_type);
-		this.setSize(tile_length, tile_length);
+//		this.setSize(tile_length, tile_length);
 		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
 	}
 	

@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import gui.BoardLabel;
 import gui.SharedGameAreaWindow;
-import gui.MainMenuWindow;
 import main.TileType;
 
 public class Board {
