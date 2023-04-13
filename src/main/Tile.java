@@ -19,6 +19,10 @@ public abstract class Tile {
 		this.label = label;
 	}
 	
+	protected void setLabel(TileType tile_type) {
+		label.setType(tile_type);
+	}
+	
 	public boolean isVisible() {
 		return this.isVisible;
 	}
@@ -33,6 +37,7 @@ public abstract class Tile {
 	}
 	
 	public void setType(TileType tile_type) {
-		this.type = tile_type ;
+		this.type = tile_type;
+		setLabel(tile_type);
 	}
 }
