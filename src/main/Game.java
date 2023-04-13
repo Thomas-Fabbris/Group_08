@@ -42,16 +42,17 @@ public class Game {
 	
 	public void Start() {
 		
+		//Prints player names and ids
 		for (int i = 0; i < players.length; i++) {
 			System.out.println(players[i].getName() + " - id: " + players[i].id);
 		}
 		
 		board.hideTile(2, 4);
-		System.out.println(board.getTileType(2, 4));
+		System.out.println("Tile @ 2, 4 before refill: " + board.getTileType(2, 4));
 		board.refill();
-		System.out.println(board.getTileType(2, 4));
+		System.out.println("Tile @ 2, 4 after refill: " + board.getTileType(2, 4));
 		
-		System.out.println(board.getTile(2, 4).tileDown().getRow());
+		System.out.println("Tile below that is: " + board.getTile(2, 4).tileDown().getType());
 		
 	}
 }

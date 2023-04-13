@@ -1,35 +1,28 @@
 package main;
 
-import gui.BoardTileLabel;
+import javax.swing.JLabel;
 
-public abstract class Tile {
-	private TileType type;
-	private BoardTileLabel label; //image displayed on the GUI - this should probably be a more abstract type the BoardTileLabel
-	private boolean isVisible;
+import gui.TileLabel;
+
+public abstract class Tile{
+	protected TileType type;
+	protected JLabel label; //image displayed on the GUI
+	protected boolean isVisible;
 	
 	public Tile(TileType tile_type) {
 		this.type = tile_type;
 	}
-
-	public BoardTileLabel getLabel() {
-		return label;
-	}
 	
-	protected void setLabel(BoardTileLabel label) {
+	protected void setLabel(JLabel label) {
 		this.label = label;
 	}
 	
-	protected void setLabel(TileType tile_type) {
-		label.setType(tile_type);
-	}
-	
 	public boolean isVisible() {
-		return this.isVisible;
+		return label.isVisible();
 	}
 	
 	public void setVisible(boolean isVisible) {
 		this.label.setVisible(isVisible);
-		this.isVisible = isVisible;
 	}
 	
 	public TileType getType() {
@@ -38,6 +31,5 @@ public abstract class Tile {
 	
 	public void setType(TileType tile_type) {
 		this.type = tile_type;
-		setLabel(tile_type);
 	}
 }

@@ -1,6 +1,5 @@
 package sharedgamearea;
 
-import gui.BoardTileLabel;
 import gui.GameEndTileLabel;
 import main.Player;
 import main.Tile;
@@ -9,7 +8,6 @@ import main.TileType;
 public class GameEndTile extends Tile {
 	
 	private Board board;
-	private GameEndTileLabel label;
 	
 	public GameEndTile(Board board) {
 		super(TileType.GAME_END);
@@ -24,8 +22,8 @@ public class GameEndTile extends Tile {
 		player.givePoints(1);
 		label.setVisible(false);
 	}
-	
+
 	public GameEndTileLabel getLabel() {
-		return this.label;
+		return (GameEndTileLabel)this.label;
 	}
 }
