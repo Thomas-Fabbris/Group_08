@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class GameEndTileLabel extends JLabel {
-	private final String IMAGE_PATH = "Assets/Point_tiles/First_to_finish.png";
+	private final String IMAGE_PATH = "Assets/Point_tiles/First_to_finish.jpg";
 	ImageIcon image;
 	
 	//informazioni sulla posizione del tile in pixels
@@ -24,13 +24,15 @@ public class GameEndTileLabel extends JLabel {
 	private final int left_offset;
 	
 	public GameEndTileLabel(Dimension board_size) {
-		this.side_length = board_size.height/12;
-		this.top_offset = (int)(board_size.height / 3.55);
-		this.left_offset = (int)(board_size.width / 1.6);
+//		this.setOpaque(true);
+//		this.setBackground(Color.green);
+		this.side_length = board_size.height/10;
+		this.top_offset = (int)(board_size.height / 1.42);
+		this.left_offset = (int)(board_size.width / 1.23);
 		
-		x_pos = left_offset-left_offset/16;
+		x_pos = left_offset;
 		y_pos = top_offset;
-
+		
 		this.image = RotateIcon(LoadImageAsIcon(IMAGE_PATH));
 		this.setIcon(image);
 		
@@ -51,7 +53,7 @@ public class GameEndTileLabel extends JLabel {
 		icon.paintIcon(null, g, 0, 0);
 		g.dispose();
 		
-		double radians = Math.toRadians(352);
+		double radians = Math.toRadians(15);
 		AffineTransform transform = new AffineTransform();
 		transform.rotate(radians, this.side_length/ 2, this.side_length/ 2);
 		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
@@ -59,4 +61,5 @@ public class GameEndTileLabel extends JLabel {
 		
 		return new ImageIcon(rotatedImage);
 	}
+
 }

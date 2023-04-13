@@ -2,8 +2,6 @@ package main;
 
 import javax.swing.JLabel;
 
-import gui.TileLabel;
-
 public abstract class Tile{
 	protected TileType type;
 	protected JLabel label; //image displayed on the GUI

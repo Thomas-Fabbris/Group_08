@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class PointTileLabel extends JLabel {
-	private final String folder_path = "Assets/Point_tiles/Xp.png";
+	private final String folder_path = "Assets/Point_tiles/Xp.jpg";
 	ImageIcon image;
 	
 	//informazioni sulla posizione del tile in pixels
@@ -24,15 +24,22 @@ public class PointTileLabel extends JLabel {
 	private final int left_offset;
 	
 	public PointTileLabel(Dimension card_size, int starting_point) {
+//		this.setOpaque(true);
+//		this.setBackground(Color.red);
+		
 		this.side_length = (int)(card_size.width / 3.55);
 		this.top_offset = (int)(card_size.height / 3.55);
-		this.left_offset = (int)(card_size.width / 1.6);
+		this.left_offset = (int)(card_size.width / 1.7);
 		
-		x_pos = left_offset-left_offset/16;
+		x_pos = left_offset;
 		y_pos = top_offset;
 
+		this.setVerticalAlignment(JLabel.CENTER);
+		this.setHorizontalAlignment(JLabel.CENTER);
+		
 		this.setBounds(x_pos, y_pos, side_length, side_length);
 		this.setImage(starting_point);
+
 		this.setVisible(true);
 	}
 
@@ -44,12 +51,13 @@ public class PointTileLabel extends JLabel {
 	private ImageIcon LoadImageAsIcon(String image_path) {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(this.side_length, this.side_length, java.awt.Image.SCALE_SMOOTH);
+		tmp_image = tmp_image.getScaledInstance(side_length, side_length, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 	
 	private ImageIcon RotateIcon(ImageIcon icon) {
-		BufferedImage originalImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB); //load the icon as a buffered image
+		BufferedImage originalImage = new BufferedImage(side_length, side_length, BufferedImage.TYPE_INT_ARGB); //load the icon as a buffered image
+		
 		Graphics g = originalImage.createGraphics();
 		icon.paintIcon(null, g, 0, 0);
 		g.dispose();
