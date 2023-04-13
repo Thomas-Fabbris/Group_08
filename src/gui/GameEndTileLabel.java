@@ -10,8 +10,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class PointTileLabel extends JLabel {
-	private final String folder_path = "Assets/Point_tiles/Xp.png";
+import main.TileType;
+
+public class GameEndTileLabel extends JLabel {
+	private final String IMAGE_PATH = "Assets/Point_tiles/First_to_finish.png";
 	ImageIcon image;
 	
 	//informazioni sulla posizione del tile in pixels
@@ -23,22 +25,19 @@ public class PointTileLabel extends JLabel {
 	private final int top_offset;
 	private final int left_offset;
 	
-	public PointTileLabel(Dimension card_size, int starting_point) {
-		this.side_length = (int)(card_size.width / 3.55);
+	public GameEndTileLabel(Dimension board_size) {
+		this.side_length = board_size.height/12;
 		this.top_offset = (int)(card_size.height / 3.55);
 		this.left_offset = (int)(card_size.width / 1.6);
 		
 		x_pos = left_offset-left_offset/16;
 		y_pos = top_offset;
 
+		this.image = RotateIcon(LoadImageAsIcon(IMAGE_PATH));
+		this.setIcon(image);
+		
 		this.setBounds(x_pos, y_pos, side_length, side_length);
-		this.setImage(starting_point);
 		this.setVisible(true);
-	}
-
-	private String GetImagePath(int points) {
-		String image_id = (Integer.valueOf(points)).toString();
-		return folder_path.replaceAll("X", image_id);
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path) {
@@ -49,28 +48,17 @@ public class PointTileLabel extends JLabel {
 	}
 	
 	private ImageIcon RotateIcon(ImageIcon icon) {
-		BufferedImage originalImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB); //load the icon as a buffered image
+		BufferedImage originalImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = originalImage.createGraphics();
 		icon.paintIcon(null, g, 0, 0);
 		g.dispose();
 		
-		double radians = Math.toRadians(352); //then apply a rotation to the buffered image through a transform
+		double radians = Math.toRadians(352);
 		AffineTransform transform = new AffineTransform();
 		transform.rotate(radians, this.side_length/ 2, this.side_length/ 2);
 		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 		BufferedImage rotatedImage = op.filter(originalImage, null);
 		
 		return new ImageIcon(rotatedImage);
-	}
-	
-	public void setImage(int points) {
-		
-		if(points != 2 && points != 4 && points != 6 && points != 8)
-			throw new IllegalArgumentException("A point tile with " + points + " points does not exist!");
-		
-		this.image = LoadImageAsIcon(GetImagePath(points));
-		this.image = RotateIcon(image);
-
-		setIcon(this.image);
 	}
 }

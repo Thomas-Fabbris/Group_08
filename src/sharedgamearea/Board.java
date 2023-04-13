@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import gui.BoardLabel;
 import gui.SharedGameAreaWindow;
+import main.Player;
 import main.TileType;
 
 public class Board {
@@ -14,13 +15,14 @@ public class Board {
 	
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
 	private boolean[][] valid_positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
-	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions.txt";
+	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
 	private BoardLabel label;
 	
 	public Board() {
-		valid_positions = readValidBoardPositionsFile(new File(VALID_POSITIONS_FILE_PATH));
+//		valid_positions = readValidBoardPositionsFile(new File(VALID_POSITIONS_FILE_PATH));
+		valid_positions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
 		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
-		this.fill();
+		this.initTiles();
 		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	
@@ -52,9 +54,8 @@ public class Board {
 	 * @return the type of the tile at specified row / column
 	 */
 	public TileType getTileType(int row, int column) {
-		if(!isValidPosition(row, column)) {
-			throw new InvalidBoardPositionException(row, column);			
-		}
+		if(!isValidPosition(row, column))
+			throw new InvalidBoardPositionException(row, column);
 		
 		return tiles[row][column].getType();
 	}
@@ -76,21 +77,31 @@ public class Board {
 	 * @return Returns whether the specified row/col position is valid
 	 */
 	public boolean isValidPosition(int row, int column) {
-		return tiles[row][column] != null;
+		return valid_positions[row][column];
 	}
 	
-	/***
-	 * Sets whether the tile at row/col is visible on the board GUI
+	/**
+	 * Hides the tile on the board (will not affect TileType)
 	 * @param row
 	 * @param column
-	 * @param isVisible
 	 */
-	public void setTileVisible(int row, int column, boolean isVisible) {
-		
+	public void hideTile(int row, int column) {
 		if(!isValidPosition(row, column))
-			throw new InvalidBoardPositionException(row, column);			
+			throw new InvalidBoardPositionException(row, column);
 		
-		tiles[row][column].setVisible(isVisible);
+		tiles[row][column].setVisible(false);
+	}
+	
+	/**
+	 * Tile becomes visible on the board (will not change TileType)
+	 * @param row
+	 * @param column
+	 */
+	public void showTile(int row, int column) {
+		if(!isValidPosition(row, column))
+			throw new InvalidBoardPositionException(row, column);
+		
+		tiles[row][column].setVisible(true);
 	}
 	
 	public boolean isTileVisible(int row, int column) {
@@ -100,12 +111,18 @@ public class Board {
 		return tiles[row][column].isVisible();
 	}
 	
+	private File selectValidPositionsFile(int number_of_players) {
+		Integer num = Integer.valueOf(number_of_players);
+		String path = VALID_POSITIONS_FILE_PATH.replaceAll("X", num.toString());
+		return new File(path);
+	}
+	
 	/**
 	 * Fills the valid_positions array according to the contents of the file
 	 * @param file with positions: 1 for valid, 0 for non valid
 	 * @return
 	 */
-	public boolean[][] readValidBoardPositionsFile(File file) {
+	private boolean[][] readValidBoardPositionsFile(File file) {
 		boolean[][] positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 		Scanner scanner = null;
 		
@@ -132,27 +149,17 @@ public class Board {
 		
 		return positions;
 	}
-	
+		
 	/***
-	 * Used to initialize the board, will set the tile at row/col without any check beforehand
-	 * @param tile_type
-	 * @param row
-	 * @param column
+	 * Fills every cell on the board with a tile (non valid positions are set to TileType.NULL)
 	 */
-	private void initTile(TileType tile_type, int row, int column) {
-		BoardTile tile = new BoardTile(tile_type, row, column, label.getSize());
-		tiles[row][column] = tile;	
-		this.label.add(tile.getLabel());
-	}
-	
 	private void initTiles() {
-		Dimension boardlabel_size = label.getSize();
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
 				if(valid_positions[i][j])
-					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, boardlabel_size);
+					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, this);
 				else {
-					tiles[i][j] = new BoardTile(TileType.NULL, i, j, boardlabel_size);
+					tiles[i][j] = new BoardTile(TileType.NULL, i, j, this);
 					tiles[i][j].setVisible(false);
 				}
 				
@@ -162,28 +169,19 @@ public class Board {
 	}
 	
 	/***
-	 * Generates a random tile on every valid cell of the board
-	 */
-	private void fill() {
-		initTiles();
-	}
-	
-	/***
 	 * Regenerates the missing tiles on the board
 	 */
 	public void refill() {
-//		int row = 0;
-//		int column = 0;		
-//		
-//		for (int i = 0; i < valid_positions.length; i+=2) {
-//			row = valid_positions[i];
-//			column = valid_positions[i+1];
-//			
-//			if(!tiles[row][column].isVisible()) {
-//				setTileType(row, column, TileType.randomType());
-//			}
-//		}
-		throw new UnsupportedOperationException();
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles.length; j++) {
+				
+				//Check if tile is not null and if it isn't visible
+				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isVisible()) {
+					tiles[i][j].setType(TileType.randomType());
+					showTile(i, j);
+				}
+			}
+		}
 	}
 	
 	public void hideAllTiles() {

@@ -46,11 +46,12 @@ public class Game {
 			System.out.println(players[i].getName() + " - id: " + players[i].id);
 		}
 		
-//		board.hideAllTiles(); //need to implement this method
-		board.setTileType(1, 4, TileType.GAMES);
+		board.hideTile(2, 4);
+		System.out.println(board.getTileType(2, 4));
+		board.refill();
+		System.out.println(board.getTileType(2, 4));
 		
-//		board.refill();
-		System.out.println(board.getTileType(1, 4));
+		System.out.println(board.getTile(2, 4).tileDown().getRow());
 		
 	}
 }
