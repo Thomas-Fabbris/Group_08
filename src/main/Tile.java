@@ -4,7 +4,7 @@ import gui.BoardTileLabel;
 
 public abstract class Tile {
 	private TileType type;
-	private BoardTileLabel label; //image displayed on the GUI
+	private BoardTileLabel label; //image displayed on the GUI - this should probably be a more abstract type the BoardTileLabel
 	private boolean isVisible;
 	
 	public Tile(TileType tile_type) {

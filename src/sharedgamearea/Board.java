@@ -1,6 +1,5 @@
 package sharedgamearea;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -17,12 +16,15 @@ public class Board {
 	private boolean[][] valid_positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
 	private BoardLabel label;
+	private GameEndTile game_end_tile;
 	
 	public Board() {
-//		valid_positions = readValidBoardPositionsFile(new File(VALID_POSITIONS_FILE_PATH));
 		valid_positions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
 		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
 		this.initTiles();
+		
+		this.game_end_tile = new GameEndTile(this);
+		label.add(game_end_tile.getLabel());
 		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	

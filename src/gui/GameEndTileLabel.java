@@ -10,8 +10,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import main.TileType;
-
 public class GameEndTileLabel extends JLabel {
 	private final String IMAGE_PATH = "Assets/Point_tiles/First_to_finish.png";
 	ImageIcon image;
@@ -27,8 +25,8 @@ public class GameEndTileLabel extends JLabel {
 	
 	public GameEndTileLabel(Dimension board_size) {
 		this.side_length = board_size.height/12;
-		this.top_offset = (int)(card_size.height / 3.55);
-		this.left_offset = (int)(card_size.width / 1.6);
+		this.top_offset = (int)(board_size.height / 3.55);
+		this.left_offset = (int)(board_size.width / 1.6);
 		
 		x_pos = left_offset-left_offset/16;
 		y_pos = top_offset;
