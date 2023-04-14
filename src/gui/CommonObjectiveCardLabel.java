@@ -14,11 +14,11 @@ public class CommonObjectiveCardLabel extends JLabel {
 
 	private PointTileLabel points_tile;
 	
-	public CommonObjectiveCardLabel(int card_number, int starting_points) {
+	public CommonObjectiveCardLabel(int card_id, int starting_points) {
 		this.card_height = SharedGameAreaWindow.getInstance().getSize().height/4;
 		this.card_width = card_height*3/2;
 		
-		this.image = LoadImageAsIcon(GetImagePath(card_number));
+		this.image = LoadImageAsIcon(GetImagePath(card_id));
 		this.setIcon(image);
 		this.setSize(this.card_width, this.card_height);
 		

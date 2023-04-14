@@ -1,7 +1,7 @@
 package main;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -12,7 +12,8 @@ import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
 
-	Player[] players;
+	//TODO: this should be a list
+	ArrayList<Player> players = new ArrayList<Player>();
 
 	//shared game area stuff
 	Board board;
@@ -21,7 +22,6 @@ public class Game {
 	
 	public Game(MainMenuWindow main_menu) {
 		this.board = new Board();
-		this.players = new Player[main_menu.getNumberOfPlayers()];
 		this.players = main_menu.getPlayers();
 		main_menu.dispose();
 
@@ -29,7 +29,7 @@ public class Game {
 		JPanel cards = new JPanel();
 		cards.setLayout(new FlowLayout(0, 10, 10));
 		cards.setSize(SharedGameAreaWindow.getInstance().getSize().width/2, SharedGameAreaWindow.getInstance().getSize().height*1/3);
-		cards.setBackground(Color.DARK_GRAY);
+		cards.setOpaque(false);
 		cards.add(card1.getLabel());
 		cards.add(card2.getLabel());
 		
@@ -37,22 +37,23 @@ public class Game {
 		SharedGameAreaWindow.getInstance().add(cards);
 		
 		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
+		
 		Start();
 	}
 	
 	public void Start() {
 		
 		//Prints player names and ids
-		for (int i = 0; i < players.length; i++) {
-			System.out.println(players[i].getName() + " - id: " + players[i].id);
+		for (int i = 0; i < players.size(); i++) {
+			System.out.println(players.get(i).getName() + " - id: " + players.get(i).id);
 		}
 		
-		board.hideTile(2, 4);
-		System.out.println("Tile @ 2, 4 before refill: " + board.getTileType(2, 4));
-		board.refill();
-		System.out.println("Tile @ 2, 4 after refill: " + board.getTileType(2, 4));
-		
-		System.out.println("Tile below that is: " + board.getTile(2, 4).tileDown().getType());
+//		board.hideTile(2, 4);
+//		System.out.println("Tile @ 2, 4 before refill: " + board.getTileType(2, 4));
+//		board.refill();
+//		System.out.println("Tile @ 2, 4 after refill: " + board.getTileType(2, 4));
+//		
+//		System.out.println("Tile below that is: " + board.getTile(2, 4).tileDown().getType());
 		
 	}
 }

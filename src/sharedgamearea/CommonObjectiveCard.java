@@ -7,12 +7,13 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
 import gui.CommonObjectiveCardLabel;
-import main.Card;
 import main.IdGenerator;
 import main.Player;
 
-public class CommonObjectiveCard extends Card {
+public class CommonObjectiveCard {
 	
+	private int card_id;
+	private CommonObjectiveCardLabel label;
 	public static int MAX_CARD_ID = 12;
 	private Stack<Integer> points = new Stack<Integer>();
 	
@@ -28,14 +29,18 @@ public class CommonObjectiveCard extends Card {
 	};
 	
 	public CommonObjectiveCard(int card_id) {
-		super(card_id);
-
+		this.card_id = card_id;
+		
 		initPointsList();
 		this.label = new CommonObjectiveCardLabel(card_id, points.lastElement());
 		
 		//debug
 		this.label.getInputMap().put(KeyStroke.getKeyStroke("X"), "pressed");
 		this.label.getActionMap().put("pressed", XpressedAction);
+	}
+	
+	public CommonObjectiveCardLabel getLabel() {
+		return label;
 	}
 	
 	public int getId() {
@@ -87,7 +92,7 @@ public class CommonObjectiveCard extends Card {
 		}
 		
 		//Give points and remove the value of points awarded to the player
-		player.givePoints(points.lastElement());
+		player.addPoints(points.lastElement());
 		points.pop();
 		
 		try {

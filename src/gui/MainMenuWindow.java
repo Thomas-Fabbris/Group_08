@@ -27,7 +27,7 @@ public class MainMenuWindow extends JDialog{
 	private JLabel number_of_players_text = new JLabel("Number of players:");
 	private JTextField[] player_names = new JTextField[4];
 	private int number_of_players;
-	private Player[] players = new Player[4];
+//	private Player[] players = new Player[4];
 
 	private JButton start = new JButton("Start Game");
 	
@@ -112,7 +112,7 @@ public class MainMenuWindow extends JDialog{
 		return this.number_of_players;
 	}
 	
-	public Player[] getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		ArrayList<Player> players = new ArrayList<>();
 		
 		IdGenerator idgenerator = new IdGenerator();	
@@ -120,7 +120,7 @@ public class MainMenuWindow extends JDialog{
 			players.add(new Player(player_names[i].getText(), idgenerator));
 		}
 		
-		return players.toArray(new Player[0]);
+		return players;
 	}
 	
 	private void startGame() {
