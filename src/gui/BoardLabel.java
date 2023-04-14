@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 public class BoardLabel extends JLabel {
 	private ImageIcon image;
-	private static final String BOARD_IMAGE_PATH = "Assets/Board.png";
+	private static final String BOARD_IMAGE_PATH = "Assets/Board.jpg";
 	
 	public BoardLabel(Dimension size) {
 		this.setSize(size.height-38, size.height-38);

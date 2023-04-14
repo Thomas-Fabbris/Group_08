@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import main.TileType;
 
 public class BoardTileLabel extends JLabel {
+	
 	private final String folder_path = "Assets/tiles/";
 	ImageIcon image;
 	
@@ -29,7 +30,6 @@ public class BoardTileLabel extends JLabel {
 		this.y_pos = convertRowToYCoords(row);
 		
 		setType(tile_type);
-//		this.setSize(tile_length, tile_length);
 		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
 	}
 	
