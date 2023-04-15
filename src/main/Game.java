@@ -12,7 +12,7 @@ import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
 
-	Player[] players;
+	static Player[] players;
 
 	//shared game area stuff
 	Board board;
