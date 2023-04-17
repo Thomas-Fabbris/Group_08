@@ -5,6 +5,7 @@ public class Player {
 	private static int number_of_players;
 	public final int id;
 	private int points = 0;
+	private boolean hasEndOfGameToken = false;
 	
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
@@ -38,5 +39,13 @@ public class Player {
 	
 	public int getPoints() {
 		return this.points;
+	}
+	
+	public boolean getHasEndOfGameToken() {
+		return this.hasEndOfGameToken;
+	}
+	
+	public void setHasEndOfGameToken(boolean value) {
+		this.hasEndOfGameToken = value;
 	}
 }

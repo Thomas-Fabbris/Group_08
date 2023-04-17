@@ -7,12 +7,14 @@ import javax.swing.JPanel;
 
 import gui.MainMenuWindow;
 import gui.SharedGameAreaWindow;
+import personalgamearea.Shelf;
 import sharedgamearea.Board;
 import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
 
-	static Player[] players;
+	public Player[] players;
+	public Shelf[] playerShelves;
 
 	//shared game area stuff
 	Board board;

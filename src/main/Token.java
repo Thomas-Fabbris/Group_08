@@ -9,20 +9,20 @@ public class Token {
 		this.currentOwner = player;
 	}
 	
-	public void shiftRound() {
+	public void shiftRound(Player players[]) {
 		this.roundNumber ++;
-		this.moveToNextPlayer();
-		}
+		this.moveToNextPlayer(players);
+	}
 	
-	private void moveToNextPlayer() {
+	private void moveToNextPlayer(Player players[]) {
 		
-		for (int k = 0; k < Game.players.length; k++) {
-			if(this.currentOwner.equals(Game.players[k])) {
-				if(k != Game.players.length - 1) {
-					this.currentOwner = Game.players[k++];
+		for (int k = 0; k < players.length; k++) {
+			if(this.currentOwner.equals(players[k])) {
+				if(k != players.length - 1) {
+					this.currentOwner = players[k++];
 				}
 				else {
-					this.currentOwner = Game.players[0];
+					this.currentOwner = players[0];
 				}
 				
 			}
