@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import main.TileType;
+import personalgamearea.Bookshelf;
 
 public class BookshelfTileLabel extends JLabel {
 	
@@ -14,7 +15,7 @@ public class BookshelfTileLabel extends JLabel {
 	ImageIcon image;
 	private int tile_length;
 	
-	public BookshelfTileLabel(TileType tile_type, Dimension shelf_size) {
+	public BookshelfTileLabel(TileType tile_type, Bookshelf shelf) {
 		
 		//TODO: compute dimensions
 		this.tile_length = ;
