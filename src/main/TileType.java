@@ -16,7 +16,10 @@ public enum TileType {
 	private static TileType[] types = {BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES};
 	
 	public static TileType randomType() {
+//		do {
 		Random rd = new Random();
+//		int i =rd.nextInt(6);		
+//		}while(Pouch.isAvailable(i))
 		return types[rd.nextInt(6)];
 	}
 }
