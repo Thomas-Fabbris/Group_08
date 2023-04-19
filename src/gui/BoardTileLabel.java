@@ -18,7 +18,7 @@ public class BoardTileLabel extends JLabel {
 	private int y_pos;
 	
 	//dimensioni del tile in pixels
-	private final int tile_length;
+	public final int tile_length;
 	private final int tile_cell_length;
 	private final int offset;
 	

@@ -12,7 +12,6 @@ import sharedgamearea.CommonObjectiveCard;
 
 public class Game {
 
-	//TODO: this should be a list
 	ArrayList<Player> players = new ArrayList<Player>();
 
 	//shared game area stuff

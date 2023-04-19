@@ -17,8 +17,7 @@ public class BookshelfTileLabel extends JLabel {
 	
 	public BookshelfTileLabel(TileType tile_type, Bookshelf shelf) {
 		
-		//TODO: compute dimensions
-		this.tile_length = ;
+		this.tile_length = shelf.getLabel().getHeight() / 7;
 		
 		setType(tile_type);
 		this.setSize(tile_length, tile_length);

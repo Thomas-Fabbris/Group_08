@@ -9,13 +9,14 @@ import javax.swing.KeyStroke;
 import gui.CommonObjectiveCardLabel;
 import main.IdGenerator;
 import main.Player;
+import personalgamearea.PointTile;
 
 public class CommonObjectiveCard {
 	
 	private int card_id;
 	private CommonObjectiveCardLabel label;
 	public static int MAX_CARD_ID = 12;
-	private Stack<Integer> points = new Stack<Integer>();
+	private Stack<PointTile> point_tiles = new Stack<>();
 	
 	//Used for debug - should be removed
 	private AbstractAction XpressedAction = new AbstractAction() {
@@ -32,7 +33,7 @@ public class CommonObjectiveCard {
 		this.card_id = card_id;
 		
 		initPointsList();
-		this.label = new CommonObjectiveCardLabel(card_id, points.lastElement());
+		this.label = new CommonObjectiveCardLabel(card_id, point_tiles.lastElement().getPoints());
 		
 		//debug
 		this.label.getInputMap().put(KeyStroke.getKeyStroke("X"), "pressed");
@@ -51,21 +52,22 @@ public class CommonObjectiveCard {
 		
 		switch (Player.getNumberOfPlayers()) {
 		case 2:
-			points.push(4);
-			points.push(8);
+			point_tiles.push(new PointTile(this, 4));
+			point_tiles.push(new PointTile(this, 8));
 			return;
 
 		case 3:
-			points.push(4);
-			points.push(6);
-			points.push(8);
+			point_tiles.push(new PointTile(this, 4));
+			point_tiles.push(new PointTile(this, 6));
+			point_tiles.push(new PointTile(this, 8));
 			return;
 		
 		case 4:
-			points.push(2);
-			points.push(4);
-			points.push(6);
-			points.push(8);
+			
+			point_tiles.push(new PointTile(this, 2));
+			point_tiles.push(new PointTile(this, 4));
+			point_tiles.push(new PointTile(this, 6));
+			point_tiles.push(new PointTile(this, 8));
 			return;
 			
 		default:
@@ -86,17 +88,17 @@ public class CommonObjectiveCard {
 		}
 		
 		//If there are no points left, don't give any
-		if(points.size() <= 0) {
+		if(point_tiles.size() <= 0) {
 			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
 			return;
 		}
 		
 		//Give points and remove the value of points awarded to the player
-		player.addPoints(points.lastElement());
-		points.pop();
+		player.addPoints(point_tiles.lastElement().getPoints());
+		point_tiles.pop();
 		
 		try {
-			((CommonObjectiveCardLabel) (this.label)).updatePointsTile(points.lastElement());
+			((CommonObjectiveCardLabel) (this.label)).updatePointsTile(point_tiles.lastElement().getPoints());
 		} catch (Exception e) {
 			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
 		}

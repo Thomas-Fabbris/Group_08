@@ -6,10 +6,15 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import main.Player;
 
 public class PersonalGameAreaWindow extends JFrame {
 	private static PersonalGameAreaWindow instance = null;
 	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
+	Player current_player = null;
+	JPanel current_player_display_info = new JPanel(); //groups information related to the current_player
 	
 	public PersonalGameAreaWindow() {
 		super("MyShelfie"); //TODO: pass as parameter the name of the player who's playing
@@ -21,6 +26,14 @@ public class PersonalGameAreaWindow extends JFrame {
 		if(instance == null)
 			instance = new PersonalGameAreaWindow();
 		return instance;
+	}
+	
+	public void setCurrentPlayer(Player player) {
+		this.current_player = player;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.current_player;
 	}
 	
 	private void Init() {

@@ -14,7 +14,7 @@ public class BookshelfTile extends Tile {
 	
 	public BookshelfTile(TileType tile_type, int row, int column, Bookshelf shelf) {
 		super(tile_type);
-		this.label = new BookshelfTileLabel();
+		this.label = new BookshelfTileLabel(tile_type, shelf);
 		this.row = row;
 		this.column = column;
 		this.shelf = shelf;
