@@ -16,6 +16,7 @@ public class Player {
 	private int points = 0;
 	private PointTile point_tile1 = null; //Point tile received from the respective common objective card 
 	private PointTile point_tile2 = null; 
+	private boolean hasEndOfGameToken = false;
 	
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
@@ -96,5 +97,13 @@ public class Player {
 	
 	public int getPoints() {
 		return this.points;
+	}
+	
+	public boolean getHasEndOfGameToken() {
+		return this.hasEndOfGameToken;
+	}
+	
+	public void setHasEndOfGameToken(boolean value) {
+		this.hasEndOfGameToken = value;
 	}
 }

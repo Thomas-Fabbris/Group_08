@@ -1,6 +1,7 @@
 package personalgamearea;
 
 import gui.personalgamearea.BookshelfLabel;
+import main.Player;
 import main.TileType;
 import sharedgamearea.BoardTile;
 
@@ -8,6 +9,7 @@ public class Bookshelf {
 	
 	private BookshelfLabel label;
 	private BookshelfTile[][] tiles = new BookshelfTile[5][6];
+	private Player player;
 	
 	public Bookshelf() {
 		
@@ -27,6 +29,14 @@ public class Bookshelf {
 	}
 	
 	public void dropTile(BoardTile tile, int column) {
-		
+		throw new UnsupportedOperationException();
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public boolean isFull() {
+		throw new UnsupportedOperationException();
 	}
 }
