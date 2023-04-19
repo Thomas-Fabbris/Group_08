@@ -82,11 +82,6 @@ public class CommonObjectiveCard {
 	 */
 	public void award(Player player) {
 		
-		//Don't give points if the player has already received any from this card
-		if(!checkPoints(player)) {
-			return;
-		}
-		
 		//If there are no points left, don't give any
 		if(point_tiles.size() <= 0) {
 			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
@@ -94,7 +89,8 @@ public class CommonObjectiveCard {
 		}
 		
 		//Give points and remove the value of points awarded to the player
-		player.addPoints(point_tiles.lastElement().getPoints());
+//		player.addPoints(point_tiles.lastElement().getPoints());
+		player.awardPointTile(point_tiles.lastElement());
 		point_tiles.pop();
 		
 		try {

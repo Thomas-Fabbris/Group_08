@@ -1,6 +1,5 @@
 package main;
 
-import gui.PointTileLabel;
 import personalgamearea.Bookshelf;
 import personalgamearea.PersonalObjectiveCard;
 import personalgamearea.PointTile;
@@ -39,19 +38,37 @@ public class Player {
 		return number_of_players;
 	}
 	
-//	public void awardPointTile(CommonObjectiveCard card, int points, PointTileLabel label) {
-//		this.addPoints(points);
-//
-//		//Do not award anything if player has already received points form both cards
-//		//-1 is the default id in PointTileInfo
-//		if(point_tile1.getCard_id() != -1 && point_tile2.getCard_id() != -1)
-//			return;
-//		
-//		//Do not award anything if the player has already received points form this card
-//		if(point_tile1.getCard_id() == card.getId() || point_tile2.getCard_id() == card.getId())
-//			return;
-//		
-//	}
+	//TODO: make this method less spaghetti or document it better
+	public void awardPointTile(PointTile tile) {
+		
+		//If both spots are empty, then fill point_tile1
+		if(point_tile1 == null && point_tile2 == null) {
+			point_tile1 = tile;
+			this.addPoints(tile.getPoints());
+			return;
+		}
+		
+		//If point_tile1 already has a tile from this card, then don't award anything
+		if(point_tile1.getCardId() == tile.getCardId())
+			return;
+		
+		//If point_tile2 is empty and point_tile1's tile doesn't have the same id, then fill it point_tile2
+		if(point_tile2 == null && point_tile1.getCardId() != tile.getCardId()) {
+			point_tile2 = tile;
+			this.addPoints(tile.getPoints());
+		}
+	}
+	
+	/**
+	 * Returns point tile 1 or point tile 2. *Can return null!*
+	 * @param which point tile to return (1 or 2)
+	 * @return
+	 */
+	public PointTile getPointTile(int tile_number) {
+		if(tile_number == 1) return this.point_tile1;
+		if(tile_number == 2) return this.point_tile2;
+		else throw new IllegalArgumentException(tile_number + " is not a valid tile number! Choose tile 1 or 2");
+	}
 	
 	public boolean hasGameEndTile() {
 		return this.has_game_end_tile;

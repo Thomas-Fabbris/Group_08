@@ -14,11 +14,11 @@ public class PointTile {
 		this.points = points;
 	}
 	
-	public int getCard_id() {
+	public int getCardId() {
 		return card_id;
 	}
 
-	public void setCard_id(int card_id) {
+	public void setCardId(int card_id) {
 		this.card_id = card_id;
 	}
 
