@@ -6,7 +6,7 @@ import java.util.Stack;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import gui.CommonObjectiveCardLabel;
+import gui.sharedgamearea.CommonObjectiveCardLabel;
 import main.IdGenerator;
 import main.Player;
 import personalgamearea.PointTile;

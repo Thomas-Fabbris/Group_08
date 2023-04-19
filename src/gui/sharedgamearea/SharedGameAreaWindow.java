@@ -1,4 +1,4 @@
-package gui;
+package gui.sharedgamearea;
 
 import java.awt.Color;
 import java.awt.Dimension;

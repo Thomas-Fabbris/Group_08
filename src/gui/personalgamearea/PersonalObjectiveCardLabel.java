@@ -1,9 +1,11 @@
-package gui;
+package gui.personalgamearea;
 
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import gui.sharedgamearea.SharedGameAreaWindow;
 
 public class PersonalObjectiveCardLabel extends JLabel {
 	private ImageIcon image;

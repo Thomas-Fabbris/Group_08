@@ -1,6 +1,6 @@
 package personalgamearea;
 
-import gui.BookshelfLabel;
+import gui.personalgamearea.BookshelfLabel;
 import main.TileType;
 import sharedgamearea.BoardTile;
 

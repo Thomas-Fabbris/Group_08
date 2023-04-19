@@ -1,9 +1,11 @@
-package gui;
+package gui.sharedgamearea;
 
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import gui.PointTileLabel;
 
 public class CommonObjectiveCardLabel extends JLabel {
 	private ImageIcon image;

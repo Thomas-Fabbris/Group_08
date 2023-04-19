@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import gui.MainMenuWindow;
-import gui.SharedGameAreaWindow;
+import gui.sharedgamearea.MainMenuWindow;
+import gui.sharedgamearea.SharedGameAreaWindow;
 import sharedgamearea.Board;
 import sharedgamearea.CommonObjectiveCard;
 

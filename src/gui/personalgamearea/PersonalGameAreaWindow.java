@@ -1,4 +1,4 @@
-package gui;
+package gui.personalgamearea;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package gui;
+package gui.personalgamearea;
 
 import javax.swing.JLabel;
 

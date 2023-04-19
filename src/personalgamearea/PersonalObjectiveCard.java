@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import gui.PersonalObjectiveCardLabel;
+import gui.personalgamearea.PersonalObjectiveCardLabel;
 import main.TileType;
 
 public class PersonalObjectiveCard {

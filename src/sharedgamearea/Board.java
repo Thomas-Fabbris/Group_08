@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import gui.BoardLabel;
-import gui.SharedGameAreaWindow;
+import gui.sharedgamearea.BoardLabel;
+import gui.sharedgamearea.SharedGameAreaWindow;
 import main.Player;
 import main.TileType;
 

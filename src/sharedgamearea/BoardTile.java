@@ -1,6 +1,6 @@
 package sharedgamearea;
 
-import gui.BoardTileLabel;
+import gui.sharedgamearea.BoardTileLabel;
 import main.Tile;
 import main.TileType;
 

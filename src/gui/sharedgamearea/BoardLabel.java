@@ -1,4 +1,4 @@
-package gui;
+package gui.sharedgamearea;
 
 import java.awt.Dimension;
 import java.awt.Image;

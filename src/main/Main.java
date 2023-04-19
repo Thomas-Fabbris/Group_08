@@ -1,7 +1,7 @@
 package main;
 
 
-import gui.MainMenuWindow;
+import gui.sharedgamearea.MainMenuWindow;
 
 public class Main {
 
