@@ -19,7 +19,7 @@ public enum TileType {
 //		do {
 		Random rd = new Random();
 //		int i =rd.nextInt(6);		
-//		}while(Pouch.isAvailable(i))
+//		}while(Pouch.extract(i))
 		return types[rd.nextInt(6)];
 	}
 }
