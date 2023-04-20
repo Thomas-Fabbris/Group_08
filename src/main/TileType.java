@@ -2,6 +2,8 @@ package main;
 
 import java.util.Random;
 
+import sharedgamearea.Pouch;
+
 public enum TileType {
 	BOOKS,
 	CATS,
@@ -16,11 +18,11 @@ public enum TileType {
 	private static TileType[] types = {BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES};
 	
 	public static TileType randomType() {
-//		do {
+		int i = 0;
+		do {
 		Random rd = new Random();
-//		int i =rd.nextInt(6);		
-//		}while(Pouch.extractgit status
-		(i))
-		return types[rd.nextInt(6)];
+		i = rd.nextInt(6);
+		}while(Pouch.extract(types[i]));
+		return types[i];
 	}
 }

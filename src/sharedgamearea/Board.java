@@ -173,31 +173,32 @@ public class Board {
 	/***
 	 * Regenerates the missing tiles on the board
 	 */
-	public void refill() {
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles.length; j++) {
-				
-				//Check if tile is not null and if it isn't visible
-				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isVisible()) {
-					tiles[i][j].setType(TileType.randomType());
-					showTile(i, j);
-				}
-			}
-		}
-	}
+//	public void l() {
+//		for (int i = 0; i < tiles.length; i++) {
+//			for (int j = 0; j < tiles.length; j++) {
+//				
+//				//Check if tile is not null and if it isn't visible
+//				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isVisible()) {
+//					tiles[i][j].setType(TileType.randomType());
+//					showTile(i, j);
+//				}
+//			}
+//		}
+//	}
 	
-	/*
-	 *public void refill() {
+	
+	 public void refill() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
 				
 				//svuota tutte le tessere rimaste e le rimette nella pouch
 				if(tiles[i][j].getType() != TileType.NULL && tiles[i][j].isVisible()) {
-					pouch.add(tiles[i][j].getType);
+					Pouch.add(tiles[i][j].getType());
 					tiles[i][j].setVisible(false);
 					
 				}
 			}
+		}
 			for (int i = 0; i < tiles.length; i++) {
 				for (int j = 0; j < tiles.length; j++) {
 				
@@ -209,8 +210,7 @@ public class Board {
 		}
 	}
 	
-	 * 
-	 */
+	 
 	public void hideAllTiles() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {

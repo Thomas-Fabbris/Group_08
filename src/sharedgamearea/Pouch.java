@@ -1,5 +1,7 @@
 package sharedgamearea;
 
+import main.TileType;
+
 public class Pouch {
 	private static int tyle_counter = 22;
 	private static int books_counter = tyle_counter;
@@ -9,45 +11,45 @@ public class Pouch {
 	private static int plants_counter = tyle_counter;
 	private static int throphies_counter = tyle_counter;
 	
-	public static boolean extract(int tyle_id) {
+	public static boolean extract(TileType tyle_id) {
 		switch(tyle_id) {
-		case 0:
-			if(books_counter > 1) {
+		case BOOKS:
+			if(books_counter > 0) {
 				books_counter--;
 				return true;
 			}else {
 				return false;
 			}
-		case 1:
-			if(cats_counter > 1) {
+		case CATS:
+			if(cats_counter > 0) {
 				cats_counter--;
 				return true;
 			}else {
 				return false;
 			}
-		case 2:
-			if(frames_counter > 1) {
+		case FRAMES:
+			if(frames_counter > 0) {
 				frames_counter--;
 				return true;
 			}else {
 				return false;
 			}
-		case 3:
-			if(games_counter > 1) {
+		case GAMES:
+			if(games_counter > 0) {
 				games_counter--;
 				return true;
 			}else {
 				return false;
 			}
-		case 4:
-			if(plants_counter > 1) {
+		case PLANTS:
+			if(plants_counter > 0) {
 				plants_counter--;
 				return true;
 			}else {
 				return false;
 			}
-		case 5:
-			if(throphies_counter > 1) {
+		case TROPHIES:
+			if(throphies_counter > 0) {
 				throphies_counter--;
 				return true;
 			}else {
@@ -59,20 +61,22 @@ public class Pouch {
 	}
 		
 			
-		public static void add(int tyle_id) {
+		public static void add(TileType tyle_id) {
 			switch(tyle_id) {
-			case 0:
+			case BOOKS:
 				books_counter++;
-			case 1:
+			case CATS:
 				cats_counter++;
-			case 2:
+			case FRAMES:
 				frames_counter++;
-			case 3:
+			case GAMES:
 				games_counter++;
-			case 4:
+			case PLANTS:
 				plants_counter++;
-			case 5:
+			case TROPHIES:
 				throphies_counter++;
+			default:
+				break;
 			}
 		
 	
