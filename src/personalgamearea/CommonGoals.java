@@ -95,8 +95,52 @@ public class CommonGoals {
 			return false;
 		}
 	}
+	// questo dovrebbe essere corretto, ma bisogna modificare il controllo, da così al tipo delle tile
+	public boolean Check_Common_Goal_03(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		if (player_bookshelf[0][0]==player_bookshelf[0][max_row] && player_bookshelf[0][0]==player_bookshelf[max_column][0] && player_bookshelf[0][0]==player_bookshelf[max_column][max_row]) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	
+	public boolean Check_Common_Goal_04(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		
+		return false;
+	}
 	
+	public boolean Check_Common_Goal_05(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_06(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_07(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_08(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_09(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_10(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_11(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
+	
+	public boolean Check_Common_Goal_12(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		return false;
+	}
 }
 
 
