@@ -9,25 +9,25 @@ public class Player {
 	private String name;
 	private static int number_of_players;
 	public final int id;
-	public final PersonalObjectiveCard objective_card;
+	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
-	private boolean has_game_end_tile = false;
-	public final boolean has_chair;
+	private boolean hasGameEndTile = false;
+	public final boolean hasChair;
 	private int points = 0;
-	private PointTile point_tile1 = null; //Point tile received from the respective common objective card 
-	private PointTile point_tile2 = null; 
+	private PointTile pointTile1 = null; //Point tile received from the respective common objective card 
+	private PointTile pointTile2 = null; 
 	private boolean hasEndOfGameToken = false;
 	
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
 		this.id = idgenerator.getNewId();
-		objective_card = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
+		objectiveCard = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf();
 		
 		if(this.id == 0)
-			this.has_chair = true;
+			this.hasChair = true;
 		else
-			this.has_chair = false;
+			this.hasChair = false;
 	}
 	
 	public static void setNumberOfPlayers(int count) {
@@ -43,19 +43,19 @@ public class Player {
 	public void awardPointTile(PointTile tile) {
 		
 		//If both spots are empty, then fill point_tile1
-		if(point_tile1 == null && point_tile2 == null) {
-			point_tile1 = tile;
+		if(pointTile1 == null && pointTile2 == null) {
+			pointTile1 = tile;
 			this.addPoints(tile.getPoints());
 			return;
 		}
 		
 		//If point_tile1 already has a tile from this card, then don't award anything
-		if(point_tile1.getCardId() == tile.getCardId())
+		if(pointTile1.getCardId() == tile.getCardId())
 			return;
 		
 		//If point_tile2 is empty and point_tile1's tile doesn't have the same id, then fill it point_tile2
-		if(point_tile2 == null && point_tile1.getCardId() != tile.getCardId()) {
-			point_tile2 = tile;
+		if(pointTile2 == null && pointTile1.getCardId() != tile.getCardId()) {
+			pointTile2 = tile;
 			this.addPoints(tile.getPoints());
 		}
 	}
@@ -65,18 +65,18 @@ public class Player {
 	 * @param which point tile to return (1 or 2)
 	 * @return
 	 */
-	public PointTile getPointTile(int tile_number) {
-		if(tile_number == 1) return this.point_tile1;
-		if(tile_number == 2) return this.point_tile2;
-		else throw new IllegalArgumentException(tile_number + " is not a valid tile number! Choose tile 1 or 2");
+	public PointTile getPointTile(int tileNumber) {
+		if(tileNumber == 1) return this.pointTile1;
+		if(tileNumber == 2) return this.pointTile2;
+		else throw new IllegalArgumentException(tileNumber + " is not a valid tile number! Choose tile 1 or 2");
 	}
 	
 	public boolean hasGameEndTile() {
-		return this.has_game_end_tile;
+		return this.hasGameEndTile;
 	}
 	
-	public void setGameEndTile(boolean has_game_end_tile) {
-		this.has_game_end_tile = has_game_end_tile;
+	public void setGameEndTile(boolean hasGameEndTile) {
+		this.hasGameEndTile = hasGameEndTile;
 	}
 	
 	public boolean equals(Player player) {

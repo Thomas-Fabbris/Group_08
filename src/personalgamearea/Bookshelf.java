@@ -1,6 +1,9 @@
 package personalgamearea;
 
+import java.awt.Dimension;
+
 import gui.personalgamearea.BookshelfLabel;
+import gui.personalgamearea.PersonalGameAreaWindow;
 import main.Player;
 import main.TileType;
 import sharedgamearea.BoardTile;
@@ -12,7 +15,7 @@ public class Bookshelf {
 	private Player player;
 	
 	public Bookshelf() {
-		
+		label = new BookshelfLabel(new Dimension(200, 200));
 	}
 	
 	//Initializes all tiles in the bookshelf, sets each tile to NULL (which also means it's not displayed on the GUI)

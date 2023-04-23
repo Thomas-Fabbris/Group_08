@@ -12,9 +12,9 @@ import main.Player;
 
 public class PersonalGameAreaWindow extends JFrame {
 	private static PersonalGameAreaWindow instance = null;
-	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
-	Player current_player = null;
-	JPanel current_player_display_info = new JPanel(); //groups information related to the current_player
+	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private Player currentPlayer = null;
+	private CurrentPlayerInfo currentPlayerInfo = new CurrentPlayerInfo(); //groups information related to the current_player
 	
 	public PersonalGameAreaWindow() {
 		super("MyShelfie"); //TODO: pass as parameter the name of the player who's playing
@@ -29,19 +29,25 @@ public class PersonalGameAreaWindow extends JFrame {
 	}
 	
 	public void setCurrentPlayer(Player player) {
-		this.current_player = player;
+		this.currentPlayer = player;
+		currentPlayerInfo.setBookshelfLabel(player.bookshelf.getLabel());
 	}
 	
 	public Player getCurrentPlayer() {
-		return this.current_player;
+		return this.currentPlayer;
+	}
+	
+	public Dimension getScreenSize() {
+		return screenSize;
 	}
 	
 	private void Init() {
-		//this.board_size = new Dimension(screen_size.getSize().height*2/3, screen_size.getSize().height*2/3);
 		this.setResizable(false);
-		this.setSize(screen_size.width/2, screen_size.height-40);
+		this.setSize(screenSize.width/2, screenSize.height-40);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
-		this.setLocation(0, 0);
+		this.setLocation(screenSize.width/2, 0);
+		this.add(currentPlayerInfo.getPanel());
+		this.setVisible(true);
 	}
 }

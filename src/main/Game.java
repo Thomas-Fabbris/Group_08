@@ -1,10 +1,12 @@
 package main;
 
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import gui.personalgamearea.PersonalGameAreaWindow;
 import gui.sharedgamearea.MainMenuWindow;
 import gui.sharedgamearea.SharedGameAreaWindow;
 import personalgamearea.Bookshelf;
@@ -39,6 +41,8 @@ public class Game {
 		
 		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
 		
+		 //TODO: used only for debug, to be removed
+		
 		Start();
 	}
 	
@@ -47,7 +51,10 @@ public class Game {
 		//Prints player names and ids
 		for (int i = 0; i < players.size(); i++) {
 			System.out.println(players.get(i).getName() + " - id: " + players.get(i).id);
+//			System.out.println(players.get(i).bookshelf.toString());
 		}
+		
+		PersonalGameAreaWindow.getInstance().setCurrentPlayer(players.get(0));
 		
 //		board.hideTile(2, 4);
 //		System.out.println("Tile @ 2, 4 before refill: " + board.getTileType(2, 4));

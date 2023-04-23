@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 //Singleton
 public class SharedGameAreaWindow extends JFrame {
 	private static SharedGameAreaWindow instance = null;
-	private final Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
-	private Dimension board_size;
+	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private Dimension boardSize;
 	
 	public SharedGameAreaWindow() {
 		super("MyShelfie");
@@ -26,13 +26,13 @@ public class SharedGameAreaWindow extends JFrame {
 	}
 	
 	public Dimension getBoardSize() {
-		return board_size;
+		return boardSize;
 	}
 	
 	private void Init() {
-		this.board_size = new Dimension(screen_size.getSize().height*2/3, screen_size.getSize().height*2/3);
+		this.boardSize = new Dimension(screenSize.getSize().height*2/3, screenSize.getSize().height*2/3);
 		this.setResizable(false);
-		this.setSize(screen_size.width/2, screen_size.height-40);
+		this.setSize(screenSize.width/2, screenSize.height-40);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);

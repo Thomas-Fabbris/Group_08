@@ -78,10 +78,6 @@ public class Pouch {
 			default:
 				break;
 			}
-		
-	
-		
 	}
-
 }
 
