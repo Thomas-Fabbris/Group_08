@@ -24,7 +24,7 @@ public class BookshelfLabel extends JLabel {
 	private int tile_length;
 	
 	public BookshelfLabel(Dimension window_size) {
-		this.setSize(window_size.height, window_size.height); //TODO: change size computation 
+		this.setSize(window_size.height*3/5, window_size.height*3/5); //TODO: change size computation 
 		image = LoadImageAsIcon(SHELF_IMAGE_PATH);
 		this.setIcon(image);
 		

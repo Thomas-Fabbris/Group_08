@@ -15,7 +15,7 @@ public class Bookshelf {
 	private Player player;
 	
 	public Bookshelf() {
-		label = new BookshelfLabel(new Dimension(200, 200));
+		label = new BookshelfLabel(PersonalGameAreaWindow.getInstance().getSize());
 	}
 	
 	//Initializes all tiles in the bookshelf, sets each tile to NULL (which also means it's not displayed on the GUI)

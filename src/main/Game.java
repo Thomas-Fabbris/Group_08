@@ -40,7 +40,7 @@ public class Game {
 		SharedGameAreaWindow.getInstance().add(cards);
 		
 		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
-		
+		PersonalGameAreaWindow.getInstance().toFront();
 		 //TODO: used only for debug, to be removed
 		
 		Start();
