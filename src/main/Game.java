@@ -57,7 +57,7 @@ public class Game {
 		PersonalGameAreaWindow.getInstance().setCurrentPlayer(players.get(0));
 		
 		players.get(0).bookshelf.setTileType(0, 0, TileType.GAMES);
-		players.get(0).bookshelf.setTileType(3, 3, TileType.CATS);
+		players.get(0).bookshelf.setTileType(3, 3, TileType.FRAMES);
 		players.get(0).bookshelf.setTileType(4, 5, TileType.BOOKS);
 		
 //		board.hideTile(2, 4);

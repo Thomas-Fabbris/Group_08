@@ -13,38 +13,27 @@ public class BookshelfLabel extends JLabel {
 	
 	private final String SHELF_IMAGE_PATH = "Assets/Bookshelf.png";
 	private ImageIcon image;
-	public final BookshelfTileContainer tilesContainer = new BookshelfTileContainer(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
+	public final JPanel tilesContainer = new JPanel(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
 	
 	private int containerXoffset;
 	private int containerYoffset;
 	private int containerWidth;
 	private int containerHeight;
-	private int containerHgap;
-	private int containerVgap;
 	
 	public BookshelfLabel(Dimension window_size) {
-		this.setSize(window_size.height*3/5, window_size.height*3/5); //TODO: change size computation 
+		this.setSize(window_size.height*3/5, window_size.height*3/5);
 		image = LoadImageAsIcon(SHELF_IMAGE_PATH);
 		this.setIcon(image);
 		
-//		containerXoffset = 0;
-//		containerYoffset = 0;
-		containerXoffset = (int)(window_size.width / 13);
+		containerXoffset = (int)(window_size.width / 12.5);
 		containerYoffset = (int)(window_size.height / 23);
 		containerWidth = (int)(this.getWidth() - 2 * containerXoffset);
 		containerHeight = (int)(this.getHeight() - 2.7 * containerYoffset);
 		
 		tilesContainer.setBounds(containerXoffset, containerYoffset, containerWidth, containerHeight);
-
-		//compute based on window size
-//		this.container_hgap = (int)((container_width / 6) - tile_length);//compute based on window size
-//		this.container_vgap = (int)((container_height / 6) - tile_length);
-
-//		this.containerHgap = 10;
-//		this.containerVgap = 10;
-		
-		tilesContainer.setLayout(new GridBagLayout());
+		tilesContainer.setLayout(null);
 		tilesContainer.setOpaque(false);
+		
 		this.add(tilesContainer);
 	}
 	

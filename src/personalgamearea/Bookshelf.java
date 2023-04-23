@@ -24,7 +24,7 @@ public class Bookshelf {
 	private void initTiles() {
 		for (int i = 0; i < tiles[0].length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
-				tiles[j][i] = new BookshelfTile(TileType.GAMES, 0, 0, this);
+				tiles[j][i] = new BookshelfTile(TileType.NULL, j, i, this);
 				this.label.tilesContainer.add(tiles[j][i].getLabel());
 			}
 		}
@@ -47,7 +47,7 @@ public class Bookshelf {
 	}
 	
 	public BookshelfTile getTile(int row, int column) {
-		if(!areValidCoordinates(row, column))
+		if(!isValidCell(row, column))
 			throw new IllegalArgumentException("row " + row + " and column " + column + " are not valid coordinates on the Bookshelf!");
 		return tiles[row][column];
 	}
@@ -56,7 +56,7 @@ public class Bookshelf {
 		tiles[row][column].setType(tileType);
 	}
 	
-	private boolean areValidCoordinates(int row, int column) {
+	private boolean isValidCell(int row, int column) {
 		return (row > 0 && row < 5) && (column > 0 && column < 4);
 	}
 }

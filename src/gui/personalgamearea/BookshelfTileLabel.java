@@ -12,14 +12,29 @@ public class BookshelfTileLabel extends JLabel {
 	
 	private final String folder_path = "Assets/tiles/";
 	ImageIcon image;
-	private int tile_length;
+	private int tileLength;
+	private int tileXLength;
+	private int tileYLength;
+	private int xOffset;
+	private int yOffset;
+	private int xPos;
+	private int yPos;
 	
-	public BookshelfTileLabel(TileType tile_type, Bookshelf shelf) {
+	public BookshelfTileLabel(TileType tile_type, int row, int column, Bookshelf shelf) {
 		
-		this.tile_length = shelf.getLabel().getHeight() / 9; // '1/7 -> 1/9'
+		//Compute the size of the various elements needed to place the tiles
+		//This method causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions
+		this.tileLength = (int)(shelf.getLabel().getHeight() / 9); // '1/7 -> 1/9'
+		this.tileXLength = shelf.getLabel().tilesContainer.getWidth() / 8;
+		this.tileYLength = shelf.getLabel().tilesContainer.getHeight() / 10;
+		this.xOffset = tileLength / 4;
+		this.yOffset = (int)(tileLength / 2.2);
+		this.xPos = convertColumnToXCoords(column);
+		this.yPos = convertRowToYCoords(row);
 		
+		//TODO make sense of why xPos and yPos need to be switched
 		setType(tile_type);
-		this.setSize(tile_length, tile_length);
+		this.setBounds(yPos, xPos, tileLength, tileLength);
 	}
 	
 	private String GetImagePath(TileType tile_type) {		
@@ -31,7 +46,7 @@ public class BookshelfTileLabel extends JLabel {
 	private ImageIcon LoadImageAsIcon(String image_path) {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(this.tile_length, this.tile_length, java.awt.Image.SCALE_SMOOTH);
+		tmp_image = tmp_image.getScaledInstance(this.tileLength, this.tileLength, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 	
@@ -39,5 +54,19 @@ public class BookshelfTileLabel extends JLabel {
 		if(type == TileType.NULL) return;
 		this.image = LoadImageAsIcon(GetImagePath(type));
 		setIcon(this.image);
+	}
+	
+	private int convertRowToYCoords(int row) {
+		if(row == 0)
+			return row * tileLength;
+		
+		return row*tileLength + this.yOffset*row;
+	}
+	
+	private int convertColumnToXCoords(int column) {
+		if(column == 0)
+			return column * tileLength;
+		
+		return column*tileLength + this.xOffset*column;
 	}
 }

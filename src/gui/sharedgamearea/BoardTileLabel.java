@@ -18,19 +18,19 @@ public class BoardTileLabel extends JLabel {
 	private int y_pos;
 	
 	//dimensioni del tile in pixels
-	public final int tile_length;
-	private final int tile_cell_length;
+	public final int tileLength;
+	private final int tileCellLength;
 	private final int offset;
 	
 	public BoardTileLabel(TileType tile_type, int row, int column, Dimension board_size) {
-		this.tile_length = board_size.height/12;
+		this.tileLength = board_size.height/12;
 		this.offset = board_size.height/17;
-		this.tile_cell_length = board_size.width / 10;
+		this.tileCellLength = board_size.width / 10;
 		this.x_pos = convertColumnToXCoords(column);
 		this.y_pos = convertRowToYCoords(row);
 		
 		setType(tile_type);
-		this.setBounds(this.x_pos, this.y_pos, tile_length, tile_length);
+		this.setBounds(this.x_pos, this.y_pos, tileLength, tileLength);
 	}
 	
 	private String GetImagePath(TileType tile_type) {		
@@ -42,7 +42,7 @@ public class BoardTileLabel extends JLabel {
 	private ImageIcon LoadImageAsIcon(String image_path) {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(this.tile_length, this.tile_length, java.awt.Image.SCALE_SMOOTH);
+		tmp_image = tmp_image.getScaledInstance(this.tileLength, this.tileLength, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 	
@@ -58,7 +58,7 @@ public class BoardTileLabel extends JLabel {
 	 * @return the location in pixels of the row on the GUI
 	 */
 	private int convertRowToYCoords(int row) {
-		return offset+((row - 1) * tile_cell_length);
+		return offset+((row - 1) * tileCellLength);
 	}
 	
 	/***
@@ -67,6 +67,6 @@ public class BoardTileLabel extends JLabel {
 	 * @return the location in pixels of the column on the GUI
 	 */
 	private int convertColumnToXCoords(int column) {
-		return offset+((column - 1) * tile_cell_length);
+		return offset+((column - 1) * tileCellLength);
 	}
 }

@@ -7,17 +7,17 @@ import main.TileType;
 
 public class BookshelfTile extends Tile {
 	
-//	private int column;
-//	private int row;
+	private int column;
+	private int row;
 	private Bookshelf shelf;
 	
 	public BookshelfTile(TileType tile_type, int row, int column, Bookshelf shelf) {
 		super(tile_type);
-		this.label = new BookshelfTileLabel(tile_type, shelf);
-//		this.row = row;
-//		this.column = column;
+		this.label = new BookshelfTileLabel(tile_type, row, column, shelf);
+		this.row = row;
+		this.column = column;
 		this.shelf = shelf;
-		this.setLabel(new BookshelfTileLabel(tile_type, shelf));
+		this.setLabel(new BookshelfTileLabel(tile_type, row, column, shelf));
 		this.setVisible(true);
 	}
 	
