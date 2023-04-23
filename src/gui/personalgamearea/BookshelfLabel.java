@@ -1,6 +1,7 @@
 package gui.personalgamearea;
 
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -12,37 +13,39 @@ public class BookshelfLabel extends JLabel {
 	
 	private final String SHELF_IMAGE_PATH = "Assets/Bookshelf.png";
 	private ImageIcon image;
-	private JPanel tiles_container = new JPanel(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
+	public final BookshelfTileContainer tilesContainer = new BookshelfTileContainer(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
 	
-	private int container_xoffset;
-	private int container_yoffset;
-	private int container_width;
-	private int container_height;
-	private int container_hgap;
-	private int container_vgap;
-	
-	private int tile_length;
+	private int containerXoffset;
+	private int containerYoffset;
+	private int containerWidth;
+	private int containerHeight;
+	private int containerHgap;
+	private int containerVgap;
 	
 	public BookshelfLabel(Dimension window_size) {
 		this.setSize(window_size.height*3/5, window_size.height*3/5); //TODO: change size computation 
 		image = LoadImageAsIcon(SHELF_IMAGE_PATH);
 		this.setIcon(image);
 		
-		tile_length = tiles_container.getHeight() / 7;
+//		containerXoffset = 0;
+//		containerYoffset = 0;
+		containerXoffset = (int)(window_size.width / 13);
+		containerYoffset = (int)(window_size.height / 23);
+		containerWidth = (int)(this.getWidth() - 2 * containerXoffset);
+		containerHeight = (int)(this.getHeight() - 2.7 * containerYoffset);
 		
-		container_xoffset = (int)(window_size.getWidth() / 21.5);
-		container_yoffset = (int)(window_size.getHeight() / 9);
-		container_width = (int)(window_size.getWidth() - 2 * container_xoffset);
-		container_height = (int)(window_size.getHeight() - 2 * container_yoffset);
-		
-		tiles_container.setBounds(container_xoffset, container_yoffset, container_width, container_height);
+		tilesContainer.setBounds(containerXoffset, containerYoffset, containerWidth, containerHeight);
+
 		//compute based on window size
 //		this.container_hgap = (int)((container_width / 6) - tile_length);//compute based on window size
 //		this.container_vgap = (int)((container_height / 6) - tile_length);
 
-		this.container_hgap = tile_length/5;
-		this.container_vgap = (int)(tile_length / 2.6);
-		tiles_container.setLayout(new GridLayout(5, 4, container_hgap, container_vgap));
+//		this.containerHgap = 10;
+//		this.containerVgap = 10;
+		
+		tilesContainer.setLayout(new GridBagLayout());
+		tilesContainer.setOpaque(false);
+		this.add(tilesContainer);
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path) {

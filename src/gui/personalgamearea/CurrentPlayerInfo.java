@@ -43,8 +43,6 @@ public class CurrentPlayerInfo {
 		
 		this.bookshelfLabel = bookshelfLabel;
 		panel.add(bookshelfLabel);
-//		panel.revalidate();
-//		panel.repaint();
 	}
 
 	public PersonalObjectiveCardLabel getPersonalObjectiveCardLabel() {
@@ -52,7 +50,12 @@ public class CurrentPlayerInfo {
 	}
 
 	public void setPersonalObjectiveCardLabel(PersonalObjectiveCardLabel personalObjectiveCardLabel) {
+		
+		if(this.personalObjectiveCardLabel != null)
+			panel.remove(this.personalObjectiveCardLabel);
+		
 		this.personalObjectiveCardLabel = personalObjectiveCardLabel;
+		panel.add(personalObjectiveCardLabel);
 	}
 	
 	public JPanel getPanel() {

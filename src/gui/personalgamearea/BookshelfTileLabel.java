@@ -1,6 +1,5 @@
 package gui.personalgamearea;
 
-import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -17,7 +16,7 @@ public class BookshelfTileLabel extends JLabel {
 	
 	public BookshelfTileLabel(TileType tile_type, Bookshelf shelf) {
 		
-		this.tile_length = shelf.getLabel().getHeight() / 7;
+		this.tile_length = shelf.getLabel().getHeight() / 9; // '1/7 -> 1/9'
 		
 		setType(tile_type);
 		this.setSize(tile_length, tile_length);

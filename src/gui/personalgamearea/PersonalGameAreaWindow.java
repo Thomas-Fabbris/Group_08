@@ -31,6 +31,8 @@ public class PersonalGameAreaWindow extends JFrame {
 	public void setCurrentPlayer(Player player) {
 		this.currentPlayer = player;
 		currentPlayerInfo.setBookshelfLabel(player.bookshelf.getLabel());
+		currentPlayerInfo.setPersonalObjectiveCardLabel(player.objectiveCard.getLabel());
+		//TODO: add points text, chair label, point tile labels, game end tile label, next player button
 	}
 	
 	public Player getCurrentPlayer() {

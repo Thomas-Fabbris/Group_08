@@ -1,6 +1,7 @@
 package personalgamearea;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 
 import gui.personalgamearea.BookshelfLabel;
 import gui.personalgamearea.PersonalGameAreaWindow;
@@ -16,13 +17,15 @@ public class Bookshelf {
 	
 	public Bookshelf() {
 		label = new BookshelfLabel(PersonalGameAreaWindow.getInstance().getSize());
+		initTiles();
 	}
 	
 	//Initializes all tiles in the bookshelf, sets each tile to NULL (which also means it's not displayed on the GUI)
 	private void initTiles() {
-		for (int i = 0; i < tiles.length; i++) {
+		for (int i = 0; i < tiles[0].length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
-				tiles[i][j] = new BookshelfTile(TileType.NULL, i, j, this);
+				tiles[j][i] = new BookshelfTile(TileType.GAMES, 0, 0, this);
+				this.label.tilesContainer.add(tiles[j][i].getLabel());
 			}
 		}
 	}
@@ -41,5 +44,19 @@ public class Bookshelf {
 	
 	public boolean isFull() {
 		throw new UnsupportedOperationException();
+	}
+	
+	public BookshelfTile getTile(int row, int column) {
+		if(!areValidCoordinates(row, column))
+			throw new IllegalArgumentException("row " + row + " and column " + column + " are not valid coordinates on the Bookshelf!");
+		return tiles[row][column];
+	}
+	
+	public void setTileType(int row, int column, TileType tileType) {
+		tiles[row][column].setType(tileType);
+	}
+	
+	private boolean areValidCoordinates(int row, int column) {
+		return (row > 0 && row < 5) && (column > 0 && column < 4);
 	}
 }
