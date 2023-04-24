@@ -24,7 +24,7 @@ public class Bookshelf {
 	private void initTiles() {
 		for (int i = 0; i < tiles[0].length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
-				tiles[j][i] = new BookshelfTile(TileType.NULL, j, i, this);
+				tiles[j][i] = new BookshelfTile(TileType.randomType(), j, i, this);
 				this.label.tilesContainer.add(tiles[j][i].getLabel());
 			}
 		}

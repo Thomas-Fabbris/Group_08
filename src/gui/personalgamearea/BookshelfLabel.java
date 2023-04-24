@@ -25,8 +25,9 @@ public class BookshelfLabel extends JLabel {
 		image = LoadImageAsIcon(SHELF_IMAGE_PATH);
 		this.setIcon(image);
 		
-		containerXoffset = (int)(window_size.width / 12.5);
-		containerYoffset = (int)(window_size.height / 23);
+		//TODO: fix dimensions
+		containerXoffset = (int)(this.getWidth() / 8);
+		containerYoffset = (int)(this.getHeight() / 14);
 		containerWidth = (int)(this.getWidth() - 2 * containerXoffset);
 		containerHeight = (int)(this.getHeight() - 2.7 * containerYoffset);
 		

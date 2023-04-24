@@ -27,7 +27,7 @@ public class BookshelfTileLabel extends JLabel {
 		this.tileLength = (int)(shelf.getLabel().getHeight() / 9); // '1/7 -> 1/9'
 		this.tileXLength = shelf.getLabel().tilesContainer.getWidth() / 8;
 		this.tileYLength = shelf.getLabel().tilesContainer.getHeight() / 10;
-		this.xOffset = tileLength / 4;
+		this.xOffset = (int)(tileLength / 3.8);
 		this.yOffset = (int)(tileLength / 2.2);
 		this.xPos = convertColumnToXCoords(column);
 		this.yPos = convertRowToYCoords(row);
