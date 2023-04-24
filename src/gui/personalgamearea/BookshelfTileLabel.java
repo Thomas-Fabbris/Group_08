@@ -27,14 +27,14 @@ public class BookshelfTileLabel extends JLabel {
 		this.tileLength = (int)(shelf.getLabel().getHeight() / 9); // '1/7 -> 1/9'
 		this.tileXLength = shelf.getLabel().tilesContainer.getWidth() / 8;
 		this.tileYLength = shelf.getLabel().tilesContainer.getHeight() / 10;
-		this.xOffset = (int)(tileLength / 3.8);
-		this.yOffset = (int)(tileLength / 2.2);
+		this.xOffset = (int)(tileLength / 2.2);
+		this.yOffset = (int)(tileLength / 3.8);
 		this.xPos = convertColumnToXCoords(column);
 		this.yPos = convertRowToYCoords(row);
 		
 		//TODO make sense of why xPos and yPos need to be switched
 		setType(tile_type);
-		this.setBounds(yPos, xPos, tileLength, tileLength);
+		this.setBounds(xPos, yPos, tileLength, tileLength);
 	}
 	
 	private String GetImagePath(TileType tile_type) {		

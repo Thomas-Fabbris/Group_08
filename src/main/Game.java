@@ -41,7 +41,6 @@ public class Game {
 		
 		SharedGameAreaWindow.getInstance().toFront(); //I'm not sure why, but the window goes to background when it is opened
 		PersonalGameAreaWindow.getInstance().toFront();
-		 //TODO: used only for debug, to be removed
 		
 		Start();
 	}
@@ -56,9 +55,14 @@ public class Game {
 		
 		PersonalGameAreaWindow.getInstance().setCurrentPlayer(players.get(0));
 		
-		players.get(0).bookshelf.setTileType(0, 0, TileType.GAMES);
-		players.get(0).bookshelf.setTileType(3, 3, TileType.FRAMES);
-		players.get(0).bookshelf.setTileType(4, 5, TileType.BOOKS);
+		players.get(0).bookshelf.setTileType(3, 2, TileType.FRAMES);
+
+		players.get(0).bookshelf.getTile(3, 2).tileUp().setType(TileType.GAMES);
+		players.get(0).bookshelf.getTile(3, 2).tileDown().setType(TileType.CATS);
+		players.get(0).bookshelf.getTile(3, 2).tileLeft().setType(TileType.PLANTS);
+		players.get(0).bookshelf.getTile(3, 2).tileRigth().setType(TileType.TROPHIES);
+		
+		players.get(0).bookshelf.setTileType(0, 1, TileType.BOOKS);
 		
 //		board.hideTile(2, 4);
 //		System.out.println("Tile @ 2, 4 before refill: " + board.getTileType(2, 4));

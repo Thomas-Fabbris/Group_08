@@ -4,6 +4,7 @@ import gui.personalgamearea.BookshelfTileLabel;
 import gui.sharedgamearea.BoardTileLabel;
 import main.Tile;
 import main.TileType;
+import sharedgamearea.BoardTile;
 
 public class BookshelfTile extends Tile {
 	
@@ -28,5 +29,21 @@ public class BookshelfTile extends Tile {
 	public void setType(TileType type) {
 		super.setType(type);
 		this.getLabel().setType(type);
+	}
+	
+	public BookshelfTile tileUp() {
+		return shelf.getTile(row-1, column);
+	}
+	
+	public BookshelfTile tileDown() {
+		return shelf.getTile(row+1, column);
+	}
+	
+	public BookshelfTile tileRigth() {
+		return shelf.getTile(row, column+1);
+	}
+	
+	public BookshelfTile tileLeft() {
+		return shelf.getTile(row, column-1);
 	}
 }

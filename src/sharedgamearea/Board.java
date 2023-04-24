@@ -131,7 +131,6 @@ public class Board {
 		try {
 			scanner = new Scanner(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
