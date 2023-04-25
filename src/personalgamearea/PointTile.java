@@ -22,10 +22,6 @@ public class PointTile extends Tile {
 	public void setCardId(int card_id) {
 		this.card_id = card_id;
 	}
-
-//	public PointTileLabel getLabel() {
-//		return (PointTileLabel)label;
-//	}
 	
 	public int getPoints() {
 		return points;

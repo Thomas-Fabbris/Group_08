@@ -23,7 +23,7 @@ public class PointTileLabel extends JLabel {
 	private final int top_offset;
 	private final int left_offset;
 	
-	public PointTileLabel(Dimension card_size, int starting_point) {
+	public PointTileLabel(Dimension card_size, int points) {
 //		this.setOpaque(true);
 //		this.setBackground(Color.red);
 		
@@ -38,7 +38,7 @@ public class PointTileLabel extends JLabel {
 		this.setHorizontalAlignment(JLabel.CENTER);
 		
 		this.setBounds(x_pos, y_pos, side_length, side_length);
-		this.setImage(starting_point);
+		this.setImage(points);
 
 		this.setVisible(true);
 	}

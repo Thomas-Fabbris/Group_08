@@ -2,85 +2,221 @@ package gui.personalgamearea;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.LayoutManager;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import gui.PointTileLabel;
 
 //Adds to a JPanel all the information that need to be displayed about a player in the personal game area
 public class PlayerInfo {
 	private Dimension windowSize;
 	private int tileLength;
 	private JPanel playerInfo; //Contains all the info that are displayed on the GUI
+	private JPanel tiles; //Contains: point tiles, chair and points
+	private JPanel bookshelfAndCard; //Contains: bookshelf and personal objective card 
+	private JPanel playerNameAndButton; //Contains: player's name and next player button
+	private JLabel playerName;
 	private BookshelfLabel bookshelfLabel;
 	private PersonalObjectiveCardLabel personalObjectiveCardLabel;
-	private PointTileLabel pointTile1;
-	private PointTileLabel pointTile2;
+	private JLabel pointTile1;
+	private JLabel pointTile2;
 	private JLabel endOfGameTile;
 	private JLabel points;
+	private JLabel chair;
+	private GridBagConstraints gbc;
+	private int gridx = 0;
+	private int gridy = 0;
 	
 	public PlayerInfo(Dimension windowSize) {
 		this.windowSize = windowSize;
+		
+		//playerInfo
 		this.playerInfo = new JPanel();
-//		this.playerInfo.setLayout(new FlowLayout());
+		this.playerInfo.setLayout(new FlowLayout());
 		this.playerInfo.setOpaque(false);
+
+		//playerNameContainer
+		this.playerNameAndButton = new JPanel();
+		applySettingsToPanel(playerNameAndButton, new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
+		
+		//tiles
+		this.tiles = new JPanel();
+		applySettingsToPanel(tiles, new BoxLayout(tiles, BoxLayout.X_AXIS));
+		
+		//bookshelfAndCard
+		this.bookshelfAndCard = new JPanel();
+//		int h = windowSize.height - playerNameAndButton.getHeight() - tiles.getHeight() - bookshelfLabel.getHeight();
+//		playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, h)));
+		applySettingsToPanel(bookshelfAndCard, new FlowLayout());
+		
 		this.tileLength = windowSize.width/12;
+		this.gbc = new GridBagConstraints();
+		gbc.insets = new java.awt.Insets(0,0,0,0);
+		gbc.ipadx = 0;
+		gbc.ipady = 0;
 	}
 
+	//Apply custom settings to the panel
+	private void applySettingsToPanel(JPanel panel, LayoutManager layoutManager) {
+		panel.setOpaque(false);
+		panel.setLayout(layoutManager);
+		playerInfo.add(panel);
+		playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, windowSize.height/12)));
+	}
+	
+	public void setPlayerName(String name) {
+		if(this.playerName == null) {
+			this.playerName = new JLabel(name + "'s turn");
+			this.playerName.setForeground(Color.white);
+			this.playerName.setFont(new Font(Font.DIALOG, Font.BOLD, windowSize.height/22));
+			
+			this.playerNameAndButton.add(playerName);
+		}
+		
+		playerName.setText(name + "'s turn");
+	}
+	
+	/**
+	 * Changes the number of points displayed on the GUI
+	 * @param points
+	 */
 	public void setPoints(int points) {
 		if(this.points == null) {
-			this.points = new JLabel("Points: ");
+			this.points = new JLabel("Points: 0");
 			this.points.setForeground(Color.white);
-			this.points.setFont(new Font(Font.DIALOG, Font.BOLD, windowSize.height/40));
-			playerInfo.add(this.points);
+			this.points.setFont(new Font(Font.DIALOG, Font.BOLD, windowSize.height/36));
+			
+			gbc.gridx = gridx;
+			gridx = 0;
+			gbc.gridy = gridy++;
+			tiles.add(this.points, gbc);
 		}
-		this.points.setText(this.points.getText() + " " + Integer.valueOf(points).toString());
+		this.points.setText("Points: " + Integer.valueOf(points).toString());
 	}
 
+	/**
+	 * Changes whether the game end tile is displayed or not
+	 * @param hasEndOfGameToken
+	 */
 	public void setEndOfGameTile(boolean hasEndOfGameToken) {
 		if(hasEndOfGameToken && this.endOfGameTile == null) {
 			endOfGameTile = new JLabel();
 			endOfGameTile.setIcon(LoadImageAsIcon("./Assets/Point_tiles/First_to_finish.jpg"));
-			playerInfo.add(endOfGameTile);
-		} else if (this.endOfGameTile != null) {
-			playerInfo.remove(endOfGameTile);
+			
+			gbc.gridx = gridx++;
+			gbc.gridy = gridy;
+			tiles.add(endOfGameTile, gbc);
+			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+			return;
 		}
+		
+		if(!hasEndOfGameToken && this.endOfGameTile != null)
+			tiles.remove(endOfGameTile);
 	}
 	
-	public void setPointTile1(int pointsFromPointTile) {
-		throw new UnsupportedOperationException();
+	/**
+	 * Changes whether the chair (first player token) is displayed or not
+	 * @param hasChair
+	 */
+	public void setChair(boolean hasChair) {
+		if(hasChair && this.chair == null) {
+			chair = new JLabel();
+			chair.setIcon(LoadImageAsIcon("./Assets/Firstplayertoken.png"));
+			
+			gbc.gridx = gridx++;
+			gbc.gridy = gridy;
+			tiles.add(chair, gbc);
+			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		}
+		
+		if(!hasChair && this.chair != null)
+			tiles.remove(chair);
 	}
 	
-	public void setPointTile2(int pointsFromPointTile) {
-		throw new UnsupportedOperationException();
+	/**
+	 * Sets point tile to be displayed
+	 * @param pointsFromPointTile
+	 */
+	public void setPointTile1(int points) {
+		if(points == 0)
+			return;
+		
+		if(this.pointTile1 == null) {
+			this.pointTile1 = new JLabel();
+			
+			gbc.gridx = gridx++;
+			gbc.gridy = gridy;
+			this.tiles.add(pointTile1, gbc);
+			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		}
+		
+		String path = "Assets/Point_tiles/Xp.jpg".replaceAll("X", Integer.valueOf(points).toString());	
+		pointTile1.setIcon(LoadImageAsIcon(path));
+	}
+	
+	/**
+	 * Sets which point tile should be displayed based on the number of points passed
+	 * (0 means no point tile is displayed)
+	 * @param pointsFromPointTile
+	 */
+	public void setPointTile2(int points) {
+		if(points == 0)
+			return;
+		
+		if(this.pointTile2 == null) {
+			this.pointTile2 = new JLabel();
+			
+			gbc.gridx = gridx++;
+			gbc.gridy = gridy;
+			this.tiles.add(pointTile2, gbc);
+			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		}
+		String path = "Assets/Point_tiles/Xp.jpg".replaceAll("X", Integer.valueOf(points).toString());
+		pointTile2.setIcon(LoadImageAsIcon(path));
 	}
 
-	public BookshelfLabel getBookshelfLabel() {
-		return bookshelfLabel;
-	}
-
+	/**
+	 * Sets the bookshelf to be displayed
+	 * @param bookshelfLabel
+	 */
 	public void setBookshelfLabel(BookshelfLabel bookshelfLabel) {
-		if(this.bookshelfLabel != null)
-			playerInfo.remove(this.bookshelfLabel);
+		if(this.bookshelfLabel == null) {
+			gbc.gridx = gridx++;
+			gbc.gridy = gridy;
+			gbc.gridwidth = 2;
+			gbc.gridheight = 2;
+			gbc.weightx = 1;
+			bookshelfAndCard.add(bookshelfLabel, gbc);
+			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
+		}
 		
 		this.bookshelfLabel = bookshelfLabel;
-		playerInfo.add(bookshelfLabel);
+
 	}
 
-	public PersonalObjectiveCardLabel getPersonalObjectiveCardLabel() {
-		return personalObjectiveCardLabel;
-	}
-
+	/**
+	 * Sets the personal objective card to be displayed
+	 * @param personalObjectiveCardLabel
+	 */
 	public void setPersonalObjectiveCardLabel(PersonalObjectiveCardLabel personalObjectiveCardLabel) {
-		if(this.personalObjectiveCardLabel != null)
-			playerInfo.remove(this.personalObjectiveCardLabel);
+		if(this.personalObjectiveCardLabel == null) {
+			gbc.gridx = gridx;
+			gridx = 0;
+			gbc.gridy = gridy++;
+			bookshelfAndCard.add(personalObjectiveCardLabel, gbc);
+			gbc.weightx = 0;
+		}
 		
 		this.personalObjectiveCardLabel = personalObjectiveCardLabel;
-		playerInfo.add(personalObjectiveCardLabel);
 	}
 
 
@@ -88,6 +224,11 @@ public class PlayerInfo {
 		return playerInfo;
 	}
 	
+	/**
+	 * Used to load the game end tile's image from the assets folder
+	 * @param image_path
+	 * @return
+	 */
 	private ImageIcon LoadImageAsIcon(String image_path) {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
