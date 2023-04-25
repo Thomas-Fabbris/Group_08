@@ -3,7 +3,6 @@ package main;
 import personalgamearea.Bookshelf;
 import personalgamearea.PersonalObjectiveCard;
 import personalgamearea.PointTile;
-import sharedgamearea.CommonObjectiveCard;
 
 public class Player {
 	private String name;
@@ -11,10 +10,9 @@ public class Player {
 	public final int id;
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
-	private boolean hasGameEndTile = false;
 	public final boolean hasChair;
-	private int points = 0;
-	private PointTile pointTile1 = null; //Point tile received from the respective common objective card 
+	private int points;
+	private PointTile pointTile1 = null;
 	private PointTile pointTile2 = null; 
 	private boolean hasEndOfGameToken = false;
 	
@@ -71,13 +69,6 @@ public class Player {
 		else throw new IllegalArgumentException(tileNumber + " is not a valid tile number! Choose tile 1 or 2");
 	}
 	
-	public boolean hasGameEndTile() {
-		return this.hasGameEndTile;
-	}
-	
-	public void setGameEndTile(boolean hasGameEndTile) {
-		this.hasGameEndTile = hasGameEndTile;
-	}
 	
 	public boolean equals(Player player) {
 		return this.id == player.id;
@@ -99,11 +90,11 @@ public class Player {
 		return this.points;
 	}
 	
-	public boolean getHasEndOfGameToken() {
+	public boolean hasEndOfGameToken() {
 		return this.hasEndOfGameToken;
 	}
 	
-	public void setHasEndOfGameToken(boolean value) {
-		this.hasEndOfGameToken = value;
+	public void setEndOfGameToken(boolean hasEndOfGameToken) {
+		this.hasEndOfGameToken = hasEndOfGameToken;
 	}
 }

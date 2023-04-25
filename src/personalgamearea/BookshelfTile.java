@@ -1,10 +1,8 @@
 package personalgamearea;
 
 import gui.personalgamearea.BookshelfTileLabel;
-import gui.sharedgamearea.BoardTileLabel;
 import main.Tile;
 import main.TileType;
-import sharedgamearea.BoardTile;
 
 public class BookshelfTile extends Tile {
 	

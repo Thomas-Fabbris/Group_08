@@ -32,7 +32,6 @@ public class BookshelfTileLabel extends JLabel {
 		this.xPos = convertColumnToXCoords(column);
 		this.yPos = convertRowToYCoords(row);
 		
-		//TODO make sense of why xPos and yPos need to be switched
 		setType(tile_type);
 		this.setBounds(xPos, yPos, tileLength, tileLength);
 	}

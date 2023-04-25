@@ -1,9 +1,5 @@
 package personalgamearea;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.util.Arrays;
-
 import gui.personalgamearea.BookshelfLabel;
 import gui.personalgamearea.PersonalGameAreaWindow;
 import main.Player;

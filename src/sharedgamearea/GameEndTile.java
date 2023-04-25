@@ -20,7 +20,7 @@ public class GameEndTile extends Tile {
 	//TODO: set the game end tile visible on the player's personal area
 	public void award(Player player) {
 		player.addPoints(1);
-		player.setGameEndTile(true);
+		player.setEndOfGameToken(true);
 		label.setVisible(false);
 	}
 

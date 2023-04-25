@@ -30,7 +30,7 @@ public class Controller {
 				if(shelf.isFull()) {
 					for(Player player : game.players) {
 						if(player.equals(gameToken.getCurrentOwner())) {
-							player.setHasEndOfGameToken(true);
+							player.setEndOfGameToken(true);
 						}
 					}
 					return;

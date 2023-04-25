@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.FlowLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;

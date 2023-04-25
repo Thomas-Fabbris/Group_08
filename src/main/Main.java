@@ -1,8 +1,6 @@
 package main;
 
 
-import java.util.ArrayList;
-
 import gui.sharedgamearea.MainMenuWindow;
 
 public class Main {
