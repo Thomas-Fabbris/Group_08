@@ -23,11 +23,9 @@ public class Token {
 				}
 				else {
 					this.currentOwner = players[0];
-				}
-				
+				}		
 			}
 		}
-		
 	}
 
 	public void setRoundNumber(int roundNumber) {

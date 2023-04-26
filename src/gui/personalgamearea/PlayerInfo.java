@@ -12,6 +12,7 @@ import java.awt.LayoutManager;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,6 +25,7 @@ public class PlayerInfo {
 	private JPanel bookshelfAndCard; //Contains: bookshelf and personal objective card 
 	private JPanel playerNameAndButton; //Contains: player's name and next player button
 	private JLabel playerName;
+	private JLabel nextPlayerButton;
 	private BookshelfLabel bookshelfLabel;
 	private PersonalObjectiveCardLabel personalObjectiveCardLabel;
 	private JLabel pointTile1;
@@ -31,12 +33,10 @@ public class PlayerInfo {
 	private JLabel endOfGameTile;
 	private JLabel points;
 	private JLabel chair;
-	private GridBagConstraints gbc;
-	private int gridx = 0;
-	private int gridy = 0;
 	
 	public PlayerInfo(Dimension windowSize) {
 		this.windowSize = windowSize;
+		this.tileLength = windowSize.width/12;
 		
 		//playerInfo
 		this.playerInfo = new JPanel();
@@ -45,31 +45,26 @@ public class PlayerInfo {
 
 		//playerNameContainer
 		this.playerNameAndButton = new JPanel();
-		applySettingsToPanel(playerNameAndButton, new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
+		applySettingsToPanel(playerNameAndButton, new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS), true);
 		
 		//tiles
 		this.tiles = new JPanel();
-		applySettingsToPanel(tiles, new BoxLayout(tiles, BoxLayout.X_AXIS));
+		applySettingsToPanel(tiles, new BoxLayout(tiles, BoxLayout.X_AXIS), false);
 		
 		//bookshelfAndCard
 		this.bookshelfAndCard = new JPanel();
-//		int h = windowSize.height - playerNameAndButton.getHeight() - tiles.getHeight() - bookshelfLabel.getHeight();
-//		playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, h)));
-		applySettingsToPanel(bookshelfAndCard, new FlowLayout());
+		applySettingsToPanel(bookshelfAndCard, new FlowLayout(), false);
 		
-		this.tileLength = windowSize.width/12;
-		this.gbc = new GridBagConstraints();
-		gbc.insets = new java.awt.Insets(0,0,0,0);
-		gbc.ipadx = 0;
-		gbc.ipady = 0;
 	}
 
 	//Apply custom settings to the panel
-	private void applySettingsToPanel(JPanel panel, LayoutManager layoutManager) {
+	private void applySettingsToPanel(JPanel panel, LayoutManager layoutManager, boolean addRigidArea) {
 		panel.setOpaque(false);
 		panel.setLayout(layoutManager);
 		playerInfo.add(panel);
-		playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, windowSize.height/12)));
+		
+//		if(addRigidArea)
+//			playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, windowSize.height/12)));
 	}
 	
 	public void setPlayerName(String name) {
@@ -79,9 +74,19 @@ public class PlayerInfo {
 			this.playerName.setFont(new Font(Font.DIALOG, Font.BOLD, windowSize.height/22));
 			
 			this.playerNameAndButton.add(playerName);
+			initButton();
 		}
 		
 		playerName.setText(name + "'s turn");
+	}
+	
+	private void initButton() {
+		if(this.nextPlayerButton == null) {
+			this.nextPlayerButton = new JLabel();
+			this.nextPlayerButton.setIcon(LoadImageAsIcon("./Assets/ArrowButton2/ArrowButton.png", 4*tileLength, 3*tileLength));
+			this.playerNameAndButton.add(Box.createRigidArea(new Dimension(2*tileLength, tileLength)));
+			this.playerNameAndButton.add(nextPlayerButton);
+		}
 	}
 	
 	/**
@@ -94,10 +99,7 @@ public class PlayerInfo {
 			this.points.setForeground(Color.white);
 			this.points.setFont(new Font(Font.DIALOG, Font.BOLD, windowSize.height/36));
 			
-			gbc.gridx = gridx;
-			gridx = 0;
-			gbc.gridy = gridy++;
-			tiles.add(this.points, gbc);
+			tiles.add(this.points);
 		}
 		this.points.setText("Points: " + Integer.valueOf(points).toString());
 	}
@@ -110,10 +112,8 @@ public class PlayerInfo {
 		if(hasEndOfGameToken && this.endOfGameTile == null) {
 			endOfGameTile = new JLabel();
 			endOfGameTile.setIcon(LoadImageAsIcon("./Assets/Point_tiles/First_to_finish.jpg"));
-			
-			gbc.gridx = gridx++;
-			gbc.gridy = gridy;
-			tiles.add(endOfGameTile, gbc);
+
+			tiles.add(endOfGameTile);
 			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
 			return;
 		}
@@ -131,9 +131,7 @@ public class PlayerInfo {
 			chair = new JLabel();
 			chair.setIcon(LoadImageAsIcon("./Assets/Firstplayertoken.png"));
 			
-			gbc.gridx = gridx++;
-			gbc.gridy = gridy;
-			tiles.add(chair, gbc);
+			tiles.add(chair);
 			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
 		}
 		
@@ -151,10 +149,8 @@ public class PlayerInfo {
 		
 		if(this.pointTile1 == null) {
 			this.pointTile1 = new JLabel();
-			
-			gbc.gridx = gridx++;
-			gbc.gridy = gridy;
-			this.tiles.add(pointTile1, gbc);
+
+			this.tiles.add(pointTile1);
 			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
 		}
 		
@@ -174,9 +170,7 @@ public class PlayerInfo {
 		if(this.pointTile2 == null) {
 			this.pointTile2 = new JLabel();
 			
-			gbc.gridx = gridx++;
-			gbc.gridy = gridy;
-			this.tiles.add(pointTile2, gbc);
+			this.tiles.add(pointTile2);
 			tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
 		}
 		String path = "Assets/Point_tiles/Xp.jpg".replaceAll("X", Integer.valueOf(points).toString());
@@ -189,14 +183,8 @@ public class PlayerInfo {
 	 */
 	public void setBookshelfLabel(BookshelfLabel bookshelfLabel) {
 		if(this.bookshelfLabel == null) {
-			gbc.gridx = gridx++;
-			gbc.gridy = gridy;
-			gbc.gridwidth = 2;
-			gbc.gridheight = 2;
-			gbc.weightx = 1;
-			bookshelfAndCard.add(bookshelfLabel, gbc);
-			gbc.gridwidth = 1;
-			gbc.gridheight = 1;
+
+			bookshelfAndCard.add(bookshelfLabel);
 		}
 		
 		this.bookshelfLabel = bookshelfLabel;
@@ -209,11 +197,7 @@ public class PlayerInfo {
 	 */
 	public void setPersonalObjectiveCardLabel(PersonalObjectiveCardLabel personalObjectiveCardLabel) {
 		if(this.personalObjectiveCardLabel == null) {
-			gbc.gridx = gridx;
-			gridx = 0;
-			gbc.gridy = gridy++;
-			bookshelfAndCard.add(personalObjectiveCardLabel, gbc);
-			gbc.weightx = 0;
+			bookshelfAndCard.add(personalObjectiveCardLabel);
 		}
 		
 		this.personalObjectiveCardLabel = personalObjectiveCardLabel;
@@ -233,6 +217,13 @@ public class PlayerInfo {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
 		tmp_image = tmp_image.getScaledInstance(tileLength, tileLength, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(tmp_image);
+	}
+	
+	private ImageIcon LoadImageAsIcon(String image_path, int width, int height) {
+		ImageIcon icon = new ImageIcon(image_path);
+		Image tmp_image = icon.getImage();
+		tmp_image = tmp_image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 }

@@ -1,6 +1,5 @@
 package main;
 
-
 import gui.sharedgamearea.MainMenuWindow;
 
 public class Main {
