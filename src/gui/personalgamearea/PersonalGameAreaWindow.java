@@ -37,7 +37,6 @@ public class PersonalGameAreaWindow extends JFrame {
 		playerInfoDisplay.setPointTile2(2);
 		playerInfoDisplay.setChair(true);
 		playerInfoDisplay.setPoints(100);
-		//TODO: add next player button
 	}
 	
 	public Player getCurrentPlayer() {

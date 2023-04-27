@@ -45,26 +45,23 @@ public class PlayerInfo {
 
 		//playerNameContainer
 		this.playerNameAndButton = new JPanel();
-		applySettingsToPanel(playerNameAndButton, new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS), true);
+		applySettingsToPanel(playerNameAndButton, new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
 		
 		//tiles
 		this.tiles = new JPanel();
-		applySettingsToPanel(tiles, new BoxLayout(tiles, BoxLayout.X_AXIS), false);
+		applySettingsToPanel(tiles, new BoxLayout(tiles, BoxLayout.X_AXIS));
 		
 		//bookshelfAndCard
 		this.bookshelfAndCard = new JPanel();
-		applySettingsToPanel(bookshelfAndCard, new FlowLayout(), false);
+		applySettingsToPanel(bookshelfAndCard, new FlowLayout());
 		
 	}
 
 	//Apply custom settings to the panel
-	private void applySettingsToPanel(JPanel panel, LayoutManager layoutManager, boolean addRigidArea) {
+	private void applySettingsToPanel(JPanel panel, LayoutManager layoutManager) {
 		panel.setOpaque(false);
 		panel.setLayout(layoutManager);
 		playerInfo.add(panel);
-		
-//		if(addRigidArea)
-//			playerInfo.add(Box.createRigidArea(new Dimension(windowSize.width, windowSize.height/12)));
 	}
 	
 	public void setPlayerName(String name) {
@@ -82,8 +79,13 @@ public class PlayerInfo {
 	
 	private void initButton() {
 		if(this.nextPlayerButton == null) {
+			ImageIcon pressedIcon = LoadImageAsIcon("./Assets/ArrowButton/ArrowButtonPressed.png", 4*tileLength, 3*tileLength);
+			ImageIcon releasedIcon = LoadImageAsIcon("./Assets/ArrowButton/ArrowButton.png", 4*tileLength, 3*tileLength);
+			
 			this.nextPlayerButton = new JLabel();
-			this.nextPlayerButton.setIcon(LoadImageAsIcon("./Assets/ArrowButton2/ArrowButton.png", 4*tileLength, 3*tileLength));
+			this.nextPlayerButton.setIcon(releasedIcon);
+			this.nextPlayerButton.addMouseListener(new NextPlayerButtonController(nextPlayerButton, pressedIcon, releasedIcon));
+			
 			this.playerNameAndButton.add(Box.createRigidArea(new Dimension(2*tileLength, tileLength)));
 			this.playerNameAndButton.add(nextPlayerButton);
 		}
