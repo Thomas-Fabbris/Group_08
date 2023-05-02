@@ -26,7 +26,7 @@ public abstract class Tile{
 	public TileType getType() {
 		return type;
 	}
-	
+		
 	public void setType(TileType tile_type) {
 		this.type = tile_type;
 	}
