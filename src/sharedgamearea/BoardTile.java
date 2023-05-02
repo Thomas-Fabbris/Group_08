@@ -1,6 +1,7 @@
 package sharedgamearea;
 
 import gui.sharedgamearea.BoardTileLabel;
+import gui.sharedgamearea.BoardTileListener;
 import main.Tile;
 import main.TileType;
 
@@ -15,7 +16,7 @@ public class BoardTile extends Tile{
 		this.column = column;
 		this.board = board;
 		this.setLabel(new BoardTileLabel(tile_type, row, column, board.getLabel().getSize()));
-//		this.label.addMouseListener(null); 
+		this.label.addMouseListener(new BoardTileListener(board, this)); 
 		this.setVisible(true);
 	}
 

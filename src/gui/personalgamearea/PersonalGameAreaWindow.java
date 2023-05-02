@@ -14,7 +14,7 @@ public class PersonalGameAreaWindow extends JFrame {
 	private PlayerInfo playerInfoDisplay; //groups information related to the current_player
 	
 	public PersonalGameAreaWindow() {
-		super("MyShelfie"); //TODO: pass as parameter the name of the player who's playing
+		super("MyShelfie");
 		Init();
 		playerInfoDisplay = new PlayerInfo(this.getSize());
 		this.add(playerInfoDisplay.getPlayerInfoPanel());

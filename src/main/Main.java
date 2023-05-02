@@ -9,6 +9,6 @@ public class Main {
 		//MainMenuWindow displays and manages the main menu, then it starts the game by instantiating the Game class		
 		
 		MainMenuWindow main_menu = new MainMenuWindow();
-
 	}
+	
 }
