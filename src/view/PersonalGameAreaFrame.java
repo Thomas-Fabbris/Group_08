@@ -6,16 +6,19 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import view.personalgamearea.BookshelfLabel;
+import view.personalgamearea.PlayerInfo;
 
 public class PersonalGameAreaFrame extends JFrame {
 	
 	Dimension screenSize;
-	BookshelfLabel bookshelfLabel;
+	PlayerInfo currentPlayerInfo;
 	
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
 		this.screenSize = screenSize;
 		Init();
+		
+		this.add(currentPlayerInfo.getPlayerInfoPanel());
 	}
 	
 	private void Init() {

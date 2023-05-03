@@ -20,13 +20,13 @@ public class BookshelfTileLabel extends JLabel {
 	private int xPos;
 	private int yPos;
 	
-	public BookshelfTileLabel(TileType tile_type, int row, int column, Bookshelf shelf) {
+	public BookshelfTileLabel(TileType tile_type, int row, int column, BookshelfLabel shelfLabel) {
 		
 		//Compute the size of the various elements needed to place the tiles
 		//This method causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions
-		this.tileLength = (int)(shelf.getLabel().getHeight() / 9); // '1/7 -> 1/9'
-		this.tileXLength = shelf.getLabel().tilesContainer.getWidth() / 8;
-		this.tileYLength = shelf.getLabel().tilesContainer.getHeight() / 10;
+		this.tileLength = (int)(shelfLabel.getHeight() / 9); // '1/7 -> 1/9'
+		this.tileXLength = shelfLabel.tilesContainer.getWidth() / 8;
+		this.tileYLength = shelfLabel.tilesContainer.getHeight() / 10;
 		this.xOffset = (int)(tileLength / 2.2);
 		this.yOffset = (int)(tileLength / 3.8);
 		this.xPos = convertColumnToXCoords(column);

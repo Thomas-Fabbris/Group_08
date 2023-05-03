@@ -3,8 +3,6 @@ package model.personalgamearea;
 import model.commongamearea.BoardTile;
 import model.shared.Player;
 import model.shared.TileType;
-import view.personalgamearea.BookshelfLabel;
-import view.personalgamearea.PersonalGameAreaWindow;
 
 public class Bookshelf {
 	

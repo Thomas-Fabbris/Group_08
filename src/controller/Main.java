@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import model.CommonGameArea;
 import model.PersonalGameArea;
-import model.shared.Player;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
 import view.commongamearea.MainMenuWindow;
@@ -22,19 +21,22 @@ public class Main {
 				try {
 					
 					ArrayList<String> players = new ArrayList<>();
+					
 					MainMenuWindow mainMenu = new MainMenuWindow(players);
 					
 					players.forEach((p) -> System.out.println(p));
 					
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-					
-					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
-					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
-					
+
+					//Model
 					CommonGameArea commonGameArea = new CommonGameArea();
 					PersonalGameArea personalGrameArea = new PersonalGameArea();
 					
-					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, personalGrameArea, commonGameArea);
+					//View
+					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
+					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
+
+//					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, personalGrameArea, commonGameArea);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

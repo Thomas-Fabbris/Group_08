@@ -30,38 +30,11 @@ public class MainMenuWindow extends JDialog {
 	private JButton start = new JButton("Start Game");
 	
 	public MainMenuWindow(ArrayList<String> players) {
-//		super("MyShelfie Main Menu");
 		this.players = players;
 		this.setModal(true);
 		InitWindow();
 		InitComponents();
 		this.setVisible(true);
-	}
-	
-	private void InitComponents() {
-		//create "Number of players" text and combo-box
-		number_of_players_text.setFont(new Font("Dialog", Font.BOLD, 20));
-		number_of_players_text.setForeground(Color.WHITE);
-		
-		number_of_players_seletion.setMaximumSize(new Dimension(500, 30));
-		number_of_players_seletion.setSize(new Dimension(500, 30));
-		number_of_players_seletion.setToolTipText("Number of players");
-		number_of_players_seletion.setFont(new Font("Dialog", Font.PLAIN, 16));
-		number_of_players_seletion.setSelectedIndex(-1);
-		
-		this.add(number_of_players_text);
-		this.add(number_of_players_seletion);
-		
-		//create empty spaces
-		empty_space1.setBackground(Color.DARK_GRAY);
-		empty_space2.setBackground(Color.DARK_GRAY);
-		
-		this.add(empty_space1);		
-		initActionListeners();
-		initTextFields();
-		
-		this.add(empty_space2);
-		this.add(start);
 	}
 	
 	private void initActionListeners() {
@@ -83,8 +56,10 @@ public class MainMenuWindow extends JDialog {
 	}
 	
 	private void startGame() {
-		//create players
-		this.players = getPlayers();
+		System.out.println("Exiting main menu...");
+		
+		//fill the list with player names
+		this.getPlayers(this.players);
 		
 		//close menu
 		this.dispose();
@@ -119,26 +94,11 @@ public class MainMenuWindow extends JDialog {
 		return this.number_of_players;
 	}
 	
-	public ArrayList<String> getPlayers() {
-		ArrayList<String> players = new ArrayList<>();
-			
+	private void getPlayers(ArrayList<String> players) {	
 		for(int i = 0; i < number_of_players; i++) {
 			players.add(player_names[i].getText());
 		}
-		
-		return players;
 	}
-	
-//	public ArrayList<Player> getPlayers() {
-//		ArrayList<Player> players = new ArrayList<>();
-//		
-//		IdGenerator idgenerator = new IdGenerator();	
-//		for(int i = 0; i < number_of_players; i++) {
-//			players.add(new Player(player_names[i].getText(), idgenerator));
-//		}
-//		
-//		return players;
-//	}
 
 	/**
 	 * @param number of the text field to get the name from (0 to 4)
@@ -156,5 +116,31 @@ public class MainMenuWindow extends JDialog {
 		this.setLayout(new GridLayout(9,0));
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
+	}
+	
+	private void InitComponents() {
+		//create "Number of players" text and combo-box
+		number_of_players_text.setFont(new Font("Dialog", Font.BOLD, 20));
+		number_of_players_text.setForeground(Color.WHITE);
+		
+		number_of_players_seletion.setMaximumSize(new Dimension(500, 30));
+		number_of_players_seletion.setSize(new Dimension(500, 30));
+		number_of_players_seletion.setToolTipText("Number of players");
+		number_of_players_seletion.setFont(new Font("Dialog", Font.PLAIN, 16));
+		number_of_players_seletion.setSelectedIndex(-1);
+		
+		this.add(number_of_players_text);
+		this.add(number_of_players_seletion);
+		
+		//create empty spaces
+		empty_space1.setBackground(Color.DARK_GRAY);
+		empty_space2.setBackground(Color.DARK_GRAY);
+		
+		this.add(empty_space1);		
+		initActionListeners();
+		initTextFields();
+		
+		this.add(empty_space2);
+		this.add(start);
 	}
 }

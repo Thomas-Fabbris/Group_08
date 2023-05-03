@@ -1,11 +1,10 @@
 package view.personalgamearea;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import view.commongamearea.SharedGameAreaWindow;
 
 public class PersonalObjectiveCardLabel extends JLabel {
 	private ImageIcon image;
@@ -14,11 +13,11 @@ public class PersonalObjectiveCardLabel extends JLabel {
 	private int card_height;
 	private int card_width;
 	
-	public PersonalObjectiveCardLabel(int card_id) {
-		this.card_width = SharedGameAreaWindow.getInstance().getSize().height/4;
+	public PersonalObjectiveCardLabel(Dimension frameSize) {
+		this.card_width = frameSize.height/4;
 		this.card_height = card_width*3/2;
 		
-		this.image = LoadImageAsIcon(GetImagePath(card_id));
+//		this.image = LoadImageAsIcon(GetImagePath(card_id));
 		this.setIcon(image);
 		this.setSize(this.card_width, this.card_height);
 		
