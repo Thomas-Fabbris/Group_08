@@ -1,5 +1,6 @@
-package view.sharedgamearea;
+package view.commongamearea;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -14,20 +15,26 @@ public class CommonObjectiveCardLabel extends JLabel {
 	private int card_height;
 	private int card_width;
 
-	private PointTileLabel points_tile;
+	private PointTileLabel pointTile;
 	
-	public CommonObjectiveCardLabel(int card_id, int starting_points) {
-		this.card_height = SharedGameAreaWindow.getInstance().getSize().height/4;
+	public CommonObjectiveCardLabel(Dimension frameSize) {
+//		this.card_height = SharedGameAreaWindow.getInstance().getSize().height/4;
+		this.card_height = frameSize.height / 4;
 		this.card_width = card_height*3/2;
 		
-		this.image = LoadImageAsIcon(GetImagePath(card_id));
+//		this.image = LoadImageAsIcon(GetImagePath(card_id));
 		this.setIcon(image);
 		this.setSize(this.card_width, this.card_height);
 		
-		points_tile = new PointTileLabel(this.getSize(), starting_points);
-		this.add(points_tile);
+//		points_tile = new PointTileLabel(this.getSize(), starting_points);
+//		this.add(pointTile);
 		
 		this.setVisible(true);
+	}
+	
+	public void setPointTile(PointTileLabel pointTileLabel) {
+		this.pointTile = pointTileLabel;
+		this.add(pointTileLabel);
 	}
 	
 	//Replaces the X in Carta_X.png with the card's number
@@ -44,14 +51,15 @@ public class CommonObjectiveCardLabel extends JLabel {
 	 * @param points
 	 */
 	public void updatePointsTile(int points) {
-		points_tile.setImage(points);
+//		pointTile.setImage(points);
+		throw new UnsupportedOperationException("The method updatePointsTile(int points) has not been implemented yet");
 	}
 	
 	/**
 	 * Hides the tile (should be used when there are no points left)
 	 */
 	public void hidePointsTile() {
-		points_tile.setVisible(false);
+		pointTile.setVisible(false);
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path) {

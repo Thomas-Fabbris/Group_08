@@ -9,7 +9,7 @@ import javax.swing.KeyStroke;
 import model.personalgamearea.PointTile;
 import model.shared.IdGenerator;
 import model.shared.Player;
-import view.sharedgamearea.CommonObjectiveCardLabel;
+import view.commongamearea.CommonObjectiveCardLabel;
 
 public class CommonObjectiveCard {
 	

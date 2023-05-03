@@ -9,7 +9,7 @@ import model.commongamearea.CommonObjectiveCard;
 import model.shared.Player;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
-import view.sharedgamearea.MainMenuWindow;
+import view.commongamearea.MainMenuWindow;
 
 public class MainController {
 	

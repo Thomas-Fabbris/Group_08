@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import model.shared.Player;
 
 public class PersonalGameAreaWindow extends JFrame {
-	private static PersonalGameAreaWindow instance = null;
+//	private static PersonalGameAreaWindow instance = null
 	private Player currentPlayer = null;
 	private PlayerInfo playerInfoDisplay; //groups information related to the current_player
 	
@@ -20,11 +20,11 @@ public class PersonalGameAreaWindow extends JFrame {
 		this.add(playerInfoDisplay.getPlayerInfoPanel());
 	}
 	
-	public static PersonalGameAreaWindow getInstance() {
-		if(instance == null)
-			instance = new PersonalGameAreaWindow();
-		return instance;
-	}
+//	public static PersonalGameAreaWindow getInstance() {
+//		if(instance == null)
+//			instance = new PersonalGameAreaWindow();
+//		return instance;
+//	}
 	
 	public void setCurrentPlayer(Player player) {
 		this.currentPlayer = player;

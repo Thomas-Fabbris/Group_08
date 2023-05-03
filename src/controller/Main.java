@@ -10,7 +10,7 @@ import model.PersonalGameArea;
 import model.shared.Player;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
-import view.sharedgamearea.MainMenuWindow;
+import view.commongamearea.MainMenuWindow;
 
 public class Main {
 

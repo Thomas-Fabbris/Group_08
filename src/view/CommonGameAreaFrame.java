@@ -6,8 +6,8 @@ import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 
-import view.sharedgamearea.BoardLabel;
-import view.sharedgamearea.CommonObjectiveCardLabel;
+import view.commongamearea.BoardLabel;
+import view.commongamearea.CommonObjectiveCardLabel;
 
 public class CommonGameAreaFrame extends JFrame {
 
@@ -24,6 +24,10 @@ public class CommonGameAreaFrame extends JFrame {
 		Init();
 		
 		this.boardLabel = new BoardLabel(new Dimension(screenSize.getSize().height*2/3, screenSize.getSize().height*2/3));
+		this.card1 = new CommonObjectiveCardLabel(this.getSize()); //TODO: controller should have the reponsibility of deciding and setting the icon
+		this.card2 = new CommonObjectiveCardLabel(this.getSize());
+		
+		//TODO: set the card1 and card2 pointTiles' icons from a controller
 	}
 	
 	private void Init() {

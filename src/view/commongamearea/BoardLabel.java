@@ -1,4 +1,4 @@
-package view.sharedgamearea;
+package view.commongamearea;
 
 import java.awt.Dimension;
 import java.awt.Image;

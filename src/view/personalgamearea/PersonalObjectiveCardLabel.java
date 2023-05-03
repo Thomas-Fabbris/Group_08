@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import view.sharedgamearea.SharedGameAreaWindow;
+import view.commongamearea.SharedGameAreaWindow;
 
 public class PersonalObjectiveCardLabel extends JLabel {
 	private ImageIcon image;

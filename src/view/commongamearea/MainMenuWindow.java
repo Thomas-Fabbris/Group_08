@@ -1,4 +1,4 @@
-package view.sharedgamearea;
+package view.commongamearea;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.Game;
-import model.shared.IdGenerator;
 import model.shared.Player;
 
 public class MainMenuWindow extends JDialog {
