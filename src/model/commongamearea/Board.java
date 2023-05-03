@@ -20,12 +20,12 @@ public class Board {
 	
 	public Board() {
 		valid_positions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
-		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
+//		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
 		this.initTiles();
 		
 		this.game_end_tile = new GameEndTile(this);
 		label.add(game_end_tile.getLabel());
-		SharedGameAreaWindow.getInstance().setVisible(true);
+//		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	
 	public BoardLabel getLabel() {

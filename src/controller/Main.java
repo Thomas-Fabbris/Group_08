@@ -1,6 +1,8 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import model.CommonGameArea;
@@ -24,8 +26,10 @@ public class Main {
 					
 					players.forEach((p) -> System.out.println(p.getName() +" id: "+ p.id));
 					
-					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame();
-					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame();
+					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+					
+					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
+					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
 					
 					CommonGameArea commonGameArea = new CommonGameArea();
 					PersonalGameArea personalGrameArea = new PersonalGameArea();

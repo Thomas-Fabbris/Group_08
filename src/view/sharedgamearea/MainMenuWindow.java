@@ -20,7 +20,7 @@ import controller.Game;
 import model.shared.IdGenerator;
 import model.shared.Player;
 
-public class MainMenuWindow extends JDialog{
+public class MainMenuWindow extends JDialog {
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
 	private JComboBox<Integer> number_of_players_seletion = new JComboBox<Integer>(new Integer[] {2, 3, 4});

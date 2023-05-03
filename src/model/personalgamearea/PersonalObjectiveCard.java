@@ -13,18 +13,18 @@ public class PersonalObjectiveCard {
 	
 	public final static int MAX_CARD_ID = 12;
 	public final int card_id;
-	private PersonalObjectiveCardLabel label;
+//	private PersonalObjectiveCardLabel label;
 	private List<TileTypeCoordinate> type_positions = new LinkedList<>(); //Stores the TileType and its position for comparison on the shelf
 	
 	public PersonalObjectiveCard(int card_id) {
 		this.card_id = card_id;
 		this.type_positions = readTypePositionsFromFile(selectFile(card_id));
-		this.label = new PersonalObjectiveCardLabel(card_id);
+//		this.label = new PersonalObjectiveCardLabel(card_id);
 	}
 	
-	public PersonalObjectiveCardLabel getLabel() {
-		return label;
-	}
+//	public PersonalObjectiveCardLabel getLabel() {
+//		return label;
+//	}
 	
 	private File selectFile(int card_id) {
 		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.txt".replaceAll("X", Integer.valueOf(card_id).toString());

@@ -13,7 +13,7 @@ public class PersonalGameAreaWindow extends JFrame {
 	private Player currentPlayer = null;
 	private PlayerInfo playerInfoDisplay; //groups information related to the current_player
 	
-	public PersonalGameAreaWindow() {
+	public PersonalGameAreaWindow(Dimension screenSize) {
 		super("MyShelfie");
 		Init();
 		playerInfoDisplay = new PlayerInfo(this.getSize());
