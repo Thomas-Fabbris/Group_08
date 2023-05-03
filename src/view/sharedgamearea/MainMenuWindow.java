@@ -27,11 +27,11 @@ public class MainMenuWindow extends JDialog {
 	private JLabel number_of_players_text = new JLabel("Number of players:");
 	private JTextField[] player_names = new JTextField[4];
 	private int number_of_players;
-	private ArrayList<Player> players;
+	private ArrayList<String> players;
 	
 	private JButton start = new JButton("Start Game");
 	
-	public MainMenuWindow(ArrayList<Player> players) {
+	public MainMenuWindow(ArrayList<String> players) {
 //		super("MyShelfie Main Menu");
 		this.players = players;
 		this.setModal(true);
@@ -92,7 +92,7 @@ public class MainMenuWindow extends JDialog {
 		this.dispose();
 	}
 	
-	private void initTextFields() {		
+	private void initTextFields() {
 		for (int i = 0; i < player_names.length; i++) {
 			player_names[i] = new JTextField(String.format("Player name %d", i+1));
 			player_names[i].setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -121,16 +121,26 @@ public class MainMenuWindow extends JDialog {
 		return this.number_of_players;
 	}
 	
-	public ArrayList<Player> getPlayers() {
-		ArrayList<Player> players = new ArrayList<>();
-		
-		IdGenerator idgenerator = new IdGenerator();	
+	public ArrayList<String> getPlayers() {
+		ArrayList<String> players = new ArrayList<>();
+			
 		for(int i = 0; i < number_of_players; i++) {
-			players.add(new Player(player_names[i].getText(), idgenerator));
+			players.add(player_names[i].getText());
 		}
 		
 		return players;
 	}
+	
+//	public ArrayList<Player> getPlayers() {
+//		ArrayList<Player> players = new ArrayList<>();
+//		
+//		IdGenerator idgenerator = new IdGenerator();	
+//		for(int i = 0; i < number_of_players; i++) {
+//			players.add(new Player(player_names[i].getText(), idgenerator));
+//		}
+//		
+//		return players;
+//	}
 
 	/**
 	 * @param number of the text field to get the name from (0 to 4)

@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 import model.shared.Player;
 import model.shared.TileType;
-import view.sharedgamearea.BoardLabel;
-import view.sharedgamearea.SharedGameAreaWindow;
 
 public class Board {
 	private final static int BOARD_LENGTH = 11;
@@ -15,22 +13,22 @@ public class Board {
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
 	private boolean[][] valid_positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
-	private BoardLabel label;
-	private GameEndTile game_end_tile;
+//	private BoardLabel label;
+//	private GameEndTile game_end_tile;
 	
 	public Board() {
 		valid_positions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
 //		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
 		this.initTiles();
 		
-		this.game_end_tile = new GameEndTile(this);
-		label.add(game_end_tile.getLabel());
+//		this.game_end_tile = new GameEndTile(this);
+//		label.add(game_end_tile.getLabel());
 //		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	
-	public BoardLabel getLabel() {
-		return label;
-	}
+//	public BoardLabel getLabel() {
+//		return label;
+//	}
 	
 	/***
 	 * Adds a tile
@@ -45,8 +43,9 @@ public class Board {
 			throw new InvalidBoardPositionException(row, column);			
 		
 		tiles[row][column].setType(tile_type);
-		tiles[row][column].getLabel().setType(tile_type);
-		tiles[row][column].setVisible(true);
+//		tiles[row][column].getLabel().setType(tile_type);
+//		tiles[row][column].setVisible(true);
+		tiles[row][column].enable();
 	}
 	
 	/***
@@ -91,7 +90,8 @@ public class Board {
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);
 		
-		tiles[row][column].setVisible(false);
+//		tiles[row][column].setVisible(false);
+		tiles[row][column].disable();
 	}
 	
 	/**
@@ -103,14 +103,15 @@ public class Board {
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);
 		
-		tiles[row][column].setVisible(true);
+//		tiles[row][column].setVisible(true);
+		tiles[row][column].enable();
 	}
 	
 	public boolean isTileVisible(int row, int column) {
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);			
 		
-		return tiles[row][column].isVisible();
+		return tiles[row][column].isActive();
 	}
 	
 	private File selectValidPositionsFile(int number_of_players) {
@@ -161,10 +162,10 @@ public class Board {
 					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, this);
 				else {
 					tiles[i][j] = new BoardTile(TileType.NULL, i, j, this);
-					tiles[i][j].setVisible(false);
+					tiles[i][j].disable();
 				}
 				
-				this.label.add(tiles[i][j].getLabel());
+//				this.label.add(tiles[i][j].getLabel());
 			}
 		}
 	}
@@ -191,9 +192,9 @@ public class Board {
 			for (int j = 0; j < tiles.length; j++) {
 				
 				//svuota tutte le tessere rimaste e le rimette nella pouch
-				if(tiles[i][j].getType() != TileType.NULL && tiles[i][j].isVisible()) {
+				if(tiles[i][j].getType() != TileType.NULL && tiles[i][j].isActive()) {
 					Pouch.add(tiles[i][j].getType());
-					tiles[i][j].setVisible(false);
+					tiles[i][j].disable();
 					
 				}
 			}
@@ -201,7 +202,7 @@ public class Board {
 			for (int i = 0; i < tiles.length; i++) {
 				for (int j = 0; j < tiles.length; j++) {
 				
-				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isVisible()) {
+				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isActive()) {
 					tiles[i][j].setType(TileType.randomType());
 					showTile(i, j);
 				}
@@ -213,7 +214,7 @@ public class Board {
 	public void hideAllTiles() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
-				tiles[i][j].setVisible(false);
+				tiles[i][j].disable();
 			}
 		}
 	}

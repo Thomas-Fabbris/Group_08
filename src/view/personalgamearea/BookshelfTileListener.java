@@ -1,7 +1,10 @@
-package model.personalgamearea;
+package view.personalgamearea;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import model.personalgamearea.Bookshelf;
+import model.personalgamearea.BookshelfTile;
 
 public class BookshelfTileListener implements MouseListener {
 

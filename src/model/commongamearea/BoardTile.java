@@ -9,24 +9,42 @@ public class BoardTile extends Tile{
 	private int column;
 	private int row;
 	private Board board;
+	private boolean isActive;
 	
 	public BoardTile(TileType tile_type, int row, int column, Board board) {
 		super(tile_type);
 		this.row = row;
 		this.column = column;
 		this.board = board;
-		this.setLabel(new BoardTileLabel(tile_type, row, column, board.getLabel().getSize()));
-		this.label.addMouseListener(new BoardTileListener(board, this)); 
-		this.setVisible(true);
+		this.isActive = true;
+//		this.setLabel(new BoardTileLabel(tile_type, row, column, board.getLabel().getSize()));
+//		this.label.addMouseListener(new BoardTileListener(board, this)); 
+//		this.setVisible(true);
 	}
 
-	public BoardTileLabel getLabel() {
-		return (BoardTileLabel)label;
+//	public BoardTileLabel getLabel() {
+//		return (BoardTileLabel)label;
+//	}
+	
+	public void enable() {
+		this.setActive(true);
+	}
+	
+	public void disable() {
+		this.setActive(false);
+	}
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	public boolean isActive() {
+		return this.isActive;
 	}
 	
 	public void setType(TileType type) {
 		super.setType(type);
-		getLabel().setType(type);
+//		getLabel().setType(type);
 	}
 	
 	public int getRow() {
@@ -54,7 +72,7 @@ public class BoardTile extends Tile{
 	}
 	
 	public boolean isInteractible () {
-		return (!this.getType().equals(TileType.NULL) && this.isVisible());
+		return (!this.getType().equals(TileType.NULL) && this.isActive());
 	} //checks if the tile exists on the board 
 	
 	public boolean canBePickedUp () {

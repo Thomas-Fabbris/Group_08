@@ -14,12 +14,12 @@ import view.sharedgamearea.MainMenuWindow;
 public class MainController {
 	
 	Board board;
-	ArrayList<Player> players;
+	ArrayList<String> playerNames;
 	CommonObjectiveCard card1;
 	CommonObjectiveCard card2;
 	
-	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame, ArrayList<Player> players, PersonalGameArea personalGameArea, CommonGameArea commonGameArea) {		
-		this.players = players;
+	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame, ArrayList<String> playerNames, PersonalGameArea personalGameArea, CommonGameArea commonGameArea) {		
+		this.playerNames = playerNames;
 		
 	}
 }

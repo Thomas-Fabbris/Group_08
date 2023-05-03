@@ -21,10 +21,10 @@ public class Main {
 			public void run() {
 				try {
 					
-					ArrayList<Player> players = new ArrayList<>();
+					ArrayList<String> players = new ArrayList<>();
 					MainMenuWindow mainMenu = new MainMenuWindow(players);
 					
-					players.forEach((p) -> System.out.println(p.getName() +" id: "+ p.id));
+					players.forEach((p) -> System.out.println(p));
 					
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					
