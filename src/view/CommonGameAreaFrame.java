@@ -5,16 +5,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
-
-import view.commongamearea.BoardLabel;
-import view.commongamearea.CommonObjectiveCardLabel;
+import javax.swing.JLabel;
 
 public class CommonGameAreaFrame extends JFrame {
 
 	private Dimension screenSize;
-	private BoardLabel boardLabel;
-	private CommonObjectiveCardLabel card1;
-	private CommonObjectiveCardLabel card2;
+	private JLabel boardLabel;
+	private JLabel card1;
+	private JLabel card2;
 	
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -23,10 +21,17 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setLayout(new FlowLayout());
 		Init();
 		
-		this.boardLabel = new BoardLabel(new Dimension(screenSize.getSize().height*2/3, screenSize.getSize().height*2/3));
-		this.card1 = new CommonObjectiveCardLabel(this.getSize()); //TODO: controller should have the reponsibility of deciding and setting the icon
-		this.card2 = new CommonObjectiveCardLabel(this.getSize());
+		//Initialise the board
+		this.boardLabel = new JLabel();
+		this.boardLabel.setSize(screenSize.getSize().height*2/3 - 20, screenSize.getSize().height*2/3 - 20);
+		this.boardLabel.setIcon(Utils.LoadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
 		
+		//Initialise both cards
+		this.card1 = new JLabel();
+		this.card2 = new JLabel();
+		
+		this.card1.setSize(this.getHeight() * 3/8, this.getHeight() / 4); //TODO: controller should have the responsibility of deciding and setting the icon
+		this.card2.setSize(this.getHeight() * 3/8, this.getHeight() / 4); //TODO: controller should have the responsibility of deciding and setting the icon
 		
 		this.add(boardLabel);
 		this.add(card1);
@@ -43,15 +48,15 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public BoardLabel getBoardLabel() {
+	public JLabel getBoardLabel() {
 		return this.boardLabel;
 	}
 	
-	public CommonObjectiveCardLabel getCard1Label() {
+	public JLabel getCard1Label() {
 		return this.card1;
 	}
 	
-	public CommonObjectiveCardLabel getCard2Label() {
+	public JLabel getCard2Label() {
 		return this.card2;
 	}
 }

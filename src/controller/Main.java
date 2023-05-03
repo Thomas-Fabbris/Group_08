@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Random;
 
 import model.CommonGameArea;
 import model.PersonalGameArea;

@@ -4,12 +4,10 @@ import java.awt.event.ActionEvent;
 import java.util.Stack;
 
 import javax.swing.AbstractAction;
-import javax.swing.KeyStroke;
 
 import model.personalgamearea.PointTile;
 import model.shared.IdGenerator;
 import model.shared.Player;
-import view.commongamearea.CommonObjectiveCardLabel;
 
 public class CommonObjectiveCard {
 	

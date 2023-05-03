@@ -5,7 +5,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import model.personalgamearea.Bookshelf;
 import model.shared.TileType;
 
 public class BookshelfTileLabel extends JLabel {

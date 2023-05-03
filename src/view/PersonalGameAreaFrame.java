@@ -5,8 +5,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import model.shared.Player;
-import view.personalgamearea.BookshelfLabel;
 import view.personalgamearea.PlayerInfo;
 
 public class PersonalGameAreaFrame extends JFrame {

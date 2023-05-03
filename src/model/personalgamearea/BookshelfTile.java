@@ -2,8 +2,6 @@ package model.personalgamearea;
 
 import model.shared.Tile;
 import model.shared.TileType;
-import view.personalgamearea.BookshelfTileLabel;
-import view.personalgamearea.BookshelfTileListener;
 
 public class BookshelfTile extends Tile {
 	

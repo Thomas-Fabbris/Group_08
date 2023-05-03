@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.shared.TileType;
-import view.personalgamearea.PersonalObjectiveCardLabel;
 
 public class PersonalObjectiveCard {
 	

@@ -29,7 +29,7 @@ public class BoardTileLabel extends JLabel {
 	
 	public BoardTileLabel(TileType tile_type, int row, int column, Dimension board_size) {
 		this.tileLength = board_size.height/12;
-		this.offset = board_size.height/17;
+		this.offset = (int)(board_size.height / 17);
 		this.tileCellLength = board_size.width / 10;
 		this.x_pos = convertColumnToXCoords(column);
 		this.y_pos = convertRowToYCoords(row);
