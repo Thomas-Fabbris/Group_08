@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import model.shared.Player;
 import view.personalgamearea.BookshelfLabel;
 import view.personalgamearea.PlayerInfo;
 
@@ -18,6 +19,7 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.screenSize = screenSize;
 		Init();
 		
+		this.currentPlayerInfo = new PlayerInfo(this.getSize());
 		this.add(currentPlayerInfo.getPlayerInfoPanel());
 	}
 	

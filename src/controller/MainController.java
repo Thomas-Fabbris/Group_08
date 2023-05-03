@@ -13,13 +13,18 @@ import view.commongamearea.MainMenuWindow;
 
 public class MainController {
 	
-	Board board;
 	ArrayList<String> playerNames;
-	CommonObjectiveCard card1;
-	CommonObjectiveCard card2;
+	BoardController boardController;
 	
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame, ArrayList<String> playerNames, PersonalGameArea personalGameArea, CommonGameArea commonGameArea) {		
 		this.playerNames = playerNames;
 		
+		this.boardController = new BoardController(commonGameArea.getBoard(), commonGameAreaFrame.getBoardLabel());
+		initBoardController();
 	}
+	
+	public void initBoardController() {
+		this.boardController.addTiles();
+	}
+
 }

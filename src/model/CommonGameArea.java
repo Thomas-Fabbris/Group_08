@@ -21,4 +21,8 @@ public class CommonGameArea {
 		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
 	}
 	
+	public Board getBoard() {
+		return this.board;
+	}
+	
 }

@@ -11,10 +11,10 @@ import view.commongamearea.CommonObjectiveCardLabel;
 
 public class CommonGameAreaFrame extends JFrame {
 
-	Dimension screenSize;
-	BoardLabel boardLabel;
-	CommonObjectiveCardLabel card1;
-	CommonObjectiveCardLabel card2;
+	private Dimension screenSize;
+	private BoardLabel boardLabel;
+	private CommonObjectiveCardLabel card1;
+	private CommonObjectiveCardLabel card2;
 	
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -27,6 +27,10 @@ public class CommonGameAreaFrame extends JFrame {
 		this.card1 = new CommonObjectiveCardLabel(this.getSize()); //TODO: controller should have the reponsibility of deciding and setting the icon
 		this.card2 = new CommonObjectiveCardLabel(this.getSize());
 		
+		
+		this.add(boardLabel);
+		this.add(card1);
+		this.add(card2);
 		//TODO: set the card1 and card2 pointTiles' icons from a controller
 	}
 	
@@ -36,5 +40,18 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);
+		this.setVisible(true);
+	}
+	
+	public BoardLabel getBoardLabel() {
+		return this.boardLabel;
+	}
+	
+	public CommonObjectiveCardLabel getCard1Label() {
+		return this.card1;
+	}
+	
+	public CommonObjectiveCardLabel getCard2Label() {
+		return this.card2;
 	}
 }

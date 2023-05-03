@@ -11,24 +11,21 @@ public class Board {
 	private final static int BOARD_LENGTH = 11;
 	
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
-	private boolean[][] valid_positions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
+	private boolean[][] validPositions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
-//	private BoardLabel label;
-//	private GameEndTile game_end_tile;
 	
 	public Board() {
-		valid_positions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
-//		this.label = new BoardLabel(SharedGameAreaWindow.getInstance().getBoardSize());
+		validPositions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
 		this.initTiles();
-		
-//		this.game_end_tile = new GameEndTile(this);
-//		label.add(game_end_tile.getLabel());
-//		SharedGameAreaWindow.getInstance().setVisible(true);
 	}
 	
-//	public BoardLabel getLabel() {
-//		return label;
-//	}
+	public boolean[][] getValidPositions() {
+		return this.validPositions;
+	}
+	
+	public BoardTile[][] getTiles() {
+		return this.tiles;
+	}
 	
 	/***
 	 * Adds a tile
@@ -43,8 +40,6 @@ public class Board {
 			throw new InvalidBoardPositionException(row, column);			
 		
 		tiles[row][column].setType(tile_type);
-//		tiles[row][column].getLabel().setType(tile_type);
-//		tiles[row][column].setVisible(true);
 		tiles[row][column].enable();
 	}
 	
@@ -78,7 +73,7 @@ public class Board {
 	 * @return Returns whether the specified row/col position is valid
 	 */
 	public boolean isValidPosition(int row, int column) {
-		return valid_positions[row][column];
+		return validPositions[row][column];
 	}
 	
 	/**
@@ -90,7 +85,6 @@ public class Board {
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);
 		
-//		tiles[row][column].setVisible(false);
 		tiles[row][column].disable();
 	}
 	
@@ -102,8 +96,7 @@ public class Board {
 	public void showTile(int row, int column) {
 		if(!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);
-		
-//		tiles[row][column].setVisible(true);
+
 		tiles[row][column].enable();
 	}
 	
@@ -158,34 +151,15 @@ public class Board {
 	private void initTiles() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
-				if(valid_positions[i][j])
+				if(validPositions[i][j])
 					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, this);
 				else {
 					tiles[i][j] = new BoardTile(TileType.NULL, i, j, this);
 					tiles[i][j].disable();
 				}
-				
-//				this.label.add(tiles[i][j].getLabel());
 			}
 		}
 	}
-	
-	/***
-	 * Regenerates the missing tiles on the board
-	 */
-//	public void l() {
-//		for (int i = 0; i < tiles.length; i++) {
-//			for (int j = 0; j < tiles.length; j++) {
-//				
-//				//Check if tile is not null and if it isn't visible
-//				if(tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isVisible()) {
-//					tiles[i][j].setType(TileType.randomType());
-//					showTile(i, j);
-//				}
-//			}
-//		}
-//	}
-	
 	
 	 public void refill() {
 		for (int i = 0; i < tiles.length; i++) {

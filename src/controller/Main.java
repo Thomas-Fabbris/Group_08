@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.CommonGameArea;
 import model.PersonalGameArea;
@@ -36,7 +37,7 @@ public class Main {
 					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
 					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
 
-//					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, personalGrameArea, commonGameArea);
+					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, personalGrameArea, commonGameArea);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
