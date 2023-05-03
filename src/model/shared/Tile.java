@@ -1,27 +1,28 @@
 package model.shared;
 
-import javax.swing.JLabel;
-
 public abstract class Tile{
 	protected TileType type;
-//	protected JLabel label; //image displayed on the GUI
-	protected boolean isVisible;
+	protected boolean isActive;
 	
 	public Tile(TileType tile_type) {
 		this.type = tile_type;
 	}
 	
-//	protected void setLabel(JLabel label) {
-//		this.label = label;
-//	}
+	public void enable() {
+		this.setActive(true);
+	}
 	
-//	public boolean isVisible() {
-//		return label.isVisible();
-//	}
+	public void disable() {
+		this.setActive(false);
+	}
 	
-//	public void setVisible(boolean isVisible) {
-//		this.label.setVisible(isVisible);
-//	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	public boolean isActive() {
+		return this.isActive;
+	}
 	
 	public TileType getType() {
 		return type;

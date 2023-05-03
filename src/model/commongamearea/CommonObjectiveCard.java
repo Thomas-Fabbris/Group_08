@@ -14,7 +14,7 @@ import view.sharedgamearea.CommonObjectiveCardLabel;
 public class CommonObjectiveCard {
 	
 	private int card_id;
-	private CommonObjectiveCardLabel label;
+//	private CommonObjectiveCardLabel label;
 	public static int MAX_CARD_ID = 12;
 	private Stack<PointTile> point_tiles = new Stack<>();
 	
@@ -33,16 +33,16 @@ public class CommonObjectiveCard {
 		this.card_id = card_id;
 		
 		initPointsList();
-		this.label = new CommonObjectiveCardLabel(card_id, point_tiles.lastElement().getPoints());
+//		this.label = new CommonObjectiveCardLabel(card_id, point_tiles.lastElement().getPoints());
 		
 		//debug
-		this.label.getInputMap().put(KeyStroke.getKeyStroke("X"), "pressed");
-		this.label.getActionMap().put("pressed", XpressedAction);
+//		this.label.getInputMap().put(KeyStroke.getKeyStroke("X"), "pressed");
+//		this.label.getActionMap().put("pressed", XpressedAction);
 	}
 	
-	public CommonObjectiveCardLabel getLabel() {
-		return label;
-	}
+//	public CommonObjectiveCardLabel getLabel() {
+//		return label;
+//	}
 	
 	public int getId() {
 		return this.card_id;
@@ -80,11 +80,11 @@ public class CommonObjectiveCard {
 	 * Give the points displayed on the first available tile to the player
 	 * @param player to give the points to
 	 */
-	public void award(Player player) {
+	public void award(Player player) { //TODO: add implementation that doesn't depend on view
 		
 		//If there are no points left, don't give any
 		if(point_tiles.size() <= 0) {
-			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
+//			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
 			return;
 		}
 		
@@ -93,11 +93,11 @@ public class CommonObjectiveCard {
 		player.awardPointTile(point_tiles.lastElement());
 		point_tiles.pop();
 		
-		try {
-			((CommonObjectiveCardLabel) (this.label)).updatePointsTile(point_tiles.lastElement().getPoints());
-		} catch (Exception e) {
-			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
-		}
+//		try {
+//			((CommonObjectiveCardLabel) (this.label)).updatePointsTile(point_tiles.lastElement().getPoints());
+//		} catch (Exception e) {
+//			((CommonObjectiveCardLabel) (this.label)).hidePointsTile();
+//		}
 	}
 	
 	//Check if player can receive points - needs to be implemented

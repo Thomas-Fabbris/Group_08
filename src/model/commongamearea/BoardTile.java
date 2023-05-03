@@ -2,14 +2,11 @@ package model.commongamearea;
 
 import model.shared.Tile;
 import model.shared.TileType;
-import view.sharedgamearea.BoardTileLabel;
-import view.sharedgamearea.BoardTileListener;
 
 public class BoardTile extends Tile{	
 	private int column;
 	private int row;
 	private Board board;
-	private boolean isActive;
 	
 	public BoardTile(TileType tile_type, int row, int column, Board board) {
 		super(tile_type);
@@ -25,22 +22,6 @@ public class BoardTile extends Tile{
 //	public BoardTileLabel getLabel() {
 //		return (BoardTileLabel)label;
 //	}
-	
-	public void enable() {
-		this.setActive(true);
-	}
-	
-	public void disable() {
-		this.setActive(false);
-	}
-	
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-	
-	public boolean isActive() {
-		return this.isActive;
-	}
 	
 	public void setType(TileType type) {
 		super.setType(type);
