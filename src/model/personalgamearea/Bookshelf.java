@@ -6,14 +6,12 @@ import model.shared.TileType;
 
 public class Bookshelf {
 	
-	private final int ROWS = 6;
-	private final int COLUMNS = 5;
-//	private BookshelfLabel label;
+	public static final int ROWS = 6;
+	public static final int COLUMNS = 5;
 	private BookshelfTile[][] tiles = new BookshelfTile[ROWS][COLUMNS];
 	private Player player;
 	
 	public Bookshelf() {
-//		label = new BookshelfLabel(PersonalGameAreaWindow.getInstance().getSize());
 		initTiles();
 	}
 	
@@ -22,14 +20,9 @@ public class Bookshelf {
 		for (int row = 0; row < ROWS; row++) {
 			for (int column = 0; column < COLUMNS; column++) {
 				tiles[row][column] = new BookshelfTile(TileType.NULL, row, column, this);
-//				this.label.tilesContainer.add(tiles[row][column].getLabel());
 			}
 		}
 	}
-	
-//	public BookshelfLabel getLabel() {
-//	return label;
-//	}
 	
 	public void dropTile(BoardTile tile, int column) {
 		throw new UnsupportedOperationException();

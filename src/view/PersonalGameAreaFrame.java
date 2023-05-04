@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -10,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import view.personalgamearea.BookshelfLabel;
-import view.personalgamearea.PersonalObjectiveCardLabel;
 
 public class PersonalGameAreaFrame extends JFrame {
 	
@@ -24,7 +24,7 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JLabel playerName;
 	private JLabel nextPlayerButton;
 	private BookshelfLabel bookshelfLabel;
-	private PersonalObjectiveCardLabel personalObjectiveCardLabel;
+	private JLabel personalObjectiveCardLabel;
 	private JLabel pointTile1;
 	private JLabel pointTile2;
 	private JLabel endOfGameTile;
@@ -46,6 +46,9 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.playerNameAndButton.setLayout(new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
 		
 		this.playerName = new JLabel();
+		playerName.setForeground(Color.white);
+		playerName.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/22));
+		
 		this.nextPlayerButton = new JLabel();
 		
 		this.playerNameAndButton.add(playerName);
@@ -56,11 +59,19 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.tiles.setOpaque(false);
 		this.tiles.setLayout(new BoxLayout(tiles, BoxLayout.X_AXIS));
 		
-		this.pointTile1 = new JLabel();
+		this.pointTile1 = new JLabel();		
 		this.pointTile2 = new JLabel();
 		this.endOfGameTile = new JLabel();
 		this.chair = new JLabel();
 		this.points = new JLabel();
+		
+		Dimension tileSize = new Dimension(this.getWidth()/22, this.getWidth()/22);
+		pointTile1.setSize(tileSize);
+		pointTile2.setSize(tileSize);
+		endOfGameTile.setSize(tileSize);
+		chair.setSize(tileSize);
+		points.setForeground(Color.white);
+		points.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
 		
 		this.tiles.add(pointTile1);
 		this.tiles.add(pointTile2);
@@ -74,10 +85,12 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.bookshelfAndCard.setLayout(new FlowLayout());
 		
 		this.bookshelfLabel = new BookshelfLabel(this.getSize());
-		this.personalObjectiveCardLabel = new PersonalObjectiveCardLabel(this.getSize());
+		this.personalObjectiveCardLabel = new JLabel();
+		
+		personalObjectiveCardLabel.setSize(this.getHeight()/4, this.getHeight()*3/8);
 		
 		this.bookshelfAndCard.add(bookshelfLabel);
-		this.bookshelfAndCard.add(personalObjectiveCardLabel);		
+		this.bookshelfAndCard.add(personalObjectiveCardLabel);
 		
 		//Add each container in order
 		this.playerInfoPanel.add(playerNameAndButton);
@@ -93,5 +106,37 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(screenSize.width/2, 0);
 		this.setVisible(true);
+	}
+
+	public JLabel getPlayerName() {
+		return playerName;
+	}
+
+	public JLabel getNextPlayerButton() {
+		return nextPlayerButton;
+	}
+
+	public JLabel getPersonalObjectiveCardLabel() {
+		return personalObjectiveCardLabel;
+	}
+
+	public JLabel getPointTile1() {
+		return pointTile1;
+	}
+
+	public JLabel getPointTile2() {
+		return pointTile2;
+	}
+
+	public JLabel getPoints() {
+		return points;
+	}
+
+	public JLabel getChair() {
+		return chair;
+	}
+
+	public BookshelfLabel getBookshelfLabel() {
+		return bookshelfLabel;
 	}
 }

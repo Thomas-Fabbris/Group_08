@@ -11,11 +11,16 @@ import model.PersonalGameArea;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
+import model.personalgamearea.Bookshelf;
+import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.PointTile;
+import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 import view.commongamearea.BoardTileLabel;
+import view.personalgamearea.BookshelfLabel;
+import view.personalgamearea.BookshelfTileLabel;
 
 public class MainController {
 
@@ -37,13 +42,26 @@ public class MainController {
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
 
+		
 		//Common game area initialisation
 		assignBoardTiles();
 		assignCommonObjectiveCards();
 		assignPointTiles();
+		assignBookshelfTiles();
 	}
 
+	// ----------- Personal game area operations -----------
 	
+	private void assignBookshelfTiles() {
+		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
+		
+		for (int row = 0; row < Bookshelf.ROWS; row++) {
+			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
+				BookshelfTileLabel tile = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
+				bookshelfLabel.tilesContainer.add(tile);
+			}
+		}
+	}
 	
 	// ----------- Common game area operations -----------
 	
@@ -73,31 +91,6 @@ public class MainController {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
 	}
 	
-	/**
-	 * Updates the Label's icon; gets the path of the new image from the Supplier
-	 */
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
-		tileLabel.setIcon(icon);
-	}
-	
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, boolean isGray) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
-		
-		if(isGray)
-			icon = ImageUtils.getGrayImage(icon);
-		
-		tileLabel.setIcon(icon);
-	}
-	
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
-		
-		if(iconRotation != 0 && iconRotation != 360)
-			icon = ImageUtils.rotateIcon(icon, iconRotation);
-
-		tileLabel.setIcon(icon);
-	}
 
 	/**
 	 * Assigns a Label to each Tile on the board and save that Label in
@@ -114,12 +107,12 @@ public class MainController {
 
 		boardTileLabels = new BoardTileLabel[ROWS][COLUMNS];
 
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLUMNS; j++) {
-				if (board.getValidPositions()[i][j]) {
-					boardTileLabels[i][j] = new BoardTileLabel(i, j, boardLabel.getSize());
-					updateBoardTileLabel(board.getTile(i, j), boardTileLabels[i][j]);
-					boardLabel.add(boardTileLabels[i][j]);
+		for (int row = 0; row < ROWS; row++) {
+			for (int column = 0; column < COLUMNS; column++) {
+				if (board.getValidPositions()[row][column]) {
+					boardTileLabels[row][column] = new BoardTileLabel(row, column, boardLabel.getSize());
+					updateBoardTileLabel(board.getTile(row, column), boardTileLabels[row][column]);
+					boardLabel.add(boardTileLabels[row][column]);
 				}
 			}
 		}
@@ -145,4 +138,29 @@ public class MainController {
 		card2Label.setIcon(icon);
 	}
 
+	/**
+	 * Updates the Label's icon; gets the path of the new image from the Supplier
+	 */
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage) {
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		tileLabel.setIcon(icon);
+	}
+	
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, boolean isGray) {
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		
+		if(isGray)
+			icon = ImageUtils.getGrayImage(icon);
+		
+		tileLabel.setIcon(icon);
+	}
+	
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		
+		if(iconRotation != 0 && iconRotation != 360)
+			icon = ImageUtils.rotateIcon(icon, iconRotation);
+		
+		tileLabel.setIcon(icon);
+	}
 }
