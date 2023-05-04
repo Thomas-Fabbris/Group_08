@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.function.Supplier;
 
 import javax.swing.ImageIcon;
@@ -13,7 +12,6 @@ import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
 import model.personalgamearea.PointTile;
-import model.shared.Tile;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -39,11 +37,16 @@ public class MainController {
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
 
+		//Common game area initialisation
 		assignBoardTiles();
 		assignCommonObjectiveCards();
 		assignPointTiles();
 	}
 
+	
+	
+	// ----------- Common game area operations -----------
+	
 	/**
 	 * Updates each common objective card's point tile
 	 */

@@ -7,9 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import view.ImageUtils;
+
 public class BookshelfLabel extends JLabel {
-	
-	private final String SHELF_IMAGE_PATH = "Assets/Bookshelf.png";
+
 	private ImageIcon image;
 	public final JPanel tilesContainer = new JPanel(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
 	
@@ -18,9 +19,9 @@ public class BookshelfLabel extends JLabel {
 	private int containerWidth;
 	private int containerHeight;
 	
-	public BookshelfLabel(Dimension window_size) {
-		this.setSize(window_size.height*3/5, window_size.height*3/5);
-		image = LoadImageAsIcon(SHELF_IMAGE_PATH);
+	public BookshelfLabel(Dimension windowSize) {
+		this.setSize(windowSize.height*3/5, windowSize.height*3/5);
+		image = ImageUtils.loadImageAsIcon(this.getWidth(), this.getHeight(), "Assets/Bookshelf.png");
 		this.setIcon(image);
 		
 		containerXoffset = (int)(this.getWidth() / 8);
@@ -33,12 +34,5 @@ public class BookshelfLabel extends JLabel {
 		tilesContainer.setOpaque(false);
 		
 		this.add(tilesContainer);
-	}
-	
-	private ImageIcon LoadImageAsIcon(String image_path) {
-		ImageIcon icon = new ImageIcon(image_path);
-		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(this.getSize().width, this.getSize().height, java.awt.Image.SCALE_SMOOTH);
-		return new ImageIcon(tmp_image);
 	}
 }

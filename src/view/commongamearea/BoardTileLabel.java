@@ -1,17 +1,8 @@
 package view.commongamearea;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.color.ColorSpace;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import model.shared.TileType;
-import view.ImageUtils;
 
 public class BoardTileLabel extends JLabel {
 	

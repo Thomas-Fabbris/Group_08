@@ -3,12 +3,10 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import model.shared.Player;
 import view.commongamearea.BoardTileLabel;
 
 public class CommonGameAreaFrame extends JFrame {
@@ -49,6 +47,7 @@ public class CommonGameAreaFrame extends JFrame {
 		
 		this.card1PointTile.setBounds((int)(card1.getWidth() / 1.7), (int)(card1.getHeight() / 3.55),
 				(int)(card1.getWidth() / 3.55), (int)(card1.getWidth() / 3.55));
+		
 		this.card2PointTile.setBounds((int)(card2.getWidth() / 1.7), (int)(card2.getHeight() / 3.55),
 				(int)(card2.getWidth() / 3.55), (int)(card2.getWidth() / 3.55));
 		

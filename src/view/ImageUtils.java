@@ -17,18 +17,24 @@ public class ImageUtils {
 	 * Returns an ImageIcon loaded from the specified path
 	 * @param width
 	 * @param height
-	 * @param image_path
-	 * @return
+	 * @param imagePath
+	 * @return ImageIcon
 	 */
-	public static ImageIcon loadImageAsIcon(int width, int height, String image_path) {
-		ImageIcon icon = new ImageIcon(image_path);
+	public static ImageIcon loadImageAsIcon(int width, int height, String imagePath) {
+		ImageIcon icon = new ImageIcon(imagePath);
 		Image tmp_image = icon.getImage();
 		tmp_image = tmp_image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 	
-	public static ImageIcon loadImageAsIcon(Dimension size, String image_path) {
-		ImageIcon icon = new ImageIcon(image_path);
+	/**
+	 * Returns an ImageIcon loaded from the specified path
+	 * @param size
+	 * @param imagePath
+	 * @return ImageIcon
+	 */
+	public static ImageIcon loadImageAsIcon(Dimension size, String imagePath) {
+		ImageIcon icon = new ImageIcon(imagePath);
 		Image tmp_image = icon.getImage();
 		tmp_image = tmp_image.getScaledInstance(size.width, size.height, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
