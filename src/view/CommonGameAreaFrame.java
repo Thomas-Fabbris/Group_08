@@ -14,6 +14,7 @@ public class CommonGameAreaFrame extends JFrame {
 	private Dimension screenSize;
 	private JLabel boardLabel;
 	private BoardTileLabel[][] boardTileLabels;
+	private JLabel endOfGameTile;
 	
 	//Common objective cards
 	private JLabel card1;
@@ -34,6 +35,15 @@ public class CommonGameAreaFrame extends JFrame {
 		this.boardLabel = new JLabel();
 		this.boardLabel.setSize(screenSize.getSize().height*2/3 - 20, screenSize.getSize().height*2/3 - 20);
 		this.boardLabel.setIcon(ImageUtils.loadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
+
+		//Initialise endOfGameTile, rotate it and then add it to the board
+		int rotation = 15;
+		
+		this.endOfGameTile = new JLabel();
+		this.endOfGameTile.setBounds((int)(boardLabel.getWidth() / 1.23), (int)(boardLabel.getHeight() / 1.42), boardLabel.getHeight()/10, boardLabel.getHeight()/10);
+		this.endOfGameTile.setIcon(ImageUtils.rotateIcon(ImageUtils.loadImageAsIcon(endOfGameTile.getSize(), "Assets/Point_tiles/First_to_finish.jpg"), rotation));
+		
+		this.boardLabel.add(endOfGameTile);
 		
 		//Initialise both cards
 		this.card1 = new JLabel();

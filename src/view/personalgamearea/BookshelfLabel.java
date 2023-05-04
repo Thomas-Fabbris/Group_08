@@ -13,7 +13,7 @@ public class BookshelfLabel extends JLabel {
 
 	private ImageIcon image;
 	public final BookshelfTileLabel[][] tiles;
-	public final JPanel tilesContainer = new JPanel(); //The tile labels go inside the JPanel, which also offsets them correctly on the GUI
+	public final JPanel tilesContainer = new JPanel(); //This contains the tile labels displayed on the bookshelf
 	
 	public BookshelfLabel(Dimension windowSize) {
 		this.setSize(windowSize.height*3/5, windowSize.height*3/5);

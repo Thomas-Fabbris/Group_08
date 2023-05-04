@@ -14,8 +14,6 @@ import model.commongamearea.CommonObjectiveCard;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.PointTile;
-import model.shared.Player;
-import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
