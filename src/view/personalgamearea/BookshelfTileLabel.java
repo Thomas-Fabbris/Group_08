@@ -25,7 +25,7 @@ public class BookshelfTileLabel extends JLabel {
 		this.yOffset = (int)(tileLength / 3.8);
 		int xPos = convertColumnToXCoords(column);
 		int yPos = convertRowToYCoords(row);
-
+//		this.setOpaque(true);
 		this.setBounds(xPos, yPos, tileLength, tileLength);
 	}
 	

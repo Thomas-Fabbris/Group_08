@@ -57,7 +57,7 @@ public class PersonalGameAreaFrame extends JFrame {
 		nextPlayerButton.setIcon(ImageUtils.loadImageAsIcon(3 * tileLength, 2 * tileLength, "Assets/ArrowButton/ArrowButton.png"));
 		
 		playerNameAndButton.add(playerName);
-		playerNameAndButton.add(Box.createRigidArea(new Dimension(2*tileLength, tileLength)));
+		playerNameAndButton.add(Box.createRigidArea(new Dimension(3*tileLength, tileLength)));
 		playerNameAndButton.add(nextPlayerButton);
 				
 		//Tiles
@@ -106,12 +106,12 @@ public class PersonalGameAreaFrame extends JFrame {
 		bookshelfAndCard.add(bookshelfLabel);
 		bookshelfAndCard.add(personalObjectiveCardLabel);
 		
-		int separatorHeight = (this.getHeight() - tiles.getHeight() - bookshelfAndCard.getHeight() - playerNameAndButton.getHeight())/4;
-		
 		//Add each container in order
+		int separatorHeight = (this.getHeight() - tileLength - bookshelfLabel.getHeight() - playerName.getHeight())/4;
+
 		playerInfoPanel.add(playerNameAndButton);
-		playerInfoPanel.add(tiles);
 		playerInfoPanel.add(Box.createRigidArea(new Dimension(this.getWidth(), separatorHeight)));
+		playerInfoPanel.add(tiles);
 		playerInfoPanel.add(bookshelfAndCard);
 		add(playerInfoPanel);
 	}
