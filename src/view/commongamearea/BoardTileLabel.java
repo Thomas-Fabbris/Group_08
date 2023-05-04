@@ -15,51 +15,19 @@ import view.ImageUtils;
 
 public class BoardTileLabel extends JLabel {
 	
-	private final String folder_path = "Assets/tiles/";
-	ImageIcon image;
-	ImageIcon imageGray;
+	private int offset;
+	private int tileCellLength;
 	
-	//informazioni sulla posizione del tile in pixels
-	private int x_pos;
-	private int y_pos;
-	
-	//dimensioni del tile in pixels
-	public final int tileLength;
-	private final int tileCellLength;
-	private final int offset;
-	
-	public BoardTileLabel(TileType tile_type, int row, int column, Dimension board_size) {
-		this.tileLength = board_size.height/12;
-		this.offset = (int)(board_size.height / 17);
-		this.tileCellLength = board_size.width / 10;
-		this.x_pos = convertColumnToXCoords(column);
-		this.y_pos = convertRowToYCoords(row);
-		this.setBounds(this.x_pos, this.y_pos, tileLength, tileLength);
+	public BoardTileLabel(int row, int column, Dimension boardLabelSize) {
+		this.offset = (int)(boardLabelSize.height / 17);
+		this.tileCellLength = boardLabelSize.width / 10;
 
-//		this.image = LoadImageAsIcon(GetImagePath(tile_type));
-//		this.imageGray = getGrayImage(this.image);
+		int tileLength = boardLabelSize.height/12;
+		int xPos = convertColumnToXCoords(column);
+		int yPos = convertRowToYCoords(row);
 		
-		setType(tile_type);
+		this.setBounds(xPos, yPos, tileLength, tileLength);
 	}
-	
-	private String GetImagePath(TileType tile_type) {		
-		return this.folder_path + tile_type.toString() + ".png"; //'Assets/tiles/' + 'B' + 'ooks' + '.png'
-	}
-	
-	private ImageIcon LoadImageAsIcon(String image_path) {
-		ImageIcon icon = new ImageIcon(image_path);
-		Image tmp_image = icon.getImage();
-		tmp_image = tmp_image.getScaledInstance(this.tileLength, this.tileLength, java.awt.Image.SCALE_SMOOTH);
-		return new ImageIcon(tmp_image);
-	}
-	
-	public void setType(TileType type) {
-		if(type == TileType.NULL) return;
-		this.image = LoadImageAsIcon(GetImagePath(type));
-		this.imageGray =  ImageUtils.getGrayImage(image);
-		setIcon(this.image);
-	}
-
 	
 	/***
 	 * Converts the row number to the actual y coordinate

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.color.ColorSpace;
@@ -23,6 +24,13 @@ public class ImageUtils {
 		ImageIcon icon = new ImageIcon(image_path);
 		Image tmp_image = icon.getImage();
 		tmp_image = tmp_image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(tmp_image);
+	}
+	
+	public static ImageIcon loadImageAsIcon(Dimension size, String image_path) {
+		ImageIcon icon = new ImageIcon(image_path);
+		Image tmp_image = icon.getImage();
+		tmp_image = tmp_image.getScaledInstance(size.width, size.height, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(tmp_image);
 	}
 	
