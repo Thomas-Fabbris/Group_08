@@ -19,8 +19,6 @@ public class CommonGameArea {
 		IdGenerator idGenerator = new IdGenerator();
 		this.card1 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
 		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
-		
-		System.out.println("CommonGameArea.java: " + card1.getId() + ", " + card2.getId());
 	}
 	
 	public Board getBoard() {

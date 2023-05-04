@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.shared.TileType;
+import view.ImageUtils;
 
 public class BookshelfTileLabel extends JLabel {
 	
@@ -26,7 +27,6 @@ public class BookshelfTileLabel extends JLabel {
 		int yPos = convertRowToYCoords(row);
 
 		this.setBounds(xPos, yPos, tileLength, tileLength);
-		this.setOpaque(true);
 	}
 	
 	private int convertRowToYCoords(int row) {

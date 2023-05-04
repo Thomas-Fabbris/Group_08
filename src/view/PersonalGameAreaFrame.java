@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,67 +38,82 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.screenSize = screenSize;
 		Init();
 		
-		this.playerInfoPanel = new JPanel();
-		this.playerInfoPanel.setLayout(new FlowLayout());
-		this.playerInfoPanel.setOpaque(false);
+		int tileLength = this.getWidth()/12;
+		
+		playerInfoPanel = new JPanel();
+		playerInfoPanel.setLayout(new FlowLayout());
+		playerInfoPanel.setOpaque(false);
 		
 		//Player's name and Next player button
-		this.playerNameAndButton = new JPanel();
-		this.playerNameAndButton.setOpaque(false);
-		this.playerNameAndButton.setLayout(new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
+		playerNameAndButton = new JPanel();
+		playerNameAndButton.setOpaque(false);
+		playerNameAndButton.setLayout(new BoxLayout(playerNameAndButton, BoxLayout.X_AXIS));
 		
-		this.playerName = new JLabel();
+		playerName = new JLabel();
 		playerName.setForeground(Color.white);
 		playerName.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/22));
 		
 		this.nextPlayerButton = new JLabel();
+		nextPlayerButton.setIcon(ImageUtils.loadImageAsIcon(3 * tileLength, 2 * tileLength, "Assets/ArrowButton/ArrowButton.png"));
 		
-		this.playerNameAndButton.add(playerName);
-		this.playerNameAndButton.add(nextPlayerButton);
+		playerNameAndButton.add(playerName);
+		playerNameAndButton.add(Box.createRigidArea(new Dimension(2*tileLength, tileLength)));
+		playerNameAndButton.add(nextPlayerButton);
 				
 		//Tiles
-		this.tiles = new JPanel();
-		this.tiles.setOpaque(false);
-		this.tiles.setLayout(new BoxLayout(tiles, BoxLayout.X_AXIS));
+		tiles = new JPanel();
+		tiles.setOpaque(false);
+		tiles.setLayout(new BoxLayout(tiles, BoxLayout.X_AXIS));
 		
-		this.pointTile1 = new JLabel();		
-		this.pointTile2 = new JLabel();
-		this.endOfGameTile = new JLabel();
-		this.chair = new JLabel();
-		this.points = new JLabel();
+		pointTile1 = new JLabel();
+		pointTile2 = new JLabel();
+		endOfGameTile = new JLabel();
+		chair = new JLabel();
+		points = new JLabel();
 		
-		Dimension tileSize = new Dimension(this.getWidth()/22, this.getWidth()/22);
-		pointTile1.setSize(tileSize);
-		pointTile2.setSize(tileSize);
-		endOfGameTile.setSize(tileSize);
-		chair.setSize(tileSize);
+		chair.setSize(tileLength, tileLength);
+		pointTile1.setSize(tileLength, tileLength);
+		pointTile2.setSize(tileLength, tileLength);
+		endOfGameTile.setSize(tileLength, tileLength);
 		points.setForeground(Color.white);
 		points.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
 		
-		this.tiles.add(pointTile1);
-		this.tiles.add(pointTile2);
-		this.tiles.add(endOfGameTile);
-		this.tiles.add(points);
-		this.tiles.add(chair);
+		chair.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Firstplayertoken.png"));
+		pointTile1.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/4p.jpg"));
+		pointTile2.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/8p.jpg"));
+		endOfGameTile.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/First_to_finish.jpg"));
+		
+		tiles.add(chair);
+		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		tiles.add(pointTile1);
+		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		tiles.add(pointTile2);
+		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		tiles.add(endOfGameTile);
+		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
+		tiles.add(points);
 
 		//Bookshelf and Personal objective card
-		this.bookshelfAndCard = new JPanel();
-		this.bookshelfAndCard.setOpaque(false);
-		this.bookshelfAndCard.setLayout(new FlowLayout());
+		bookshelfAndCard = new JPanel();
+		bookshelfAndCard.setOpaque(false);
+		bookshelfAndCard.setLayout(new FlowLayout());
 		
-		this.bookshelfLabel = new BookshelfLabel(this.getSize());
-		this.personalObjectiveCardLabel = new JLabel();
+		bookshelfLabel = new BookshelfLabel(this.getSize());
+		personalObjectiveCardLabel = new JLabel();
 		
 		personalObjectiveCardLabel.setSize(this.getHeight()/4, this.getHeight()*3/8);
 		
-		this.bookshelfAndCard.add(bookshelfLabel);
-		this.bookshelfAndCard.add(personalObjectiveCardLabel);
+		bookshelfAndCard.add(bookshelfLabel);
+		bookshelfAndCard.add(personalObjectiveCardLabel);
+		
+		int separatorHeight = (this.getHeight() - tiles.getHeight() - bookshelfAndCard.getHeight() - playerNameAndButton.getHeight())/4;
 		
 		//Add each container in order
-		this.playerInfoPanel.add(playerNameAndButton);
-		this.playerInfoPanel.add(tiles);
-		this.playerInfoPanel.add(bookshelfAndCard);
-		this.add(playerInfoPanel);
+		playerInfoPanel.add(playerNameAndButton);
+		playerInfoPanel.add(tiles);
+		playerInfoPanel.add(Box.createRigidArea(new Dimension(this.getWidth(), separatorHeight)));
+		playerInfoPanel.add(bookshelfAndCard);
+		add(playerInfoPanel);
 	}
 	
 	private void Init() {

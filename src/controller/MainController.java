@@ -14,6 +14,7 @@ import model.commongamearea.CommonObjectiveCard;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.PointTile;
+import model.shared.Player;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
@@ -42,26 +43,65 @@ public class MainController {
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
 
+		//Personal game area initialisation
+		assignBookshelfTiles();
+		assignNextPlayerButtonController();
+		assignPlayerNameTextController();
+		assignPointsTextController();
+		assignPersonalObjectiveCardLabel(4);
 		
 		//Common game area initialisation
 		assignBoardTiles();
 		assignCommonObjectiveCards();
 		assignPointTiles();
-		assignBookshelfTiles();
 	}
 
 	// ----------- Personal game area operations -----------
 	
+	/**
+	 * Assigns a Label to each Tile in the bookshelf and saves it in personalGameAreaFrame.bookshelfLabel.tiles[][]
+	 */
 	private void assignBookshelfTiles() {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
-		
+				
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
 			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
 				BookshelfTileLabel tile = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
+				bookshelfLabel.tiles[row][column] = tile;
 				bookshelfLabel.tilesContainer.add(tile);
 			}
 		}
 	}
+	
+	private void assignPersonalObjectiveCardLabel(int cardId) {
+		JLabel personalObjectiveCard = personalGameAreaFrame.getPersonalObjectiveCardLabel();
+		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.png".replace("X", Integer.toString(cardId));
+		ImageIcon icon = ImageUtils.loadImageAsIcon(personalObjectiveCard.getSize(), path);
+		personalObjectiveCard.setIcon(icon);
+	}
+	
+	private void assignNextPlayerButtonController() {
+		JLabel button = personalGameAreaFrame.getNextPlayerButton();
+		//TODO: add missing implementation
+	}
+	
+	private void assignPlayerNameTextController() {
+		JLabel playerName = personalGameAreaFrame.getPlayerName();
+		playerName.setText("Player's turn");
+	}
+	
+	private void assignPointsTextController() {
+		JLabel points = personalGameAreaFrame.getPoints();
+		points.setText("Points: 25");
+	}
+	
+	/**
+	 * Updates the image of the label to reflect the TileType of the BookshelfTile
+	 */
+	private void updateBookshelfTileLabel(BookshelfTile tile, BookshelfTileLabel label) {
+		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
+	}
+	
 	
 	// ----------- Common game area operations -----------
 	
@@ -93,8 +133,7 @@ public class MainController {
 	
 
 	/**
-	 * Assigns a Label to each Tile on the board and save that Label in
-	 * commonGameAreaFrame.boardTileLabels
+	 * Assigns a Label to each Tile on the board and saves it in commonGameAreaFrame.boardTileLabels
 	 */
 	private void assignBoardTiles() {
 
@@ -146,10 +185,10 @@ public class MainController {
 		tileLabel.setIcon(icon);
 	}
 	
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, boolean isGray) {
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, boolean isGrayscale) {
 		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
 		
-		if(isGray)
+		if(isGrayscale)
 			icon = ImageUtils.getGrayImage(icon);
 		
 		tileLabel.setIcon(icon);
