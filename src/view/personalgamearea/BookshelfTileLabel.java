@@ -13,14 +13,14 @@ public class BookshelfTileLabel extends JLabel {
 	public BookshelfTileLabel(int row, int column, Dimension shelfLabelSize) {
 		
 		//Compute the size of the various elements needed to place the tiles
-		//This method causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions
-		this.tileLength = (int)(shelfLabelSize.height / 9); // '1/7 -> 1/9'
+		//This method of computing element sizes causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions
+		this.tileLength = (int)(shelfLabelSize.height / 9);
 
 		this.xOffset = (int)(tileLength / 2.2);
 		this.yOffset = (int)(tileLength / 3.8);
 		int xPos = convertColumnToXCoords(column);
 		int yPos = convertRowToYCoords(row);
-//		this.setOpaque(true);
+//		this.setOpaque(true); //used for debug
 		this.setBounds(xPos, yPos, tileLength, tileLength);
 	}
 	

@@ -11,9 +11,9 @@ import model.PersonalGameArea;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
+import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
-import model.personalgamearea.PointTile;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -80,7 +80,7 @@ public class MainController {
 	
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		//TODO: add missing implementation
+		button.addMouseListener(new nextPlayerButtonController(button));
 	}
 	
 	private void assignPlayerNameTextController() {

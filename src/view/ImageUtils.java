@@ -53,7 +53,7 @@ public class ImageUtils {
 		icon.paintIcon(null, g, 0, 0);
 		g.dispose();
 		
-		double radians = Math.toRadians(angle); //then apply a rotation to the buffered image through a transform
+		double radians = Math.toRadians(angle);
 		AffineTransform transform = new AffineTransform();
 		transform.rotate(radians, icon.getIconWidth()/ 2, icon.getIconHeight()/ 2);
 		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
@@ -63,7 +63,7 @@ public class ImageUtils {
 	}
 	
 	/**
-	 * Returns a gray-scale version of the icon
+	 * Returns a grayscale version of the icon
 	 * @param icon
 	 * @return
 	 */

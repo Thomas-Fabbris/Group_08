@@ -1,6 +1,5 @@
-package model.personalgamearea;
+package model.commongamearea;
 
-import model.commongamearea.CommonObjectiveCard;
 import model.shared.Tile;
 import model.shared.TileType;
 

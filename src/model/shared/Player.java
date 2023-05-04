@@ -1,8 +1,8 @@
 package model.shared;
 
+import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.PersonalObjectiveCard;
-import model.personalgamearea.PointTile;
 
 public class Player {
 	private String name;

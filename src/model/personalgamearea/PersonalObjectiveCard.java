@@ -12,11 +12,26 @@ public class PersonalObjectiveCard {
 	
 	public final static int MAX_CARD_ID = 12;
 	public final int cardId;
-	private List<TileTypeCoordinate> type_positions = new LinkedList<>(); //Stores the TileType and its position for comparison on the shelf
+	
+	/**
+	 * This is a list of TileTypes, each TileType has a pair of coordinates associated with it.
+	 * Example: 2, 3, BOOKS
+	 * 			|  |    |
+	 * 			V  V    V
+	 * 		   row col TileType  where row and column represent the position of a tile on a bookshelf, and TileType is the tile that should
+	 * 							 be present at that position in the bookshelf to satisfy the personal objective card.
+	 * 
+	 * When checking the bookshelf, we can iterate through each element of the list and compare it to the tiles on the bookshelf.
+	 * Pseudo code example
+	 * forEach(tileGoal):
+	 * 		if(Bookshelf.tileAt(tileGoal.row, tileGoal.column) == tileGoal.tileType):
+	 * 			player.givePoints(1)
+	 */
+	private List<BookshelfTileGoal> tileGoals = new LinkedList<>(); //Stores the TileType and its position for comparison on the shelf
 	
 	public PersonalObjectiveCard(int card_id) {
 		this.cardId = card_id;
-		this.type_positions = readTypePositionsFromFile(selectFile(card_id));
+		this.tileGoals = readTypePositionsFromFile(selectFile(card_id));
 	}
 	
 	private File selectFile(int card_id) {
@@ -25,7 +40,7 @@ public class PersonalObjectiveCard {
 	}
 	
 	//Read the file with the positions of each TileType on the card
-	private List<TileTypeCoordinate> readTypePositionsFromFile(File file) {
+	private List<BookshelfTileGoal> readTypePositionsFromFile(File file) {
 
 		Scanner scanner = null;
 		try {
@@ -34,7 +49,7 @@ public class PersonalObjectiveCard {
 			e.printStackTrace();
 		}
 		
-		List<TileTypeCoordinate> coords = new LinkedList<>();	
+		List<BookshelfTileGoal> coords = new LinkedList<>();	
 		String line;
 
 		while(scanner.hasNextLine()) {
@@ -46,8 +61,8 @@ public class PersonalObjectiveCard {
 	}
 	
 	
-	//Parse a String line in the format 'x, y, TileType' and create a new TileTypeCoordinate with the parsed data
-	private TileTypeCoordinate parseStringToCoordinates(String line) {
+	//Parse a line in the format 'x, y, TileType' and create a new TileTypeCoordinate with the parsed data
+	private BookshelfTileGoal parseStringToCoordinates(String line) {
 		
 		String[] line_elements = line.split(" "); // x, y, TileType
 		
@@ -66,19 +81,19 @@ public class PersonalObjectiveCard {
 		if(y < 0 || y > 5)
 			throw new IllegalArgumentException(y + " y coordinate out of bounds!");
 		
-		return new TileTypeCoordinate(x, y, tile_type);
+		return new BookshelfTileGoal(x, y, tile_type);
 	}
 	
-	private class TileTypeCoordinate {
+	private class BookshelfTileGoal {
 		
-		public final int x;
-		public final int y;
-		public final TileType tile_type;
+		public final int row;
+		public final int column;
+		public final TileType tileType;
 		
-		TileTypeCoordinate(int x, int y, TileType tile_type) {
-			this.x = x;
-			this.y = y;
-			this.tile_type = tile_type;
+		BookshelfTileGoal(int row, int column, TileType tile_type) {
+			this.row = row;
+			this.column = column;
+			this.tileType = tile_type;
 		}
 	}
 }

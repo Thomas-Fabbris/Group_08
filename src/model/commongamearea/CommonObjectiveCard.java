@@ -2,7 +2,6 @@ package model.commongamearea;
 
 import java.util.Stack;
 
-import model.personalgamearea.PointTile;
 import model.shared.Player;
 
 public class CommonObjectiveCard {

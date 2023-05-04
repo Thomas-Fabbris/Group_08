@@ -14,18 +14,10 @@ public class BoardTile extends Tile{
 		this.column = column;
 		this.board = board;
 		this.isActive = true;
-//		this.setLabel(new BoardTileLabel(tile_type, row, column, board.getLabel().getSize()));
-//		this.label.addMouseListener(new BoardTileListener(board, this)); 
-//		this.setVisible(true);
 	}
-
-//	public BoardTileLabel getLabel() {
-//		return (BoardTileLabel)label;
-//	}
 	
 	public void setType(TileType type) {
 		super.setType(type);
-//		getLabel().setType(type);
 	}
 	
 	public int getRow() {

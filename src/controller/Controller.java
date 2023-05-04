@@ -1,3 +1,7 @@
+//
+//Ho dovuto commentare tutta la classe, altrimenti il codice non si compilava perché non esiste più la classe Game.
+//Per togliere tutti i commenti in un solo colpo: CTRL + A -> CTRL + 7, poi CTRL + S per salvare.
+//
 //package controller;
 //
 //import model.personalgamearea.Bookshelf;
