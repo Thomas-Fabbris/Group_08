@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.shared.TileType;
+import view.ImageUtils;
 
 public class BoardTileLabel extends JLabel {
 	
@@ -42,9 +43,7 @@ public class BoardTileLabel extends JLabel {
 	}
 	
 	private String GetImagePath(TileType tile_type) {		
-		String image_name = tile_type.toString(); //BOOKS
-		String image_substring = image_name.substring(1,image_name.length()); //BOOKS -> OOKS
-		return this.folder_path + image_name.charAt(0) + image_substring.toLowerCase() + ".png"; //'Assets/tiles/' + 'B' + 'ooks' + '.png'
+		return this.folder_path + tile_type.toString() + ".png"; //'Assets/tiles/' + 'B' + 'ooks' + '.png'
 	}
 	
 	private ImageIcon LoadImageAsIcon(String image_path) {
@@ -54,25 +53,10 @@ public class BoardTileLabel extends JLabel {
 		return new ImageIcon(tmp_image);
 	}
 	
-	private ImageIcon getGrayImage(ImageIcon icon) {
-		BufferedImage iconToImage = imageIconToBufferedImage(icon);
-		ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
-		BufferedImage tmp = op.filter(iconToImage, iconToImage);
-		return new ImageIcon(tmp);
-	}
-	
-	private BufferedImage imageIconToBufferedImage(ImageIcon icon) {
-        BufferedImage bufferedImage = new BufferedImage(tileLength, tileLength, BufferedImage.TYPE_INT_ARGB);
-        Graphics graphics = bufferedImage.createGraphics();
-        icon.paintIcon(null, graphics, 0, 0);
-        graphics.dispose();
-        return bufferedImage;
-    }
-	
 	public void setType(TileType type) {
 		if(type == TileType.NULL) return;
 		this.image = LoadImageAsIcon(GetImagePath(type));
-		this.imageGray =  this.getGrayImage(image);
+		this.imageGray =  ImageUtils.getGrayImage(image);
 		setIcon(this.image);
 	}
 

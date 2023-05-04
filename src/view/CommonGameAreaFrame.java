@@ -7,10 +7,13 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import view.commongamearea.BoardTileLabel;
+
 public class CommonGameAreaFrame extends JFrame {
 
 	private Dimension screenSize;
 	private JLabel boardLabel;
+	private BoardTileLabel[][] boardTileLabels;
 	private JLabel card1;
 	private JLabel card2;
 	
@@ -24,7 +27,7 @@ public class CommonGameAreaFrame extends JFrame {
 		//Initialise the board
 		this.boardLabel = new JLabel();
 		this.boardLabel.setSize(screenSize.getSize().height*2/3 - 20, screenSize.getSize().height*2/3 - 20);
-		this.boardLabel.setIcon(Utils.LoadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
+		this.boardLabel.setIcon(ImageUtils.loadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
 		
 		//Initialise both cards
 		this.card1 = new JLabel();
@@ -46,6 +49,10 @@ public class CommonGameAreaFrame extends JFrame {
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);
 		this.setVisible(true);
+	}
+	
+	public BoardTileLabel[][] getBoardTiles() {
+		return this.boardTileLabels;
 	}
 	
 	public JLabel getBoardLabel() {

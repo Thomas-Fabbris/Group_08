@@ -20,7 +20,7 @@ public class CommonGameArea {
 		this.card1 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
 		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
 		
-		System.out.println("CommonGameArea.java: " + card1.getId() + " - " + card2.getId());
+		System.out.println("CommonGameArea.java: " + card1.getId() + ", " + card2.getId());
 	}
 	
 	public Board getBoard() {
