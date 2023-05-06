@@ -23,7 +23,7 @@ public class PersonalObjectiveCard {
 	 * 
 	 * When checking the bookshelf, we can iterate through each element of the list and compare it to the tiles on the bookshelf.
 	 * Pseudo code example
-	 * forEach(tileGoal):
+	 * forEach tileGoal:
 	 * 		if(Bookshelf.tileAt(tileGoal.row, tileGoal.column) == tileGoal.tileType):
 	 * 			player.givePoints(1)
 	 */

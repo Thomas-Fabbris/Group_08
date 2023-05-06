@@ -14,6 +14,7 @@ import model.commongamearea.CommonObjectiveCard;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
+import model.shared.IdGenerator;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -40,13 +41,15 @@ public class MainController {
 
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
+		
+		IdGenerator idGenerator = new IdGenerator();
 
 		//Personal game area initialisation
 		assignBookshelfTiles();
 		assignNextPlayerButtonController();
 		assignPlayerNameTextController();
 		assignPointsTextController();
-		assignPersonalObjectiveCardLabel(4);
+		assignPersonalObjectiveCardLabel(idGenerator.getNewPersonalObjectiveCardId());
 		
 		//Common game area initialisation
 		assignBoardTiles();
