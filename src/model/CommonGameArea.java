@@ -12,13 +12,13 @@ public class CommonGameArea {
 	CommonObjectiveCard card2;
 	GameEndTile gameEndTile;
 	
-	public CommonGameArea() {
-		this.board = new Board();
+	public CommonGameArea(int numberOfPlayers) {
+		this.board = new Board(numberOfPlayers);
 		this.gameEndTile = new GameEndTile(board);
 		
 		IdGenerator idGenerator = new IdGenerator();
-		this.card1 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
-		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId());
+		this.card1 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers);
+		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers);
 	}
 	
 	public Board getBoard() {

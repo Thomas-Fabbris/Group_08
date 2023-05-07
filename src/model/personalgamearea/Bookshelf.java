@@ -8,7 +8,7 @@ public class Bookshelf {
 	
 	public static final int ROWS = 6;
 	public static final int COLUMNS = 5;
-	private BookshelfTile[][] tiles = new BookshelfTile[ROWS][COLUMNS];
+	public final BookshelfTile[][] tiles = new BookshelfTile[ROWS][COLUMNS];
 	private Player player;
 	
 	public Bookshelf() {

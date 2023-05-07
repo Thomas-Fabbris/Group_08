@@ -16,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.shared.Player;
-
 public class MainMenuWindow extends JDialog {
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
@@ -49,7 +47,6 @@ public class MainMenuWindow extends JDialog {
 		
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Player.setNumberOfPlayers(number_of_players);
 				startGame();
 			}
 		});

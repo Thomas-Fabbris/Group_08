@@ -10,19 +10,19 @@ public class CommonObjectiveCard {
 	public static int MAX_CARD_ID = 12;
 	private Stack<PointTile> pointTiles = new Stack<>();
 	
-	public CommonObjectiveCard(int card_id) {
+	public CommonObjectiveCard(int card_id, int numberOfPlayers) {
 		this.cardId = card_id;
 		
-		initPointsList();
+		initPointsList(numberOfPlayers);
 	}
 	
 	public int getId() {
 		return this.cardId;
 	}
 	
-	private void initPointsList() {
+	private void initPointsList(int numberOfPlayers) {
 		
-		switch (Player.getNumberOfPlayers()) {
+		switch (numberOfPlayers) {
 		case 2:
 			pointTiles.push(new PointTile(this, 4));
 			pointTiles.push(new PointTile(this, 8));

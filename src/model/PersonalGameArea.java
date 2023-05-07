@@ -10,4 +10,12 @@ public class PersonalGameArea {
 		
 	}
 	
+	public void setCurrentPlayer(Player newPlayer) {
+		this.currentPlayer = newPlayer;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+	
 }

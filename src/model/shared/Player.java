@@ -6,7 +6,7 @@ import model.personalgamearea.PersonalObjectiveCard;
 
 public class Player {
 	private String name;
-	private static int number_of_players;
+//	private static int number_of_players;
 	public final int id;
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
@@ -28,14 +28,14 @@ public class Player {
 			this.hasChair = false;
 	}
 	
-	public static void setNumberOfPlayers(int count) {
-		if(number_of_players == 0)
-			number_of_players = count;
-	}
-	
-	public static int getNumberOfPlayers() {
-		return number_of_players;
-	}
+//	public static void setNumberOfPlayers(int count) {
+//		if(number_of_players == 0)
+//			number_of_players = count;
+//	}
+//	
+//	public static int getNumberOfPlayers() {
+//		return number_of_players;
+//	}
 	
 	//TODO: make this method less spaghetti or document it better
 	public void awardPointTile(PointTile tile) {

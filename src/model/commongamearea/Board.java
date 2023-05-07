@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import model.shared.Player;
 import model.shared.TileType;
 
 public class Board {
@@ -14,8 +13,8 @@ public class Board {
 	private boolean[][] validPositions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
 	
-	public Board() {
-		validPositions = readValidBoardPositionsFile(selectValidPositionsFile(Player.getNumberOfPlayers()));
+	public Board(int numberOfPlayers) {
+		validPositions = readValidBoardPositionsFile(selectValidPositionsFile(numberOfPlayers));
 		this.initTiles();
 	}
 	

@@ -24,12 +24,10 @@ public class Main {
 					
 					MainMenuWindow mainMenu = new MainMenuWindow(players);
 					
-					players.forEach((p) -> System.out.println(p));
-					
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 					//Model
-					CommonGameArea commonGameArea = new CommonGameArea();
+					CommonGameArea commonGameArea = new CommonGameArea(players.size());
 					PersonalGameArea personalGrameArea = new PersonalGameArea();
 					
 					//View
