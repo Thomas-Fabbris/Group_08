@@ -1,21 +1,23 @@
-package model.shared;
+package model;
 
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.PersonalObjectiveCard;
+import model.shared.IdGenerator;
 
 public class Player {
+
 	private String name;
-//	private static int number_of_players;
 	public final int id;
+	private int points;
+	public final boolean hasChair;
+	private boolean hasEndOfGameToken = false;
+
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
-	public final boolean hasChair;
-	private int points;
-	private PointTile pointTile1 = null;
-	private PointTile pointTile2 = null; 
-	private boolean hasEndOfGameToken = false;
-	
+	private PointTile pointTile1;
+	private PointTile pointTile2; 
+
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
 		this.id = idgenerator.getNewId();
@@ -28,30 +30,26 @@ public class Player {
 			this.hasChair = false;
 	}
 	
-//	public static void setNumberOfPlayers(int count) {
-//		if(number_of_players == 0)
-//			number_of_players = count;
-//	}
-//	
-//	public static int getNumberOfPlayers() {
-//		return number_of_players;
-//	}
-	
-	//TODO: make this method less spaghetti or document it better
+	/**
+	 * Checks if this player can receive this point tile.
+	 * If the player is eligible for this point tile, then the player will
+	 * receive the points, and the point tile is saved as reference.
+	 * @param tile PointTile to award to the player
+	 */
 	public void awardPointTile(PointTile tile) {
 		
-		//If both spots are empty, then fill point_tile1
+		//If both spots are empty, then fill pointTile1
 		if(pointTile1 == null && pointTile2 == null) {
 			pointTile1 = tile;
 			this.addPoints(tile.getPoints());
 			return;
 		}
 		
-		//If point_tile1 already has a tile from this card, then don't award anything
+		//If pointTile1 already has a tile from this card, then don't award anything
 		if(pointTile1.getCardId() == tile.getCardId())
 			return;
 		
-		//If point_tile2 is empty and point_tile1's tile doesn't have the same id, then fill it point_tile2
+		//If pointTile2 is empty and pointTile1 doesn't come from the same card, then fill pointTile2
 		if(pointTile2 == null && pointTile1.getCardId() != tile.getCardId()) {
 			pointTile2 = tile;
 			this.addPoints(tile.getPoints());
@@ -59,7 +57,7 @@ public class Player {
 	}
 	
 	/**
-	 * Returns point tile 1 or point tile 2. *Can return null!*
+	 * Returns point tile 1 or point tile 2.
 	 * @param which point tile to return (1 or 2)
 	 * @return
 	 */
@@ -96,5 +94,9 @@ public class Player {
 	
 	public void setEndOfGameToken(boolean hasEndOfGameToken) {
 		this.hasEndOfGameToken = hasEndOfGameToken;
+	}
+
+	public PersonalObjectiveCard getObjectiveCard() {
+		return objectiveCard;
 	}
 }

@@ -1,6 +1,6 @@
 package model.commongamearea;
 
-import model.shared.Player;
+import model.Player;
 import model.shared.Tile;
 import model.shared.TileType;
 

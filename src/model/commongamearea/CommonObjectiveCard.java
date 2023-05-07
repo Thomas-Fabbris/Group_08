@@ -2,7 +2,7 @@ package model.commongamearea;
 
 import java.util.Stack;
 
-import model.shared.Player;
+import model.Player;
 
 public class CommonObjectiveCard {
 	
@@ -60,11 +60,6 @@ public class CommonObjectiveCard {
 		//Give points and remove the value of points awarded to the player
 		player.awardPointTile(pointTiles.lastElement());
 		pointTiles.pop();
-	}
-	
-	//Check if player can receive points - needs to be implemented
-	private boolean checkPoints(Player player) {
-		return true;
 	}
 
 	public Stack<PointTile> getPointTiles() {

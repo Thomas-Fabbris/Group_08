@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import model.CommonGameArea;
-import model.PersonalGameArea;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
 import view.commongamearea.MainMenuWindow;
@@ -28,13 +27,12 @@ public class Main {
 
 					//Model
 					CommonGameArea commonGameArea = new CommonGameArea(players.size());
-					PersonalGameArea personalGrameArea = new PersonalGameArea();
 					
 					//View
 					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
 					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
 
-					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, personalGrameArea, commonGameArea);
+					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame, players, commonGameArea);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

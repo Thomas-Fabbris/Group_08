@@ -1,6 +1,6 @@
 package controller;
 
-import model.shared.Player;
+import model.Player;
 
 public class Token {
 	private int roundNumber;

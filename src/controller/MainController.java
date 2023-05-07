@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.CommonGameArea;
-import model.PersonalGameArea;
+import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
@@ -15,7 +15,7 @@ import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.shared.IdGenerator;
-import model.shared.Player;
+import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -28,20 +28,19 @@ public class MainController {
 	public static GameState gameState;
 
 	private Player[] players;
+	private Player currentPlayer;
 
 	private CommonGameArea commonGameArea;
-	private PersonalGameArea personalGameArea;
 
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
-			ArrayList<String> playerNames, PersonalGameArea personalGameArea, CommonGameArea commonGameArea) {
+			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
 
 		MainController.gameState = GameState.RUNNING;
 
 		this.commonGameArea = commonGameArea;
-		this.personalGameArea = personalGameArea;
 
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
@@ -51,34 +50,50 @@ public class MainController {
 		// Initialise players
 		this.players = new Player[playerNames.size()];
 		createPlayers(playerNames, idGenerator);
-		
+		this.currentPlayer = players[0];
+
 		// Personal game area initialisation
 		assignBookshelfTiles();
 		assignNextPlayerButtonController();
 		assignPlayerNameTextController();
 		assignPointsTextController();
-		assignPersonalObjectiveCardLabel(players[0].objectiveCard.cardId);
+		assignPersonalObjectiveCardLabel(currentPlayer.objectiveCard.cardId);
 
 		// Common game area initialisation
 		assignBoardTiles();
 		assignCommonObjectiveCards();
-		assignPointTiles();		
+		assignPointTiles();
+
+		startGame();
 	}
 
 	private void startGame() {
 
-		while (MainController.gameState == GameState.RUNNING) {
-			// A turn ends when nextPlayerButton on the GUI is pressed
-		}
+		players[0].bookshelf.fillRandom();
+
+		// Personal Objective card 1 goals (used for debug)
+		players[0].bookshelf.setTileType(0, 0, TileType.PLANTS);
+		players[0].bookshelf.setTileType(0, 2, TileType.FRAMES);
+		players[0].bookshelf.setTileType(5, 2, TileType.TROPHIES);
+		players[0].bookshelf.setTileType(1, 4, TileType.CATS);
+		players[0].bookshelf.setTileType(3, 1, TileType.GAMES);
+		players[0].bookshelf.setTileType(2, 3, TileType.BOOKS);
+
+		updateBookshelfOnScreen();
+		System.out.println(players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
+
+//		while (MainController.gameState == GameState.RUNNING) {
+//			// A turn ends when nextPlayerButton on the GUI is pressed
+//		}
 	}
 
 	/**
 	 * Create players from the names entered in the main menu
 	 */
-	private void createPlayers(ArrayList<String> names, IdGenerator idGenerator) {		
+	private void createPlayers(ArrayList<String> names, IdGenerator idGenerator) {
 		for (int i = 0; i < names.size(); i++) {
 			this.players[i] = new Player(names.get(i), idGenerator);
-			System.out.println("Created player with name '" + players[i].getName() + "' and id " +players[i].id);
+			System.out.println("Created player with name '" + players[i].getName() + "' and id " + players[i].id);
 		}
 	}
 
@@ -104,7 +119,7 @@ public class MainController {
 	 * Updates the type of each tile displayed on the GUI
 	 */
 	private void updateBookshelfOnScreen() {
-		Bookshelf bookshelf = personalGameArea.getCurrentPlayer().bookshelf;
+		Bookshelf bookshelf = currentPlayer.bookshelf;
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
 
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
