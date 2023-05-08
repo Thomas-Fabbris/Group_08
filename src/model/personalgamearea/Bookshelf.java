@@ -60,6 +60,34 @@ public class Bookshelf {
 		return tiles[row][column];
 	}
 
+	public BookshelfTile[] getRow(int row)
+	{
+
+		BookshelfTile[] res_row = new BookshelfTile[5];
+
+		for (int col = 0; col < 5; col++)
+		{
+			res_row[col] = tiles[row][col];
+		}
+
+		return res_row;
+
+	}
+
+	public BookshelfTile[] getColumn(int column)
+	{
+
+		BookshelfTile[] res_col = new BookshelfTile[6];
+
+		for (int row = 0; row < 6; row++)
+		{
+			res_col[row] = tiles[row][column];
+		}
+
+		return res_col;
+
+	}
+
 	public void setTileType(int row, int column, TileType tileType) {
 		tiles[row][column].setType(tileType);
 	}
