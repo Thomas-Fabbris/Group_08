@@ -30,10 +30,20 @@ public class MainController {
 	private Player[] players;
 	private Player currentPlayer;
 
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
 	private CommonGameArea commonGameArea;
 
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
+	
+	private Controller controller;
 
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
@@ -44,13 +54,16 @@ public class MainController {
 
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
-
+		
 		IdGenerator idGenerator = new IdGenerator();
 
 		// Initialise players
 		this.players = new Player[playerNames.size()];
 		createPlayers(playerNames, idGenerator);
 		this.currentPlayer = players[0];
+		
+		//Controller initialisation
+		this.controller = new Controller(this,players[0]);
 
 		// Personal game area initialisation
 		assignBookshelfTiles();
@@ -257,5 +270,9 @@ public class MainController {
 			icon = ImageUtils.rotateIcon(icon, iconRotation);
 
 		tileLabel.setIcon(icon);
+	}
+
+	public Controller getController() {
+		return controller;
 	}
 }

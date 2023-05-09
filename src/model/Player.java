@@ -11,7 +11,7 @@ public class Player {
 	public final int id;
 	private int points;
 	public final boolean hasChair;
-	private boolean hasEndOfGameToken = false;
+	private boolean hasEndOfGameToken;
 
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 

@@ -4,9 +4,9 @@ package model.personalgamearea;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 // non considerate i nomi dei metodi, perchè mandano solo in confusione
-// va strutturata in maniera diversa l'assegnazione dei punti
 // ma inizio a fare uno switch con i metodi di controlli per i vare common goals
 
 public class CommonGoals {
@@ -15,20 +15,7 @@ public class CommonGoals {
 	// con <= e non solamente con < se no si salta l'ultima colonna/riga.
 	// è fatto in questo modo così che per le carte che hanno bisogno di
 	// controllare gli angoli è più semplice mettere dentro max row/col
-	private static int MAX_ROW = 5;
-	private static int MAX_COL = 4;
 
-	public int award(Bookshelf player_bookshelf[][], int i, int j, int goal_id) {
-		int points = 0;
-		switch(goal_id) {
-		case 0:{
-
-
-			}
-		}
-		return points;
-
-	}
 	//probabilmente sia 01 che 02 andranno iterati per ogni tipo di tessera
 	public boolean Check_CommonGoal_01(Bookshelf player_bookshelf[][], int max_column, int max_row) {
 		int consecutive_counter=0;
@@ -36,7 +23,7 @@ public class CommonGoals {
 		int group_dim = 2;
 		for(int i = 0; i < max_row; i++) {
 			for(int j=0, k = 1; j<max_column-1 && k < max_column; j++, k++) {
-				if(player_bookshelf[i][j] == player_bookshelf[i][k]) {// qui non è corretto perchè bisogna confrontare il tipo delle tile
+				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
 					consecutive_counter++;
 				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
 					if (consecutive_counter >= group_dim - 1) {
@@ -50,7 +37,7 @@ public class CommonGoals {
 		}
 		for(int i = 0; i < max_column; i++) {
 			for(int j=0, k = 1; j<max_row-1 && k < max_row; j++, k++) {
-				if(player_bookshelf[i][j] == player_bookshelf[i][k]) {// qui non è corretto perchè bisogna confrontare il tipo delle tile
+				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
 					consecutive_counter++;
 				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
 					if (consecutive_counter >= group_dim - 1) {
@@ -76,7 +63,7 @@ public class CommonGoals {
 		int group_dim = 4;
 		for(int i = 0; i < max_row; i++) {
 			for(int j=0, k = 1; j<max_column-1 && k < max_column; j++, k++) {
-				if(player_bookshelf[i][j] == player_bookshelf[i][k]) {// qui non è corretto perchè bisogna confrontare il tipo delle tile
+				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
 					consecutive_counter++;
 				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
 					if (consecutive_counter >= group_dim - 1) {
@@ -90,7 +77,7 @@ public class CommonGoals {
 		}
 		for(int i = 0; i < max_column; i++) {
 			for(int j=0, k = 1; j<max_row-1 && k < max_row; j++, k++) {
-				if(player_bookshelf[i][j] == player_bookshelf[i][k]) {// qui non è corretto perchè bisogna confrontare il tipo delle tile
+				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
 					consecutive_counter++;
 				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
 					if (consecutive_counter >= group_dim - 1) {
@@ -108,9 +95,9 @@ public class CommonGoals {
 			return false;
 		}
 	}
-	// questo dovrebbe essere corretto, ma bisogna modificare il controllo, da così al tipo delle tile
+	
 	public boolean Check_Common_Goal_03(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		if (player_bookshelf[0][0]==player_bookshelf[0][max_row] && player_bookshelf[0][0]==player_bookshelf[max_column][0] && player_bookshelf[0][0]==player_bookshelf[max_column][max_row]) {
+		if (player_bookshelf[0][0].equals(player_bookshelf[0][max_row]) && player_bookshelf[0][0].equals(player_bookshelf[max_column][0]) && player_bookshelf[0][0].equals(player_bookshelf[max_column][max_row])) {
 			return true;
 		}else {
 			return false;
@@ -124,6 +111,10 @@ public class CommonGoals {
 	}
 
 	public boolean Check_Common_Goal_05(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+		int differentTypesCount = 0;
+		for(int k = 0; k < Bookshelf.ROWS; k++) {
+			//BookshelfTile[] row = player_bookshelf[k];
+		}
 		return false;
 	}
 
@@ -160,24 +151,17 @@ public class CommonGoals {
 
 	}
 
-	public boolean Check_Common_Goal_10(Bookshelf pshelf) {
-
-		// Controlla se ci sono 2 righe della shelf composte interamente da tile diverse
-
-		int count = 0;
-
-		for (int row = 0; row <= MAX_ROW; row++)
-		{
-			BookshelfTile[] current_row = pshelf.getRow(row);
-			Set<BookshelfTile> set = new HashSet<>(Arrays.asList(current_row));
-			if (set.size() == 5) count++;
-
-			if (count == 2) return true;
-
-		}
-
+	public boolean Check_Common_Goal_10(Bookshelf shelf) {
+		//Refactored method 
+		for (int k = 0; k < Bookshelf.ROWS; k++){
+			
+			BookshelfTile[] col = shelf.getColumn(k);
+			 if(!Arrays.stream(col).allMatch(new HashSet<>()::add)){
+				 return true;
+			 }
+			 
+			}
 		return false;
-
 	}
 
 	public boolean Check_Common_Goal_11(Bookshelf pshelf, int max_column, int max_row) {
@@ -188,13 +172,7 @@ public class CommonGoals {
 
 	public boolean Check_Common_Goal_12(Bookshelf pshelf) {
 
-		// Controlla se i lati della shelf hanno tile uguali
-
-		boolean t1 = pshelf.getTile(0, 0) == pshelf.getTile(0, MAX_COL);
-		boolean t2 = pshelf.getTile(0, 0) == pshelf.getTile(MAX_ROW, 0);
-		boolean t3 = pshelf.getTile(0, 0) == pshelf.getTile(MAX_ROW, MAX_COL);
-
-		return t1 && t2 && t3;
+		return false;
 
 	}
 }

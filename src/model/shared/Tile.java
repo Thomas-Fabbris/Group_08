@@ -31,4 +31,14 @@ public abstract class Tile{
 	public void setType(TileType tile_type) {
 		this.type = tile_type;
 	}
+	
+	public boolean equals(Tile other) {
+		if(!(other instanceof Tile)) {
+			return false;
+		}
+		if (this.type.equals(other.type)) {
+			return true;
+		}
+		return false;
+	}
 }
