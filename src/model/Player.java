@@ -10,7 +10,7 @@ public class Player {
 	private String name;
 	public final int id;
 	private int points;
-	public final boolean hasChair;
+	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
 
 	public final PersonalObjectiveCard objectiveCard;
@@ -23,11 +23,6 @@ public class Player {
 		this.id = idgenerator.getNewId();
 		objectiveCard = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf();
-		
-		if(this.id == 0)
-			this.hasChair = true;
-		else
-			this.hasChair = false;
 	}
 	
 	/**
@@ -98,5 +93,13 @@ public class Player {
 
 	public PersonalObjectiveCard getObjectiveCard() {
 		return objectiveCard;
+	}
+
+	public boolean hasChair() {
+		return hasChair;
+	}
+
+	public void setHasChair(boolean hasChair) {
+		this.hasChair = hasChair;
 	}
 }

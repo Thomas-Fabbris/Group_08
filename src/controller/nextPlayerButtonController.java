@@ -18,6 +18,8 @@ public class nextPlayerButtonController implements MouseListener {
 		this.button = button;
 		this.defaultStateIcon = (ImageIcon)button.getIcon();
 		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(), defaultStateIcon.getIconHeight(), "Assets/ArrowButton/ArrowButtonPressed.png");
+	
+		//start next turn
 	}
 	
 	@Override
