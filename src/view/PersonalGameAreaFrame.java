@@ -155,4 +155,8 @@ public class PersonalGameAreaFrame extends JFrame {
 	public BookshelfLabel getBookshelfLabel() {
 		return bookshelfLabel;
 	}
+
+	public JLabel getEndOfGameTile() {
+		return endOfGameTile;
+	}
 }

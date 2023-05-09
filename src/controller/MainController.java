@@ -14,6 +14,7 @@ import model.commongamearea.CommonObjectiveCard;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
+import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
@@ -32,10 +33,6 @@ public class MainController {
 
 	public Player getCurrentPlayer() {
 		return currentPlayer;
-	}
-
-	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
 	}
 
 	private CommonGameArea commonGameArea;
@@ -68,9 +65,6 @@ public class MainController {
 		// Personal game area initialisation
 		assignBookshelfTiles();
 		assignNextPlayerButtonController();
-		assignPlayerNameTextController();
-		assignPointsTextController();
-		assignPersonalObjectiveCardLabel(currentPlayer.objectiveCard.cardId);
 
 		// Common game area initialisation
 		assignBoardTiles();
@@ -82,22 +76,21 @@ public class MainController {
 
 	private void startGame() {
 
+		players[0].setHasChair(true);
 		players[0].bookshelf.fillRandom();
+		setCurrentPlayer(players[0]);
 
-		// Personal Objective card 1 goals (used for debug)
-		players[0].bookshelf.setTileType(0, 0, TileType.PLANTS);
-		players[0].bookshelf.setTileType(0, 2, TileType.FRAMES);
-		players[0].bookshelf.setTileType(5, 2, TileType.TROPHIES);
-		players[0].bookshelf.setTileType(1, 4, TileType.CATS);
-		players[0].bookshelf.setTileType(3, 1, TileType.GAMES);
-		players[0].bookshelf.setTileType(2, 3, TileType.BOOKS);
+		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
 
-		updateBookshelfOnScreen();
-		System.out.println(players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
+		while (MainController.gameState == GameState.RUNNING) {
+			int index = 0;
 
-//		while (MainController.gameState == GameState.RUNNING) {
-//			// A turn ends when nextPlayerButton on the GUI is pressed
-//		}
+			setCurrentPlayer(players[index++]);
+
+			if (index > 4) index = 0;
+			
+			// stop execution until nextPlayerButton is pressed
+		}
 	}
 
 	/**
@@ -113,9 +106,55 @@ public class MainController {
 	// ----------- Personal game area operations -----------
 
 	/**
-	 * Assigns a Label to each Tile in the bookshelf and saves it in
-	 * personalGameAreaFrame.bookshelfLabel.tiles[][]
+	 * Updates the info on the personal game area to reflect the current player's
+	 * info
+	 * 
+	 * @param player
 	 */
+	private void setCurrentPlayer(Player player) {
+		this.currentPlayer = player;
+		updatePlayerNameText(player);
+		updatePointsText(player);
+		updateBookshelfLabel(player.bookshelf);
+		updatePointTile1Label(player);
+		updatePointTile2Label(player);
+		updatePersonalObjectiveCardLabel(player.getObjectiveCard());
+		personalGameAreaFrame.getEndOfGameTile().setVisible(player.hasEndOfGameToken());
+		personalGameAreaFrame.getChair().setVisible(player.hasChair());
+
+		personalGameAreaFrame.getPointTile2();
+		personalGameAreaFrame.getEndOfGameTile();
+		personalGameAreaFrame.getChair();
+	}
+
+	/**
+	 * updates the point tile to reflect the player's point tile
+	 */
+	private void updatePointTile1Label(Player player) {
+		JLabel tileLabel = personalGameAreaFrame.getPointTile1();
+
+		if (player.getPointTile(1) == null) {
+			tileLabel.setVisible(false);
+			return;
+		}
+
+		updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
+	}
+
+	/**
+	 * updates the point tile to reflect the player's point tile
+	 */
+	private void updatePointTile2Label(Player player) {
+		JLabel tileLabel = personalGameAreaFrame.getPointTile2();
+
+		if (player.getPointTile(2) == null) {
+			tileLabel.setVisible(false);
+			return;
+		}
+
+		updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
+	}
+
 	private void assignBookshelfTiles() {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
 
@@ -131,8 +170,7 @@ public class MainController {
 	/**
 	 * Updates the type of each tile displayed on the GUI
 	 */
-	private void updateBookshelfOnScreen() {
-		Bookshelf bookshelf = currentPlayer.bookshelf;
+	private void updateBookshelfLabel(Bookshelf bookshelf) {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
 
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
@@ -142,9 +180,9 @@ public class MainController {
 		}
 	}
 
-	private void assignPersonalObjectiveCardLabel(int cardId) {
+	private void updatePersonalObjectiveCardLabel(PersonalObjectiveCard card) {
 		JLabel personalObjectiveCard = personalGameAreaFrame.getPersonalObjectiveCardLabel();
-		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.png".replace("X", Integer.toString(cardId));
+		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.png".replace("X", Integer.toString(card.cardId));
 		ImageIcon icon = ImageUtils.loadImageAsIcon(personalObjectiveCard.getSize(), path);
 		personalObjectiveCard.setIcon(icon);
 	}
@@ -154,14 +192,14 @@ public class MainController {
 		button.addMouseListener(new nextPlayerButtonController(button));
 	}
 
-	private void assignPlayerNameTextController() {
+	private void updatePlayerNameText(Player player) {
 		JLabel playerName = personalGameAreaFrame.getPlayerName();
-		playerName.setText("Player's turn");
+		playerName.setText(player.getName() + "'s turn");
 	}
 
-	private void assignPointsTextController() {
+	private void updatePointsText(Player player) {
 		JLabel points = personalGameAreaFrame.getPoints();
-		points.setText("Points: 25");
+		points.setText("Points: " + player.getPoints());
 	}
 
 	/**
@@ -169,6 +207,13 @@ public class MainController {
 	 */
 	private void updateBookshelfTileLabel(BookshelfTile tile, BookshelfTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
+	}
+
+	/**
+	 * Updates the image of the label to reflect the points of the PointTile
+	 */
+	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
+		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + ".png");
 	}
 
 	// ----------- Common game area operations -----------
@@ -180,14 +225,14 @@ public class MainController {
 		CommonObjectiveCard card1 = commonGameArea.getCard1();
 		CommonObjectiveCard card2 = commonGameArea.getCard2();
 
-		updatePointTileLabel(card1.getPointTiles().lastElement(), commonGameAreaFrame.getCard1PointTile());
-		updatePointTileLabel(card2.getPointTiles().lastElement(), commonGameAreaFrame.getCard2PointTile());
+		updateBoardPointTileLabel(card1.getPointTiles().lastElement(), commonGameAreaFrame.getCard1PointTile());
+		updateBoardPointTileLabel(card2.getPointTiles().lastElement(), commonGameAreaFrame.getCard2PointTile());
 	}
 
 	/**
 	 * Updates the amount of points shown on the tile
 	 */
-	private void updatePointTileLabel(PointTile tile, JLabel label) {
+	private void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/Xp.jpg".replace("X", Integer.toString(tile.getPoints())),
 				rotation);
@@ -218,9 +263,13 @@ public class MainController {
 		for (int row = 0; row < ROWS; row++) {
 			for (int column = 0; column < COLUMNS; column++) {
 				if (board.getValidPositions()[row][column]) {
-					boardTileLabels[row][column] = new BoardTileLabel(row, column, boardLabel.getSize());
-					updateBoardTileLabel(board.getTile(row, column), boardTileLabels[row][column]);
-					boardLabel.add(boardTileLabels[row][column]);
+					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
+					label.addMouseListener(
+							new BoardTileController(board, board.getTile(row, column), label, board.getTiles()));
+
+					updateBoardTileLabel(board.getTile(row, column), label);
+					boardLabel.add(label);
+					boardTileLabels[row][column] = label;
 				}
 			}
 		}
