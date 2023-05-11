@@ -1,10 +1,12 @@
 package model.personalgamearea;
 
+import java.util.Iterator;
+
 import model.Player;
 import model.commongamearea.BoardTile;
 import model.shared.TileType;
 
-public class Bookshelf {
+public class Bookshelf implements Iterable<Bookshelf>{
 
 	public static final int ROWS = 6;
 	public static final int COLUMNS = 5;
@@ -43,7 +45,14 @@ public class Bookshelf {
 	}
 
 	public boolean isFull() {
-		throw new UnsupportedOperationException();
+		for(int row = 0; row < Bookshelf.ROWS; row++) {
+			for(int col = 0; col < Bookshelf.COLUMNS; col++) {
+				if(this.tiles[row][col] == null) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -94,5 +103,10 @@ public class Bookshelf {
 
 	private boolean isValidCell(int row, int column) {
 		return (row >= 0 && row < 6) && (column >= 0 && column < 5); // row 0-5 | column 0-4
+	}
+
+	@Override
+	public Iterator<Bookshelf> iterator() {
+		return null;
 	}
 }

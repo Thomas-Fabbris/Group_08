@@ -1,9 +1,11 @@
 package model.personalgamearea;
 
+import java.util.Iterator;
+
 import model.shared.Tile;
 import model.shared.TileType;
 
-public class BookshelfTile extends Tile {
+public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 	
 	private int column;
 	private int row;
@@ -35,5 +37,10 @@ public class BookshelfTile extends Tile {
 	
 	public BookshelfTile tileLeft() {
 		return shelf.getTile(row, column-1);
+	}
+
+	@Override
+	public Iterator<BookshelfTile> iterator() {
+		return null;
 	}
 }
