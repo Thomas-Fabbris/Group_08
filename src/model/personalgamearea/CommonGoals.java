@@ -1,34 +1,19 @@
 package model.personalgamearea;
 
-// questi tre importati per convertire array in set
+// Questi tre importati per convertire array in set
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.shared.Tile;
+// Per avere i tipi possibili delle tiles
 import model.shared.TileType;
-
-
-// non considerate i nomi dei metodi, perchè mandano solo in confusione
-// va strutturata in maniera diversa l'assegnazione dei punti
-// ma inizio a fare uno switch con i metodi di controlli per i vare common goals
 
 public class CommonGoals {
 
-	public int award(Bookshelf player_bookshelf[][], int i, int j, int goal_id) {
-		int points = 0;
-		switch(goal_id) {
-			case 0:{
-
-
-			}
-		}
-		return points;
-
-	}
-
 	// WORKING
 	public int Check_Common_Goal_01(Bookshelf pshelf) {
+
+		// Due colonne formate ciascuna da 6 diversi tipi di tessere.
 
 		int result = 0;
 
@@ -45,14 +30,51 @@ public class CommonGoals {
 
 	}
 
-	// TODO FARE QUESTO
+	// WORKING
 	public int Check_Common_Goal_02(Bookshelf pshelf) {
-		return 0;
+
+		// Quattro gruppi separati formati ciascuno
+		// da quattro tessere adiacenti dello stesso tipo
+		// (non necessariamente come mostrato in figura).
+		// Le tessere di un gruppo possono essere
+		// diverse da quelle di un altro gruppo.
+
+		int result = 0;
+		int index = 0;
+		int[] already_checked = {-1};
+
+		for (int row = 0; row <= 5; row++) {
+
+			for (int col = 0; col <= 4; col++) {
+
+				if (Coords_Check(already_checked, row, col, 3)) continue;
+
+				if (pshelf.getTile(row, col).getType() == TileType.NULL) continue;
+
+				boolean c1 = CheckRow(pshelf, row, col, 4);
+				boolean c2 = CheckCol(pshelf, row, col, 4);
+
+				if (c1 || c2) {
+					already_checked[index] = row * 3 + col * 5;
+					index++;
+					result++;
+				}
+
+			}
+
+		}
+
+		return Math.max(0, result - 3);
+
 	}
 
 
 	// WORKING
 	public int Check_Common_Goal_03(Bookshelf pshelf) {
+
+		// Tre colonne formate ciascuna da 6 tessere di uno,
+		// due o tre tipi differenti. Colonne diverse
+		// possono avere combinazioni diverse di tipi di tessere,
 
 		int result = 0;
 
@@ -72,6 +94,11 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_04(Bookshelf pshelf) {
 
+		// Cinque colonne di altezza crescente o decrescente:
+		// a partire dalla prima colonna a sinistra o a destra,
+		// ogni colonna successiva deve essere formata da una
+		// tessera in più. Le tessere possono essere di qualsiasi tipo.
+
 		int result = 0;
 
 		for (int inverse = 0; inverse <= 1; inverse++) {
@@ -85,8 +112,7 @@ public class CommonGoals {
 
 			}
 
-			for (int i = 0; i <= 3; i++)
-			{
+			for (int i = 0; i <= 3; i++) {
 
 				if ((heights[i] - 1) != (heights[i+1])) {
 					wrong = true;
@@ -101,13 +127,49 @@ public class CommonGoals {
 		return result;
 	}
 
-	// TODO FARE QUESTO
+	// WORKING
 	public int Check_Common_Goal_05(Bookshelf pshelf) {
-		return 0;
+
+		// Sei gruppi separati formati ciascuno da due tessere
+		// adiacenti dello stesso tipo (non necessariamente
+		// come mostrato in figura). Le tessere di un gruppo
+		// possono essere diverse da quelle di un altro gruppo.
+
+		int result = 0;
+		int index = 0;
+		int[] already_checked = {-1};
+
+		for (int row = 0; row <= 5; row++) {
+
+			for (int col = 0; col <= 4; col++) {
+
+				if (Coords_Check(already_checked, row, col, 2)) continue;
+
+				if (pshelf.getTile(row, col).getType() == TileType.NULL) continue;
+
+				boolean c1 = CheckRow(pshelf, row, col, 2);
+				boolean c2 = CheckCol(pshelf, row, col, 2);
+
+				if (c1 || c2) {
+					already_checked[index] = row * 3 + col * 5;
+					index++;
+					result++;
+				}
+
+			}
+
+		}
+
+		return Math.max(0, result - 5);
+
 	}
 
 	// WORKING
 	public int Check_Common_Goal_06(Bookshelf pshelf) {
+
+		// Due gruppi separati di 4 tessere dello stesso
+		// tipo che formano un quadrato 2x2. Le
+		// tessere dei due gruppi devono essere dello stesso tipo.
 
 		int result = 0;
 
@@ -123,7 +185,7 @@ public class CommonGoals {
 
 					// non andiamo a prendere il quadrato che abbiamo già trovato
 
-					if (Coords_Check(already_checked, dshift, rshift)) continue;
+					if (Coords_Check(already_checked, dshift, rshift, 1)) continue;
 
 					TileType checktile = pshelf.getTile(0 + rshift, 0 + dshift).getType();
 
@@ -157,6 +219,10 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_07(Bookshelf pshelf) {
 
+		// Otto tessere dello stesso tipo. Non
+		// ci sono restrizioni sulla posizione
+		// di queste tessere.
+
 		int result = 0;
 
 		for (TileType type : TileType.types) {
@@ -181,9 +247,7 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_08(Bookshelf pshelf) {
 
-		// Controlla il seguente pattern > 		X X
-		// su tutta la shelf se è				 X
-		// composto da tile uguali 				X X
+		// Cinque tessere dello stesso tipo che formano una X
 
 		int result = 0;
 
@@ -213,9 +277,8 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_09(Bookshelf pshelf) {
 
-		// Controlla la diagonale (y = x e y = -x) se è composta dalle stesse tile,
-		// nel caso controlla quelle sotto (ce ne stanno 4 di diagonali così
-		// nella shelf)
+		// Cinque tessere dello stesso tipo che formano
+		// una diagonale
 
 		int result = 0;
 
@@ -244,7 +307,7 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_10(Bookshelf pshelf) {
 
-		// Controlla se ci sono 2 righe della shelf composte interamente da tile diverse
+		// Due righe formate ciascuna da 5 diversi tipi di tessere
 
 		int result = 0;
 
@@ -263,6 +326,11 @@ public class CommonGoals {
 
 	// WORKING
 	public int Check_Common_Goal_11(Bookshelf pshelf) {
+
+		// Quattro righe formate ciascuna da 5 tessere di
+		// uno, due o tre tipi differenti. Righe
+		// diverse possono avere combinazioni
+		// diverse di tipi di tessere.
 
 		int result = 0;
 
@@ -283,7 +351,7 @@ public class CommonGoals {
 	// WORKING
 	public int Check_Common_Goal_12(Bookshelf pshelf) {
 
-		// Controlla se i lati della shelf hanno tile uguali
+		// Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
 
 		TileType checktile = pshelf.getTile(0, 0).getType();
 
@@ -300,6 +368,9 @@ public class CommonGoals {
 
 	public int Count_NULL(TileType[] row_col) {
 
+		// Metodo per contare quante tile di tipo NULL ci sono
+		// in una riga / colonna
+
 		int count = 0;
 
 		for (TileType tile : row_col) {
@@ -310,16 +381,51 @@ public class CommonGoals {
 
 	}
 
-	public boolean Coords_Check(int[] coords, int row, int col) {
+	public boolean Coords_Check(int[] coords, int row, int col, int mode) {
+
+		// Metodo unico (mode cambia il modo in cui funziona) per
+		// controllare se una tile è già presente in un gruppo
+		// controllato precedentemente
 
 		for (int coord : coords) {
 
-			boolean t1 = (row + 1) * 3 +  col      * 5 == coord;
-			boolean t2 =  row * 3      + (col + 1) * 5 == coord;
-			boolean t3 = (row + 1) * 3 + (col + 1) * 5 == coord;
+			// Gruppo di grandezza 2x2
+			if (mode == 1)
+			{
+				boolean t1 = (row - 1) * 3 +  col * 5 	   == coord;
+				boolean t2 =  row * 3      + (col - 1) * 5 == coord;
+				boolean t3 = (row - 1) * 3 + (col - 1) * 5 == coord;
 
-			if (t1 || t2 || t3) return true;
+				if (t1 || t2 || t3) return true;
+			}
 
+			// Gruppo di lunghezza 2
+			else if (mode == 2)
+			{
+
+				boolean h1 = (row - 1) * 3 +  col * 5 	   == coord;
+				boolean v1 =  row * 3      + (col - 1) * 5 == coord;
+
+				if (h1 || v1) return true;
+
+
+			}
+
+			// Gruppo di lunghezza 4
+			else if (mode == 3)
+			{
+
+				boolean h1 = (row - 1) * 3 + col * 5 == coord;
+				boolean h2 = (row - 2) * 3 + col * 5 == coord;
+				boolean h3 = (row - 3) * 3 + col * 5 == coord;
+
+				boolean v1 = row * 3 + (col - 1) * 5 == coord;
+				boolean v2 = row * 3 + (col - 2) * 5 == coord;
+				boolean v3 = row * 3 + (col - 3) * 5 == coord;
+
+				if (h1 || h2 || h3 || v1 || v2 || v3) return true;
+
+			}
 		}
 
 		return false;
@@ -328,13 +434,14 @@ public class CommonGoals {
 
 	public int Count_Tiles(TileType[] row_col) {
 
+		// Metodo per contare le tile di una riga/colonna
+
 		int count = 0;
 
 		for (TileType tile : row_col) {
 			for (TileType type : TileType.types) {
 				if (tile == type) {
 					count++;
-					break;
 				}
 			}
 		}
@@ -342,6 +449,90 @@ public class CommonGoals {
 		return count;
 
 	}
+
+	public boolean CheckRow(Bookshelf pshelf, int row, int col, int length)
+	{
+
+		// Metodo unico (length cambia la lunghezza che si vuole cercare) per
+		// controllare se ci siano 2 o 4 tile dello stesso tipo adiacenti
+		// sulla stessa riga
+
+		// in parole povere: [=][=]([=])([=])
+
+		if (length == 4 && col > 1) return false;
+		if (length == 2 && col > 3) return false;
+
+		if (length == 4)
+		{
+
+			TileType checktile = pshelf.getTile(row, col).getType();
+
+			boolean t1 = checktile == pshelf.getTile(row, col + 1).getType();
+			boolean t2 = checktile == pshelf.getTile(row, col + 2).getType();
+			boolean t3 = checktile == pshelf.getTile(row, col + 3).getType();
+
+			return t1 && t2 && t3;
+
+		}
+
+		if (length == 2)
+		{
+
+			TileType checktile = pshelf.getTile(row, col).getType();
+
+			boolean t1 = checktile == pshelf.getTile(row, col + 1).getType();
+
+			return t1;
+
+		}
+
+		return false;
+
+	}
+
+	public boolean CheckCol(Bookshelf pshelf, int row, int col, int length)
+	{
+
+		// Metodo unico (length cambia la lunghezza che si vuole cercare) per
+		// controllare se ci siano 2 o 4 tile dello stesso tipo adiacenti
+		// sulla stessa colonna
+
+		// in parole povere: [=]
+		//                   [=]
+		//                  ([=])
+		//                  ([=])
+
+		// (?) Volendo si potrebbe fare un metodo unico di nome CheckRowCol
+
+		if (length == 4 && row > 2) return false;
+		if (length == 2 && row > 4) return false;
+
+		if (length == 4)
+		{
+
+			TileType checktile = pshelf.getTile(row, col).getType();
+
+			boolean t1 = checktile == pshelf.getTile(row + 1, col).getType();
+			boolean t2 = checktile == pshelf.getTile(row + 2, col).getType();
+			boolean t3 = checktile == pshelf.getTile(row + 3, col).getType();
+
+			return t1 && t2 && t3;
+
+		}
+
+		if (length == 2)
+		{
+
+			TileType checktile = pshelf.getTile(row, col).getType();
+
+			return checktile == pshelf.getTile(row + 1, col).getType();
+
+		}
+
+		return false;
+
+	}
+
 
 }
 
