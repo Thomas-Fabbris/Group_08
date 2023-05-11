@@ -69,28 +69,28 @@ public class Bookshelf implements Iterable<Bookshelf>{
 		return tiles[row][column];
 	}
 
-	public BookshelfTile[] getRow(int row)
+	public TileType[] getRow(int row)
 	{
 
-		BookshelfTile[] res_row = new BookshelfTile[5];
+		TileType[] res_row = new TileType[5];
 
 		for (int col = 0; col < 5; col++)
 		{
-			res_row[col] = tiles[row][col];
+			res_row[col] = tiles[row][col].getType();
 		}
 
 		return res_row;
 
 	}
 
-	public BookshelfTile[] getColumn(int column)
+	public TileType[] getColumn(int column)
 	{
 
-		BookshelfTile[] res_col = new BookshelfTile[6];
+		TileType[] res_col = new TileType[6];
 
 		for (int row = 0; row < 6; row++)
 		{
-			res_col[row] = tiles[row][column];
+			res_col[row] = tiles[row][column].getType();
 		}
 
 		return res_col;

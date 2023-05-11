@@ -4,146 +4,321 @@ package model.personalgamearea;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import model.shared.Tile;
+import model.shared.TileType;
+
 
 // non considerate i nomi dei metodi, perchè mandano solo in confusione
+// va strutturata in maniera diversa l'assegnazione dei punti
 // ma inizio a fare uno switch con i metodi di controlli per i vare common goals
 
 public class CommonGoals {
 
-	// maxrow e maxcol se usati in un loop for devono essere messi
-	// con <= e non solamente con < se no si salta l'ultima colonna/riga.
-	// è fatto in questo modo così che per le carte che hanno bisogno di
-	// controllare gli angoli è più semplice mettere dentro max row/col
+	public int award(Bookshelf player_bookshelf[][], int i, int j, int goal_id) {
+		int points = 0;
+		switch(goal_id) {
+			case 0:{
 
-	//probabilmente sia 01 che 02 andranno iterati per ogni tipo di tessera
-	public boolean Check_CommonGoal_01(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		int consecutive_counter=0;
-		int group_counter = 0;
-		int group_dim = 2;
-		for(int i = 0; i < max_row; i++) {
-			for(int j=0, k = 1; j<max_column-1 && k < max_column; j++, k++) {
-				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
-					consecutive_counter++;
-				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
-					if (consecutive_counter >= group_dim - 1) {
-						group_counter++;
-						consecutive_counter = 0;
-					}else {
-						consecutive_counter = 0;
-					}
-				}
+
 			}
 		}
-		for(int i = 0; i < max_column; i++) {
-			for(int j=0, k = 1; j<max_row-1 && k < max_row; j++, k++) {
-				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
-					consecutive_counter++;
-				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
-					if (consecutive_counter >= group_dim - 1) {
-						group_counter++;
-						consecutive_counter = 0;
-					}else {
-						consecutive_counter = 0;
+		return points;
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_01(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (int col = 0; col <= 4; col++) {
+
+			TileType[] current_col = pshelf.getColumn(col);
+			int nulls = Math.min(1, Count_NULL(current_col));
+			Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
+			if (set.size() - nulls == 6) result++;
+
+		}
+
+		return Math.min(0, result - 1);
+
+	}
+
+	// TODO FARE QUESTO
+	public int Check_Common_Goal_02(Bookshelf pshelf) {
+		return 0;
+	}
+
+
+	// WORKING
+	public int Check_Common_Goal_03(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (int col = 0; col <= 4; col++) {
+
+			TileType[] current_col = pshelf.getColumn(col);
+			int nulls = Math.min(1, Count_NULL(current_col));
+			Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
+			if (set.size() - nulls <= 3) result++;
+
+		}
+
+		return Math.max(0, result - 2);
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_04(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (int inverse = 0; inverse <= 1; inverse++) {
+
+			int[] heights = new int[5];
+			boolean wrong = false;
+
+			for (int col = 0; col <= 4; col++) {
+
+				heights[col] = Count_Tiles(pshelf.getColumn(Math.abs(4*inverse - col)));
+
+			}
+
+			for (int i = 0; i <= 3; i++)
+			{
+
+				if ((heights[i] - 1) != (heights[i+1])) {
+					wrong = true;
+					break;
+				}
+
+			}
+
+			if (!wrong) result++;
+
+		}
+		return result;
+	}
+
+	// TODO FARE QUESTO
+	public int Check_Common_Goal_05(Bookshelf pshelf) {
+		return 0;
+	}
+
+	// WORKING
+	public int Check_Common_Goal_06(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (TileType type : TileType.types) {
+
+			int count = 0;
+			int index = 0;
+			int[] already_checked = {-1};
+
+			for (int dshift = 0; dshift <= 4; dshift++) {
+
+				for (int rshift = 0; rshift <= 3; rshift++) {
+
+					// non andiamo a prendere il quadrato che abbiamo già trovato
+
+					if (Coords_Check(already_checked, dshift, rshift)) continue;
+
+					TileType checktile = pshelf.getTile(0 + rshift, 0 + dshift).getType();
+
+					// se la prima tile del quadrato è diversa da quella che stiamo effettivamente
+					// cercando andiamo oltre
+
+					if (checktile != type) continue;
+
+					boolean t1 = checktile == pshelf.getTile(1 + rshift, 0 + dshift).getType();
+					boolean t2 = checktile == pshelf.getTile(0 + rshift, 1 + dshift).getType();
+					boolean t3 = checktile == pshelf.getTile(1 + rshift, 1 + dshift).getType();
+
+					if (t1 && t2 && t3) {
+						already_checked[index] = (dshift * 3 + rshift * 5);
+						index++;
+						count++;
 					}
+
+				}
+
+			}
+
+			result += Math.max(count - 1, 0);
+
+		}
+
+		return result;
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_07(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (TileType type : TileType.types) {
+
+			int count = 0;
+
+			for (int row = 0; row <= 4; row++) {
+				for (int col = 0; col <= 5; col++) {
+					if (pshelf.getTile(row, col).getType() == type) count++;
+
 				}
 			}
+
+			if (count >= 8) result++;
+
 		}
-		if(group_counter >= 6) {
-			return true;
-		}else {
-			return false;
-		}
+
+		return result;
+
 	}
-	//il metodo 2 funziona solo se si considerano gruppi di file/colonne da 4 e non forme strane
-	// i due metodi sono corretti solo se si considerano gruppi "doppioni"
-	public boolean Check_CommonGoal_02(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		int consecutive_counter=0;
-		int group_counter = 0;
-		int group_dim = 4;
-		for(int i = 0; i < max_row; i++) {
-			for(int j=0, k = 1; j<max_column-1 && k < max_column; j++, k++) {
-				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
-					consecutive_counter++;
-				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
-					if (consecutive_counter >= group_dim - 1) {
-						group_counter++;
-						consecutive_counter = 0;
-					}else {
-						consecutive_counter = 0;
-					}
-				}
+
+	// WORKING
+	public int Check_Common_Goal_08(Bookshelf pshelf) {
+
+		// Controlla il seguente pattern > 		X X
+		// su tutta la shelf se è				 X
+		// composto da tile uguali 				X X
+
+		int result = 0;
+
+		for (int rshift = 0; rshift <= 2; rshift++) {
+
+			for (int dshift = 0; dshift <= 3; dshift++) {
+
+				TileType checktile = pshelf.getTile(0 + dshift, 0 + rshift).getType();
+
+				if (checktile == TileType.NULL) continue;
+
+				boolean t1 = checktile == pshelf.getTile(1 + dshift, 1 + rshift).getType();
+				boolean t2 = checktile == pshelf.getTile(2 + dshift, 0 + rshift).getType();
+				boolean t3 = checktile == pshelf.getTile(0 + dshift, 2 + rshift).getType();
+				boolean t4 = checktile == pshelf.getTile(2 + dshift, 2 + rshift).getType();
+
+				if (t1 && t2 && t3 && t4) result++;
+
 			}
-		}
-		for(int i = 0; i < max_column; i++) {
-			for(int j=0, k = 1; j<max_row-1 && k < max_row; j++, k++) {
-				if(player_bookshelf[i][j].equals(player_bookshelf[i][k])) {
-					consecutive_counter++;
-				}else if (player_bookshelf[i][j] != player_bookshelf[i][k]) {
-					if (consecutive_counter >= group_dim - 1) {
-						group_counter++;
-						consecutive_counter = 0;
-					}else {
-						consecutive_counter = 0;
-					}
-				}
-			}
-		}
-		if(group_counter >= 4) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	public boolean Check_Common_Goal_03(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		if (player_bookshelf[0][0].equals(player_bookshelf[0][max_row]) && player_bookshelf[0][0].equals(player_bookshelf[max_column][0]) && player_bookshelf[0][0].equals(player_bookshelf[max_column][max_row])) {
-			return true;
-		}else {
-			return false;
+
 		}
 
+		return result;
+
 	}
 
-	public boolean Check_Common_Goal_04(Bookshelf player_bookshelf[][], int max_column, int max_row) {
+	// WORKING
+	public int Check_Common_Goal_09(Bookshelf pshelf) {
 
-		return false;
-	}
-
-	public boolean Check_Common_Goal_05(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		int differentTypesCount = 0;
-		for(int k = 0; k < Bookshelf.ROWS; k++) {
-			//BookshelfTile[] row = player_bookshelf[k];
-		}
-		return false;
-	}
-
-	public boolean Check_Common_Goal_06(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		return false;
-	}
-
-	public boolean Check_Common_Goal_07(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		return false;
-	}
-
-	public boolean Check_Common_Goal_08(Bookshelf player_bookshelf[][], int max_column, int max_row) {
-		return false;
-	}
-
-	public boolean Check_Common_Goal_09(Bookshelf pshelf) {
-
-		// Controlla la diagonale (y = -x) se è composta dalle stesse tile,
-		// nel caso controlla quella sotto (ce ne stanno due di diagonali così
+		// Controlla la diagonale (y = x e y = -x) se è composta dalle stesse tile,
+		// nel caso controlla quelle sotto (ce ne stanno 4 di diagonali così
 		// nella shelf)
 
-		for (int i = 0; i < 2; i++)
-		{
-			boolean t1 = pshelf.getTile(i, 0) == pshelf.getTile(1 + i, 1);
-			boolean t2 = pshelf.getTile(i, 0) == pshelf.getTile(2 + i, 2);
-			boolean t3 = pshelf.getTile(i, 0) == pshelf.getTile(3 + i, 3);
-			boolean t4 = pshelf.getTile(i, 0) == pshelf.getTile(4 + i, 4);
+		int result = 0;
 
-			if (t1 && t2 && t3 && t4) return true;
+		for (int dshift = 0; dshift <= 1; dshift++) {
+
+			for (int inverse = 0; inverse <= 1; inverse++) {
+
+				TileType checktile = pshelf.getTile(0 + dshift, 0 + (4*inverse)).getType();
+
+				if (checktile == TileType.NULL) continue;
+
+				boolean t1 = checktile == pshelf.getTile(1 + dshift, 1 + (2*inverse)).getType();
+				boolean t2 = checktile == pshelf.getTile(2 + dshift, 2              ).getType();
+				boolean t3 = checktile == pshelf.getTile(3 + dshift, 3 - (2*inverse)).getType();
+				boolean t4 = checktile == pshelf.getTile(4 + dshift, 4 - (4*inverse)).getType();
+
+				if (t1 && t2 && t3 && t4) result++;
+
+			}
+		}
+
+		return result;
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_10(Bookshelf pshelf) {
+
+		// Controlla se ci sono 2 righe della shelf composte interamente da tile diverse
+
+		int result = 0;
+
+		for (int row = 0; row <= 5; row++) {
+
+			TileType[] current_row = pshelf.getRow(row);
+			int nulls = Math.min(1, Count_NULL(current_row));
+			Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
+			if (set.size() - nulls == 5) result++;
+
+		}
+
+		return Math.max(0, result - 1);
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_11(Bookshelf pshelf) {
+
+		int result = 0;
+
+		for (int row = 0; row <= 5; row++) {
+
+			TileType[] current_row = pshelf.getRow(row);
+			int nulls = Math.min(1, Count_NULL(current_row));
+			Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
+			if (set.size() - nulls <= 3) result++;
+
+		}
+
+		return Math.max(0, result - 3);
+
+
+	}
+
+	// WORKING
+	public int Check_Common_Goal_12(Bookshelf pshelf) {
+
+		// Controlla se i lati della shelf hanno tile uguali
+
+		TileType checktile = pshelf.getTile(0, 0).getType();
+
+		if (checktile == TileType.NULL) return 0;
+
+		boolean t1 = checktile == pshelf.getTile(0, 4).getType();
+		boolean t2 = checktile == pshelf.getTile(5, 0).getType();
+		boolean t3 = checktile == pshelf.getTile(5, 4).getType();
+
+		if (t1 && t2 && t3) return 1;
+		return 0;
+
+	}
+
+	public int Count_NULL(TileType[] row_col) {
+
+		int count = 0;
+
+		for (TileType tile : row_col) {
+			if (tile == TileType.NULL) count++;
+		}
+
+		return count;
+
+	}
+
+	public boolean Coords_Check(int[] coords, int row, int col) {
+
+		for (int coord : coords) {
+
+			boolean t1 = (row + 1) * 3 +  col      * 5 == coord;
+			boolean t2 =  row * 3      + (col + 1) * 5 == coord;
+			boolean t3 = (row + 1) * 3 + (col + 1) * 5 == coord;
+
+			if (t1 || t2 || t3) return true;
 
 		}
 
@@ -151,30 +326,23 @@ public class CommonGoals {
 
 	}
 
-	public boolean Check_Common_Goal_10(Bookshelf shelf) {
-		//Refactored method 
-		for (int k = 0; k < Bookshelf.ROWS; k++){
-			
-			BookshelfTile[] col = shelf.getColumn(k);
-			 if(!Arrays.stream(col).allMatch(new HashSet<>()::add)){
-				 return true;
-			 }
-			 
+	public int Count_Tiles(TileType[] row_col) {
+
+		int count = 0;
+
+		for (TileType tile : row_col) {
+			for (TileType type : TileType.types) {
+				if (tile == type) {
+					count++;
+					break;
+				}
 			}
-		return false;
-	}
+		}
 
-	public boolean Check_Common_Goal_11(Bookshelf pshelf, int max_column, int max_row) {
-
-		return false;
+		return count;
 
 	}
 
-	public boolean Check_Common_Goal_12(Bookshelf pshelf) {
-
-		return false;
-
-	}
 }
 
 
