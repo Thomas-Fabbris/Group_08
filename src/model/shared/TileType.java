@@ -15,7 +15,7 @@ public enum TileType {
 	GAME_END,
 	NULL;
 	
-	private static TileType[] types = {BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES};
+	public static TileType[] types = {BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES};
 	
 	public static TileType randomType() {
 		int i = 0;
