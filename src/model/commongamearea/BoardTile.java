@@ -1,5 +1,8 @@
 package model.commongamearea;
 
+import java.io.File;
+
+import model.personalgamearea.Bookshelf;
 import model.shared.Tile;
 import model.shared.TileType;
 
@@ -44,11 +47,15 @@ public class BoardTile extends Tile{
 		return board.getTile(row, column-1);
 	}
 	
+		
+	
+	//checks if the tile exists on the board 
 	public boolean isInteractible () {
 		return (!this.getType().equals(TileType.NULL) && this.isActive());
-	} //checks if the tile exists on the board 
+	}
 	
-	public boolean canBePickedUp () {
+	//assigns the boolean (isSelectable) to the checked tile
+	public boolean canBePickedUp (BoardTile tile) {
 		int contatore=0;
 		if (this.tileUp().isInteractible())
 			contatore ++;
@@ -69,5 +76,6 @@ public class BoardTile extends Tile{
 		}
 			
 	}
+	
 	
 }

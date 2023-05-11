@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
+
 import model.shared.TileType;
 
 public class Board {

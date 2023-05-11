@@ -82,15 +82,15 @@ public class MainController {
 
 		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
 
-		while (MainController.gameState == GameState.RUNNING) {
-			int index = 0;
-
-			setCurrentPlayer(players[index++]);
-
-			if (index > 4) index = 0;
-			
-			// stop execution until nextPlayerButton is pressed
-		}
+//		while (MainController.gameState == GameState.RUNNING) {
+//			int index = 0;
+//
+//			setCurrentPlayer(players[index++]);
+//
+//			if (index > 4) index = 0;
+//			
+//			// stop execution until nextPlayerButton is pressed
+//		}
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class MainController {
 				if (board.getValidPositions()[row][column]) {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 					label.addMouseListener(
-							new BoardTileController(board, board.getTile(row, column), label, board.getTiles()));
+							new BoardTileController(board, board.getTile(row, column), label, board.getTiles(), commonGameAreaFrame));
 
 					updateBoardTileLabel(board.getTile(row, column), label);
 					boardLabel.add(label);

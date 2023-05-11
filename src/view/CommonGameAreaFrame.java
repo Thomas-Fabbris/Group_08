@@ -31,13 +31,13 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setLayout(new FlowLayout());
 		Init();
 
-		// Initialise the board
+		// Initialize the board
 		this.boardLabel = new JLabel();
 		this.boardLabel.setSize(screenSize.getSize().height * 2 / 3 - 20, screenSize.getSize().height * 2 / 3 - 20);
 		this.boardLabel
 				.setIcon(ImageUtils.loadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
 
-		// Initialise endOfGameTile, rotate it and then add it to the board
+		// Initialize endOfGameTile, rotate it and then add it to the board
 		int rotation = 15;
 
 		this.endOfGameTile = new JLabel();
@@ -49,7 +49,7 @@ public class CommonGameAreaFrame extends JFrame {
 
 		this.boardLabel.add(endOfGameTile);
 
-		// Initialise both cards
+		// Initialize both cards
 		this.card1 = new JLabel();
 		this.card2 = new JLabel();
 

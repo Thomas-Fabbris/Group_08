@@ -63,7 +63,7 @@ public class ImageUtils {
 	}
 	
 	/**
-	 * Returns a grayscale version of the icon
+	 * Returns a grayscale version of the icon 
 	 * @param icon
 	 * @return
 	 */
