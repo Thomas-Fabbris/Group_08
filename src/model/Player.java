@@ -102,4 +102,60 @@ public class Player {
 	public void setHasChair(boolean hasChair) {
 		this.hasChair = hasChair;
 	}
+
+	/**
+	 * @return the hasEndOfGameToken
+	 */
+	public boolean isHasEndOfGameToken() {
+		return hasEndOfGameToken;
+	}
+
+	/**
+	 * @param hasEndOfGameToken the hasEndOfGameToken to set
+	 */
+	public void setHasEndOfGameToken(boolean hasEndOfGameToken) {
+		this.hasEndOfGameToken = hasEndOfGameToken;
+	}
+
+	/**
+	 * @return the pointTile1
+	 */
+	public PointTile getPointTile1() {
+		return pointTile1;
+	}
+
+	/**
+	 * @param pointTile1 the pointTile1 to set
+	 */
+	public void setPointTile1(PointTile pointTile1) {
+		this.pointTile1 = pointTile1;
+	}
+
+	/**
+	 * @return the pointTile2
+	 */
+	public PointTile getPointTile2() {
+		return pointTile2;
+	}
+
+	/**
+	 * @param pointTile2 the pointTile2 to set
+	 */
+	public void setPointTile2(PointTile pointTile2) {
+		this.pointTile2 = pointTile2;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @return the bookshelf
+	 */
+	public Bookshelf getBookshelf() {
+		return bookshelf;
+	}
 }

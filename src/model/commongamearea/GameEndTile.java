@@ -5,12 +5,9 @@ import model.shared.Tile;
 import model.shared.TileType;
 
 public class GameEndTile extends Tile {
-	
 	private Board board;
-	
 	public GameEndTile(Board board) {
 		super(TileType.GAME_END);
-		
 		this.board = board;
 		this.enable();
 	}

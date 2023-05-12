@@ -8,9 +8,11 @@ import javax.swing.JLabel;
 
 import model.CommonGameArea;
 import model.Player;
+import model.GameToken;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
+import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
@@ -30,17 +32,15 @@ public class MainController {
 
 	private Player[] players;
 	private Player currentPlayer;
-
-	public Player getCurrentPlayer() {
-		return currentPlayer;
-	}
+	private Player lastPlayer;
 
 	private CommonGameArea commonGameArea;
 
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
-	
-	private Controller controller;
+
+	private GameToken gameToken;
+	private GameEndTile gameEndTile = null;
 
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
@@ -59,8 +59,8 @@ public class MainController {
 		createPlayers(playerNames, idGenerator);
 		this.currentPlayer = players[0];
 		
-		//Controller initialisation
-		this.controller = new Controller(this,players[0]);
+		//Initialise gameToken 
+		this.gameToken = new GameToken(this.currentPlayer);
 
 		// Personal game area initialisation
 		assignBookshelfTiles();
@@ -72,6 +72,10 @@ public class MainController {
 		assignPointTiles();
 
 		startGame();
+	}
+	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	private void startGame() {
@@ -320,8 +324,97 @@ public class MainController {
 
 		tileLabel.setIcon(icon);
 	}
-
-	public Controller getController() {
-		return controller;
+	
+	// ----------- General-purpose game operations -----------
+	
+	/**
+	 * This method checks if the game has finished and if so sets all the necessary parameters of the game
+	 */
+	public void checkEndOfGame() {
+		if(this.currentPlayer.getBookshelf().isFull()) {
+			this.currentPlayer.setEndOfGameToken(true);
+			MainController.gameState = GameState.ENDED;
+			this.setLastPlayer(determineLastPlayer());
+			this.gameEndTile = new GameEndTile(this.commonGameArea.getBoard());
+			this.gameEndTile.award(this.currentPlayer);
+			saveCurrentPlayerInfo();
+		}
 	}
+	
+	/**
+	 * This method allows to skip to the next turn of the game
+	 */
+	
+	public void nextTurn() {
+		checkEndOfGame();
+		Player nextPlayer = determineNextPlayer();
+		if(!nextPlayer.equals(this.lastPlayer)) {
+			this.gameToken.setCurrentOwner(currentPlayer);
+			setCurrentPlayer(nextPlayer);
+		}
+	}
+	
+	public Player determineNextPlayer() {
+		Player nextPlayer = null;
+		for (int k = 0; k < this.players.length; k++) {
+			if(this.players[k].equals(this.currentPlayer)) {
+				if (k != this.players.length - 1) {
+					nextPlayer = this.players[k + 1];
+				}
+				else {
+					nextPlayer = this.players[0];
+				}
+			}
+		}
+		return nextPlayer;
+	}
+	
+	public Player determineLastPlayer() {
+		return this.players[this.players.length - 1];
+	}
+	
+	public void setLastPlayer(Player lastPlayer) {
+		this.lastPlayer = lastPlayer;
+	}
+	
+	public void saveCurrentPlayerInfo() {
+		
+		for(Player p : this.players) {
+			if(p.equals(this.currentPlayer)) {
+				p = this.currentPlayer;
+				return;
+			}
+		}
+		
+	}
+	
+	/**
+	 * This method is used to decide the winner of the math in case of a tie
+	 * @param player
+	 * @return 
+	 */
+	private int determineDistanceFromFirstPlayer(Player player) {
+		int distance = 0;
+		
+		for(int k = 0; k < this.players.length; k++) {
+			if(players[k].equals(player)) {
+				do {
+					if(!players[k].equals(this.players[0])) {
+						distance++;
+					}
+					if(k < this.players.length) {
+						k++;
+					}
+					else {
+						k = 0;
+					}
+				}while(distance < this.players.length - 1);
+				
+				return distance;
+			}
+			
+		}
+		return -1;
+	}
+
 }

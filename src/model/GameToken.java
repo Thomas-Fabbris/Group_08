@@ -1,12 +1,10 @@
-package controller;
+package model;
 
-import model.Player;
-
-public class Token {
+public class GameToken {
 	private int roundNumber;
 	private Player currentOwner;
 	
-	public Token(Player player){
+	public GameToken(Player player){
 		this.roundNumber = 1;
 		this.currentOwner = player;
 	}
@@ -18,16 +16,13 @@ public class Token {
 	
 	private void moveToNextPlayer(Player players[]) {
 		
-		for (int k = 0; k < players.length; k++) {
+		for(int k = 0; k < players.length; k++) {
 			if(this.currentOwner.equals(players[k])) {
-				if(k != players.length - 1) {
-					this.currentOwner = players[k++];
-				}
-				else {
-					this.currentOwner = players[0];
-				}		
+				this.currentOwner = players[k++];
+				break;
 			}
 		}
+		
 	}
 
 	public void setRoundNumber(int roundNumber) {
