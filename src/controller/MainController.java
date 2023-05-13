@@ -346,11 +346,24 @@ public class MainController {
 	 */
 	
 	public void nextTurn() {
+		checkCommonGoals();
 		checkEndOfGame();
+		saveCurrentPlayerInfo();
 		Player nextPlayer = determineNextPlayer();
 		if(!nextPlayer.equals(this.lastPlayer)) {
 			this.gameToken.setCurrentOwner(currentPlayer);
 			setCurrentPlayer(nextPlayer);
+		}
+	}
+	
+	public void checkCommonGoals() {
+		if(!this.currentPlayer.hasCompletedCommonGoal1() && this.commonGameArea.getCard1().getRelatedCommonGoal().checkCommonGoal(this.currentPlayer.getBookshelf())){
+			this.currentPlayer.setHasCompletedCommonGoal1(true);
+			this.commonGameArea.getCard1().award(this.currentPlayer);
+		}
+		if(!this.currentPlayer.hasCompletedCommonGoal2() && this.commonGameArea.getCard2().getRelatedCommonGoal().checkCommonGoal(this.currentPlayer.getBookshelf())){
+			this.currentPlayer.setHasCompletedCommonGoal2(true);
+			this.commonGameArea.getCard2().award(this.currentPlayer);
 		}
 	}
 	

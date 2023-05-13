@@ -17,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class MainMenuWindow extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3919760497868695631L;
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
 	private JComboBox<Integer> number_of_players_seletion = new JComboBox<Integer>(new Integer[] {2, 3, 4});

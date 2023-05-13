@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 
 public class BoardTileLabel extends JLabel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5349661031097838790L;
 	private int offset;
 	private int tileCellLength;
 	

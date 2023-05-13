@@ -15,6 +15,11 @@ import view.personalgamearea.BookshelfLabel;
 
 public class PersonalGameAreaFrame extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2242387074378483496L;
+
 	Dimension screenSize;
 
 	private JPanel playerInfoPanel; //Contains all the info that are displayed on the GUI

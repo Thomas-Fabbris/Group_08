@@ -12,6 +12,8 @@ public class Player {
 	private int points;
 	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
+	private boolean hasCompletedCommonGoal1 = false;
+	private boolean hasCompletedCommonGoal2 = false;
 
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
@@ -157,5 +159,33 @@ public class Player {
 	 */
 	public Bookshelf getBookshelf() {
 		return bookshelf;
+	}
+
+	/**
+	 * @return the hasCompletedCommonGoal1
+	 */
+	public boolean hasCompletedCommonGoal1() {
+		return hasCompletedCommonGoal1;
+	}
+
+	/**
+	 * @param hasCompletedCommonGoal1 the hasCompletedCommonGoal1 to set
+	 */
+	public void setHasCompletedCommonGoal1(boolean hasCompletedCommonGoal1) {
+		this.hasCompletedCommonGoal1 = hasCompletedCommonGoal1;
+	}
+
+	/**
+	 * @return the hasCompletedCommonGoal2
+	 */
+	public boolean hasCompletedCommonGoal2() {
+		return hasCompletedCommonGoal2;
+	}
+
+	/**
+	 * @param hasCompletedCommonGoal2 the hasCompletedCommonGoal2 to set
+	 */
+	public void setHasCompletedCommonGoal2(boolean hasCompletedCommonGoal2) {
+		this.hasCompletedCommonGoal2 = hasCompletedCommonGoal2;
 	}
 }

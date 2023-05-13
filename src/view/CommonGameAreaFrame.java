@@ -11,6 +11,10 @@ import view.commongamearea.BoardTileLabel;
 
 public class CommonGameAreaFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4736645517826828496L;
 	private Dimension screenSize;
 	private JLabel boardLabel;
 	private BoardTileLabel[][] boardTileLabels;

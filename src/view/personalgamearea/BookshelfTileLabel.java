@@ -6,6 +6,10 @@ import javax.swing.JLabel;
 
 public class BookshelfTileLabel extends JLabel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7047995230385435718L;
 	private int tileLength;
 	private int xOffset;
 	private int yOffset;

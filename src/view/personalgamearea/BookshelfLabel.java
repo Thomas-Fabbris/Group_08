@@ -11,6 +11,10 @@ import view.ImageUtils;
 
 public class BookshelfLabel extends JLabel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2080265389523747344L;
 	private ImageIcon image;
 	public final BookshelfTileLabel[][] tiles;
 	public final JPanel tilesContainer = new JPanel(); //This contains the tile labels displayed on the bookshelf
