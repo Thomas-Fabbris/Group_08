@@ -4,13 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NavigableMap;
 import java.util.Scanner;
 
 import model.shared.TileType;
-
+import java.util.TreeMap;
 public class PersonalObjectiveCard {
 
 	public final static int MAX_CARD_ID = 12;
+	public static NavigableMap<Integer,Integer> pointsMap;
 	public final int cardId;
 
 	/**
@@ -21,17 +23,45 @@ public class PersonalObjectiveCard {
 	 * and compare it to the tiles on the bookshelf.
 	 */
 	private List<BookshelfTileGoal> tileGoals = new LinkedList<>(); // Stores the TileType and its position for
-																	// comparison on the shelf
-
+	
+	//Important: pointsMap is initiliazed in the constructor even though it's a static field, because it has no reason for existing if no personal object card has been created before
 	public PersonalObjectiveCard(int card_id) {
 		this.cardId = card_id;
 		this.tileGoals = readTypePositionsFromFile(selectFile(card_id));
+		if(PersonalObjectiveCard.pointsMap == null) {
+			PersonalObjectiveCard.pointsMap = readPersonalGoalPointsFromFile(new File("Assets/Carte_Obiettivo_Personale/Punteggi_Carte_Obiettivo_Personali.csv"));
+		}
 	}
 
 	private File selectFile(int card_id) {
 		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.txt".replaceAll("X",
 				Integer.valueOf(card_id).toString());
 		return new File(path);
+	}
+	
+	/* This method reads the csv file containing the number of points assigned if the player has tiles in its bookshelf in the exact position illustrated by its personal goal card
+	 * @param file
+	 * @return
+	 */
+	private NavigableMap<Integer, Integer> readPersonalGoalPointsFromFile(File file){
+		
+		Scanner scanner = null;
+		
+		try {
+			scanner = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		NavigableMap<Integer,Integer> pointsMap = new TreeMap<Integer,Integer>();
+		String line;
+		
+		while(scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			String lineData[] = line.split(";");
+			pointsMap.put(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]));
+		}
+		return pointsMap;
 	}
 
 	// Read the file with the positions of each TileType on the card

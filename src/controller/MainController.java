@@ -16,9 +16,9 @@ import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
+import model.personalgamearea.CommonGoals;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
-import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -33,6 +33,7 @@ public class MainController {
 	private Player[] players;
 	private Player currentPlayer;
 	private Player lastPlayer;
+	private Player winner;
 
 	private CommonGameArea commonGameArea;
 
@@ -58,6 +59,7 @@ public class MainController {
 		this.players = new Player[playerNames.size()];
 		createPlayers(playerNames, idGenerator);
 		this.currentPlayer = players[0];
+		this.winner = null;
 		
 		//Initialise gameToken 
 		this.gameToken = new GameToken(this.currentPlayer);
@@ -330,7 +332,7 @@ public class MainController {
 	/**
 	 * This method checks if the game has finished and if so sets all the necessary parameters of the game
 	 */
-	public void checkEndOfGame() {
+	private void checkEndOfGame() {
 		if(this.currentPlayer.getBookshelf().isFull()) {
 			this.currentPlayer.setEndOfGameToken(true);
 			MainController.gameState = GameState.ENDED;
@@ -345,7 +347,7 @@ public class MainController {
 	 * This method allows to skip to the next turn of the game
 	 */
 	
-	public void nextTurn() {
+	private void nextTurn() {
 		checkCommonGoals();
 		checkEndOfGame();
 		saveCurrentPlayerInfo();
@@ -354,9 +356,76 @@ public class MainController {
 			this.gameToken.setCurrentOwner(currentPlayer);
 			setCurrentPlayer(nextPlayer);
 		}
+		else if(this.gameState.equals(GameState.ENDED)){
+			computePersonalGoalsPoints();
+			computePointsFromTilesGroup();
+			this.winner = determineWinner();
+		}
+	}
+	private Player determineWinner() {
+		
+		Player[] winners = new Player[this.players.length];
+		boolean continua = true;
+		int count = 0; //indice interno array winners
+		
+		//Determina il/i giocatore/i che hanno totalizzato il maggior punteggio nella partita
+		for(Player p : this.players) {
+			for(int k = 0; k < count + 1 && continua; k++) {
+				if(winners[k] != null && p.getPoints() > winners[k].getPoints()) {
+					continua = false;
+					winners = new Player[this.players.length];
+					count = 0;
+					winners[count] = p;
+				}
+				else if(winners[k] != null && p.getPoints() == winners[k].getPoints()) {
+					count += 1;
+					winners[count] = p;
+				}
+			}
+		}
+		
+		//In caso di pareggio, sceglie il vincitore sulla base della distanza in senso orario dal primo giocatore
+		int maxDistance = 0, currentDistance = 0;
+		for(Player w : winners) {
+			currentDistance = determineDistanceFromFirstPlayer(w);
+			if(currentDistance > maxDistance) {
+				maxDistance = currentDistance;
+				this.winner = w;
+			}
+		}
+		
+		return this.winner;
+	}
+
+	/**
+	 * This method computes the points which will be assigned to each player for fulfilling their personal goals
+	 */
+	private void computePersonalGoalsPoints() {
+		for(Player p : this.players) {
+			int satisfiedGoals = p.getObjectiveCard().countSatisfiedGoals(p.getBookshelf());
+			p.addPoints(PersonalObjectiveCard.pointsMap.get(satisfiedGoals));
+		}
 	}
 	
-	public void checkCommonGoals() {
+	/**
+	 * This method computes the points which will be assigned to each player for having created group of 3/4/5/6+ adjacent tiles of the same type in his own bookshelf
+	 */
+	private void computePointsFromTilesGroup() {
+		for(Player p : this.players) {
+			int groupOf3Number = CommonGoals.CountGroupOf3TilesAdjacent(p.getBookshelf());
+			int groupOf4Number = CommonGoals.CountGroupOf4TilesAdjacent(p.getBookshelf());
+			int groupOf5Number = CommonGoals.CountGroupOf5TilesAdjacent(p.getBookshelf());
+			int groupOf6Number = CommonGoals.CountGroupOf6OrMoreTilesAdjacent(p.getBookshelf());
+			
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(3) * groupOf3Number);
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(4) * groupOf4Number);
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(5) * groupOf5Number);
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(6) * groupOf6Number);
+			
+		}
+	}
+	
+	private void checkCommonGoals() {
 		if(!this.currentPlayer.hasCompletedCommonGoal1() && this.commonGameArea.getCard1().getRelatedCommonGoal().checkCommonGoal(this.currentPlayer.getBookshelf())){
 			this.currentPlayer.setHasCompletedCommonGoal1(true);
 			this.commonGameArea.getCard1().award(this.currentPlayer);
@@ -367,7 +436,7 @@ public class MainController {
 		}
 	}
 	
-	public Player determineNextPlayer() {
+	private Player determineNextPlayer() {
 		Player nextPlayer = null;
 		for (int k = 0; k < this.players.length; k++) {
 			if(this.players[k].equals(this.currentPlayer)) {
@@ -382,7 +451,7 @@ public class MainController {
 		return nextPlayer;
 	}
 	
-	public Player determineLastPlayer() {
+	private Player determineLastPlayer() {
 		return this.players[this.players.length - 1];
 	}
 	
@@ -390,7 +459,7 @@ public class MainController {
 		this.lastPlayer = lastPlayer;
 	}
 	
-	public void saveCurrentPlayerInfo() {
+	private void saveCurrentPlayerInfo() {
 		
 		for(Player p : this.players) {
 			if(p.equals(this.currentPlayer)) {
@@ -412,15 +481,22 @@ public class MainController {
 		for(int k = 0; k < this.players.length; k++) {
 			if(players[k].equals(player)) {
 				do {
+					
 					if(!players[k].equals(this.players[0])) {
 						distance++;
 					}
+					else {
+						distance = 0;
+						return distance;
+					}
+					
 					if(k < this.players.length) {
 						k++;
 					}
 					else {
 						k = 0;
 					}
+					
 				}while(distance < this.players.length - 1);
 				
 				return distance;

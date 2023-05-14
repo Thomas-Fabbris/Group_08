@@ -1,7 +1,6 @@
 package view.commongamearea;
 
 import java.awt.Dimension;
-import java.io.File;
 
 import javax.swing.JLabel;
 

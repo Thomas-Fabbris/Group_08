@@ -2,13 +2,11 @@ package controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
-import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.commongamearea.BoardTileLabel;

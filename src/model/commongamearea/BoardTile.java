@@ -1,8 +1,5 @@
 package model.commongamearea;
 
-import java.io.File;
-
-import model.personalgamearea.Bookshelf;
 import model.shared.Tile;
 import model.shared.TileType;
 

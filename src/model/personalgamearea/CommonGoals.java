@@ -1,8 +1,13 @@
 package model.personalgamearea;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.NavigableMap;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 
 import model.shared.TileType;
 
@@ -414,11 +419,39 @@ public enum CommonGoals {
 	};
 
 	private int id;
-
+	
 	public abstract boolean checkCommonGoal(Bookshelf pshelf);
 
 	private CommonGoals(int id) {
 		this.id = id;
+		if(StaticFields.pointsMap == null) {
+			StaticFields.pointsMap = readGroupPointsFromFile(new File("Assets/Carte_Obiettivo_Comune/Punteggi_Gruppi_Tiles.csv"));
+		}
+	}
+
+	/* This method reads the csv file containing the number of points assigned if the player has groups of 3/4/5/6+ tiles of the same type in his bookshelf
+	 * @param file
+	 * @return
+	 */
+	private NavigableMap<Integer, Integer> readGroupPointsFromFile(File file){
+		
+		Scanner scanner = null;
+		
+		try {
+			scanner = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		NavigableMap<Integer,Integer> pointsMap = new TreeMap<Integer,Integer>();
+		String line;
+		
+		while(scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			String lineData[] = line.split(";");
+			pointsMap.put(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]));
+		}
+		return pointsMap;
 	}
 
 	private static int Count_NULL(TileType[] row_col) {
@@ -585,4 +618,44 @@ public enum CommonGoals {
 		return false;
 
 	}
+	
+	//Il metodo serve per contare quanti gruppi formati da 3 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
+	public static int CountGroupOf3TilesAdjacent(Bookshelf pshelf) {
+		int result = 0;
+		
+		return result;
+	}
+	
+	//Il metodo serve per contare quanti gruppi formati da 4 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
+	public static int CountGroupOf4TilesAdjacent(Bookshelf pshelf) {
+		int result = 0;
+		
+		return result;
+	}
+	
+	//Il metodo serve per contare quanti gruppi formati da 5 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
+	public static int CountGroupOf5TilesAdjacent(Bookshelf pshelf) {
+		int result = 0;
+		
+		return result;
+	}
+	
+	//Il metodo serve per contare quanti gruppi formati da 6 O PIU tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
+	public static int CountGroupOf6OrMoreTilesAdjacent(Bookshelf pshelf) {
+		int result = 0;
+		
+		return result;
+	}
+	
+	public static final class StaticFields {
+		 private static NavigableMap<Integer,Integer> pointsMap = new TreeMap<>();
+
+		/**
+		 * @return the pointsMap
+		 */
+		public static NavigableMap<Integer, Integer> getPointsMap() {
+			return pointsMap;
+		}
+	 }
+
 }
