@@ -353,6 +353,10 @@ public class MainController {
 		saveCurrentPlayerInfo();
 		Player nextPlayer = determineNextPlayer();
 		if(!nextPlayer.equals(this.lastPlayer)) {
+			/*
+			 * if(this.commonGameArea.getBoard().hasToBeRefilled()) {
+			 * this.commonGameArea.getBoard().refill(); assignBoardTiles(); }
+			 */
 			this.gameToken.setCurrentOwner(currentPlayer);
 			setCurrentPlayer(nextPlayer);
 		}

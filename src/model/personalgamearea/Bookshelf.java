@@ -12,9 +12,11 @@ public class Bookshelf implements Iterable<Bookshelf>{
 	public static final int COLUMNS = 5;
 	public final BookshelfTile[][] tiles = new BookshelfTile[ROWS][COLUMNS];
 	private Player player;
+	public boolean stateChanged = false; //stateChanged is a flag determining if the player has updated his bookshelf during the turn
 
-	public Bookshelf() {
+	public Bookshelf(Player player) {
 		initTiles();
+		this.stateChanged = false;
 	}
 
 	// Initializes all tiles in the bookshelf, sets each tile to NULL (which also
@@ -40,14 +42,11 @@ public class Bookshelf implements Iterable<Bookshelf>{
 		throw new UnsupportedOperationException();
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
+	
 	public boolean isFull() {
-		for(int row = 0; row < Bookshelf.ROWS; row++) {
-			for(int col = 0; col < Bookshelf.COLUMNS; col++) {
-				if(this.tiles[row][col] == null) {
+		for(int row = 0; row < ROWS; row++) {
+			for(int col = 0; col < COLUMNS; col++) {
+				if(this.tiles[row][col] != null && this.tiles[row][col].getType() == TileType.NULL) {
 					return false;
 				}
 			}
@@ -108,5 +107,26 @@ public class Bookshelf implements Iterable<Bookshelf>{
 	@Override
 	public Iterator<Bookshelf> iterator() {
 		return null;
+	}
+
+	/**
+	 * @return the stateChanged
+	 */
+	public boolean isStateChanged() {
+		return stateChanged;
+	}
+
+	/**
+	 * @param stateChanged the stateChanged to set
+	 */
+	public void setStateChanged(boolean stateChanged) {
+		this.stateChanged = stateChanged;
+	}
+	
+	public void addTile(BookshelfTile tile, int col) {
+		if(col > COLUMNS) {
+			throw new IllegalArgumentException("Unable to add a tile in  an invalid position of the bookshelf!");
+		}
+		
 	}
 }

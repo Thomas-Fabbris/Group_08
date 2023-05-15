@@ -24,7 +24,7 @@ public class Player {
 		this.name = name;
 		this.id = idgenerator.getNewId();
 		objectiveCard = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
-		bookshelf = new Bookshelf();
+		bookshelf = new Bookshelf(this);
 	}
 	
 	/**
