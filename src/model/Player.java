@@ -9,6 +9,11 @@ import model.personalgamearea.Bookshelf;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 
+/**
+ * La classe {@code Player} modella un giocatore che partecipa alla partita.
+ * @since 1.0
+ *
+ */
 public class Player {
 
 	private String name;
@@ -23,7 +28,13 @@ public class Player {
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
 	private PointTile pointTile1;
-	private PointTile pointTile2; 
+	private PointTile pointTile2;
+	
+	/**
+	 * Il costruttore definisce una nuova istanza della classe {@code Player}
+	 * @param name nome del giocatore
+	 * @param idgenerator istanza della classe {@link IdGenerator}
+	 */
 
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
@@ -33,11 +44,9 @@ public class Player {
 		bookshelf = new Bookshelf(this);
 	}
 	
-	/**
-	 * Checks if this player can receive this point tile.
-	 * If the player is eligible for this point tile, then the player will
-	 * receive the points, and the point tile is saved as reference.
-	 * @param tile PointTile to award to the player
+	/**Il metodo {@code awardPointTile} controlla se il {@link model.Player giocatore} può ricevere la {@link PointTile PointTile}.<br/>
+	 * Se il {@link model.Player giocatore} può riceverla, allora gli vengono assegnati i punti corrispondenti
+	 * @param tile {@link PointTile PointTile} da assegnare al giocatore
 	 */
 	public void awardPointTile(PointTile tile) {
 		
@@ -59,10 +68,9 @@ public class Player {
 		}
 	}
 	
-	/**
-	 * Returns point tile 1 or point tile 2.
-	 * @param which point tile to return (1 or 2)
-	 * @return
+	/**Il metodo {@code getPointTile} restituisce la {@link PointTile PointTile} da ritornare.
+	 * @param tileNumber, numero della {@code PointTile PointTile} da ritornare (1 oppure 2)
+	 * @return pointTile, la {@link PointTile PointTile} richiesta
 	 */
 	public PointTile getPointTile(int tileNumber) {
 		if(tileNumber == 1) return this.pointTile1;
@@ -70,39 +78,60 @@ public class Player {
 		else throw new IllegalArgumentException(tileNumber + " is not a valid tile number! Choose tile 1 or 2");
 	}
 	
-	
+	/**
+	 * Il metodo {@code equals} permette di confrontare tra loro due giocatori, sulla base dell'{@code id} ad essi assegnato automaticamente all'inizio della partita
+	 * @param player il {@link Player giocatore} da confrontare con l'istanza dell'oggetto che chiama questo metodo
+	 * @return {@code true} se i due giocatori confrontati sono gli stessi, {@code false} in tutti gli altri casi
+	 */
 	public boolean equals(Player player) {
 		return this.id == player.id;
 	}
+	
+	/**Il metodo {@code getName} restituisce il nome del {@link model.Player giocatore} che lo ha invocato
+	 * @return il nome del {@link model.Player giocatore} 
+	 */
 	
 	public String getName() {
 		return this.name;
 	}
 	
+	/**Il metodo{@code addPoints} serve per assegnare {@link model.Player giocatore} dei nuovi punti
+	 * @param points i punti da assegnare al {@link model.Player giocatore}
+	 */
+	
 	public void addPoints(int points) {
 		this.points += points;
 	}
 	
-	public void setPoints(int value) {
-		this.points = value;
-	}
-	
+	/**Il metodo {@code getPoints} restituisce i punti del {@link model.Player giocatore} che lo ha invocato
+	 * @return i punti correnti del {@link model.Player giocatore}
+	 */
 	public int getPoints() {
 		return this.points;
 	}
 	
+	/**Il metodo {@code hasEndOfGameToken} serve per vedere se il {@link model.Player giocatore} che ha invocato il metodo è stato lui ad innescare la fine della partita
+	 * @return {@code true} se il {@link model.Player giocatore} possiede il {@link GameEndTile gettone di fine partita}
+	 */
 	public boolean hasEndOfGameToken() {
 		return this.hasEndOfGameToken;
 	}
 	
+	
 	public void setEndOfGameToken(boolean hasEndOfGameToken) {
 		this.hasEndOfGameToken = hasEndOfGameToken;
 	}
-
+	
+	/**Il metodo {@code getObjectiveCard} restituisce la {@link PersonalObjectiveCard} posseduta {@link model.Player giocatore} durante la partita corrente
+	 * @return la {@link PersonalObjectiveCard} del {@link model.Player giocatore}
+	 */
 	public PersonalObjectiveCard getObjectiveCard() {
 		return objectiveCard;
 	}
-
+	
+	/**Il metodo {@code hasEndOfGameToken} serve per vedere se il {@link model.Player giocatore} che ha invocato il metodo è il primo a cominciare la partita
+	 * @return {@code true} se il {@link model.Player giocatore} ha cominciato la partita attuale
+	 */
 	public boolean hasChair() {
 		return hasChair;
 	}
@@ -111,86 +140,49 @@ public class Player {
 		this.hasChair = hasChair;
 	}
 
-	/**
-	 * @return the hasEndOfGameToken
-	 */
-	public boolean isHasEndOfGameToken() {
-		return hasEndOfGameToken;
-	}
-
-	/**
-	 * @param hasEndOfGameToken the hasEndOfGameToken to set
-	 */
-	public void setHasEndOfGameToken(boolean hasEndOfGameToken) {
-		this.hasEndOfGameToken = hasEndOfGameToken;
-	}
-
-	/**
-	 * @return the pointTile1
-	 */
 	public PointTile getPointTile1() {
 		return pointTile1;
 	}
 
-	/**
-	 * @param pointTile1 the pointTile1 to set
-	 */
 	public void setPointTile1(PointTile pointTile1) {
 		this.pointTile1 = pointTile1;
 	}
 
-	/**
-	 * @return the pointTile2
-	 */
+	
 	public PointTile getPointTile2() {
 		return pointTile2;
 	}
 
-	/**
-	 * @param pointTile2 the pointTile2 to set
-	 */
+	
 	public void setPointTile2(PointTile pointTile2) {
 		this.pointTile2 = pointTile2;
 	}
 
-	/**
-	 * @return the id
-	 */
+	
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @return the bookshelf
-	 */
+	
 	public Bookshelf getBookshelf() {
 		return bookshelf;
 	}
 
-	/**
-	 * @return the hasCompletedCommonGoal1
-	 */
+	
 	public boolean hasCompletedCommonGoal1() {
 		return hasCompletedCommonGoal1;
 	}
 
-	/**
-	 * @param hasCompletedCommonGoal1 the hasCompletedCommonGoal1 to set
-	 */
+	
 	public void setHasCompletedCommonGoal1(boolean hasCompletedCommonGoal1) {
 		this.hasCompletedCommonGoal1 = hasCompletedCommonGoal1;
 	}
 
-	/**
-	 * @return the hasCompletedCommonGoal2
-	 */
+	
 	public boolean hasCompletedCommonGoal2() {
 		return hasCompletedCommonGoal2;
 	}
 
-	/**
-	 * @param hasCompletedCommonGoal2 the hasCompletedCommonGoal2 to set
-	 */
 	public void setHasCompletedCommonGoal2(boolean hasCompletedCommonGoal2) {
 		this.hasCompletedCommonGoal2 = hasCompletedCommonGoal2;
 	}
