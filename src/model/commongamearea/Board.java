@@ -48,9 +48,9 @@ public class Board {
 	 * @return the type of the tile at specified row / column
 	 */
 	public TileType getTileType(int row, int column) {
-		if(!isValidPosition(row, column))
+		if (!isValidPosition(row, column))
 			throw new InvalidBoardPositionException(row, column);
-		
+
 		return tiles[row][column].getType();
 	}
 	
