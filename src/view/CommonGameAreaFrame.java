@@ -3,17 +3,17 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import view.commongamearea.BoardTileLabel;
 
 public class CommonGameAreaFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4736645517826828496L;
 	private Dimension screenSize;
 	private JLabel boardLabel;
@@ -27,6 +27,12 @@ public class CommonGameAreaFrame extends JFrame {
 	// Tiles that, on the real board-game, would go on the common objective cards
 	private JLabel card1PointTile;
 	private JLabel card2PointTile;
+	
+	// Elements to display the tiles selected by the player
+	private JPanel selectedTiles;
+	private JLabel selectedTile1;
+	private JLabel selectedTile2;
+	private JLabel selectedTile3;
 
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -35,13 +41,13 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setLayout(new FlowLayout());
 		Init();
 
-		// Initialize the board
+		// Initialise the board
 		this.boardLabel = new JLabel();
 		this.boardLabel.setSize(screenSize.getSize().height * 2 / 3 - 20, screenSize.getSize().height * 2 / 3 - 20);
 		this.boardLabel
 				.setIcon(ImageUtils.loadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
 
-		// Initialize endOfGameTile, rotate it and then add it to the board
+		// Initialise endOfGameTile, rotate it and then add it to the board
 		int rotation = 15;
 
 		this.endOfGameTile = new JLabel();
@@ -53,7 +59,7 @@ public class CommonGameAreaFrame extends JFrame {
 
 		this.boardLabel.add(endOfGameTile);
 
-		// Initialize both cards
+		// Initialise both cards
 		this.card1 = new JLabel();
 		this.card2 = new JLabel();
 
@@ -69,11 +75,34 @@ public class CommonGameAreaFrame extends JFrame {
 		this.card2PointTile.setBounds((int) (card2.getWidth() / 1.7), (int) (card2.getHeight() / 3.55),
 				(int) (card2.getWidth() / 3.55), (int) (card2.getWidth() / 3.55));
 
+		// Initialise selected tiles elements
+		this.selectedTiles = new JPanel();
+		this.selectedTiles.setLayout(new GridLayout(3, 0));
+		this.selectedTiles.setSize(endOfGameTile.getWidth(), endOfGameTile.getHeight()*3);
+		this.selectedTiles.setOpaque(true);
+		
+		this.selectedTile1 = new JLabel();
+		this.selectedTile2 = new JLabel();
+		this.selectedTile3 = new JLabel();
+		this.selectedTile1.setSize(endOfGameTile.getSize());
+		this.selectedTile2.setSize(endOfGameTile.getSize());
+		this.selectedTile3.setSize(endOfGameTile.getSize());
+		this.selectedTile1.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/BOOKS.png"));
+		this.selectedTile2.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/FRAMES.png"));
+		this.selectedTile3.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/GAMES.png"));
+		
+		
+		// Add all elements
+		this.selectedTiles.add(selectedTile1);
+		this.selectedTiles.add(selectedTile2);
+		this.selectedTiles.add(selectedTile3);
+		
 		this.add(boardLabel);
-		this.add(card1);
-		this.add(card2);
+		this.add(selectedTiles);
 		this.card1.add(card1PointTile);
 		this.card2.add(card2PointTile);
+		this.add(card1);
+		this.add(card2);
 	}
 
 	private void Init() {
@@ -107,5 +136,21 @@ public class CommonGameAreaFrame extends JFrame {
 
 	public JLabel getCard2Label() {
 		return this.card2;
+	}
+	
+//	public JPanel getSelectedTiles() {
+//		return selectedTiles;
+//	}
+
+	public JLabel getSelectedTile1() {
+		return selectedTile1;
+	}
+
+	public JLabel getSelectedTile2() {
+		return selectedTile2;
+	}
+
+	public JLabel getSelectedTile3() {
+		return selectedTile3;
 	}
 }
