@@ -182,6 +182,18 @@ public class Board {
 		}
 	}
 	
+	public boolean refillCheck() {
+		boolean check = true;
+		for (int i = 0; i<tiles.length; i++) {
+			for (int j = 0; j<tiles.length; j++) {
+				if(tiles[i][j].isActive() && tiles[i][j].canBePickedUp()) {
+					check = false;
+					break; // interrompe sono il primo for, sarebbe meglio implementare un modo che li fermi entrambi
+				}
+			}
+		}
+		return check;
+	}
 	 
 	public void hideAllTiles() {
 		for (int i = 0; i < tiles.length; i++) {
