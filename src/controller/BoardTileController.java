@@ -34,7 +34,7 @@ public class BoardTileController implements MouseListener {
 			return;
 		}
 		
-		if (this.tile.canBePickedUp(tile)) {
+		if (this.tile.canBePickedUp()) {
 			/*
 			 * TODO select tile and bring it to the personal game area
 			 * TODO to be placed in the personal shelf of the player
@@ -81,7 +81,7 @@ public class BoardTileController implements MouseListener {
 		
 		for (int i = 0; i < board.getTiles().length; i++) {
 			for (int j = 0; j < board.getTiles().length; j++) {
-				if (!(board.getTiles()[i][j].canBePickedUp(board.getTiles()[i][j]))){
+				if (!(board.getTiles()[i][j].canBePickedUp())){
 					ImageIcon ogIcon = (ImageIcon)tileLabels[i][j].getIcon();
 					ImageIcon greyIcon = ImageUtils.getGrayImage(ogIcon);
 					tileLabels[i][j].setIcon(greyIcon);

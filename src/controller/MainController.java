@@ -348,22 +348,32 @@ public class MainController {
 	 */
 	
 	private void nextTurn() {
-		checkCommonGoals();
-		checkEndOfGame();
-		saveCurrentPlayerInfo();
-		Player nextPlayer = determineNextPlayer();
-		if(!nextPlayer.equals(this.lastPlayer)) {
-			/*
-			 * if(this.commonGameArea.getBoard().hasToBeRefilled()) {
-			 * this.commonGameArea.getBoard().refill(); assignBoardTiles(); }
-			 */
-			this.gameToken.setCurrentOwner(currentPlayer);
-			setCurrentPlayer(nextPlayer);
+		
+		if(!this.currentPlayer.getBookshelf().isStateChanged()) {
+			System.out.println("It is not possible to skip to the next turn before having completed yours!");
+			return;
 		}
-		else if(this.gameState.equals(GameState.ENDED)){
-			computePersonalGoalsPoints();
-			computePointsFromTilesGroup();
-			this.winner = determineWinner();
+		else {
+			checkCommonGoals();
+			checkEndOfGame();
+			this.currentPlayer.getBookshelf().setStateChanged(false);
+			saveCurrentPlayerInfo();
+			Player nextPlayer = determineNextPlayer();
+			if(!nextPlayer.equals(this.lastPlayer)) {
+				
+			  if(this.commonGameArea.getBoard().refillCheck()) {
+				  this.commonGameArea.getBoard().refill(); 
+				  assignBoardTiles(); 
+			  }
+				 
+				this.gameToken.setCurrentOwner(currentPlayer);
+				setCurrentPlayer(nextPlayer);
+			}
+			else if(this.gameState.equals(GameState.ENDED)){
+				computePersonalGoalsPoints();
+				computePointsFromTilesGroup();
+				this.winner = determineWinner();
+			}
 		}
 	}
 	private Player determineWinner() {

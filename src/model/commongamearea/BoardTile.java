@@ -128,40 +128,8 @@ public class BoardTile extends Tile{
 			}else {
 				choices.add(this);
 			}
+	}
+		
 		return choices;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
