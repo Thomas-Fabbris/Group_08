@@ -13,19 +13,26 @@ public class nextPlayerButtonController implements MouseListener {
 	JLabel button;
 	ImageIcon defaultStateIcon;
 	ImageIcon pressedStateIcon;
-	
-	public nextPlayerButtonController(JLabel button) {
+	MainController mainController;
+
+	public nextPlayerButtonController(JLabel button, MainController mainController) {
 		this.button = button;
-		this.defaultStateIcon = (ImageIcon)button.getIcon();
-		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(), defaultStateIcon.getIconHeight(), "Assets/ArrowButton/ArrowButtonPressed.png");
-	
-	
+		this.defaultStateIcon = (ImageIcon) button.getIcon();
+		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(),
+				defaultStateIcon.getIconHeight(), "Assets/ArrowButton/ArrowButtonPressed.png");
+		this.mainController = mainController;
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
+		int currentPlayerId = mainController.getCurrentPlayer().getId();
+		int nextId = currentPlayerId + 1;
+
+		if (nextId > mainController.getLastPlayer().getId())
+			nextId = 0;
+
+		mainController.setCurrentPlayer(mainController.getPlayer(nextId));
+
 	}
 
 	@Override
@@ -40,14 +47,12 @@ public class nextPlayerButtonController implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
-		
+
 	}
 
 }

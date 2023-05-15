@@ -1,5 +1,9 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import model.commongamearea.BoardTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.PersonalObjectiveCard;
@@ -15,6 +19,7 @@ public class Player {
 	private boolean hasCompletedCommonGoal1 = false;
 	private boolean hasCompletedCommonGoal2 = false;
 
+	private List<BoardTile> selectedTiles;
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf; 
 	private PointTile pointTile1;
@@ -23,6 +28,7 @@ public class Player {
 	public Player(String name, IdGenerator idgenerator) {
 		this.name = name;
 		this.id = idgenerator.getNewId();
+		this.selectedTiles = new LinkedList<BoardTile>();
 		objectiveCard = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
 	}
@@ -187,5 +193,9 @@ public class Player {
 	 */
 	public void setHasCompletedCommonGoal2(boolean hasCompletedCommonGoal2) {
 		this.hasCompletedCommonGoal2 = hasCompletedCommonGoal2;
+	}
+
+	public List<BoardTile> getSelectedTiles() {
+		return selectedTiles;
 	}
 }

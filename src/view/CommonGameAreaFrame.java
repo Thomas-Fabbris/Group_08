@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ public class CommonGameAreaFrame extends JFrame {
 	// Tiles that, on the real board-game, would go on the common objective cards
 	private JLabel card1PointTile;
 	private JLabel card2PointTile;
-	
+
 	// Elements to display the tiles selected by the player
 	private JPanel selectedTiles;
 	private JLabel selectedTile1;
@@ -78,25 +77,21 @@ public class CommonGameAreaFrame extends JFrame {
 		// Initialise selected tiles elements
 		this.selectedTiles = new JPanel();
 		this.selectedTiles.setLayout(new GridLayout(3, 0));
-		this.selectedTiles.setSize(endOfGameTile.getWidth(), endOfGameTile.getHeight()*3);
-		this.selectedTiles.setOpaque(true);
-		
+		this.selectedTiles.setSize(endOfGameTile.getWidth(), endOfGameTile.getHeight() * 3);
+		this.selectedTiles.setOpaque(false);
+
 		this.selectedTile1 = new JLabel();
 		this.selectedTile2 = new JLabel();
 		this.selectedTile3 = new JLabel();
 		this.selectedTile1.setSize(endOfGameTile.getSize());
 		this.selectedTile2.setSize(endOfGameTile.getSize());
 		this.selectedTile3.setSize(endOfGameTile.getSize());
-		this.selectedTile1.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/BOOKS.png"));
-		this.selectedTile2.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/FRAMES.png"));
-		this.selectedTile3.setIcon(ImageUtils.loadImageAsIcon(selectedTile1.getSize(), "Assets/tiles/GAMES.png"));
-		
-		
+
 		// Add all elements
 		this.selectedTiles.add(selectedTile1);
 		this.selectedTiles.add(selectedTile2);
 		this.selectedTiles.add(selectedTile3);
-		
+
 		this.add(boardLabel);
 		this.add(selectedTiles);
 		this.card1.add(card1PointTile);
@@ -137,10 +132,10 @@ public class CommonGameAreaFrame extends JFrame {
 	public JLabel getCard2Label() {
 		return this.card2;
 	}
-	
-//	public JPanel getSelectedTiles() {
-//		return selectedTiles;
-//	}
+
+	public JPanel getSelectedTiles() {
+		return selectedTiles;
+	}
 
 	public JLabel getSelectedTile1() {
 		return selectedTile1;

@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import model.shared.TileType;
-import java.util.TreeMap;
 public class PersonalObjectiveCard {
 
 	public final static int MAX_CARD_ID = 12;

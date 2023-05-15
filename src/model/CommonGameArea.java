@@ -1,9 +1,5 @@
 package model;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import model.commongamearea.Board;
 import model.commongamearea.CommonObjectiveCard;
 import model.commongamearea.GameEndTile;

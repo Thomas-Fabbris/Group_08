@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.CommonGameArea;
-import model.Player;
 import model.GameToken;
+import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
@@ -52,16 +52,16 @@ public class MainController {
 
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
-		
+
 		IdGenerator idGenerator = new IdGenerator();
 
 		// Initialise players
 		this.players = new Player[playerNames.size()];
 		createPlayers(playerNames, idGenerator);
-		this.currentPlayer = players[0];
+		this.lastPlayer = determineLastPlayer();
 		this.winner = null;
-		
-		//Initialise gameToken 
+
+		// Initialise gameToken
 		this.gameToken = new GameToken(this.currentPlayer);
 
 		// Personal game area initialisation
@@ -72,12 +72,9 @@ public class MainController {
 		assignBoardTiles();
 		assignCommonObjectiveCards();
 		assignPointTiles();
+		assignSelectedTilesController();
 
 		startGame();
-	}
-	
-	public Player getCurrentPlayer() {
-		return currentPlayer;
 	}
 
 	private void startGame() {
@@ -87,16 +84,6 @@ public class MainController {
 		setCurrentPlayer(players[0]);
 
 		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
-
-//		while (MainController.gameState == GameState.RUNNING) {
-//			int index = 0;
-//
-//			setCurrentPlayer(players[index++]);
-//
-//			if (index > 4) index = 0;
-//			
-//			// stop execution until nextPlayerButton is pressed
-//		}
 	}
 
 	/**
@@ -117,7 +104,7 @@ public class MainController {
 	 * 
 	 * @param player
 	 */
-	private void setCurrentPlayer(Player player) {
+	public void setCurrentPlayer(Player player) {
 		this.currentPlayer = player;
 		updatePlayerNameText(player);
 		updatePointsText(player);
@@ -131,6 +118,10 @@ public class MainController {
 		personalGameAreaFrame.getPointTile2();
 		personalGameAreaFrame.getEndOfGameTile();
 		personalGameAreaFrame.getChair();
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	/**
@@ -195,7 +186,7 @@ public class MainController {
 
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		button.addMouseListener(new nextPlayerButtonController(button));
+		button.addMouseListener(new nextPlayerButtonController(button, this));
 	}
 
 	private void updatePlayerNameText(Player player) {
@@ -223,6 +214,15 @@ public class MainController {
 	}
 
 	// ----------- Common game area operations -----------
+
+	private void assignSelectedTilesController() {
+		commonGameAreaFrame.getSelectedTile1()
+				.addMouseListener(new selectedTileController(0, commonGameAreaFrame, personalGameAreaFrame, this));
+		commonGameAreaFrame.getSelectedTile2()
+				.addMouseListener(new selectedTileController(1, commonGameAreaFrame, personalGameAreaFrame, this));
+		commonGameAreaFrame.getSelectedTile3()
+				.addMouseListener(new selectedTileController(2, commonGameAreaFrame, personalGameAreaFrame, this));
+	}
 
 	/**
 	 * Updates each common objective card's point tile
@@ -270,8 +270,9 @@ public class MainController {
 			for (int column = 0; column < COLUMNS; column++) {
 				if (board.getValidPositions()[row][column]) {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
-					label.addMouseListener(
-							new BoardTileController(board, board.getTile(row, column), label, board.getTiles(), commonGameAreaFrame));
+
+					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
+							board.getTiles(), commonGameAreaFrame, this));
 
 					updateBoardTileLabel(board.getTile(row, column), label);
 					boardLabel.add(label);
@@ -326,14 +327,15 @@ public class MainController {
 
 		tileLabel.setIcon(icon);
 	}
-	
+
 	// ----------- General-purpose game operations -----------
-	
+
 	/**
-	 * This method checks if the game has finished and if so sets all the necessary parameters of the game
+	 * This method checks if the game has finished and if so sets all the necessary
+	 * parameters of the game
 	 */
 	private void checkEndOfGame() {
-		if(this.currentPlayer.getBookshelf().isFull()) {
+		if (this.currentPlayer.getBookshelf().isFull()) {
 			this.currentPlayer.setEndOfGameToken(true);
 			MainController.gameState = GameState.ENDED;
 			this.setLastPlayer(determineLastPlayer());
@@ -342,182 +344,201 @@ public class MainController {
 			saveCurrentPlayerInfo();
 		}
 	}
-	
+
 	/**
 	 * This method allows to skip to the next turn of the game
 	 */
-	
+
 	private void nextTurn() {
-		
-		if(!this.currentPlayer.getBookshelf().isStateChanged()) {
+
+		if (!this.currentPlayer.getBookshelf().isStateChanged()) {
 			System.out.println("It is not possible to skip to the next turn before having completed yours!");
 			return;
-		}
-		else {
+		} else {
 			checkCommonGoals();
 			checkEndOfGame();
 			this.currentPlayer.getBookshelf().setStateChanged(false);
 			saveCurrentPlayerInfo();
 			Player nextPlayer = determineNextPlayer();
-			if(!nextPlayer.equals(this.lastPlayer)) {
-				
-			  if(this.commonGameArea.getBoard().refillCheck()) {
-				  this.commonGameArea.getBoard().refill(); 
-				  assignBoardTiles(); 
-			  }
-				 
+			if (!nextPlayer.equals(this.lastPlayer)) {
+
+				if (this.commonGameArea.getBoard().refillCheck()) {
+					this.commonGameArea.getBoard().refill();
+					assignBoardTiles();
+				}
+
 				this.gameToken.setCurrentOwner(currentPlayer);
 				setCurrentPlayer(nextPlayer);
-			}
-			else if(this.gameState.equals(GameState.ENDED)){
+			} else if (this.gameState.equals(GameState.ENDED)) {
 				computePersonalGoalsPoints();
 				computePointsFromTilesGroup();
 				this.winner = determineWinner();
 			}
 		}
 	}
+
 	private Player determineWinner() {
-		
+
 		Player[] winners = new Player[this.players.length];
 		boolean continua = true;
-		int count = 0; //indice interno array winners
-		
-		//Determina il/i giocatore/i che hanno totalizzato il maggior punteggio nella partita
-		for(Player p : this.players) {
-			for(int k = 0; k < count + 1 && continua; k++) {
-				if(winners[k] != null && p.getPoints() > winners[k].getPoints()) {
+		int count = 0; // indice interno array winners
+
+		// Determina il/i giocatore/i che hanno totalizzato il maggior punteggio nella
+		// partita
+		for (Player p : this.players) {
+			for (int k = 0; k < count + 1 && continua; k++) {
+				if (winners[k] != null && p.getPoints() > winners[k].getPoints()) {
 					continua = false;
 					winners = new Player[this.players.length];
 					count = 0;
 					winners[count] = p;
-				}
-				else if(winners[k] != null && p.getPoints() == winners[k].getPoints()) {
+				} else if (winners[k] != null && p.getPoints() == winners[k].getPoints()) {
 					count += 1;
 					winners[count] = p;
 				}
 			}
 		}
-		
-		//In caso di pareggio, sceglie il vincitore sulla base della distanza in senso orario dal primo giocatore
+
+		// In caso di pareggio, sceglie il vincitore sulla base della distanza in senso
+		// orario dal primo giocatore
 		int maxDistance = 0, currentDistance = 0;
-		for(Player w : winners) {
+		for (Player w : winners) {
 			currentDistance = determineDistanceFromFirstPlayer(w);
-			if(currentDistance > maxDistance) {
+			if (currentDistance > maxDistance) {
 				maxDistance = currentDistance;
 				this.winner = w;
 			}
 		}
-		
+
 		return this.winner;
 	}
 
 	/**
-	 * This method computes the points which will be assigned to each player for fulfilling their personal goals
+	 * This method computes the points which will be assigned to each player for
+	 * fulfilling their personal goals
 	 */
 	private void computePersonalGoalsPoints() {
-		for(Player p : this.players) {
+		for (Player p : this.players) {
 			int satisfiedGoals = p.getObjectiveCard().countSatisfiedGoals(p.getBookshelf());
 			p.addPoints(PersonalObjectiveCard.pointsMap.get(satisfiedGoals));
 		}
 	}
-	
+
 	/**
-	 * This method computes the points which will be assigned to each player for having created group of 3/4/5/6+ adjacent tiles of the same type in his own bookshelf
+	 * This method computes the points which will be assigned to each player for
+	 * having created group of 3/4/5/6+ adjacent tiles of the same type in his own
+	 * bookshelf
 	 */
 	private void computePointsFromTilesGroup() {
-		for(Player p : this.players) {
+		for (Player p : this.players) {
 			int groupOf3Number = CommonGoals.CountGroupOf3TilesAdjacent(p.getBookshelf());
 			int groupOf4Number = CommonGoals.CountGroupOf4TilesAdjacent(p.getBookshelf());
 			int groupOf5Number = CommonGoals.CountGroupOf5TilesAdjacent(p.getBookshelf());
 			int groupOf6Number = CommonGoals.CountGroupOf6OrMoreTilesAdjacent(p.getBookshelf());
-			
+
 			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(3) * groupOf3Number);
 			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(4) * groupOf4Number);
 			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(5) * groupOf5Number);
 			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(6) * groupOf6Number);
-			
+
 		}
 	}
-	
+
 	private void checkCommonGoals() {
-		if(!this.currentPlayer.hasCompletedCommonGoal1() && this.commonGameArea.getCard1().getRelatedCommonGoal().checkCommonGoal(this.currentPlayer.getBookshelf())){
+		if (!this.currentPlayer.hasCompletedCommonGoal1() && this.commonGameArea.getCard1().getRelatedCommonGoal()
+				.checkCommonGoal(this.currentPlayer.getBookshelf())) {
 			this.currentPlayer.setHasCompletedCommonGoal1(true);
 			this.commonGameArea.getCard1().award(this.currentPlayer);
 		}
-		if(!this.currentPlayer.hasCompletedCommonGoal2() && this.commonGameArea.getCard2().getRelatedCommonGoal().checkCommonGoal(this.currentPlayer.getBookshelf())){
+		if (!this.currentPlayer.hasCompletedCommonGoal2() && this.commonGameArea.getCard2().getRelatedCommonGoal()
+				.checkCommonGoal(this.currentPlayer.getBookshelf())) {
 			this.currentPlayer.setHasCompletedCommonGoal2(true);
 			this.commonGameArea.getCard2().award(this.currentPlayer);
 		}
 	}
-	
+
 	private Player determineNextPlayer() {
 		Player nextPlayer = null;
 		for (int k = 0; k < this.players.length; k++) {
-			if(this.players[k].equals(this.currentPlayer)) {
+			if (this.players[k].equals(this.currentPlayer)) {
 				if (k != this.players.length - 1) {
 					nextPlayer = this.players[k + 1];
-				}
-				else {
+				} else {
 					nextPlayer = this.players[0];
 				}
 			}
 		}
 		return nextPlayer;
 	}
-	
+
 	private Player determineLastPlayer() {
 		return this.players[this.players.length - 1];
 	}
-	
+
 	public void setLastPlayer(Player lastPlayer) {
 		this.lastPlayer = lastPlayer;
 	}
-	
+
 	private void saveCurrentPlayerInfo() {
-		
-		for(Player p : this.players) {
-			if(p.equals(this.currentPlayer)) {
+
+		for (Player p : this.players) {
+			if (p.equals(this.currentPlayer)) {
 				p = this.currentPlayer;
 				return;
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method is used to decide the winner of the math in case of a tie
+	 * 
 	 * @param player
-	 * @return 
+	 * @return
 	 */
 	private int determineDistanceFromFirstPlayer(Player player) {
 		int distance = 0;
-		
-		for(int k = 0; k < this.players.length; k++) {
-			if(players[k].equals(player)) {
+
+		for (int k = 0; k < this.players.length; k++) {
+			if (players[k].equals(player)) {
 				do {
-					
-					if(!players[k].equals(this.players[0])) {
+
+					if (!players[k].equals(this.players[0])) {
 						distance++;
-					}
-					else {
+					} else {
 						distance = 0;
 						return distance;
 					}
-					
-					if(k < this.players.length) {
+
+					if (k < this.players.length) {
 						k++;
-					}
-					else {
+					} else {
 						k = 0;
 					}
-					
-				}while(distance < this.players.length - 1);
-				
+
+				} while (distance < this.players.length - 1);
+
 				return distance;
 			}
-			
+
 		}
 		return -1;
+	}
+
+	/**
+	 * Returns the player with the specified id (if such player exists)
+	 * 
+	 * @param playerId
+	 * @return Player with id PlayerId
+	 */
+	public Player getPlayer(int playerId) {
+		if (playerId < 0 || playerId > players.length)
+			throw new ArrayIndexOutOfBoundsException("Player with id " + playerId + " doesn't exist!");
+		return players[playerId];
+	}
+
+	public Player getLastPlayer() {
+		return lastPlayer;
 	}
 
 }
