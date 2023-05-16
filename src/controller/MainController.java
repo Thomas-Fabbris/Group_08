@@ -157,9 +157,10 @@ public class MainController {
 
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
 			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
-				BookshelfTileLabel tile = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
-				bookshelfLabel.tiles[row][column] = tile;
-				bookshelfLabel.tilesContainer.add(tile);
+				BookshelfTileLabel tileLabel = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
+				tileLabel.addMouseListener(new BookshelfTileController(tileLabel, personalGameAreaFrame, this));
+				bookshelfLabel.tiles[row][column] = tileLabel;
+				bookshelfLabel.tilesContainer.add(tileLabel);
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public class BoardTileController implements MouseListener {
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
 		this.board = board;
 		this.tile = tile;
-		this.label = label;		
+		this.label = label;
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
@@ -47,7 +47,7 @@ public class BoardTileController implements MouseListener {
 		}
 
 		if (this.tile.canBePickedUp() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
-			
+
 			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
 
 			switch (selectedTiles.size()) {
@@ -123,22 +123,25 @@ public class BoardTileController implements MouseListener {
 	}
 
 	/**
-	 * Checks whether the selected tile can be picked up. Uses vector arithmetic to
-	 * predict the coordinates of the third tile, and it checks whether they match
-	 * the selected tile.
+	 * Checks whether the selected tile can be picked up. First it finds the vector
+	 * that gives the direction between the first two selected tiles, then it
+	 * enforces that the third tile has to be either on the same row or on the same
+	 * column.
 	 * 
 	 * @param selectedTiles
-	 * @param row           row that has to match (0 means ignore)
-	 * @param column        column that has to match (0 means ignore)
 	 */
 	private void pickupThirdTile(List<BoardTile> selectedTiles) {
+		// If Vx = 0, enforce same column, if Vy = 0, enforce same row
 		int Vx = selectedTiles.get(1).getRow() - selectedTiles.get(0).getRow();
 		int Vy = selectedTiles.get(1).getColumn() - selectedTiles.get(0).getColumn();
 
-		int row = selectedTiles.get(1).getRow() + Vx;
-		int column = selectedTiles.get(1).getColumn() + Vy;
+		boolean checkRowColumn = (Vx == 0 && selectedTiles.get(0).getRow() == tile.getRow())
+				|| (Vy == 0 && selectedTiles.get(0).getColumn() == tile.getColumn());
+		
+		boolean adjacentToFirst = this.tile.isAdjacent(selectedTiles.get(0));
+		boolean adjacentToSecond = this.tile.isAdjacent(selectedTiles.get(1));
 
-		if (this.tile.getRow() == row && this.tile.getColumn() == column) {
+		if ((adjacentToFirst || adjacentToSecond) && checkRowColumn) {
 			commonGameAreaFrame.getSelectedTile3().setIcon(label.getIcon());
 			selectedTiles.add(tile);
 			this.tile.setActive(false);

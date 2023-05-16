@@ -53,10 +53,12 @@ public class BoardTile extends Tile {
 	 * @return
 	 */
 	public boolean isAdjacent(BoardTile tile) {
-
+		return getDistance(tile) <= 1;
+	}
+	
+	public double getDistance(BoardTile tile) {
 		// Pythagora's theorem
-		double distance = Math.pow(this.getRow() - tile.getRow(), 2) + Math.pow(this.getColumn() - tile.getColumn(), 2);
-		return distance <= 1;
+		return Math.pow(this.getRow() - tile.getRow(), 2) + Math.pow(this.getColumn() - tile.getColumn(), 2);
 	}
 
 	// checks if the tile exists on the board
