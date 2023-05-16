@@ -31,11 +31,11 @@ public class BoardTileController implements MouseListener {
 		this.boardTiles = boardTiles;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
-		
+
 		mainController.updateBoardTileLabel(tile, label);
-		this.coloredIcon = (ImageIcon)label.getIcon();
+		this.coloredIcon = (ImageIcon) label.getIcon();
 		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
-		
+
 	}
 
 	@Override
@@ -48,40 +48,32 @@ public class BoardTileController implements MouseListener {
 		if (this.tile.canBePickedUp()) {
 			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
 
-			switch (selectedTiles.size() + 1) {
+			switch (selectedTiles.size()) {
+			case 0:
+				pickupFirstTile(selectedTiles);
+				break;
+
 			case 1:
-				commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
+				pickupSecondTile(selectedTiles);
 				break;
 
 			case 2:
-				commonGameAreaFrame.getSelectedTile2().setIcon(label.getIcon());
+				pickupThirdTile(selectedTiles);
 				break;
-
-			case 3:
-				commonGameAreaFrame.getSelectedTile3().setIcon(label.getIcon());
-				break;
-
-			default:
-				return;
 			}
-			
-			selectedTiles.add(tile);
-			this.tile.setActive(false);
-			this.label.setVisible(false);
-
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(!this.tile.canBePickedUp()) {			
+		if (!this.tile.canBePickedUp()) {
 			this.label.setIcon(this.grayIcon);
 		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {		
-		this.label.setIcon(this.coloredIcon);
+	public void mouseReleased(MouseEvent e) {
+
 	}
 
 	@Override
@@ -91,11 +83,69 @@ public class BoardTileController implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		this.label.setIcon(this.coloredIcon);
+	}
 
+	/**
+	 * Picks up the selected tile
+	 * 
+	 * @param selectedTiles
+	 */
+	private void pickupFirstTile(List<BoardTile> selectedTiles) {
+		// If no tiles have been selected, pick up the current tile
+		commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
+		selectedTiles.add(tile);
+		this.tile.setActive(false);
+		this.label.setVisible(false);
+	}
+
+	/**
+	 * Checks whether the selected tile can be picked up. The tile must be adjacent
+	 * to the previous selected tile.
+	 * 
+	 * @param selectedTiles
+	 */
+	private void pickupSecondTile(List<BoardTile> selectedTiles) {
+		// If one tile has been selected, the current tile can be picked up if it is
+		// adjacent
+		if (this.tile.isAdjacent(selectedTiles.get(0))) {
+			commonGameAreaFrame.getSelectedTile2().setIcon(label.getIcon());
+			selectedTiles.add(tile);
+			this.tile.setActive(false);
+			this.label.setVisible(false);
+		} else {
+			this.label.setIcon(grayIcon);
+		}
+	}
+
+	/**
+	 * Checks whether the selected tile can be picked up. Uses vector arithmetic to
+	 * predict the coordinates of the third tile, and it checks whether they match
+	 * the selected tile.
+	 * 
+	 * @param selectedTiles
+	 * @param row           row that has to match (0 means ignore)
+	 * @param column        column that has to match (0 means ignore)
+	 */
+	private void pickupThirdTile(List<BoardTile> selectedTiles) {
+		int Vx = selectedTiles.get(1).getRow() - selectedTiles.get(0).getRow();
+		int Vy = selectedTiles.get(1).getColumn() - selectedTiles.get(0).getColumn();
+
+		int row = selectedTiles.get(1).getRow() + Vx;
+		int column = selectedTiles.get(1).getColumn() + Vy;
+
+		if (this.tile.getRow() == row && this.tile.getColumn() == column) {
+			commonGameAreaFrame.getSelectedTile3().setIcon(label.getIcon());
+			selectedTiles.add(tile);
+			this.tile.setActive(false);
+			this.label.setVisible(false);
+		} else {
+			this.label.setIcon(grayIcon);
+		}
 	}
 
 	/*
-	 * shows by using colors if the selected tiles can be picked up
+	 * shows by using colours if the selected tiles can be picked up
 	 */
 	public void globalCheckIfTilesCanBePickedUp() {
 
