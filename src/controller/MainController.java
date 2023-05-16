@@ -247,7 +247,7 @@ public class MainController {
 	/**
 	 * Updates the image of the label to reflect the TileType of the BoardTile
 	 */
-	private void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
+	public void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
 	}
 
@@ -274,7 +274,8 @@ public class MainController {
 					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
 							board.getTiles(), commonGameAreaFrame, this));
 
-					updateBoardTileLabel(board.getTile(row, column), label);
+					
+					
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;
 				}

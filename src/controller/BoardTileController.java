@@ -17,6 +17,8 @@ public class BoardTileController implements MouseListener {
 	private Board board;
 	private BoardTile tile;
 	private BoardTileLabel label;
+	private ImageIcon coloredIcon;
+	private ImageIcon grayIcon;
 	private BoardTile[][] boardTiles;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
@@ -29,6 +31,10 @@ public class BoardTileController implements MouseListener {
 		this.boardTiles = boardTiles;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
+		
+		mainController.updateBoardTileLabel(tile, label);
+		this.coloredIcon = (ImageIcon)label.getIcon();
+		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
 	}
 
 	@Override
@@ -62,23 +68,19 @@ public class BoardTileController implements MouseListener {
 			this.tile.setActive(false);
 			this.label.setVisible(false);
 
-		} else {
-
-			ImageIcon ogIcon = (ImageIcon) this.label.getIcon();
-			ImageIcon greyIcon = ImageUtils.getGrayImage(ogIcon);
-			this.label.setIcon(greyIcon);
-
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		if(!this.tile.canBePickedUp()) {			
+			this.label.setIcon(this.grayIcon);
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-
+	public void mouseReleased(MouseEvent e) {		
+		this.label.setIcon(this.coloredIcon);
 	}
 
 	@Override

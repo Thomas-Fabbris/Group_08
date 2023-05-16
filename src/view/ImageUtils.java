@@ -75,7 +75,10 @@ public class ImageUtils {
 	}
 	
 	private static BufferedImage imageIconToBufferedImage(ImageIcon icon) {
-        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        if(icon == null) {
+        	throw new NullPointerException("ImageIcon icon is null!");
+        }
+		BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = bufferedImage.createGraphics();
         icon.paintIcon(null, graphics, 0, 0);
         graphics.dispose();
