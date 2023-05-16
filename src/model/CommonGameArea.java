@@ -12,7 +12,6 @@ public class CommonGameArea {
 	private CommonObjectiveCard card2;
 	private GameEndTile gameEndTile;
 
-	
 	public CommonGameArea(int numberOfPlayers) {
 		this.board = new Board(numberOfPlayers);
 		this.gameEndTile = new GameEndTile(board);

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.commongamearea.Board;
 import view.commongamearea.BoardTileLabel;
 
 public class CommonGameAreaFrame extends JFrame {
@@ -47,6 +48,8 @@ public class CommonGameAreaFrame extends JFrame {
 		this.boardLabel
 				.setIcon(ImageUtils.loadImageAsIcon(boardLabel.getWidth(), boardLabel.getHeight(), "Assets/Board.jpg"));
 
+		this.boardTileLabels = new BoardTileLabel[Board.BOARD_LENGTH][Board.BOARD_LENGTH];
+		
 		// Initialise endOfGameTile, rotate it and then add it to the board
 		int rotation = 15;
 

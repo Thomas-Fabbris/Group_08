@@ -35,6 +35,7 @@ public class BoardTileController implements MouseListener {
 		mainController.updateBoardTileLabel(tile, label);
 		this.coloredIcon = (ImageIcon)label.getIcon();
 		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
+		
 	}
 
 	@Override
