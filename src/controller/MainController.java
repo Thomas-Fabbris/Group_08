@@ -63,16 +63,16 @@ public class MainController {
 
 		// Initialise gameToken
 		this.gameToken = new GameToken(this.currentPlayer);
-
-		// Personal game area initialisation
-		assignBookshelfTiles();
-		assignNextPlayerButtonController();
-
+		
 		// Common game area initialisation
 		assignBoardTiles();
 		assignCommonObjectiveCards();
 		assignPointTiles();
 		assignSelectedTilesController();
+		
+		// Personal game area initialisation
+		assignBookshelfTiles();
+		assignNextPlayerButtonController();
 
 		startGame();
 	}
@@ -186,7 +186,7 @@ public class MainController {
 
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		button.addMouseListener(new nextPlayerButtonController(button, this));
+		button.addMouseListener(new NextPlayerButtonController(button, commonGameAreaFrame, this));
 	}
 
 	private void updatePlayerNameText(Player player) {
@@ -217,11 +217,11 @@ public class MainController {
 
 	private void assignSelectedTilesController() {
 		commonGameAreaFrame.getSelectedTile1()
-				.addMouseListener(new selectedTileController(0, commonGameAreaFrame, personalGameAreaFrame, this));
+				.addMouseListener(new SelectedTileController(0, commonGameAreaFrame, personalGameAreaFrame, this));
 		commonGameAreaFrame.getSelectedTile2()
-				.addMouseListener(new selectedTileController(1, commonGameAreaFrame, personalGameAreaFrame, this));
+				.addMouseListener(new SelectedTileController(1, commonGameAreaFrame, personalGameAreaFrame, this));
 		commonGameAreaFrame.getSelectedTile3()
-				.addMouseListener(new selectedTileController(2, commonGameAreaFrame, personalGameAreaFrame, this));
+				.addMouseListener(new SelectedTileController(2, commonGameAreaFrame, personalGameAreaFrame, this));
 	}
 
 	/**
@@ -264,8 +264,6 @@ public class MainController {
 		JLabel boardLabel = commonGameAreaFrame.getBoardLabel();
 		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTiles();
 
-		boardTileLabels = new BoardTileLabel[ROWS][COLUMNS];
-
 		for (int row = 0; row < ROWS; row++) {
 			for (int column = 0; column < COLUMNS; column++) {
 				if (board.getValidPositions()[row][column]) {
@@ -274,8 +272,6 @@ public class MainController {
 					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
 							board.getTiles(), commonGameAreaFrame, this));
 
-					
-					
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;
 				}

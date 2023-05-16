@@ -11,17 +11,17 @@ import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
 
-public class selectedTileController implements MouseListener {
+public class SelectedTileController implements MouseListener {
 
 	private BoardTile tile;
 	private JLabel label;
 	private Player currentPlayer;
-	private int id; // Used to identify which selected tile the use is interacting with
+	private int id; // Used to identify which selected tile the user is interacting with
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 	private MainController mainController;
 
-	public selectedTileController(int id, CommonGameAreaFrame commonGameAreaFrame,
+	public SelectedTileController(int id, CommonGameAreaFrame commonGameAreaFrame,
 			PersonalGameAreaFrame personalGameAreaFrame, MainController mainController) {
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
@@ -36,9 +36,6 @@ public class selectedTileController implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 		System.out.println("selectedTileController.java: Selected tile " + tiles.get(this.id).getType());
-
-		// TODO: if player ends turn before placing all tiles in the bookshelf,
-		// discarded tiles return to the board
 	}
 
 	@Override
@@ -60,29 +57,4 @@ public class selectedTileController implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
-
-	public BoardTile getTile() {
-		return tile;
-	}
-
-	public void setTile(BoardTile tile) {
-		this.tile = tile;
-	}
-
-	public JLabel getLabel() {
-		return label;
-	}
-
-	public void setLabel(JLabel label) {
-		this.label = label;
-	}
-
-	public Player getCurrentPlayer() {
-		return currentPlayer;
-	}
-
-	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
-
 }

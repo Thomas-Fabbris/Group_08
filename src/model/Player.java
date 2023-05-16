@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.commongamearea.BoardTile;
+import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.PersonalObjectiveCard;

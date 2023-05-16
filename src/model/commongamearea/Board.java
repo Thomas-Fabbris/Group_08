@@ -7,7 +7,7 @@ import java.util.Scanner;
 import model.shared.TileType;
 
 public class Board {
-	private final static int BOARD_LENGTH = 11;
+	public final static int BOARD_LENGTH = 11;
 	
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
 	private boolean[][] validPositions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
