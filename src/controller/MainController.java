@@ -17,6 +17,7 @@ import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.CommonGoals;
+import model.personalgamearea.PathFinder;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 import view.CommonGameAreaFrame;
@@ -431,16 +432,14 @@ public class MainController {
 	 * bookshelf
 	 */
 	private void computePointsFromTilesGroup() {
+		PathFinder pf = new PathFinder();
 		for (Player p : this.players) {
-			int groupOf3Number = CommonGoals.CountGroupOf3TilesAdjacent(p.getBookshelf());
-			int groupOf4Number = CommonGoals.CountGroupOf4TilesAdjacent(p.getBookshelf());
-			int groupOf5Number = CommonGoals.CountGroupOf5TilesAdjacent(p.getBookshelf());
-			int groupOf6Number = CommonGoals.CountGroupOf6OrMoreTilesAdjacent(p.getBookshelf());
-
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(3) * groupOf3Number);
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(4) * groupOf4Number);
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(5) * groupOf5Number);
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(6) * groupOf6Number);
+			
+			ArrayList<Integer> groupList = pf.pointsPathFinder();
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(3) * groupList.get(0));
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(4) * groupList.get(1));
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(5) * groupList.get(2));
+			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(6) * groupList.get(3));
 
 		}
 	}

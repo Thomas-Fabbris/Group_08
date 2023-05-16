@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -127,6 +128,8 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(screenSize.width/2, 0);
 		this.setVisible(true);
+		this.setTitle("MyShelfie - Personal Game Area");
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./Assets/Icon.png"));
 	}
 
 	public JLabel getPlayerName() {

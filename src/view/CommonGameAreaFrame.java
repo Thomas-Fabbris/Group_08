@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -107,6 +108,9 @@ public class CommonGameAreaFrame extends JFrame {
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		this.setLocation(0, 0);
 		this.setVisible(true);
+		this.setTitle("MyShelfie - Board");
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./Assets/Icon.png"));
+		
 	}
 
 	public JLabel getCard1PointTile() {
