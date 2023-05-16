@@ -67,24 +67,20 @@ public class BoardTile extends Tile {
 	// assigns the boolean (isSelectable) to the checked tile
 	public boolean canBePickedUp() {
 		int contatore = 0;
-		if (this.tileUp().isInteractible())
+		
+		if (tileUp() != null && tileUp().isInteractible())
 			contatore++;
 
-		if (this.tileDown().isInteractible())
+		if (tileDown() != null && tileDown().isInteractible())
 			contatore++;
 
-		if (this.tileLeft().isInteractible())
+		if (tileLeft() != null && tileLeft().isInteractible())
 			contatore++;
 
-		if (this.tileRigth().isInteractible())
+		if (tileRigth() != null && tileRigth().isInteractible())
 			contatore++;
 
-		if (contatore > 0 && contatore < 4) {
-			return true;
-		} else {
-			return false;
-		}
-
+		return contatore > 0 && contatore < 4;
 	}
 
 	// serve, dopo aver verificato se una tile può essere presa, per capire quali

@@ -186,7 +186,7 @@ public class MainController {
 
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		button.addMouseListener(new NextPlayerButtonController(button, commonGameAreaFrame, this));
+		button.addMouseListener(new NextPlayerButtonController(button, commonGameArea, commonGameAreaFrame, this));
 	}
 
 	private void updatePlayerNameText(Player player) {
@@ -270,7 +270,7 @@ public class MainController {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 
 					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
-							board.getTiles(), commonGameAreaFrame, this));
+							commonGameArea, commonGameAreaFrame, this));
 
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;

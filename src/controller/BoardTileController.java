@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import model.CommonGameArea;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
@@ -19,16 +20,16 @@ public class BoardTileController implements MouseListener {
 	private BoardTileLabel label;
 	private ImageIcon coloredIcon;
 	private ImageIcon grayIcon;
-	private BoardTile[][] boardTiles;
+	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
 
-	public BoardTileController(Board board, BoardTile tile, BoardTileLabel label, BoardTile[][] boardTiles,
+	public BoardTileController(Board board, BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
 		this.board = board;
 		this.tile = tile;
-		this.label = label;
-		this.boardTiles = boardTiles;
+		this.label = label;		
+		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
 
@@ -45,7 +46,8 @@ public class BoardTileController implements MouseListener {
 			return;
 		}
 
-		if (this.tile.canBePickedUp()) {
+		if (this.tile.canBePickedUp() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
+			
 			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
 
 			switch (selectedTiles.size()) {
@@ -61,6 +63,8 @@ public class BoardTileController implements MouseListener {
 				pickupThirdTile(selectedTiles);
 				break;
 			}
+		} else {
+			this.label.setIcon(grayIcon);
 		}
 	}
 
