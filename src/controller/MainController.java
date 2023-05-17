@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
 import javax.swing.ImageIcon;
@@ -19,7 +18,7 @@ import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.CommonGoals;
-import model.personalgamearea.PathFinder;
+import model.personalgamearea.PathFind;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 import model.shared.TileType;
@@ -314,7 +313,7 @@ public class MainController {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 
 					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
-							commonGameArea, commonGameAreaFrame, this));
+							commonGameArea, commonGameAreaFrame, this, personalGameAreaFrame));
 
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;
@@ -410,7 +409,7 @@ public class MainController {
 
 				this.gameToken.setCurrentOwner(currentPlayer);
 				setCurrentPlayer(nextPlayer);
-			} else if (this.gameState.equals(GameState.ENDED)) {
+			} else if (MainController.gameState.equals(GameState.ENDED)) {
 				computePersonalGoalsPoints();
 				computePointsFromTilesGroup();
 				this.winner = determineWinner();
@@ -471,15 +470,13 @@ public class MainController {
 	 * bookshelf
 	 */
 	private void computePointsFromTilesGroup() {
-		PathFinder pf = new PathFinder();
+		PathFind pf = null;
 		for (Player p : this.players) {
-			
-			ArrayList<Integer> groupList = pf.pointsPathFinder();
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(3) * groupList.get(0));
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(4) * groupList.get(1));
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(5) * groupList.get(2));
-			p.addPoints(CommonGoals.StaticFields.getPointsMap().get(6) * groupList.get(3));
-
+			pf = new PathFind(p.getBookshelf());
+			int[] groupList = pf.PointsPathfinding();
+			for(int k = 0; k < groupList.length; k++) {
+				p.addPoints(CommonGoals.StaticFields.getPointsMap().get(k + 3) * groupList[k]);
+			}
 		}
 	}
 

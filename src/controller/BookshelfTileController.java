@@ -3,14 +3,10 @@ package controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
-
-import javax.swing.JLabel;
-
 import model.Player;
 import model.commongamearea.BoardTile;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
-import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
 

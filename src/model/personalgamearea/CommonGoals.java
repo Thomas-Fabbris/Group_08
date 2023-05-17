@@ -616,7 +616,7 @@ public enum CommonGoals {
 
 	public int[] PointsPathfinder(Bookshelf pshelf)
 	{
-		Pathfind pathfinder = new Pathfind(pshelf);
+		PathFind pathfinder = new PathFind(pshelf);
 		return pathfinder.PointsPathfinding();
 	}
 

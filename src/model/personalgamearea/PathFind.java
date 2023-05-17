@@ -2,9 +2,7 @@ package model.personalgamearea;
 
 import model.shared.TileType;
 
-import java.util.ArrayList;
-
-public class Pathfind {
+public class PathFind {
 
     private Bookshelf pshelf;
     private int[] checked_places;
@@ -14,7 +12,7 @@ public class Pathfind {
     private int group_count;
     private boolean started_search;
 
-    public Pathfind(Bookshelf bookshelf)
+    public PathFind(Bookshelf bookshelf)
     {
         this.pshelf = bookshelf;
         this.checked_places = new int[30];

@@ -10,8 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.w3c.dom.html.HTMLBaseElement;
-
 import model.commongamearea.Board;
 import view.commongamearea.BoardTileLabel;
 
