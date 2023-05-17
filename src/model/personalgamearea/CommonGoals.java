@@ -2,12 +2,7 @@ package model.personalgamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.NavigableMap;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 import model.shared.TileType;
 
@@ -411,7 +406,7 @@ public enum CommonGoals {
 			if (t1 && t2 && t3) {
 				return true;
 			}
-			
+
 			return false;
 
 		}
@@ -618,35 +613,13 @@ public enum CommonGoals {
 		return false;
 
 	}
-	
-	//Il metodo serve per contare quanti gruppi formati da 3 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
-	public static int CountGroupOf3TilesAdjacent(Bookshelf pshelf) {
-		int result = 0;
-		
-		return result;
+
+	public int[] PointsPathfinder(Bookshelf pshelf)
+	{
+		Pathfind pathfinder = new Pathfind(pshelf);
+		return pathfinder.PointsPathfinding();
 	}
-	
-	//Il metodo serve per contare quanti gruppi formati da 4 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
-	public static int CountGroupOf4TilesAdjacent(Bookshelf pshelf) {
-		int result = 0;
-		
-		return result;
-	}
-	
-	//Il metodo serve per contare quanti gruppi formati da 5 tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
-	public static int CountGroupOf5TilesAdjacent(Bookshelf pshelf) {
-		int result = 0;
-		
-		return result;
-	}
-	
-	//Il metodo serve per contare quanti gruppi formati da 6 O PIU tessere adiacenti dello stesso tipo sono presenti nella libreria del giocatore 
-	public static int CountGroupOf6OrMoreTilesAdjacent(Bookshelf pshelf) {
-		int result = 0;
-		
-		return result;
-	}
-	
+
 	public static final class StaticFields {
 		 private static NavigableMap<Integer,Integer> pointsMap = new TreeMap<>();
 
