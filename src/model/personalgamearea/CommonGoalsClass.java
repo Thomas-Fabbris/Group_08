@@ -55,7 +55,7 @@ public class CommonGoalsClass {
 				boolean c2 = CheckCol(pshelf, row, col, 4);
 
 				if (c1 || c2) {
-					already_checked[index] = row * 3 + col * 5;
+					already_checked[index] = row * 10 + col;
 					index++;
 					result++;
 				}
@@ -151,7 +151,7 @@ public class CommonGoalsClass {
 				boolean c2 = CheckCol(pshelf, row, col, 2);
 
 				if (c1 || c2) {
-					already_checked[index] = row * 3 + col * 5;
+					already_checked[index] = row * 10 + col;
 					index++;
 					result++;
 				}
@@ -392,9 +392,9 @@ public class CommonGoalsClass {
 			// Gruppo di grandezza 2x2
 			if (mode == 1)
 			{
-				boolean t1 = (row - 1) * 3 +  col * 5 	   == coord;
-				boolean t2 =  row * 3      + (col - 1) * 5 == coord;
-				boolean t3 = (row - 1) * 3 + (col - 1) * 5 == coord;
+				boolean t1 = (row - 1) * 10 +  col	  	== coord;
+				boolean t2 =  row      * 10 + (col - 1) == coord;
+				boolean t3 = (row - 1) * 10 + (col - 1) == coord;
 
 				if (t1 || t2 || t3) return true;
 			}
@@ -403,8 +403,8 @@ public class CommonGoalsClass {
 			else if (mode == 2)
 			{
 
-				boolean h1 = (row - 1) * 3 +  col * 5 	   == coord;
-				boolean v1 =  row * 3      + (col - 1) * 5 == coord;
+				boolean h1 = (row - 1) * 10 +  col	 	== coord;
+				boolean v1 =  row 	   * 10 + (col - 1) == coord;
 
 				if (h1 || v1) return true;
 
@@ -415,13 +415,13 @@ public class CommonGoalsClass {
 			else if (mode == 3)
 			{
 
-				boolean h1 = (row - 1) * 3 + col * 5 == coord;
-				boolean h2 = (row - 2) * 3 + col * 5 == coord;
-				boolean h3 = (row - 3) * 3 + col * 5 == coord;
+				boolean h1 = (row - 1) * 10 +  col      == coord;
+				boolean h2 = (row - 2) * 10 +  col      == coord;
+				boolean h3 = (row - 3) * 10 +  col      == coord;
 
-				boolean v1 = row * 3 + (col - 1) * 5 == coord;
-				boolean v2 = row * 3 + (col - 2) * 5 == coord;
-				boolean v3 = row * 3 + (col - 3) * 5 == coord;
+				boolean v1 =  row      * 10 + (col - 1) == coord;
+				boolean v2 =  row      * 10 + (col - 2) == coord;
+				boolean v3 =  row      * 10 + (col - 3) == coord;
 
 				if (h1 || h2 || h3 || v1 || v2 || v3) return true;
 
