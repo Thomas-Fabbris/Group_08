@@ -148,7 +148,6 @@ public class CommonGameAreaFrame extends JFrame {
 	 * @return
 	 */
 	public JLabel getSelectedTile(int id) {
-		//TODO: add check index between 1 and 3
 		switch(id) {
 		case 0:
 			return selectedTile1;

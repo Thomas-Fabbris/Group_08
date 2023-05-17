@@ -26,7 +26,10 @@ public class Player {
 	private boolean hasCompletedCommonGoal1 = false;
 	private boolean hasCompletedCommonGoal2 = false;
 
-	private List<BoardTile> selectedTiles;
+	private int selectedColumn = -1; // Identifies which the column on the bookshelf the player is adding the tiles
+										// to (value -1 means no column has been decided yet)
+
+	private List<BoardTile> selectedTiles; // List of tiles selected from the board (can have max 3 tiles at a time)
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf;
 	private PointTile pointTile1;
@@ -231,24 +234,43 @@ public class Player {
 	}
 
 	/**
-	 * Removes the top selected tile and moves the next ones up by one slot
+	 * Returns the column selected by the player while inserting the tiles in the
+	 * bookshelf. Value -1 means that the player has not yet selected a column.
+	 * 
+	 * @return
 	 */
-	public void popFirstSelectedTile() {
-		for (int i = 0; i < selectedTiles.size(); i++) {
-			BoardTile next = null;
-			
-			try {
-				next = selectedTiles.get(i + 1);
-			} catch (IndexOutOfBoundsException e) {
-				
-			}
-			
-			if (next == null) {
-				selectedTiles.remove(i);
-				return;
-			}
+	public int getSelectedColumn() {
+		return selectedColumn;
+	}
 
-			selectedTiles.set(i, next);
+	/**
+	 * Set the column selected by the player when inserting a tile in the bookshelf.
+	 * 
+	 * @param bookshelfColumn which column the player is inserting the tiles into.
+	 *                        Must be 0, 1, 2, 3 or 4.
+	 */
+	public void setSelectedColumn(int bookshelfColumn) {
+		if (bookshelfColumn < 0 || bookshelfColumn > 4) {
+			throw new IllegalArgumentException(
+					"The player must select a column between 0 and 4 (inclusive): " + bookshelfColumn);
 		}
+		this.selectedColumn = bookshelfColumn;
+	}
+
+	/**
+	 * Reset the flag to -1, which means that the player has not yet selected a row
+	 */
+	public void resetSelectedColumn() {
+		this.selectedColumn = -1;
+	}
+
+	/**
+	 * Returns true if the player has already added a tile to the bookshelf (which
+	 * means the player has selected a column to insert the tiles into)
+	 * 
+	 * @return
+	 */
+	public boolean hasSelectedColumn() {
+		return this.selectedColumn != -1;
 	}
 }

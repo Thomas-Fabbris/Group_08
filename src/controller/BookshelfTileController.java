@@ -41,8 +41,16 @@ public class BookshelfTileController implements MouseListener {
 		int row = label.getRow();
 		int column = label.getColumn();
 
-		if(selectedTiles.size() > 0 && currentPlayer.bookshelf.getTile(row, column).getType() == TileType.NULL) {			
-			moveFirstSelectedTileToBookshelf(row, column);
+		if (selectedTiles.size() > 0 && currentPlayer.bookshelf.getTile(row, column).getType() == TileType.NULL) {
+
+			// If this is the first tile added to the bookshelf on this turn, do not enforce
+			// a column
+			if (!currentPlayer.hasSelectedColumn()) {
+				moveFirstSelectedTileToBookshelf(column);
+				currentPlayer.setSelectedColumn(column);
+			} else if (currentPlayer.getSelectedColumn() == column) {
+				moveSelectedTileToBookshelf();
+			}
 		}
 
 		mainController.updateBookshelfLabel();
@@ -65,13 +73,28 @@ public class BookshelfTileController implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 	// Moves the first selected tile to the bookshelf and then removes it
-	private void moveFirstSelectedTileToBookshelf(int row, int column) {
+	private void moveFirstSelectedTileToBookshelf(int column) {
 
 		Player currentPlayer = mainController.getCurrentPlayer();
+		int row = currentPlayer.bookshelf.getFirstFreeRow(column);
+
+		List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
+		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
+
+		currentPlayer.getSelectedTiles().remove(0);
+		mainController.updateSelectedTileLabels();
+	}
+
+	private void moveSelectedTileToBookshelf() {
+
+		Player currentPlayer = mainController.getCurrentPlayer();
+		int column = currentPlayer.getSelectedColumn();
+		int row = currentPlayer.bookshelf.getFirstFreeRow(column);
+		
 		List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
 		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
 

@@ -1,6 +1,7 @@
 package model.personalgamearea;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import model.Player;
 import model.commongamearea.BoardTile;
@@ -138,5 +139,34 @@ public class Bookshelf implements Iterable<Bookshelf>{
 			}
 		}
 		
+	}
+	
+	/**
+	 * Finds the first available (free) row on a specified column. Returns -1 if the column is full
+	 * @param column
+	 * @return
+	 */
+	public int getFirstFreeRow(int column) {
+		int row = 0;
+		
+		//Check if the column is full before looping through it
+		if(tiles[0][column].getType() != TileType.NULL) {
+			return -1;
+		}
+		
+		for (; row < Bookshelf.ROWS; row++) {
+			
+			// If we get to the end of the column, return the last possible row position
+			if(row+1 >= Bookshelf.ROWS) {
+				return Bookshelf.ROWS-1;
+			}
+			
+			// 
+			if(tiles[row+1][column].getType() != TileType.NULL) {
+				return row;
+			}
+		}
+		
+		return -1;
 	}
 }

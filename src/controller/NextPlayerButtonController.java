@@ -70,6 +70,8 @@ public class NextPlayerButtonController implements MouseListener {
 
 	// Advances the turn
 	private void nextTurn() {
+		mainController.getCurrentPlayer().resetSelectedColumn();
+		
 		int currentPlayerId = mainController.getCurrentPlayer().getId();
 		int nextId = currentPlayerId + 1;
 

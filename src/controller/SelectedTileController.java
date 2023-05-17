@@ -4,18 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.swing.JLabel;
-
-import model.Player;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
-import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 
 public class SelectedTileController implements MouseListener {
 
-	private boolean selected = false;
 	private int id; // Used to identify which selected tile the user is interacting with
+	//TODO: remove these attributes if not used
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 	private MainController mainController;

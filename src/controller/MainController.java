@@ -85,8 +85,8 @@ public class MainController {
 		players[0].setHasChair(true);
 //		players[0].bookshelf.fillRandom();
 		setCurrentPlayer(players[0]);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 3, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 5, 2);
 		
 		updateBookshelfLabel();
 		

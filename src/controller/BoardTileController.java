@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import model.CommonGameArea;
+import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.shared.TileSides;
@@ -46,9 +47,11 @@ public class BoardTileController implements MouseListener {
 		if (!this.tile.isInteractible()) {
 			return;
 		}
-
-		if (commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
-			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
+		
+		Player currentPlayer = mainController.getCurrentPlayer();
+		
+		if (!currentPlayer.hasSelectedColumn() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
+			List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
 
 			switch (selectedTiles.size()) {
 			case 0:
@@ -94,7 +97,7 @@ public class BoardTileController implements MouseListener {
 	 * @param selectedTiles
 	 */
 	private void pickupFirstTile(List<BoardTile> selectedTiles) {
-		//The tile must have at least one free side and max 3 free sides (1, 2 or 3 free sides = pickup)
+		// The tile must have at least one free side and max 3 free sides (1, 2 or 3 free sides = pickup)
 		if(tile.getBlockedSides() != TileSides.AT_LEAST_ONE_SIDE_FREE) {
 			return;
 		}
