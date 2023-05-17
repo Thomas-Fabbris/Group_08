@@ -27,15 +27,13 @@ public class SelectedTileController implements MouseListener {
 		this.mainController = mainController;
 
 		if (id < 0 || id >= 3)
-			throw new IllegalArgumentException("A selectedTileController must have an id < 0 and >= 3!");
+			throw new IllegalArgumentException("A SelectedTileController must have an id < 0 and >= 3!");
 		this.id = id;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
-		System.out.println("selectedTileController.java: Selected tile " + tiles.get(this.id).getType());
-		
+		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();		
 		swapTiles(tiles);
 	}
 
@@ -67,16 +65,7 @@ public class SelectedTileController implements MouseListener {
 		selectedTiles.set(0, selectedTiles.get(id));
 		selectedTiles.set(id, tmp);
 		
-		updateTileLabel(0);
-		updateTileLabel(id);
-
-	}
-	
-	//Given the id of the selectedTile, update its label to reflect the tile's type
-	private void updateTileLabel(int id) {
-		BoardTile tile = mainController.getCurrentPlayer().getSelectedTile(id);
-		JLabel label = commonGameAreaFrame.getSelectedTile(id);
-		String path = "Assets/tiles/" + tile.getType() + ".png";
-		label.setIcon(ImageUtils.loadImageAsIcon(label.getSize(), path));
+		mainController.updateSelectedTileLabel(0);
+		mainController.updateSelectedTileLabel(id);
 	}
 }

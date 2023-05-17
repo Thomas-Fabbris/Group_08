@@ -4,8 +4,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import model.Player;
 import model.commongamearea.BoardTile;
+import model.shared.TileType;
+import view.CommonGameAreaFrame;
+import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
 
@@ -13,13 +18,15 @@ public class BookshelfTileController implements MouseListener {
 
 	private BookshelfTileLabel label;
 	private MainController mainController;
+	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 
-	public BookshelfTileController(BookshelfTileLabel label, PersonalGameAreaFrame personalGameAreaFrame,
-			MainController mainController) {
+	public BookshelfTileController(BookshelfTileLabel label, CommonGameAreaFrame commonGameAreaFrame,
+			PersonalGameAreaFrame personalGameAreaFrame, MainController mainController) {
 
 		this.label = label;
 		this.mainController = mainController;
+		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
 
 	}
@@ -28,15 +35,16 @@ public class BookshelfTileController implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		Player currentPlayer = mainController.getCurrentPlayer();
 		List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
-		
-		// Prendo le coordinate del label, queste corrispondono alle coordinate nella bookshelf
+
+		// Gets the coordinates of the label, which correspond to the coordinates on the
+		// bookshelf
 		int row = label.getRow();
 		int column = label.getColumn();
-		
-		System.out.println("BookshelfTileController.java: row " +row + " col " + column);
-		System.out.println(currentPlayer.getBookshelf().getTile(row, column).getType());
-		
-		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
+
+		if(selectedTiles.size() > 0 && currentPlayer.bookshelf.getTile(row, column).getType() == TileType.NULL) {			
+			moveFirstSelectedTileToBookshelf(row, column);
+		}
+
 		mainController.updateBookshelfLabel();
 	}
 
@@ -57,7 +65,17 @@ public class BookshelfTileController implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		
 	}
 
+	// Moves the first selected tile to the bookshelf and then removes it
+	private void moveFirstSelectedTileToBookshelf(int row, int column) {
+
+		Player currentPlayer = mainController.getCurrentPlayer();
+		List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
+		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
+
+		currentPlayer.getSelectedTiles().remove(0);
+		mainController.updateSelectedTileLabels();
+	}
 }

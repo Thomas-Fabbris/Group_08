@@ -1,6 +1,8 @@
 package controller;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import javax.swing.ImageIcon;
@@ -19,6 +21,7 @@ import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.CommonGoals;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
+import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -80,9 +83,13 @@ public class MainController {
 	private void startGame() {
 
 		players[0].setHasChair(true);
-		players[0].bookshelf.fillRandom();
+//		players[0].bookshelf.fillRandom();
 		setCurrentPlayer(players[0]);
-
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 3, 2);
+		
+		updateBookshelfLabel();
+		
 		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
 	}
 
@@ -158,7 +165,7 @@ public class MainController {
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
 			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
 				BookshelfTileLabel tileLabel = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
-				tileLabel.addMouseListener(new BookshelfTileController(tileLabel, personalGameAreaFrame, this));
+				tileLabel.addMouseListener(new BookshelfTileController(tileLabel, commonGameAreaFrame, personalGameAreaFrame, this));
 				bookshelfLabel.tiles[row][column] = tileLabel;
 				bookshelfLabel.tilesContainer.add(tileLabel);
 			}
@@ -226,6 +233,31 @@ public class MainController {
 
 	// ----------- Common game area operations -----------
 
+	/**
+	 * Updates the label on each selected tile
+	 */
+	public void updateSelectedTileLabels() {
+		int selectedTilesMaxCount = 3;
+		
+		for (int i = 0; i < selectedTilesMaxCount; i++) {
+			try {
+				updateSelectedTileLabel(i);
+			} catch (IndexOutOfBoundsException e) {
+				commonGameAreaFrame.getSelectedTile(i).setIcon(null);
+			}
+		}
+	}
+	
+	/**
+	 * Updates the label on the selected tile with the specified id
+	 * @param id
+	 */
+	public void updateSelectedTileLabel(int id) {
+		String path = "Assets/tiles/" +currentPlayer.getSelectedTiles().get(id).getType()+ ".png";
+		Dimension size = commonGameAreaFrame.getSelectedTile1().getSize();
+		commonGameAreaFrame.getSelectedTile(id).setIcon(ImageUtils.loadImageAsIcon(size, path));
+	}
+	
 	private void assignSelectedTilesController() {
 		commonGameAreaFrame.getSelectedTile1()
 				.addMouseListener(new SelectedTileController(0, commonGameAreaFrame, personalGameAreaFrame, this));
