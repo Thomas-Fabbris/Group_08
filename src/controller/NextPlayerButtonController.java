@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import model.CommonGameArea;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
@@ -16,15 +17,17 @@ public class NextPlayerButtonController implements MouseListener {
 	private JLabel button;
 	private ImageIcon defaultStateIcon;
 	private ImageIcon pressedStateIcon;
+	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
 
-	public NextPlayerButtonController(JLabel button, CommonGameAreaFrame commonGameAreaFrame,
+	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea, CommonGameAreaFrame commonGameAreaFrame,
 			MainController mainController) {
 		this.button = button;
 		this.defaultStateIcon = (ImageIcon) button.getIcon();
 		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(),
 				defaultStateIcon.getIconHeight(), "Assets/ArrowButton/ArrowButtonPressed.png");
+		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
 	}
@@ -33,11 +36,13 @@ public class NextPlayerButtonController implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 
 		// each time the player moves a tile to the bookshelf, the tile is removed from
-		// the list
-		// tiles that are still in the list when the turn ends should return to the
+		// the list,
+		// tiles that are still in the list when the turn ends will return to the
 		// board
+		
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 		clearSelectedTiles(tiles);
+		commonGameArea.updateCurrentBlockedTiles();
 
 		nextTurn();
 
@@ -63,17 +68,6 @@ public class NextPlayerButtonController implements MouseListener {
 
 	}
 
-	private void clearSelectedTiles(List<BoardTile> tiles) {
-		for (BoardTile boardTile : tiles) {
-			returnTileToBoard(boardTile);
-		}
-
-		tiles.clear();
-		commonGameAreaFrame.getSelectedTile1().setIcon(null);
-		commonGameAreaFrame.getSelectedTile2().setIcon(null);
-		commonGameAreaFrame.getSelectedTile3().setIcon(null);
-	}
-
 	// Advances the turn
 	private void nextTurn() {
 		int currentPlayerId = mainController.getCurrentPlayer().getId();
@@ -85,8 +79,19 @@ public class NextPlayerButtonController implements MouseListener {
 		mainController.setCurrentPlayer(mainController.getPlayer(nextId));
 	}
 
-	// Returns to the board the selected tiles that have not been moved to the
+	// Returns to the board the selected tile that have not been moved to the
 	// bookshelf
+	private void clearSelectedTiles(List<BoardTile> tiles) {
+		for (BoardTile boardTile : tiles) {
+			returnTileToBoard(boardTile);
+		}
+
+		tiles.clear();
+		commonGameAreaFrame.getSelectedTile1().setIcon(null);
+		commonGameAreaFrame.getSelectedTile2().setIcon(null);
+		commonGameAreaFrame.getSelectedTile3().setIcon(null);
+	}
+
 	private void returnTileToBoard(BoardTile tile) {
 		tile.setActive(true);
 		int row = tile.getRow();

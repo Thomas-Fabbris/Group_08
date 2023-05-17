@@ -158,9 +158,10 @@ public class MainController {
 
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
 			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
-				BookshelfTileLabel tile = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
-				bookshelfLabel.tiles[row][column] = tile;
-				bookshelfLabel.tilesContainer.add(tile);
+				BookshelfTileLabel tileLabel = new BookshelfTileLabel(row, column, bookshelfLabel.getSize());
+				tileLabel.addMouseListener(new BookshelfTileController(tileLabel, personalGameAreaFrame, this));
+				bookshelfLabel.tiles[row][column] = tileLabel;
+				bookshelfLabel.tilesContainer.add(tileLabel);
 			}
 		}
 	}
@@ -187,7 +188,7 @@ public class MainController {
 
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		button.addMouseListener(new NextPlayerButtonController(button, commonGameAreaFrame, this));
+		button.addMouseListener(new NextPlayerButtonController(button, commonGameArea, commonGameAreaFrame, this));
 	}
 
 	private void updatePlayerNameText(Player player) {
@@ -271,7 +272,7 @@ public class MainController {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 
 					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
-							board.getTiles(), commonGameAreaFrame, this));
+							commonGameArea, commonGameAreaFrame, this));
 
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;
