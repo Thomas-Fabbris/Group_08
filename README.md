@@ -13,7 +13,7 @@
 
 - Builda e gioca! 😍
 - Ecco come fare in 3️⃣ semplici step: ☝️
-1. Clona la repo con `git clone https://github.com/Thomas-Fabbris/Group_08.git` in una cartella a tuo piacere 🧐
+1. Clona la repo con `git clone https://github.com/Thomas-Fabbris/Group_08.git` in una cartella 🧐
 2. Apri la cartella con il tuo IDE di Java preferito 📁
 3. Premi Build, Run e divertiti 🥳
 
