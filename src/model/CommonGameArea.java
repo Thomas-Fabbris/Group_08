@@ -40,7 +40,7 @@ public class CommonGameArea {
 	}
 
 	/**
-	 * Returns whether the tile has at least one free side or not
+	 * Returns whether, at the start of the round, the tile had at least one free side 
 	 * 
 	 * @param row
 	 * @param column

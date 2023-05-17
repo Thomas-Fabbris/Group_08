@@ -3,6 +3,7 @@ package model.commongamearea;
 import java.util.ArrayList;
 
 import model.shared.Tile;
+import model.shared.TileSides;
 import model.shared.TileType;
 
 public class BoardTile extends Tile {
@@ -55,7 +56,7 @@ public class BoardTile extends Tile {
 	public boolean isAdjacent(BoardTile tile) {
 		return getDistance(tile) <= 1;
 	}
-	
+
 	public double getDistance(BoardTile tile) {
 		// Pythagora's theorem
 		return Math.pow(this.getRow() - tile.getRow(), 2) + Math.pow(this.getColumn() - tile.getColumn(), 2);
@@ -69,7 +70,7 @@ public class BoardTile extends Tile {
 	// assigns the boolean (isSelectable) to the checked tile
 	public boolean canBePickedUp() {
 		int contatore = 0;
-		
+
 		if (tileUp() != null && tileUp().isInteractible())
 			contatore++;
 
@@ -83,6 +84,38 @@ public class BoardTile extends Tile {
 			contatore++;
 
 		return contatore > 0 && contatore < 4;
+	}
+
+	/**
+	 * Returns whether all sides al blocked, all sides are free, or at least on side
+	 * is free
+	 * 
+	 * @return
+	 */
+	public TileSides getBlockedSides() {
+		int blockedSides = 0;
+
+		if (tileUp() != null && tileUp().isInteractible())
+			blockedSides++;
+
+		if (tileDown() != null && tileDown().isInteractible())
+			blockedSides++;
+
+		if (tileLeft() != null && tileLeft().isInteractible())
+			blockedSides++;
+
+		if (tileRigth() != null && tileRigth().isInteractible())
+			blockedSides++;
+
+		if (blockedSides == 0) {
+			return TileSides.ALL_SIDES_FREE;
+		}
+
+		if (blockedSides == 4) {
+			return TileSides.ALL_SIDES_BLOCKED;
+		}
+
+		return TileSides.AT_LEAST_ONE_SIDE_FREE;
 	}
 
 	// serve, dopo aver verificato se una tile può essere presa, per capire quali

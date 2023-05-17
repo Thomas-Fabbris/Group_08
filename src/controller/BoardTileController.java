@@ -7,8 +7,10 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import model.CommonGameArea;
+import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
+import model.shared.TileSides;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.commongamearea.BoardTileLabel;
@@ -45,23 +47,24 @@ public class BoardTileController implements MouseListener {
 		if (!this.tile.isInteractible()) {
 			return;
 		}
-
-		if (this.tile.canBePickedUp() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
-
-			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
+		
+		Player currentPlayer = mainController.getCurrentPlayer();
+		
+		if (!currentPlayer.hasSelectedColumn() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
+			List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
 
 			switch (selectedTiles.size()) {
 			case 0:
 				pickupFirstTile(selectedTiles);
-				break;
+				return;
 
 			case 1:
 				pickupSecondTile(selectedTiles);
-				break;
+				return;
 
 			case 2:
 				pickupThirdTile(selectedTiles);
-				break;
+				return;
 			}
 		} else {
 			this.label.setIcon(grayIcon);
@@ -70,9 +73,7 @@ public class BoardTileController implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!this.tile.canBePickedUp()) {
-			this.label.setIcon(this.grayIcon);
-		}
+		
 	}
 
 	@Override
@@ -96,7 +97,10 @@ public class BoardTileController implements MouseListener {
 	 * @param selectedTiles
 	 */
 	private void pickupFirstTile(List<BoardTile> selectedTiles) {
-		// If no tiles have been selected, pick up the current tile
+		// The tile must have at least one free side and max 3 free sides (1, 2 or 3 free sides = pickup)
+		if(tile.getBlockedSides() != TileSides.AT_LEAST_ONE_SIDE_FREE) {
+			return;
+		}
 		commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
 		selectedTiles.add(tile);
 		this.tile.setActive(false);
@@ -105,14 +109,15 @@ public class BoardTileController implements MouseListener {
 
 	/**
 	 * Checks whether the selected tile can be picked up. The tile must be adjacent
-	 * to the previous selected tile.
+	 * to the previous selected tile and it must have at least one free side
 	 * 
 	 * @param selectedTiles
 	 */
 	private void pickupSecondTile(List<BoardTile> selectedTiles) {
 		// If one tile has been selected, the current tile can be picked up if it is
 		// adjacent
-		if (this.tile.isAdjacent(selectedTiles.get(0))) {
+		
+		if (tile.isAdjacent(selectedTiles.get(0)) && tile.getBlockedSides() != TileSides.ALL_SIDES_BLOCKED) {
 			commonGameAreaFrame.getSelectedTile2().setIcon(label.getIcon());
 			selectedTiles.add(tile);
 			this.tile.setActive(false);
@@ -140,8 +145,8 @@ public class BoardTileController implements MouseListener {
 		
 		boolean adjacentToFirst = this.tile.isAdjacent(selectedTiles.get(0));
 		boolean adjacentToSecond = this.tile.isAdjacent(selectedTiles.get(1));
-
-		if ((adjacentToFirst || adjacentToSecond) && checkRowColumn) {
+		
+		if ((adjacentToFirst || adjacentToSecond) && checkRowColumn && tile.getBlockedSides() != TileSides.ALL_SIDES_BLOCKED) {
 			commonGameAreaFrame.getSelectedTile3().setIcon(label.getIcon());
 			selectedTiles.add(tile);
 			this.tile.setActive(false);

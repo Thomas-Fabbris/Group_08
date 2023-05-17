@@ -10,14 +10,22 @@ public class BookshelfTileLabel extends JLabel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7047995230385435718L;
+	
+	private int row;
+	private int column;
+	
 	private int tileLength;
 	private int xOffset;
 	private int yOffset;
 	
 	public BookshelfTileLabel(int row, int column, Dimension shelfLabelSize) {
 		
+		this.row = row;
+		this.column = column;
+		
 		//Compute the size of the various elements needed to place the tiles
-		//This method of computing element sizes causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions
+		//This method of computing element sizes causes some displacement on screens with weird aspect ratios (eg 16:10) or with low resolutions	
+		
 		this.tileLength = (int)(shelfLabelSize.height / 9);
 
 		this.xOffset = (int)(tileLength / 2.2);
@@ -40,5 +48,13 @@ public class BookshelfTileLabel extends JLabel {
 			return column * tileLength;
 		
 		return column*tileLength + this.xOffset*column;
+	}
+	
+	public int getRow() {
+		return this.row;
+	}
+	
+	public int getColumn() {
+		return this.column;
 	}
 }

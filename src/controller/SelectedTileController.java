@@ -4,19 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.swing.JLabel;
-
-import model.Player;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
 
 public class SelectedTileController implements MouseListener {
 
-	private BoardTile tile;
-	private JLabel label;
-	private Player currentPlayer;
 	private int id; // Used to identify which selected tile the user is interacting with
+	//TODO: remove these attributes if not used
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 	private MainController mainController;
@@ -28,14 +23,14 @@ public class SelectedTileController implements MouseListener {
 		this.mainController = mainController;
 
 		if (id < 0 || id >= 3)
-			throw new IllegalArgumentException("A selectedTileController must have an id < 0 and >= 3!");
+			throw new IllegalArgumentException("A SelectedTileController must have an id < 0 and >= 3!");
 		this.id = id;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
-		System.out.println("selectedTileController.java: Selected tile " + tiles.get(this.id).getType());
+		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();		
+		swapTiles(tiles);
 	}
 
 	@Override
@@ -56,5 +51,17 @@ public class SelectedTileController implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 
+	}
+	
+	/**
+	 * Swaps the clicked tile with the first tile
+	 */
+	private void swapTiles(List<BoardTile> selectedTiles) {
+		BoardTile tmp = selectedTiles.get(0);
+		selectedTiles.set(0, selectedTiles.get(id));
+		selectedTiles.set(id, tmp);
+		
+		mainController.updateSelectedTileLabel(0);
+		mainController.updateSelectedTileLabel(id);
 	}
 }
