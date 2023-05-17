@@ -42,6 +42,9 @@ public class Bookshelf implements Iterable<Bookshelf>{
 		throw new UnsupportedOperationException();
 	}
 
+	public void addTile(BoardTile tile, int row, int column) {
+		tiles[row][column].setType(tile.getType());
+	}
 	
 	public boolean isFull() {
 		for(int row = 0; row < ROWS; row++) {
@@ -96,8 +99,8 @@ public class Bookshelf implements Iterable<Bookshelf>{
 
 	}
 
-	public void setTileType(int row, int column, TileType tileType) {
-		tiles[row][column].setType(tileType);
+	public void setTileType(TileType type, int row, int column) {
+		tiles[row][column].setType(type);
 	}
 
 	private boolean isValidCell(int row, int column) {

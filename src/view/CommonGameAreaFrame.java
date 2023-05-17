@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.w3c.dom.html.HTMLBaseElement;
+
 import model.commongamearea.Board;
 import view.commongamearea.BoardTileLabel;
 
@@ -138,6 +140,28 @@ public class CommonGameAreaFrame extends JFrame {
 
 	public JPanel getSelectedTiles() {
 		return selectedTiles;
+	}
+	
+	/**
+	 * Returns the selected tile 1, 2 or 3
+	 * @param id
+	 * @return
+	 */
+	public JLabel getSelectedTile(int id) {
+		//TODO: add check index between 1 and 3
+		switch(id) {
+		case 0:
+			return selectedTile1;
+			
+		case 1:
+			return selectedTile2;
+			
+		case 2:
+			return selectedTile3;
+
+		default:
+			throw new IndexOutOfBoundsException("Selected tile with id (index) " +id+ " doesn't exist!");
+		}
 	}
 
 	public JLabel getSelectedTile1() {

@@ -9,13 +9,12 @@ import javax.swing.JLabel;
 import model.Player;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
+import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 
 public class SelectedTileController implements MouseListener {
 
-	private BoardTile tile;
-	private JLabel label;
-	private Player currentPlayer;
+	private boolean selected = false;
 	private int id; // Used to identify which selected tile the user is interacting with
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
@@ -36,6 +35,8 @@ public class SelectedTileController implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 		System.out.println("selectedTileController.java: Selected tile " + tiles.get(this.id).getType());
+		
+		swapTiles(tiles);
 	}
 
 	@Override
@@ -56,5 +57,26 @@ public class SelectedTileController implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 
+	}
+	
+	/**
+	 * Swaps the clicked tile with the first tile
+	 */
+	private void swapTiles(List<BoardTile> selectedTiles) {
+		BoardTile tmp = selectedTiles.get(0);
+		selectedTiles.set(0, selectedTiles.get(id));
+		selectedTiles.set(id, tmp);
+		
+		updateTileLabel(0);
+		updateTileLabel(id);
+
+	}
+	
+	//Given the id of the selectedTile, update its label to reflect the tile's type
+	private void updateTileLabel(int id) {
+		BoardTile tile = mainController.getCurrentPlayer().getSelectedTile(id);
+		JLabel label = commonGameAreaFrame.getSelectedTile(id);
+		String path = "Assets/tiles/" + tile.getType() + ".png";
+		label.setIcon(ImageUtils.loadImageAsIcon(label.getSize(), path));
 	}
 }

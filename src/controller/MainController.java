@@ -168,9 +168,19 @@ public class MainController {
 	/**
 	 * Updates the type of each tile displayed on the GUI
 	 */
-	private void updateBookshelfLabel(Bookshelf bookshelf) {
+	public void updateBookshelfLabel(Bookshelf bookshelf) {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
 
+		for (int row = 0; row < Bookshelf.ROWS; row++) {
+			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
+				updateBookshelfTileLabel(bookshelf.getTile(row, column), bookshelfLabel.tiles[row][column]);
+			}
+		}
+	}
+	
+	public void updateBookshelfLabel() {
+		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
+		Bookshelf bookshelf = currentPlayer.getBookshelf();
 		for (int row = 0; row < Bookshelf.ROWS; row++) {
 			for (int column = 0; column < Bookshelf.COLUMNS; column++) {
 				updateBookshelfTileLabel(bookshelf.getTile(row, column), bookshelfLabel.tiles[row][column]);

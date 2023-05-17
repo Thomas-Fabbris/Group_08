@@ -191,4 +191,8 @@ public class Player {
 	public List<BoardTile> getSelectedTiles() {
 		return selectedTiles;
 	}
+	
+	public BoardTile getSelectedTile(int id) {
+		return selectedTiles.get(id);
+	}
 }
