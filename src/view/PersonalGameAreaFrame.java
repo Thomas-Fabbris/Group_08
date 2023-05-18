@@ -21,7 +21,8 @@ public class PersonalGameAreaFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -2242387074378483496L;
 
-	Dimension screenSize;
+	private Dimension screenSize;
+	public final int tileLength;
 
 	private JPanel playerInfoPanel; //Contains all the info that are displayed on the GUI
 	private JPanel tiles; //Contains: point tiles, chair and points
@@ -43,7 +44,7 @@ public class PersonalGameAreaFrame extends JFrame {
 		this.screenSize = screenSize;
 		Init();
 		
-		int tileLength = this.getWidth()/12;
+		this.tileLength = this.getWidth()/12;
 		
 		playerInfoPanel = new JPanel();
 		playerInfoPanel.setLayout(new FlowLayout());
@@ -77,8 +78,9 @@ public class PersonalGameAreaFrame extends JFrame {
 		points = new JLabel();
 		
 		chair.setSize(tileLength, tileLength);
-		pointTile1.setSize(tileLength, tileLength);
-		pointTile2.setSize(tileLength, tileLength);
+		pointTile1.setPreferredSize(new Dimension(tileLength, tileLength));
+		pointTile2.setPreferredSize(new Dimension(tileLength, tileLength));
+//		pointTile2.setSize(tileLength, tileLength);
 		endOfGameTile.setSize(tileLength, tileLength);
 		points.setForeground(Color.white);
 		points.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));

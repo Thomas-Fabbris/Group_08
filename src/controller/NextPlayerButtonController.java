@@ -8,7 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.CommonGameArea;
+import model.Player;
 import model.commongamearea.BoardTile;
+import model.commongamearea.CommonObjectiveCard;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 
@@ -21,8 +23,8 @@ public class NextPlayerButtonController implements MouseListener {
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
 
-	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea, CommonGameAreaFrame commonGameAreaFrame,
-			MainController mainController) {
+	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
+			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
 		this.button = button;
 		this.defaultStateIcon = (ImageIcon) button.getIcon();
 		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(),
@@ -39,7 +41,7 @@ public class NextPlayerButtonController implements MouseListener {
 		// the list,
 		// tiles that are still in the list when the turn ends will return to the
 		// board
-		
+
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 		clearSelectedTiles(tiles);
 		commonGameArea.updateCurrentBlockedTiles();
@@ -71,7 +73,7 @@ public class NextPlayerButtonController implements MouseListener {
 	// Advances the turn
 	private void nextTurn() {
 		mainController.getCurrentPlayer().resetSelectedColumn();
-		
+
 		int currentPlayerId = mainController.getCurrentPlayer().getId();
 		int nextId = currentPlayerId + 1;
 

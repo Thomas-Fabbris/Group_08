@@ -41,7 +41,7 @@ public enum CommonGoals {
 
 			int result = 0;
 			int index = 0;
-			int[] already_checked = { -1 };
+			int[] already_checked = new int[] { -1 };
 
 			for (int row = 0; row <= 5; row++) {
 
@@ -247,8 +247,8 @@ public enum CommonGoals {
 
 				int count = 0;
 
-				for (int row = 0; row <= 4; row++) {
-					for (int col = 0; col <= 5; col++) {
+				for (int row = 0; row <= Bookshelf.ROWS; row++) {
+					for (int col = 0; col <= Bookshelf.COLUMNS; col++) {
 						if (pshelf.getTile(row, col).getType() == type)
 							count++;
 
