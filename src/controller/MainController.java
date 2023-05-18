@@ -73,7 +73,7 @@ public class MainController {
 		this.winner = null;
 
 		// Initialise gameToken
-		this.gameToken = new GameToken(this.currentPlayer);
+		this.gameToken = new GameToken(this.players[0]);
 
 		// Common game area initialisation
 		assignBoardTiles();
