@@ -13,7 +13,8 @@ public class CommonObjectiveCard {
 	private Stack<PointTile> pointTiles = new Stack<>();
 	
 	public CommonObjectiveCard(int card_id, int numberOfPlayers) {
-		this.cardId = card_id;
+//		this.cardId = card_id;
+		this.cardId = 12;
 		
 		initRelatedCommonGoal();
 		

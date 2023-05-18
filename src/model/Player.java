@@ -63,6 +63,7 @@ public class Player {
 		// If both spots are empty, then fill pointTile1
 		if (pointTile1 == null && pointTile2 == null) {
 			pointTile1 = tile;
+			this.hasCompletedCommonGoal1 = true;
 			this.addPoints(tile.getPoints());
 			return;
 		}
@@ -75,6 +76,7 @@ public class Player {
 		// fill pointTile2
 		if (pointTile2 == null && pointTile1.getCardId() != tile.getCardId()) {
 			pointTile2 = tile;
+			this.hasCompletedCommonGoal2 = true;
 			this.addPoints(tile.getPoints());
 		}
 	}

@@ -11,6 +11,7 @@ import model.CommonGameArea;
 import model.commongamearea.BoardTile;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
+import view.PersonalGameAreaFrame;
 
 public class NextPlayerButtonController implements MouseListener {
 
@@ -34,7 +35,6 @@ public class NextPlayerButtonController implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 		// each time the player moves a tile to the bookshelf, the tile is removed from
 		// the list,
 		// tiles that are still in the list when the turn ends will return to the
@@ -77,7 +77,8 @@ public class NextPlayerButtonController implements MouseListener {
 
 		if (nextId > mainController.getLastPlayer().getId())
 			nextId = 0;
-
+		
+		
 		mainController.setCurrentPlayer(mainController.getPlayer(nextId));
 	}
 

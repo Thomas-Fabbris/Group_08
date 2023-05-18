@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +39,10 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JLabel chair;
 	private JLabel warnings;
 	
+	private ImageIcon emptyPointTileIcon;
+	private ImageIcon emptyGameEndIcon;
+	private ImageIcon gameEndTileIcon;
+	
 	
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -45,6 +50,10 @@ public class PersonalGameAreaFrame extends JFrame {
 		Init();
 		
 		this.tileLength = this.getWidth()/12;
+		Dimension tileSize = new Dimension(tileLength, tileLength);
+		this.emptyPointTileIcon = ImageUtils.loadImageAsIcon(tileSize, "Assets/Point_tiles/Point_empty.png");
+		this.emptyGameEndIcon = ImageUtils.loadImageAsIcon(tileSize, "Assets/Point_tiles/GameEnd_emtpty.png");
+		this.gameEndTileIcon = ImageUtils.loadImageAsIcon(tileSize, "Assets/Point_tiles/First_to_finish.jpg");
 		
 		playerInfoPanel = new JPanel();
 		playerInfoPanel.setLayout(new FlowLayout());
@@ -91,17 +100,22 @@ public class PersonalGameAreaFrame extends JFrame {
 		points = new JLabel();
 		
 		chair.setSize(tileLength, tileLength);
-		pointTile1.setPreferredSize(new Dimension(tileLength, tileLength));
-		pointTile2.setPreferredSize(new Dimension(tileLength, tileLength));
-//		pointTile2.setSize(tileLength, tileLength);
+		
+
+		pointTile1.setSize(tileSize);
+		pointTile2.setSize(tileSize);
+		pointTile1.setIcon(this.emptyPointTileIcon);
+		pointTile2.setIcon(this.emptyPointTileIcon);
 		endOfGameTile.setSize(tileLength, tileLength);
 		points.setForeground(Color.white);
 		points.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
 		
-		chair.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Firstplayertoken.png"));
-		pointTile1.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/4p.jpg"));
-		pointTile2.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/8p.jpg"));
-		endOfGameTile.setIcon(ImageUtils.loadImageAsIcon(tileLength, tileLength, "Assets/Point_tiles/First_to_finish.jpg"));
+		chair.setSize(tileSize);
+		chair.setIcon(ImageUtils.loadImageAsIcon(tileSize, "Assets/Firstplayertoken.png"));
+		chair.setPreferredSize(tileSize);
+		chair.setMaximumSize(tileSize);
+		
+		endOfGameTile.setIcon(this.emptyGameEndIcon);
 		
 		tiles.add(chair);
 		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
@@ -187,5 +201,17 @@ public class PersonalGameAreaFrame extends JFrame {
 	
 	public JLabel getWarnings() {
 		return warnings;
+	}
+	
+	public ImageIcon getEmptyPointTileIcon() {
+		return this.emptyPointTileIcon;
+	}
+	
+	public ImageIcon getEmptyGameEndIcon() {
+		return this.emptyGameEndIcon;
+	}
+	
+	public ImageIcon getGameEndTileIcon () {
+		return this.gameEndTileIcon;
 	}
 }

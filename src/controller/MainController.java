@@ -82,6 +82,7 @@ public class MainController {
 
 	private void startGame() {
 
+
 		players[0].setHasChair(true);
 //		players[0].bookshelf.fillRandom();
 		setCurrentPlayer(players[0]);
@@ -99,6 +100,7 @@ public class MainController {
 
 		updateBookshelfLabel();
 
+		//TODO remove
 		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
 	}
 
@@ -128,12 +130,22 @@ public class MainController {
 		updatePlayerPointTile1Label(player);
 		updatePlayerPointTile2Label(player);
 		updatePersonalObjectiveCardLabel(player.getObjectiveCard());
-		personalGameAreaFrame.getEndOfGameTile().setVisible(player.hasEndOfGameToken());
+		updatePlayerGameEndTileLabel(player);
 		personalGameAreaFrame.getChair().setVisible(player.hasChair());
 	}
 
 	public Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+	
+	public void updatePlayerGameEndTileLabel(Player player) {
+		JLabel tileLabel = personalGameAreaFrame.getEndOfGameTile();
+		
+		if(player.hasEndOfGameToken()) {
+			tileLabel.setIcon(personalGameAreaFrame.getGameEndTileIcon());
+		} else {
+			tileLabel.setIcon(personalGameAreaFrame.getEmptyGameEndIcon());
+		}
 	}
 
 	/**
@@ -144,13 +156,11 @@ public class MainController {
 
 		// If the player has not completed this goal, don't show the point tile
 		if (player.getPointTile(1) == null) {
-			tileLabel.setVisible(false);
-			return;
+			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
 			tileLabel.setVisible(true);
+			updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
 		}
-
-		updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
 	}
 
 	/**
@@ -160,13 +170,11 @@ public class MainController {
 		JLabel tileLabel = personalGameAreaFrame.getPointTile2();
 
 		if (player.getPointTile(2) == null) {
-			tileLabel.setVisible(false);
-			return;
+			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
 			tileLabel.setVisible(true);
+			updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
 		}
-
-		updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
 	}
 
 	private void assignBookshelfTiles() {
@@ -240,9 +248,6 @@ public class MainController {
 	 * Updates the image of the label to reflect the points of the PointTile
 	 */
 	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
-		// TODO: find what is setting the size to 0, then remove this line
-		label.setSize(personalGameAreaFrame.tileLength, personalGameAreaFrame.tileLength);
-//		System.out.println("Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 	}
 
@@ -361,12 +366,12 @@ public class MainController {
 	 * Updates the Label's icon; gets the path of the new image from the Supplier
 	 */
 	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
 		tileLabel.setIcon(icon);
 	}
 
 	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, boolean isGrayscale) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
 
 		if (isGrayscale)
 			icon = ImageUtils.getGrayImage(icon);
@@ -375,7 +380,7 @@ public class MainController {
 	}
 
 	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {
-		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getWidth(), tileLabel.getHeight(), pathToNewImage.get());
+		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
 
 		if (iconRotation != 0 && iconRotation != 360)
 			icon = ImageUtils.rotateIcon(icon, iconRotation);
@@ -592,4 +597,8 @@ public class MainController {
 		return lastPlayer;
 	}
 
+	//TODO remove this
+	public JLabel getPointTile1() {
+		return personalGameAreaFrame.getPointTile1();
+	}
 }
