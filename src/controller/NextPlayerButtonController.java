@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import model.CommonGameArea;
 import model.commongamearea.BoardTile;
+import model.personalgamearea.IllegalActionException;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -39,13 +40,27 @@ public class NextPlayerButtonController implements MouseListener {
 		// the list,
 		// tiles that are still in the list when the turn ends will return to the
 		// board
-
-		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
+		try {
+			List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 		clearSelectedTiles(tiles);
 		commonGameArea.updateCurrentBlockedTiles();
 
 		nextTurn();
+		fillInBoard();
+		}catch(IllegalActionException ex) {
+			this.mainController.getPersonalGameAreaFrame().getWarnings().setText(ex.getMessage());			
+			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(true);
+		}
+		
 
+	}
+
+	private void fillInBoard() {
+		if (this.commonGameArea.getBoard().refillCheck()) {
+			this.commonGameArea.getBoard().refill();
+			this.mainController.assignBoardTiles();
+		}
+		
 	}
 
 	@Override
@@ -69,17 +84,23 @@ public class NextPlayerButtonController implements MouseListener {
 	}
 
 	// Advances the turn
-	private void nextTurn() {
-		mainController.getCurrentPlayer().resetSelectedColumn();
+	private void nextTurn() throws IllegalActionException {
+		/*TODO Delete comment when BookShelf is completely implementated
+		if (!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
+			throw new IllegalActionException("Warning, you have to make your move before you can pass your turn!");
+		} 
+		*/
+		this.mainController.getCurrentPlayer().resetSelectedColumn();
 
 		int currentPlayerId = mainController.getCurrentPlayer().getId();
 		int nextId = currentPlayerId + 1;
-
+		
 		if (nextId > mainController.getLastPlayer().getId())
 			nextId = 0;
 		
-		
-		mainController.setCurrentPlayer(mainController.getPlayer(nextId));
+		this.mainController.setCurrentPlayer(mainController.getPlayer(nextId));
+		this.mainController.getCurrentPlayer().getBookshelf().setStateChanged(false);
+		this.mainController.getGameToken().setCurrentOwner(this.mainController.getCurrentPlayer());
 	}
 
 	// Returns to the board the selected tile that have not been moved to the

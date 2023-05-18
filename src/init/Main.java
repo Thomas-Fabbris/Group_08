@@ -32,7 +32,8 @@ public class Main {
 					// View
 					CommonGameAreaFrame commonGameAreaFrame = new CommonGameAreaFrame(screenSize);
 					PersonalGameAreaFrame personalGameAreaFrame = new PersonalGameAreaFrame(screenSize);
-
+					
+					//Controller
 					MainController mainController = new MainController(personalGameAreaFrame, commonGameAreaFrame,
 							players, commonGameArea);
 

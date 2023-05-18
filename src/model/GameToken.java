@@ -5,6 +5,9 @@ public class GameToken {
 	private Player currentOwner;
 	
 	public GameToken(Player player){
+		if(player == null) {
+			throw new NullPointerException("player cannot be set to null while creating a GameToken instance!");
+		}
 		this.roundNumber = 1;
 		this.currentOwner = player;
 	}
@@ -15,10 +18,10 @@ public class GameToken {
 	}
 	
 	private void moveToNextPlayer(Player players[]) {
-		
+	
 		for(int k = 0; k < players.length; k++) {
 			if(this.currentOwner.equals(players[k])) {
-				this.currentOwner = players[k++];
+				this.setCurrentOwner(players[k++]);
 				break;
 			}
 		}
@@ -30,6 +33,9 @@ public class GameToken {
 	}
 	
 	public void setCurrentOwner(Player newOwner) {
+		if(newOwner == null) {
+			throw new NullPointerException("newOwner cannot be set to null when calling GameToken:setCurrentOwner() method!");
+		}
 		this.currentOwner = newOwner;
 	}
 	

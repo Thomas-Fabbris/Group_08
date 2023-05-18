@@ -39,20 +39,28 @@ public class MainController {
 	private Player winner;
 
 	private CommonGameArea commonGameArea;
-
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 
-	private GameToken gameToken;
+	private GameToken gameToken = null;
 	private GameEndTile gameEndTile = null;
 
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
-
+		if(playerNames == null) {
+			throw new NullPointerException("players must not be set to null when creating a mainController instance!");
+		}
+		if(commonGameArea == null) {
+			throw new NullPointerException("commonGameArea must not be set to null when creating a MainController instance!");
+		}
+		if(commonGameAreaFrame == null) {
+			throw new NullPointerException("commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		}
+		if(personalGameAreaFrame == null) {
+			throw new NullPointerException("personalGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		}
 		MainController.gameState = GameState.RUNNING;
-
 		this.commonGameArea = commonGameArea;
-
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
 
@@ -84,7 +92,9 @@ public class MainController {
 
 
 		players[0].setHasChair(true);
-//		players[0].bookshelf.fillRandom();
+		/*Used for debug
+		players[0].bookshelf.fillRandom();
+		*/
 		setCurrentPlayer(players[0]);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 0);
@@ -123,6 +133,9 @@ public class MainController {
 	 * @param player
 	 */
 	public void setCurrentPlayer(Player player) {
+		if(player == null) {
+			throw new NullPointerException("currentPlayer cannot be set to null when calling MainController:setCurrentPlayer method!");
+		}
 		this.currentPlayer = player;
 		updatePlayerNameText(player);
 		updatePointsText(player);
@@ -216,7 +229,6 @@ public class MainController {
 
 	private void updatePersonalObjectiveCardLabel(PersonalObjectiveCard card) {
 		JLabel personalObjectiveCard = personalGameAreaFrame.getPersonalObjectiveCardLabel();
-//		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.png".replace("X", Integer.toString(card.cardId));
 		String path = "Assets/Carte_Obiettivo_Personale/Carta_" + card.cardId + ".png";
 		ImageIcon icon = ImageUtils.loadImageAsIcon(personalObjectiveCard.getSize(), path);
 		personalObjectiveCard.setIcon(icon);
@@ -318,7 +330,7 @@ public class MainController {
 	 * Assigns a Label to each Tile on the board and saves it in
 	 * commonGameAreaFrame.boardTileLabels
 	 */
-	private void assignBoardTiles() {
+	public void assignBoardTiles() {
 
 		int ROWS = commonGameArea.getBoard().getTiles()[0].length;
 		int COLUMNS = commonGameArea.getBoard().getTiles().length;
@@ -415,18 +427,11 @@ public class MainController {
 			System.out.println("It is not possible to skip to the next turn before having completed yours!");
 			return;
 		} else {
-			checkCommonGoals();
 			checkEndOfGame();
 			this.currentPlayer.getBookshelf().setStateChanged(false);
 			saveCurrentPlayerInfo();
 			Player nextPlayer = determineNextPlayer();
 			if (!nextPlayer.equals(this.lastPlayer)) {
-
-				if (this.commonGameArea.getBoard().refillCheck()) {
-					this.commonGameArea.getBoard().refill();
-					assignBoardTiles();
-				}
-
 				this.gameToken.setCurrentOwner(currentPlayer);
 				setCurrentPlayer(nextPlayer);
 			} else if (MainController.gameState.equals(GameState.ENDED)) {
@@ -497,19 +502,6 @@ public class MainController {
 			for(int k = 0; k < groupList.length; k++) {
 				p.addPoints(CommonGoals.StaticFields.getPointsMap().get(k + 3) * groupList[k]);
 			}
-		}
-	}
-
-	private void checkCommonGoals() {
-		if (!this.currentPlayer.hasCompletedCommonGoal1() && this.commonGameArea.getCard1().getRelatedCommonGoal()
-				.checkCommonGoal(this.currentPlayer.getBookshelf())) {
-			this.currentPlayer.setHasCompletedCommonGoal1(true);
-			this.commonGameArea.getCard1().award(this.currentPlayer);
-		}
-		if (!this.currentPlayer.hasCompletedCommonGoal2() && this.commonGameArea.getCard2().getRelatedCommonGoal()
-				.checkCommonGoal(this.currentPlayer.getBookshelf())) {
-			this.currentPlayer.setHasCompletedCommonGoal2(true);
-			this.commonGameArea.getCard2().award(this.currentPlayer);
 		}
 	}
 
@@ -600,5 +592,19 @@ public class MainController {
 	//TODO remove this
 	public JLabel getPointTile1() {
 		return personalGameAreaFrame.getPointTile1();
+	}
+
+	/**
+	 * @return the gameToken
+	 */
+	public GameToken getGameToken() {
+		return gameToken;
+	}
+
+	/**
+	 * @return the personalGameAreaFrame
+	 */
+	public PersonalGameAreaFrame getPersonalGameAreaFrame() {
+		return personalGameAreaFrame;
 	}
 }

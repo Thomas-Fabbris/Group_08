@@ -42,11 +42,17 @@ public class Player {
 	 * @param idgenerator istanza della classe {@link IdGenerator}
 	 */
 
-	public Player(String name, IdGenerator idgenerator) {
+	public Player(String name, IdGenerator idGenerator) {
+		if(name == null) {
+			throw new NullPointerException("name cannot be set to null when creating a Player instance!");
+		}
+		if(idGenerator == null) {
+			throw new NullPointerException("players cannot be set to null when calling GameToken:shiftRound method!");
+		}
 		this.name = name;
-		this.id = idgenerator.getNewId();
+		this.id = idGenerator.getNewId();
 		this.selectedTiles = new LinkedList<BoardTile>();
-		objectiveCard = new PersonalObjectiveCard(idgenerator.getNewPersonalObjectiveCardId());
+		objectiveCard = new PersonalObjectiveCard(idGenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
 	}
 
@@ -59,7 +65,9 @@ public class Player {
 	 * @param tile {@link PointTile PointTile} da assegnare al giocatore
 	 */
 	public void awardPointTile(PointTile tile) {
-
+		if(tile == null) {
+			throw new NullPointerException("tile cannot be set to null while calling Player:awardPointTile() method!");
+		}
 		// If both spots are empty, then fill pointTile1
 		if (pointTile1 == null && pointTile2 == null) {
 			pointTile1 = tile;
@@ -192,6 +200,9 @@ public class Player {
 	}
 
 	public void setPointTile1(PointTile pointTile1) {
+		if(pointTile1 == null) {
+			throw new NullPointerException("pointTile1 cannot be set to null while calling Player:setPointTile1() method!");
+		}
 		this.pointTile1 = pointTile1;
 	}
 
@@ -200,6 +211,9 @@ public class Player {
 	}
 
 	public void setPointTile2(PointTile pointTile2) {
+		if(pointTile2 == null) {
+			throw new NullPointerException("pointTile2 cannot be set to null while calling Player:setPointTile2() method!");
+		}
 		this.pointTile2 = pointTile2;
 	}
 

@@ -11,15 +11,13 @@ import view.PersonalGameAreaFrame;
 public class SelectedTileController implements MouseListener {
 
 	private int id; // Used to identify which selected tile the user is interacting with
-	//TODO: remove these attributes if not used
-	private CommonGameAreaFrame commonGameAreaFrame;
-	private PersonalGameAreaFrame personalGameAreaFrame;
 	private MainController mainController;
 
 	public SelectedTileController(int id, CommonGameAreaFrame commonGameAreaFrame,
 			PersonalGameAreaFrame personalGameAreaFrame, MainController mainController) {
-		this.commonGameAreaFrame = commonGameAreaFrame;
-		this.personalGameAreaFrame = personalGameAreaFrame;
+		if(mainController == null) {
+			throw new NullPointerException("mainController must not be set to null while creating a SelectedTileController instance!");
+		}
 		this.mainController = mainController;
 
 		if (id < 0 || id >= 3)

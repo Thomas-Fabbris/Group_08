@@ -21,7 +21,18 @@ public class BookshelfTileController implements MouseListener {
 
 	public BookshelfTileController(BookshelfTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
-
+		if(commonGameArea == null) {
+			throw new NullPointerException("commonGameArea cannot be set to null while creating a BookShelfTileController instance!");
+		}
+		if(commonGameAreaFrame == null) {
+			throw new NullPointerException("commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		}
+		if(label == null) {
+			throw new NullPointerException("label cannot be set to null while creating a BookShelfTileController instance!");
+		}
+		if(mainController == null) {
+			throw new NullPointerException("mainController cannot be set to null while creating a BookShelfTileController instance!");
+		}
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.label = label;

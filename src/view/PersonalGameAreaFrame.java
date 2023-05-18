@@ -26,7 +26,7 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JPanel tiles; //Contains: point tiles, chair and points
 	private JPanel bookshelfAndCard; //Contains: bookshelf and personal objective card
 	private JPanel playerNameAndButton; //Contains: player's name and next player button
-	private JPanel warningsPanel;
+	private JPanel warningsPanel; //Contains: warning label
 	
 	private JLabel playerName;
 	private JLabel nextPlayerButton;
