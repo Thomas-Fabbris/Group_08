@@ -2,7 +2,12 @@ package model.personalgamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.NavigableMap;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 
 import model.shared.TileType;
 
@@ -616,7 +621,7 @@ public enum CommonGoals {
 
 	public int[] PointsPathfinder(Bookshelf pshelf)
 	{
-		Pathfind pathfinder = new Pathfind(pshelf);
+		PathFind pathfinder = new PathFind(pshelf);
 		return pathfinder.PointsPathfinding();
 	}
 

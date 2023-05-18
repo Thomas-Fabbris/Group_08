@@ -4,16 +4,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.swing.JLabel;
-
 import model.CommonGameArea;
 import model.Player;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
-import view.ImageUtils;
-import view.PersonalGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
 
 public class BookshelfTileController implements MouseListener {

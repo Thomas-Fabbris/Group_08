@@ -1,7 +1,6 @@
 package model.personalgamearea;
 
 import java.util.Iterator;
-import java.util.Random;
 
 import model.Player;
 import model.commongamearea.BoardTile;

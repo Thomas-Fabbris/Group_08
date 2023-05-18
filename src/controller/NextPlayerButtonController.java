@@ -8,9 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.CommonGameArea;
-import model.Player;
 import model.commongamearea.BoardTile;
-import model.commongamearea.CommonObjectiveCard;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 

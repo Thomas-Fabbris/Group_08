@@ -10,9 +10,11 @@ import model.CommonGameArea;
 import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
+import model.commongamearea.InvalidMoveException;
 import model.shared.TileSides;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
+import view.PersonalGameAreaFrame;
 import view.commongamearea.BoardTileLabel;
 
 public class BoardTileController implements MouseListener {
@@ -25,49 +27,77 @@ public class BoardTileController implements MouseListener {
 	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
+	private PersonalGameAreaFrame personalGameAreaFrame;
 
 	public BoardTileController(Board board, BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
-			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
+			CommonGameAreaFrame commonGameAreaFrame, MainController mainController, PersonalGameAreaFrame personalGameAreaFrame) {
+		if(board == null) {
+			throw new NullPointerException("Warning, board must not be set to null while creating a BoardTileController instance!");
+		}
+		if(tile == null) {
+			throw new NullPointerException("Warning, tile must not be set to null while creating a BoardTileController instance!");
+		}
+		if(label == null) {
+			throw new NullPointerException("Warning, label must not be set to null while creating a BoardTileController instance!");
+		}
+		if(commonGameArea == null) {
+			throw new NullPointerException("Warning, commonGameArea must not be set to null while creating a BoardTileController instance!");
+		}
+		if(commonGameAreaFrame == null) {
+			throw new NullPointerException("Warning, commonGameAreaFrame must not be set to null while creating a BoardTileController instance!");
+		}
+		if(mainController == null) {
+			throw new NullPointerException("Warning, mainController must not be set to null while creating a BoardTileController instance!");
+		}
+		if(personalGameAreaFrame == null) {
+			throw new NullPointerException("Warning, personalGameAreaFrame must not be set to null while creating a BoardTileController instance!");
+		}
 		this.board = board;
 		this.tile = tile;
 		this.label = label;
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
+		this.personalGameAreaFrame = personalGameAreaFrame;
 		this.mainController = mainController;
-
+		
 		mainController.updateBoardTileLabel(tile, label);
 		this.coloredIcon = (ImageIcon) label.getIcon();
 		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
-		if (!this.tile.isInteractible()) {
-			return;
-		}
-		
-		Player currentPlayer = mainController.getCurrentPlayer();
-		
-		if (!currentPlayer.hasSelectedColumn() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
-			List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
-
-			switch (selectedTiles.size()) {
-			case 0:
-				pickupFirstTile(selectedTiles);
-				return;
-
-			case 1:
-				pickupSecondTile(selectedTiles);
-				return;
-
-			case 2:
-				pickupThirdTile(selectedTiles);
-				return;
+		try {
+			this.personalGameAreaFrame.getWarnings().setVisible(false);
+			if (!this.tile.isInteractible()) {
+				throw new InvalidMoveException("Warning, you cannot interact with this tile!");
 			}
-		} else {
-			this.label.setIcon(grayIcon);
+			
+			Player currentPlayer = mainController.getCurrentPlayer();
+			
+			if (!currentPlayer.hasSelectedColumn() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
+				List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
+	
+				switch (selectedTiles.size()) {
+				case 0:
+					pickupFirstTile(selectedTiles);
+					return;
+	
+				case 1:
+					pickupSecondTile(selectedTiles);
+					return;
+	
+				case 2:
+					pickupThirdTile(selectedTiles);
+					return;
+				}
+			} else {
+				this.label.setIcon(grayIcon);
+			}
+		}
+		catch(InvalidMoveException ex){
+			this.personalGameAreaFrame.getWarnings().setText(ex.getMessage());			
+			this.personalGameAreaFrame.getWarnings().setVisible(true);
 		}
 	}
 
@@ -99,7 +129,7 @@ public class BoardTileController implements MouseListener {
 	private void pickupFirstTile(List<BoardTile> selectedTiles) {
 		// The tile must have at least one free side and max 3 free sides (1, 2 or 3 free sides = pickup)
 		if(tile.getBlockedSides() != TileSides.AT_LEAST_ONE_SIDE_FREE) {
-			return;
+			throw new InvalidMoveException("Warning, you cannot pick up this tile!");
 		}
 		commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
 		selectedTiles.add(tile);

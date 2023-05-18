@@ -16,9 +16,6 @@ import view.personalgamearea.BookshelfLabel;
 
 public class PersonalGameAreaFrame extends JFrame {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2242387074378483496L;
 
 	private Dimension screenSize;
@@ -28,6 +25,7 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JPanel tiles; //Contains: point tiles, chair and points
 	private JPanel bookshelfAndCard; //Contains: bookshelf and personal objective card
 	private JPanel playerNameAndButton; //Contains: player's name and next player button
+	private JPanel warningsPanel;
 	
 	private JLabel playerName;
 	private JLabel nextPlayerButton;
@@ -38,6 +36,8 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JLabel endOfGameTile;
 	private JLabel points;
 	private JLabel chair;
+	private JLabel warnings;
+	
 	
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -65,7 +65,20 @@ public class PersonalGameAreaFrame extends JFrame {
 		playerNameAndButton.add(playerName);
 		playerNameAndButton.add(Box.createRigidArea(new Dimension(3*tileLength, tileLength)));
 		playerNameAndButton.add(nextPlayerButton);
-				
+			
+		
+		//Warnings 
+		warningsPanel = new JPanel();
+		warningsPanel.setOpaque(false);
+		warningsPanel.setLayout(new BoxLayout(warningsPanel, BoxLayout.X_AXIS));
+		
+		warnings = new JLabel();
+		warnings.setForeground(Color.white);
+		warnings.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
+		warnings.setForeground(Color.RED);
+		warnings.setVisible(false);
+		warningsPanel.add(warnings);
+		
 		//Tiles
 		tiles = new JPanel();
 		tiles.setOpaque(false);
@@ -117,6 +130,8 @@ public class PersonalGameAreaFrame extends JFrame {
 		int separatorHeight = (this.getHeight() - tileLength - bookshelfLabel.getHeight() - playerName.getHeight())/4;
 
 		playerInfoPanel.add(playerNameAndButton);
+		playerInfoPanel.add(Box.createRigidArea(new Dimension(this.getWidth(), 5)));
+		playerInfoPanel.add(warningsPanel);
 		playerInfoPanel.add(Box.createRigidArea(new Dimension(this.getWidth(), separatorHeight)));
 		playerInfoPanel.add(tiles);
 		playerInfoPanel.add(bookshelfAndCard);
@@ -168,5 +183,9 @@ public class PersonalGameAreaFrame extends JFrame {
 
 	public JLabel getEndOfGameTile() {
 		return endOfGameTile;
+	}
+	
+	public JLabel getWarnings() {
+		return warnings;
 	}
 }
