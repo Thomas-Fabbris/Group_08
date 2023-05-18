@@ -2,6 +2,7 @@ package model.personalgamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NavigableMap;
@@ -15,21 +16,23 @@ public enum CommonGoals {
 
 	CommonGoal1(1) {
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Due colonne formate ciascuna da 6 diversi tipi di tessere.
 
-			int result = 0;
+			int count = 0;
 
 			for (int col = 0; col <= 4; col++) {
 
 				TileType[] current_col = pshelf.getColumn(col);
 				int nulls = Math.min(1, Count_NULL(current_col));
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
-				if (set.size() - nulls == 6)
-					result++;
-
+				if (set.size() - nulls == 6) {
+					count++;
+					if (count == 2) return true;
+				}
 			}
 
-			return Math.min(0, result - 1)>=2;
+			return false;
 
 		}
 	},
@@ -38,6 +41,7 @@ public enum CommonGoals {
 
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Quattro gruppi separati formati ciascuno
 			// da quattro tessere adiacenti dello stesso tipo
 			// (non necessariamente come mostrato in figura).
@@ -46,7 +50,8 @@ public enum CommonGoals {
 
 			int result = 0;
 			int index = 0;
-			int[] already_checked = new int[] { -1 };
+			int[] already_checked = new int[30];
+			Arrays.fill(already_checked, -1);
 
 			for (int row = 0; row <= 5; row++) {
 
@@ -62,16 +67,22 @@ public enum CommonGoals {
 					boolean c2 = CheckCol(pshelf, row, col, 4);
 
 					if (c1 || c2) {
-						already_checked[index] = row * 3 + col * 5;
+						already_checked[index] = row * 10 + col;
 						index++;
 						result++;
+
+						if (result == 4)
+						{
+							return true;
+						}
+
 					}
 
 				}
 
 			}
 
-			return Math.max(0, result - 3)>=4;
+			return false;
 		}
 
 	},
@@ -92,12 +103,17 @@ public enum CommonGoals {
 				TileType[] current_col = pshelf.getColumn(col);
 				int nulls = Math.min(1, Count_NULL(current_col));
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
-				if (set.size() - nulls <= 3)
-					result++;
+				if (set.size() - nulls <= 3) {
 
+					result++;
+					if (result == 3) {
+						return true;
+					}
+
+				}
 			}
 
-			return Math.max(0, result - 2)>=3;
+			return false;
 
 		}
 
@@ -107,12 +123,11 @@ public enum CommonGoals {
 
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Cinque colonne di altezza crescente o decrescente:
 			// a partire dalla prima colonna a sinistra o a destra,
 			// ogni colonna successiva deve essere formata da una
 			// tessera in più. Le tessere possono essere di qualsiasi tipo.
-
-			int result = 0;
 
 			for (int inverse = 0; inverse <= 1; inverse++) {
 
@@ -134,12 +149,11 @@ public enum CommonGoals {
 
 				}
 
-				if (!wrong)
-					result++;
+				if (!wrong) return true;
 
 			}
 			
-			return result >=5;
+			return false;
 		}
 	},
 
@@ -147,6 +161,7 @@ public enum CommonGoals {
 
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Sei gruppi separati formati ciascuno da due tessere
 			// adiacenti dello stesso tipo (non necessariamente
 			// come mostrato in figura). Le tessere di un gruppo
@@ -154,7 +169,8 @@ public enum CommonGoals {
 
 			int result = 0;
 			int index = 0;
-			int[] already_checked = { -1 };
+			int[] already_checked = new int[30];
+			Arrays.fill(already_checked, -1);
 
 			for (int row = 0; row <= 5; row++) {
 
@@ -170,16 +186,23 @@ public enum CommonGoals {
 					boolean c2 = CheckCol(pshelf, row, col, 2);
 
 					if (c1 || c2) {
-						already_checked[index] = row * 3 + col * 5;
+
+						already_checked[index] = row * 10 + col;
 						index++;
 						result++;
+
+						if (result == 6)
+						{
+							return true;
+						}
+
 					}
 
 				}
 
 			}
 
-			return Math.max(0, result - 5) >= 6;
+			return false;
 
 		}
 
@@ -187,6 +210,7 @@ public enum CommonGoals {
 
 	CommonGoal6(6) {
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Due gruppi separati di 4 tessere dello stesso
 			// tipo che formano un quadrato 2x2. Le
 			// tessere dei due gruppi devono essere dello stesso tipo.
@@ -195,9 +219,9 @@ public enum CommonGoals {
 
 			for (TileType type : TileType.types) {
 
-				int count = 0;
 				int index = 0;
-				int[] already_checked = { -1 };
+				int[] already_checked = new int[30];
+				Arrays.fill(already_checked, -1);
 
 				for (int dshift = 0; dshift <= 4; dshift++) {
 
@@ -221,19 +245,23 @@ public enum CommonGoals {
 						boolean t3 = checktile == pshelf.getTile(1 + rshift, 1 + dshift).getType();
 
 						if (t1 && t2 && t3) {
-							already_checked[index] = (dshift * 3 + rshift * 5);
+							already_checked[index] = (dshift * 10 + rshift);
 							index++;
-							count++;
+							result++;
+
+							if (result == 2)
+							{
+								return true;
+							}
+
 						}
 
 					}
 
 				}
 
-				result += Math.max(count - 1, 0);
-
 			}
-			return result >= 4;
+			return false;
 		}
 
 	},
@@ -242,11 +270,10 @@ public enum CommonGoals {
 
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
+
 			// Otto tessere dello stesso tipo. Non
 			// ci sono restrizioni sulla posizione
 			// di queste tessere.
-
-			int result = 0;
 
 			for (TileType type : TileType.types) {
 
@@ -254,18 +281,18 @@ public enum CommonGoals {
 
 				for (int row = 0; row <= Bookshelf.ROWS; row++) {
 					for (int col = 0; col <= Bookshelf.COLUMNS; col++) {
-						if (pshelf.getTile(row, col).getType() == type)
+						if (pshelf.getTile(row, col).getType() == type) {
 							count++;
-
+							if (count == 8) {
+								return true;
+							}
+						}
 					}
 				}
 
-				if (count >= 8)
-					result++;
-
 			}
 
-			return result == 1;
+			return false;
 
 		}
 
@@ -277,8 +304,6 @@ public enum CommonGoals {
 		public boolean checkCommonGoal(Bookshelf pshelf) {
 
 			// Cinque tessere dello stesso tipo che formano una X
-
-			int result = 0;
 
 			for (int rshift = 0; rshift <= 2; rshift++) {
 
@@ -295,13 +320,13 @@ public enum CommonGoals {
 					boolean t4 = checktile == pshelf.getTile(2 + dshift, 2 + rshift).getType();
 
 					if (t1 && t2 && t3 && t4)
-						result++;
+						return true;
 
 				}
 
 			}
 
-			return result == 1;
+			return false;
 
 		}
 
@@ -314,8 +339,6 @@ public enum CommonGoals {
 
 			// Cinque tessere dello stesso tipo che formano
 			// una diagonale
-
-			int result = 0;
 
 			for (int dshift = 0; dshift <= 1; dshift++) {
 
@@ -332,12 +355,12 @@ public enum CommonGoals {
 					boolean t4 = checktile == pshelf.getTile(4 + dshift, 4 - (4 * inverse)).getType();
 
 					if (t1 && t2 && t3 && t4)
-						result++;
+						return true;
 
 				}
 			}
 
-			return result == 1;
+			return false;
 		}
 
 	},
@@ -357,11 +380,14 @@ public enum CommonGoals {
 				int nulls = Math.min(1, Count_NULL(current_row));
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls == 5)
+				{
 					result++;
+					if (result == 2) return true;
+				}
 
 			}
 
-			return Math.max(0, result - 1) >= 2;
+			return false;
 		}
 
 	},
@@ -383,11 +409,17 @@ public enum CommonGoals {
 				int nulls = Math.min(1, Count_NULL(current_row));
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls <= 3)
+				{
 					result++;
+					if (result == 4)
+					{
+						return true;
+					}
+				}
 
 			}
 
-			return Math.max(0, result - 3) >= 5;
+			return false;
 
 		}
 	},
@@ -470,7 +502,7 @@ public enum CommonGoals {
 
 	}
 
-	private static boolean Coords_Check(int[] coords, int row, int col, int mode) {
+	public boolean Coords_Check(int[] coords, int row, int col, int mode) {
 
 		// Metodo unico (mode cambia il modo in cui funziona) per
 		// controllare se una tile è già presente in un gruppo
@@ -478,41 +510,33 @@ public enum CommonGoals {
 
 		for (int coord : coords) {
 
-			// Gruppo di grandezza 2x2
-			if (mode == 1) {
-				boolean t1 = (row - 1) * 3 + col * 5 == coord;
-				boolean t2 = row * 3 + (col - 1) * 5 == coord;
-				boolean t3 = (row - 1) * 3 + (col - 1) * 5 == coord;
+			switch (mode) {
 
-				if (t1 || t2 || t3)
-					return true;
-			}
+				// Gruppo di grandezza 2x2
+				case 1 -> {
+					boolean t1 = (row - 1) * 10 + col == coord;
+					boolean t2 = row * 10 + (col - 1) == coord;
+					boolean t3 = (row - 1) * 10 + (col - 1) == coord;
+					if (t1 || t2 || t3) return true;
+				}
 
-			// Gruppo di lunghezza 2
-			else if (mode == 2) {
+				// Gruppo di lunghezza 2
+				case 2 -> {
+					boolean h1 = (row - 1) * 10 + col == coord;
+					boolean v1 = row * 10 + (col - 1) == coord;
+					if (h1 || v1) return true;
+				}
 
-				boolean h1 = (row - 1) * 3 + col * 5 == coord;
-				boolean v1 = row * 3 + (col - 1) * 5 == coord;
-
-				if (h1 || v1)
-					return true;
-
-			}
-
-			// Gruppo di lunghezza 4
-			else if (mode == 3) {
-
-				boolean h1 = (row - 1) * 3 + col * 5 == coord;
-				boolean h2 = (row - 2) * 3 + col * 5 == coord;
-				boolean h3 = (row - 3) * 3 + col * 5 == coord;
-
-				boolean v1 = row * 3 + (col - 1) * 5 == coord;
-				boolean v2 = row * 3 + (col - 2) * 5 == coord;
-				boolean v3 = row * 3 + (col - 3) * 5 == coord;
-
-				if (h1 || h2 || h3 || v1 || v2 || v3)
-					return true;
-
+				// Gruppo di lunghezza 4
+				case 3 -> {
+					boolean h1 = (row - 1) * 10 + col == coord;
+					boolean h2 = (row - 2) * 10 + col == coord;
+					boolean h3 = (row - 3) * 10 + col == coord;
+					boolean v1 = row * 10 + (col - 1) == coord;
+					boolean v2 = row * 10 + (col - 2) == coord;
+					boolean v3 = row * 10 + (col - 3) == coord;
+					if (h1 || h2 || h3 || v1 || v2 || v3) return true;
+				}
 			}
 		}
 
@@ -551,26 +575,27 @@ public enum CommonGoals {
 		if (length == 2 && col > 3)
 			return false;
 
-		if (length == 4) {
+		switch (length) {
 
-			TileType checktile = pshelf.getTile(row, col).getType();
+			case 4 -> {
 
-			boolean t1 = checktile == pshelf.getTile(row, col + 1).getType();
-			boolean t2 = checktile == pshelf.getTile(row, col + 2).getType();
-			boolean t3 = checktile == pshelf.getTile(row, col + 3).getType();
+				TileType checktile = pshelf.getTile(row, col).getType();
 
-			return t1 && t2 && t3;
+				boolean t1 = checktile == pshelf.getTile(row, col + 1).getType();
+				boolean t2 = checktile == pshelf.getTile(row, col + 2).getType();
+				boolean t3 = checktile == pshelf.getTile(row, col + 3).getType();
 
-		}
+				return t1 && t2 && t3;
 
-		if (length == 2) {
+			}
 
-			TileType checktile = pshelf.getTile(row, col).getType();
+			case 2 -> {
 
-			boolean t1 = checktile == pshelf.getTile(row, col + 1).getType();
+				TileType checktile = pshelf.getTile(row, col).getType();
 
-			return t1;
+				return checktile == pshelf.getTile(row, col + 1).getType();
 
+			}
 		}
 
 		return false;
