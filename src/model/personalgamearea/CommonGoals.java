@@ -50,7 +50,7 @@ public enum CommonGoals {
 			int result = 0;
 			int index = 0;
 			int[] already_checked = new int[30];
-			Arrays.fill(already_checked, -1);
+			Arrays.fill(already_checked, -99);
 
 			for (int row = 0; row <= 5; row++) {
 
@@ -101,6 +101,7 @@ public enum CommonGoals {
 
 				TileType[] current_col = pshelf.getColumn(col);
 				int nulls = Math.min(1, Count_NULL(current_col));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
 				if (set.size() - nulls <= 3) {
 
@@ -169,7 +170,7 @@ public enum CommonGoals {
 			int result = 0;
 			int index = 0;
 			int[] already_checked = new int[30];
-			Arrays.fill(already_checked, -1);
+			Arrays.fill(already_checked, -99);
 
 			for (int row = 0; row <= 5; row++) {
 
@@ -220,14 +221,13 @@ public enum CommonGoals {
 
 				int index = 0;
 				int[] already_checked = new int[30];
-				Arrays.fill(already_checked, -1);
+				Arrays.fill(already_checked, -99);
 
 				for (int dshift = 0; dshift <= 4; dshift++) {
 
 					for (int rshift = 0; rshift <= 3; rshift++) {
 
 						// non andiamo a prendere il quadrato che abbiamo già trovato
-
 						if (Coords_Check(already_checked, dshift, rshift, 1))
 							continue;
 
@@ -278,8 +278,8 @@ public enum CommonGoals {
 
 				int count = 0;
 
-				for (int row = 0; row <= Bookshelf.ROWS; row++) {
-					for (int col = 0; col <= Bookshelf.COLUMNS; col++) {
+				for (int row = 0; row <= 5; row++) {
+					for (int col = 0; col <= 4; col++) {
 						if (pshelf.getTile(row, col).getType() == type) {
 							count++;
 							if (count == 8) {
@@ -349,7 +349,7 @@ public enum CommonGoals {
 						continue;
 
 					boolean t1 = checktile == pshelf.getTile(1 + dshift, 1 + (2 * inverse)).getType();
-					boolean t2 = checktile == pshelf.getTile(2 + dshift, 2).getType();
+					boolean t2 = checktile == pshelf.getTile(2 + dshift, 2                ).getType();
 					boolean t3 = checktile == pshelf.getTile(3 + dshift, 3 - (2 * inverse)).getType();
 					boolean t4 = checktile == pshelf.getTile(4 + dshift, 4 - (4 * inverse)).getType();
 
@@ -377,6 +377,7 @@ public enum CommonGoals {
 
 				TileType[] current_row = pshelf.getRow(row);
 				int nulls = Math.min(1, Count_NULL(current_row));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls == 5)
 				{
@@ -406,6 +407,7 @@ public enum CommonGoals {
 
 				TileType[] current_row = pshelf.getRow(row);
 				int nulls = Math.min(1, Count_NULL(current_row));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls <= 3)
 				{
@@ -516,14 +518,14 @@ public enum CommonGoals {
 					boolean t1 = (row - 1) * 10 + col == coord;
 					boolean t2 = row * 10 + (col - 1) == coord;
 					boolean t3 = (row - 1) * 10 + (col - 1) == coord;
-					if (t1 || t2 || t3) return true;
+					return t1 || t2 || t3;
 				}
 
 				// Gruppo di lunghezza 2
 				case 2 : {
 					boolean h1 = (row - 1) * 10 + col == coord;
 					boolean v1 = row * 10 + (col - 1) == coord;
-					if (h1 || v1) return true;
+					return h1 || v1;
 				}
 
 				// Gruppo di lunghezza 4
@@ -534,7 +536,7 @@ public enum CommonGoals {
 					boolean v1 = row * 10 + (col - 1) == coord;
 					boolean v2 = row * 10 + (col - 2) == coord;
 					boolean v3 = row * 10 + (col - 3) == coord;
-					if (h1 || h2 || h3 || v1 || v2 || v3) return true;
+					return (h1 || h2 || h3 || v1 || v2 || v3);
 				}
 			}
 		}
