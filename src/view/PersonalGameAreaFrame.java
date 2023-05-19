@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import view.personalgamearea.BookshelfLabel;
-import view.personalgamearea.GameEndScreen;
 
 public class PersonalGameAreaFrame extends JFrame {
 	

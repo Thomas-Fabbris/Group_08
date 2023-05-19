@@ -28,7 +28,7 @@ import view.PersonalGameAreaFrame;
 import view.commongamearea.BoardTileLabel;
 import view.personalgamearea.BookshelfLabel;
 import view.personalgamearea.BookshelfTileLabel;
-import view.personalgamearea.GameEndScreen;
+import view.personalgamearea.GameEndFrame;
 
 public class MainController {
 
@@ -105,11 +105,34 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 0);
 		
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 1);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 1);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 1);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 1);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 1);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 1);
+		
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 2);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 2);	
+		
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
+		
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
+
 		
 		updateBookshelfLabel();
 
@@ -266,9 +289,9 @@ public class MainController {
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 	}
 	
-	public GameEndScreen displayGameEndScreen() {
-		GameEndScreen gameEndScreen = new GameEndScreen(personalGameAreaFrame.getSize());
-		personalGameAreaFrame.removeAll();
+	public GameEndFrame displayGameEndScreen() {
+		personalGameAreaFrame.dispose();
+		GameEndFrame gameEndScreen = new GameEndFrame();
 		return gameEndScreen;
 	}
 
