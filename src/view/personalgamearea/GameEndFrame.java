@@ -29,7 +29,7 @@ public class GameEndFrame extends JFrame {
 		int screenWidth = (int) screenSize.getWidth();
 		int screenHeight = (int) screenSize.getHeight();
 
-		Font winnerNameFont = new Font("Dialog", Font.PLAIN, (int) (screenSize.getWidth() / 30));
+		Font winnerNameFont = new Font("Dialog", Font.ITALIC, (int) (screenSize.getWidth() / 30));
 		Font winnerTextFont = new Font("Dialog", Font.PLAIN, (int) (screenSize.getWidth() / 40));
 
 		Font leaderboardFont = new Font("Dialog", Font.PLAIN, (int) (screenSize.getWidth() / 50));
