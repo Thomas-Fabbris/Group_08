@@ -513,7 +513,7 @@ public enum CommonGoals {
 			switch (mode) {
 
 				// Gruppo di grandezza 2x2
-				case 1 -> {
+				case 1 : {
 					boolean t1 = (row - 1) * 10 + col == coord;
 					boolean t2 = row * 10 + (col - 1) == coord;
 					boolean t3 = (row - 1) * 10 + (col - 1) == coord;
@@ -521,14 +521,14 @@ public enum CommonGoals {
 				}
 
 				// Gruppo di lunghezza 2
-				case 2 -> {
+				case 2 : {
 					boolean h1 = (row - 1) * 10 + col == coord;
 					boolean v1 = row * 10 + (col - 1) == coord;
 					if (h1 || v1) return true;
 				}
 
 				// Gruppo di lunghezza 4
-				case 3 -> {
+				case 3 : {
 					boolean h1 = (row - 1) * 10 + col == coord;
 					boolean h2 = (row - 2) * 10 + col == coord;
 					boolean h3 = (row - 3) * 10 + col == coord;
@@ -577,7 +577,7 @@ public enum CommonGoals {
 
 		switch (length) {
 
-			case 4 -> {
+			case 4 : {
 
 				TileType checktile = pshelf.getTile(row, col).getType();
 
@@ -589,7 +589,7 @@ public enum CommonGoals {
 
 			}
 
-			case 2 -> {
+			case 2 : {
 
 				TileType checktile = pshelf.getTile(row, col).getType();
 

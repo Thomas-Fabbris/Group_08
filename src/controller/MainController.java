@@ -589,11 +589,6 @@ public class MainController {
 		return lastPlayer;
 	}
 
-	//TODO remove this
-	public JLabel getPointTile1() {
-		return personalGameAreaFrame.getPointTile1();
-	}
-
 	/**
 	 * @return the gameToken
 	 */
