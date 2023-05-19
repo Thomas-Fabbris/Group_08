@@ -128,7 +128,7 @@ public class Bookshelf implements Iterable<Bookshelf>{
 	
 	public void addTile(BookshelfTile tile, int col) {
 		if(col > COLUMNS) {
-			throw new IllegalArgumentException("Unable to add a tile in  an non-existing column in the bookshelf!");
+			throw new IllegalArgumentException("Unable to add a tile in a non-existing column in the bookshelf!");
 		}
 		for (int row = ROWS - 1; row >= 0; row--) {
 			if(this.tiles[row][col].getType() == TileType.NULL) {

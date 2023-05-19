@@ -61,6 +61,9 @@ public class BookshelfTileController implements MouseListener {
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "onTwo");
 
 		am.put("onOne", new AbstractAction() {
+			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				forceCommonObjectiveCompletion(mainController.getCurrentPlayer(), 0);
@@ -68,6 +71,8 @@ public class BookshelfTileController implements MouseListener {
 		});
 
 		am.put("onTwo", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				forceCommonObjectiveCompletion(mainController.getCurrentPlayer(), 1);

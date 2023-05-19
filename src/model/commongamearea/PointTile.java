@@ -11,6 +11,9 @@ public class PointTile extends Tile {
 	
 	public PointTile(CommonObjectiveCard card, int points) {
 		super(TileType.POINTS);
+		if(card == null) {
+			throw new NullPointerException("card cannot be set to null while creating a PointTile instance!");
+		}
 		this.cardId = card.getId();
 		this.romanNumber = card.getRomanNumber();
 		this.points = points;

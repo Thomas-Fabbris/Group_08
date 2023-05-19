@@ -16,8 +16,11 @@ public class CommonObjectiveCard {
 	private Stack<PointTile> pointTiles = new Stack<>();
 
 	public CommonObjectiveCard(IdGenerator idGenerator, int numberOfPlayers) {
+		if(idGenerator == null) {
+			throw new NullPointerException("idGenerator must not be set to null while creating a CommonObjectiveCard instance!");
+		}
 		this.romanNumber = CommonObjectiveCard.ROMAN_NUMBER++;
-
+		
 		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
 //		this.cardId = 12; //debug
 

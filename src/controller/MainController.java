@@ -214,7 +214,7 @@ public class MainController {
 				tileLabel.addMouseListener(
 						new BookshelfTileController(tileLabel, commonGameArea, commonGameAreaFrame, this));
 				bookshelfLabel.tiles[row][column] = tileLabel;
-				bookshelfLabel.tilesContainer.add(tileLabel);
+				bookshelfLabel.tilesContainer.add(tileLabel);			
 			}
 		}
 	}
