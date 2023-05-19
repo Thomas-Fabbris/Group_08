@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import view.personalgamearea.BookshelfLabel;
+import view.personalgamearea.GameEndScreen;
 
 public class PersonalGameAreaFrame extends JFrame {
 	
@@ -42,7 +43,6 @@ public class PersonalGameAreaFrame extends JFrame {
 	private ImageIcon emptyPointTileIcon;
 	private ImageIcon emptyGameEndIcon;
 	private ImageIcon gameEndTileIcon;
-	
 	
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -100,7 +100,6 @@ public class PersonalGameAreaFrame extends JFrame {
 		points = new JLabel();
 		
 		chair.setSize(tileLength, tileLength);
-		
 
 		pointTile1.setSize(tileSize);
 		pointTile2.setSize(tileSize);

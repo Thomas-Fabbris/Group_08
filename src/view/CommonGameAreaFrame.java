@@ -176,4 +176,8 @@ public class CommonGameAreaFrame extends JFrame {
 	public JLabel getSelectedTile3() {
 		return selectedTile3;
 	}
+
+	public JLabel getEndOfGameTile() {
+		return endOfGameTile;
+	}
 }

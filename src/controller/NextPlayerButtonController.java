@@ -51,8 +51,6 @@ public class NextPlayerButtonController implements MouseListener {
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setText(ex.getMessage());			
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(true);
 		}
-		
-
 	}
 
 	private void fillInBoard() {

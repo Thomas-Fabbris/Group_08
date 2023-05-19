@@ -17,4 +17,8 @@ public class GameEndTile extends Tile {
 		player.setEndOfGameToken(true);
 		this.disable();
 	}
+	
+	public boolean hasBeenAwarded() {
+		return !this.isActive;
+	}
 }

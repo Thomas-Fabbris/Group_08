@@ -56,4 +56,8 @@ public class CommonGameArea {
 	public void updateCurrentBlockedTiles() {
 		this.currentBlockedTiles = board.getCurrentBlockedTiles();
 	}
+
+	public GameEndTile getGameEndTile() {
+		return gameEndTile;
+	}
 }

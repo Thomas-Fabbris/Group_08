@@ -28,6 +28,7 @@ import view.PersonalGameAreaFrame;
 import view.commongamearea.BoardTileLabel;
 import view.personalgamearea.BookshelfLabel;
 import view.personalgamearea.BookshelfTileLabel;
+import view.personalgamearea.GameEndScreen;
 
 public class MainController {
 
@@ -102,12 +103,13 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 0);
+		
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 4);
-
+		
 		updateBookshelfLabel();
 
 		//TODO remove
@@ -262,6 +264,13 @@ public class MainController {
 	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 	}
+	
+	public GameEndScreen displayGameEndScreen() {
+		GameEndScreen gameEndScreen = new GameEndScreen(personalGameAreaFrame.getSize());
+		personalGameAreaFrame.removeAll();
+		return gameEndScreen;
+	}
+
 
 	// ----------- Common game area operations -----------
 

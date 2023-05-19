@@ -21,17 +21,21 @@ public class BookshelfTileController implements MouseListener {
 
 	public BookshelfTileController(BookshelfTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
-		if(commonGameArea == null) {
-			throw new NullPointerException("commonGameArea cannot be set to null while creating a BookShelfTileController instance!");
+		if (commonGameArea == null) {
+			throw new NullPointerException(
+					"commonGameArea cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		if(commonGameAreaFrame == null) {
-			throw new NullPointerException("commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		if (commonGameAreaFrame == null) {
+			throw new NullPointerException(
+					"commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		if(label == null) {
-			throw new NullPointerException("label cannot be set to null while creating a BookShelfTileController instance!");
+		if (label == null) {
+			throw new NullPointerException(
+					"label cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		if(mainController == null) {
-			throw new NullPointerException("mainController cannot be set to null while creating a BookShelfTileController instance!");
+		if (mainController == null) {
+			throw new NullPointerException(
+					"mainController cannot be set to null while creating a BookShelfTileController instance!");
 		}
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
@@ -62,10 +66,18 @@ public class BookshelfTileController implements MouseListener {
 			}
 		}
 
+		// When the player has inserted all three tiles in the bookshelf, check if a
+		// goal is satisfied
 		if (selectedTiles.size() == 0) {
 			checkCommonObjectives(currentPlayer);
 		}
 
+		if(!commonGameArea.getGameEndTile().hasBeenAwarded() && currentPlayer.bookshelf.isFull()) {
+			commonGameArea.getGameEndTile().award(currentPlayer);
+			mainController.updatePlayerGameEndTileLabel(currentPlayer);
+			commonGameAreaFrame.getEndOfGameTile().setVisible(false);
+		}
+		
 		mainController.updateBookshelfLabel();
 	}
 
@@ -118,10 +130,10 @@ public class BookshelfTileController implements MouseListener {
 	private void checkCommonObjectives(Player currentPlayer) {
 		CommonObjectiveCard card1 = commonGameArea.getCard1();
 		CommonObjectiveCard card2 = commonGameArea.getCard2();
-		
+
 		boolean card1Satisfied = false;
 		boolean card2Satisfied = false;
-		
+
 		// If the player has already been awarded a point tile from this card, we don't
 		// have to check again the card's goal condition
 		if (!currentPlayer.hasCompletedCommonGoal1()) {
@@ -133,19 +145,21 @@ public class BookshelfTileController implements MouseListener {
 		}
 
 		if (card1Satisfied) {
-			System.out.println("BookshelfTileController.java " +currentPlayer.getName()+ " has completed goal 1!");
+			System.out.println("BookshelfTileController.java " + currentPlayer.getName() + " has completed goal 1!");
 			card1.award(currentPlayer);
 			mainController.updatePointsText(currentPlayer);
 			mainController.updatePlayerPointTile1Label(currentPlayer);
-			mainController.updateBoardPointTileLabel(card1.getPointTiles().lastElement(), commonGameAreaFrame.getCard1PointTile());
+			mainController.updateBoardPointTileLabel(card1.getPointTiles().lastElement(),
+					commonGameAreaFrame.getCard1PointTile());
 		}
 
 		if (card2Satisfied) {
-			System.out.println("BookshelfTileController.java " +currentPlayer.getName()+ " has completed goal 2!");
+			System.out.println("BookshelfTileController.java " + currentPlayer.getName() + " has completed goal 2!");
 			card2.award(currentPlayer);
 			mainController.updatePointsText(currentPlayer);
 			mainController.updatePlayerPointTile2Label(currentPlayer);
-			mainController.updateBoardPointTileLabel(card2.getPointTiles().lastElement(), commonGameAreaFrame.getCard2PointTile());
+			mainController.updateBoardPointTileLabel(card2.getPointTiles().lastElement(),
+					commonGameAreaFrame.getCard2PointTile());
 		}
 	}
 }
