@@ -12,7 +12,6 @@ import model.commongamearea.BoardTile;
 import model.personalgamearea.IllegalActionException;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
-import view.PersonalGameAreaFrame;
 
 public class NextPlayerButtonController implements MouseListener {
 

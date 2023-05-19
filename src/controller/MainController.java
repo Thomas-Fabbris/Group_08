@@ -166,11 +166,15 @@ public class MainController {
 		updatePlayerNameText(player);
 		updatePointsText(player);
 		updateBookshelfLabel(player.bookshelf);
-		updatePlayerPointTile1Label(player);
-		updatePlayerPointTile2Label(player);
+//		updatePlayerPointTile1Label(player);
+//		updatePlayerPointTile2Label(player);
 		updatePersonalObjectiveCardLabel(player.getObjectiveCard());
 		updatePlayerGameEndTileLabel(player);
 		personalGameAreaFrame.getChair().setVisible(player.hasChair());
+		
+		for (int i = 0; i < commonGameArea.getCommonObjectiveCards().length; i++) {
+			updatePlayerPointTileLabel(player, i);
+		}
 	}
 
 	public Player getCurrentPlayer() {
@@ -186,35 +190,49 @@ public class MainController {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyGameEndIcon());
 		}
 	}
-
+	
 	/**
-	 * updates the point tile to reflect the player's point tile
+	 * updates the point tile's label to reflect the state of the player's point tile
 	 */
-	public void updatePlayerPointTile1Label(Player player) {
-		JLabel tileLabel = personalGameAreaFrame.getPointTile1();
-
-		// If the player has not completed this goal, don't show the point tile
-		if (player.getPointTile(1) == null) {
+	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
+		JLabel tileLabel = personalGameAreaFrame.getPointTile(pointTileId);
+		
+		if(player.getPointTile(pointTileId) == null) {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
-			tileLabel.setVisible(true);
-			updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
+//			tileLabel.setVisible(true);
+			updatePlayerPointTileLabel(player.getPointTile(pointTileId), tileLabel);
 		}
 	}
 
 	/**
 	 * updates the point tile to reflect the player's point tile
 	 */
-	public void updatePlayerPointTile2Label(Player player) {
-		JLabel tileLabel = personalGameAreaFrame.getPointTile2();
+//	public void updatePlayerPointTile1Label(Player player) {
+//		JLabel tileLabel = personalGameAreaFrame.getPointTile1();
+//
+//		// If the player has not completed this goal, don't show the point tile
+//		if (player.getPointTile(1) == null) {
+//			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
+//		} else {
+//			tileLabel.setVisible(true);
+//			updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
+//		}
+//	}
 
-		if (player.getPointTile(2) == null) {
-			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
-		} else {
-			tileLabel.setVisible(true);
-			updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
-		}
-	}
+	/**
+	 * updates the point tile to reflect the player's point tile
+	 */
+//	public void updatePlayerPointTile2Label(Player player) {
+//		JLabel tileLabel = personalGameAreaFrame.getPointTile2();
+//
+//		if (player.getPointTile(2) == null) {
+//			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
+//		} else {
+//			tileLabel.setVisible(true);
+//			updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
+//		}
+//	}
 
 	private void assignBookshelfTiles() {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
@@ -356,11 +374,12 @@ public class MainController {
 	 * Updates each common objective card's point tile
 	 */
 	private void assignPointTiles() {
-		CommonObjectiveCard card1 = commonGameArea.getCard1();
-		CommonObjectiveCard card2 = commonGameArea.getCard2();
-
-		updateBoardPointTileLabel(card1.getPointTiles().lastElement(), commonGameAreaFrame.getCard1PointTile());
-		updateBoardPointTileLabel(card2.getPointTiles().lastElement(), commonGameAreaFrame.getCard2PointTile());
+		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
+		
+		 //TODO add lastPointTile() method
+		for (int i = 0; i < cards.length; i++) {
+			updateBoardPointTileLabel(cards[i].getPointTiles().lastElement(), commonGameAreaFrame.getPointTile(i));
+		}
 	}
 
 	/**
@@ -411,19 +430,13 @@ public class MainController {
 	 */
 	private void assignCommonObjectiveCards() {
 
-		CommonObjectiveCard card1 = commonGameArea.getCard1();
-		CommonObjectiveCard card2 = commonGameArea.getCard2();
-
-		JLabel card1Label = commonGameAreaFrame.getCard1Label();
-		JLabel card2Label = commonGameAreaFrame.getCard2Label();
-
-		String path = "Assets/Carte_Obiettivo_Comune/Carta_X.png".replace("X", Integer.toString(card1.getId()));
-		ImageIcon icon = ImageUtils.loadImageAsIcon(card1Label.getWidth(), card1Label.getHeight(), path);
-		card1Label.setIcon(icon);
-
-		path = "Assets/Carte_Obiettivo_Comune/Carta_X.png".replace("X", Integer.toString(card2.getId()));
-		icon = ImageUtils.loadImageAsIcon(card1Label.getWidth(), card1Label.getHeight(), path);
-		card2Label.setIcon(icon);
+		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
+		JLabel label = null;
+ 		
+		for (int i = 0; i < cards.length; i++) {
+			label = commonGameAreaFrame.getCommonObjectiveCard(i);
+			label.setIcon(ImageUtils.loadImageAsIcon(label.getSize(), "Assets/Carte_Obiettivo_Comune/Carta_" +cards[i].getId()+ ".png"));
+		}
 	}
 
 	/**

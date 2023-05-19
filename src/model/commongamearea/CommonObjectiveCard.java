@@ -12,12 +12,11 @@ public class CommonObjectiveCard {
 	public static int MAX_CARD_ID = 12;
 	private Stack<PointTile> pointTiles = new Stack<>();
 	
-	public CommonObjectiveCard(int card_id, int numberOfPlayers) {
-		this.cardId = card_id;
+	public CommonObjectiveCard(int cardId, int numberOfPlayers) {
+		this.cardId = cardId;
 //		this.cardId = 12; //debug
 		
 		initRelatedCommonGoal();
-		
 		initPointsList(numberOfPlayers);
 	}
 	
@@ -125,6 +124,19 @@ public class CommonObjectiveCard {
 
 	public Stack<PointTile> getPointTiles() {
 		return pointTiles;
+	}
+	
+	/**
+	 * Returns pointTiles.lastElement() if the stack is not empty, else it returns null
+	 * @return
+	 */
+	public PointTile getLastPointTile() {
+		System.out.println(pointTiles.size()); //TODO remove this line
+		if(pointTiles.size() > 0) {
+			return pointTiles.firstElement();
+		} else {
+			return null;
+		}
 	}
 
 	/**

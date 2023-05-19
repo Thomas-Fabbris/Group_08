@@ -32,8 +32,7 @@ public class PersonalGameAreaFrame extends JFrame {
 	private JLabel nextPlayerButton;
 	private BookshelfLabel bookshelfLabel;
 	private JLabel personalObjectiveCardLabel;
-	private JLabel pointTile1;
-	private JLabel pointTile2;
+	private JLabel pointTiles[];
 	private JLabel endOfGameTile;
 	private JLabel points;
 	private JLabel chair;
@@ -92,18 +91,20 @@ public class PersonalGameAreaFrame extends JFrame {
 		tiles.setOpaque(false);
 		tiles.setLayout(new BoxLayout(tiles, BoxLayout.X_AXIS));
 		
-		pointTile1 = new JLabel();
-		pointTile2 = new JLabel();
+		this.pointTiles = new JLabel[2];
+		
+		pointTiles[0] = new JLabel();
+		pointTiles[1] = new JLabel();
 		endOfGameTile = new JLabel();
 		chair = new JLabel();
 		points = new JLabel();
 		
 		chair.setSize(tileLength, tileLength);
 
-		pointTile1.setSize(tileSize);
-		pointTile2.setSize(tileSize);
-		pointTile1.setIcon(this.emptyPointTileIcon);
-		pointTile2.setIcon(this.emptyPointTileIcon);
+		pointTiles[0].setSize(tileSize);
+		pointTiles[1].setSize(tileSize);
+		pointTiles[0].setIcon(this.emptyPointTileIcon);
+		pointTiles[1].setIcon(this.emptyPointTileIcon);
 		endOfGameTile.setSize(tileLength, tileLength);
 		points.setForeground(Color.white);
 		points.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
@@ -117,9 +118,9 @@ public class PersonalGameAreaFrame extends JFrame {
 		
 		tiles.add(chair);
 		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
-		tiles.add(pointTile1);
+		tiles.add(pointTiles[0]);
 		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
-		tiles.add(pointTile2);
+		tiles.add(pointTiles[1]);
 		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
 		tiles.add(endOfGameTile);
 		tiles.add(Box.createRigidArea(new Dimension(tileLength/6, tileLength)));
@@ -173,12 +174,13 @@ public class PersonalGameAreaFrame extends JFrame {
 		return personalObjectiveCardLabel;
 	}
 
-	public JLabel getPointTile1() {
-		return pointTile1;
-	}
-
-	public JLabel getPointTile2() {
-		return pointTile2;
+	/**
+	 * Returns the label of the associated point tile taken from the card with the specified id (either 0 or 1).
+	 * @param id id of the common objective card with this point tile, can be either 0 or 1.
+	 * @return
+	 */
+	public JLabel getPointTile(int id) {
+		return pointTiles[id];
 	}
 
 	public JLabel getPoints() {

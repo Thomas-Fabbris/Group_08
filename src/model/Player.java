@@ -23,8 +23,7 @@ public class Player {
 	private int points = 0;
 	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
-	private boolean hasCompletedCommonGoal1 = false;
-	private boolean hasCompletedCommonGoal2 = false;
+	private boolean[] completedCommonGoals;
 	
 	private int previousObjectiveCardMatches = 0;
 	private int previousObjetiveCardPoints = 0;
@@ -35,8 +34,7 @@ public class Player {
 	private List<BoardTile> selectedTiles; // List of tiles selected from the board (can have max 3 tiles at a time)
 	public final PersonalObjectiveCard objectiveCard;
 	public final Bookshelf bookshelf;
-	private PointTile pointTile1;
-	private PointTile pointTile2;
+	private PointTile[] pointTiles;
 
 	/**
 	 * Il costruttore definisce una nuova istanza della classe {@code Player}
@@ -54,6 +52,8 @@ public class Player {
 		}
 		this.name = name;
 		this.id = idGenerator.getNewId();
+		this.completedCommonGoals = new boolean[] {false, false};
+		this.pointTiles = new PointTile[2];
 		this.selectedTiles = new LinkedList<BoardTile>();
 		objectiveCard = new PersonalObjectiveCard(idGenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
@@ -74,23 +74,24 @@ public class Player {
 		if(tile == null) {
 			throw new NullPointerException("tile cannot be set to null while calling Player:awardPointTile() method!");
 		}
+
 		// If both spots are empty, then fill pointTile1
-		if (pointTile1 == null && pointTile2 == null) {
-			pointTile1 = tile;
-			this.hasCompletedCommonGoal1 = true;
+		if (pointTiles[0] == null && pointTiles[1] == null) {
+			pointTiles[0] = tile;
+			this.completedCommonGoals[0] = true;
 			this.addPoints(tile.getPoints());
 			return;
 		}
 
 		// If pointTile1 already has a tile from this card, then don't award anything
-		if (pointTile1.getCardId() == tile.getCardId())
+		if (pointTiles[0].getCardId() == tile.getCardId())
 			return;
 
 		// If pointTile2 is empty and pointTile1 doesn't come from the same card, then
 		// fill pointTile2
-		if (pointTile2 == null && pointTile1.getCardId() != tile.getCardId()) {
-			pointTile2 = tile;
-			this.hasCompletedCommonGoal2 = true;
+		if (pointTiles[1] == null && pointTiles[0].getCardId() != tile.getCardId()) {
+			pointTiles[1] = tile;
+			this.completedCommonGoals[1] = true;
 			this.addPoints(tile.getPoints());
 		}
 	}
@@ -99,17 +100,12 @@ public class Player {
 	 * Il metodo {@code getPointTile} restituisce la {@link PointTile PointTile} da
 	 * ritornare.
 	 * 
-	 * @param tileNumber, numero della {@code PointTile PointTile} da ritornare (1
-	 *                    oppure 2)
+	 * @param tileNumber, numero della {@code PointTile PointTile} da ritornare (0
+	 *                    oppure 1)
 	 * @return pointTile, la {@link PointTile PointTile} richiesta
 	 */
 	public PointTile getPointTile(int tileNumber) {
-		if (tileNumber == 1)
-			return this.pointTile1;
-		if (tileNumber == 2)
-			return this.pointTile2;
-		else
-			throw new IllegalArgumentException(tileNumber + " is not a valid tile number! Choose tile 1 or 2");
+		return pointTiles[tileNumber];
 	}
 
 	/**
@@ -201,28 +197,6 @@ public class Player {
 		this.hasChair = hasChair;
 	}
 
-	public PointTile getPointTile1() {
-		return pointTile1;
-	}
-
-	public void setPointTile1(PointTile pointTile1) {
-		if(pointTile1 == null) {
-			throw new NullPointerException("pointTile1 cannot be set to null while calling Player:setPointTile1() method!");
-		}
-		this.pointTile1 = pointTile1;
-	}
-
-	public PointTile getPointTile2() {
-		return pointTile2;
-	}
-
-	public void setPointTile2(PointTile pointTile2) {
-		if(pointTile2 == null) {
-			throw new NullPointerException("pointTile2 cannot be set to null while calling Player:setPointTile2() method!");
-		}
-		this.pointTile2 = pointTile2;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -231,20 +205,22 @@ public class Player {
 		return bookshelf;
 	}
 
-	public boolean hasCompletedCommonGoal1() {
-		return hasCompletedCommonGoal1;
+	/**
+	 * Returns whether the player has completed the specified common goal (0 or 1)
+	 * @param id - 0 or 1
+	 * @return
+	 */
+	public boolean hasCompletedCommonGoal(int id) {
+		return completedCommonGoals[id];
 	}
-
-	public void setHasCompletedCommonGoal1(boolean hasCompletedCommonGoal1) {
-		this.hasCompletedCommonGoal1 = hasCompletedCommonGoal1;
-	}
-
-	public boolean hasCompletedCommonGoal2() {
-		return hasCompletedCommonGoal2;
-	}
-
-	public void setHasCompletedCommonGoal2(boolean hasCompletedCommonGoal2) {
-		this.hasCompletedCommonGoal2 = hasCompletedCommonGoal2;
+	
+	/**
+	 * Set the flag to true or false for the specified common goal (0 or 1)
+	 * @param id - 0 or 1
+	 * @return
+	 */
+	public void setCompletedCommonGoal(int id, boolean completed) {
+		completedCommonGoals[id] = completed;
 	}
 
 	public List<BoardTile> getSelectedTiles() {

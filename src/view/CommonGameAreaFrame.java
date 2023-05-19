@@ -22,12 +22,10 @@ public class CommonGameAreaFrame extends JFrame {
 	private JLabel endOfGameTile;
 
 	// Common objective cards
-	private JLabel card1;
-	private JLabel card2;
+	private JLabel[] commonObjectiveCards;
 
 	// Tiles that, on the real board-game, would go on the common objective cards
-	private JLabel card1PointTile;
-	private JLabel card2PointTile;
+	private JLabel[] pointTiles;
 
 	// Elements to display the tiles selected by the player
 	private JPanel selectedTiles;
@@ -63,20 +61,24 @@ public class CommonGameAreaFrame extends JFrame {
 		this.boardLabel.add(endOfGameTile);
 
 		// Initialise both cards
-		this.card1 = new JLabel();
-		this.card2 = new JLabel();
+		this.commonObjectiveCards = new JLabel[2];
+		
+		this.commonObjectiveCards[0] = new JLabel();
+		this.commonObjectiveCards[1] = new JLabel();
+		
+		this.commonObjectiveCards[0].setSize(this.getHeight() * 3 / 8, this.getHeight() / 4);
+		this.commonObjectiveCards[1].setSize(this.getHeight() * 3 / 8, this.getHeight() / 4);
 
-		this.card1.setSize(this.getHeight() * 3 / 8, this.getHeight() / 4);
-		this.card2.setSize(this.getHeight() * 3 / 8, this.getHeight() / 4);
-
-		this.card1PointTile = new JLabel();
-		this.card2PointTile = new JLabel();
-
-		this.card1PointTile.setBounds((int) (card1.getWidth() / 1.7), (int) (card1.getHeight() / 3.55),
-				(int) (card1.getWidth() / 3.55), (int) (card1.getWidth() / 3.55));
-
-		this.card2PointTile.setBounds((int) (card2.getWidth() / 1.7), (int) (card2.getHeight() / 3.55),
-				(int) (card2.getWidth() / 3.55), (int) (card2.getWidth() / 3.55));
+		this.pointTiles = new JLabel[2];
+		
+		pointTiles[0] = new JLabel();
+		pointTiles[1] = new JLabel();
+		
+		pointTiles[0].setBounds((int) (commonObjectiveCards[0].getWidth() / 1.7), (int) (commonObjectiveCards[0].getHeight() / 3.55),
+				(int) (commonObjectiveCards[0].getWidth() / 3.55), (int) (commonObjectiveCards[0].getWidth() / 3.55));
+		
+		pointTiles[1].setBounds((int) (this.commonObjectiveCards[1].getWidth() / 1.7), (int) (this.commonObjectiveCards[1].getHeight() / 3.55),
+				(int) (this.commonObjectiveCards[1].getWidth() / 3.55), (int) (this.commonObjectiveCards[1].getWidth() / 3.55));
 
 		// Initialise selected tiles elements
 		this.selectedTiles = new JPanel();
@@ -98,10 +100,10 @@ public class CommonGameAreaFrame extends JFrame {
 
 		this.add(boardLabel);
 		this.add(selectedTiles);
-		this.card1.add(card1PointTile);
-		this.card2.add(card2PointTile);
-		this.add(card1);
-		this.add(card2);
+		this.commonObjectiveCards[0].add(pointTiles[0]);
+		this.commonObjectiveCards[1].add(pointTiles[1]);
+		this.add(commonObjectiveCards[0]);
+		this.add(commonObjectiveCards[1]);
 	}
 
 	private void Init() {
@@ -115,13 +117,9 @@ public class CommonGameAreaFrame extends JFrame {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./Assets/Icon.png"));
 		
 	}
-
-	public JLabel getCard1PointTile() {
-		return card1PointTile;
-	}
-
-	public JLabel getCard2PointTile() {
-		return card2PointTile;
+	
+	public JLabel getPointTile(int index) {
+		return pointTiles[index];
 	}
 
 	public BoardTileLabel[][] getBoardTiles() {
@@ -131,13 +129,14 @@ public class CommonGameAreaFrame extends JFrame {
 	public JLabel getBoardLabel() {
 		return this.boardLabel;
 	}
-
-	public JLabel getCard1Label() {
-		return this.card1;
-	}
-
-	public JLabel getCard2Label() {
-		return this.card2;
+	
+	/**
+	 * Returns the associated label to the specified common objective card (either 0 or 1)
+	 * @param index 0 or 1
+	 * @return
+	 */
+	public JLabel getCommonObjectiveCard(int index) {
+		return commonObjectiveCards[index];
 	}
 
 	public JPanel getSelectedTiles() {

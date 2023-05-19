@@ -139,38 +139,21 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	private void checkCommonObjectives(Player player) {
-		CommonObjectiveCard card1 = commonGameArea.getCard1();
-		CommonObjectiveCard card2 = commonGameArea.getCard2();
+		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
 
-		boolean card1Satisfied = false;
-		boolean card2Satisfied = false;
+		// The first condition checks whether the player already has a point tile from
+		// this card, the second condition checks if if card's goal is satisfied
 
-		// If the player has already been awarded a point tile from this card, we don't
-		// have to check again the card's goal condition
-		if (!player.hasCompletedCommonGoal1()) {
-			card1Satisfied = card1.getRelatedCommonGoal().checkCommonGoal(player.bookshelf);
-		}
-
-		if (!player.hasCompletedCommonGoal2()) {
-			card2Satisfied = card2.getRelatedCommonGoal().checkCommonGoal(player.bookshelf);
-		}
-
-		if (card1Satisfied) {
-			System.out.println("BookshelfTileController.java " + player.getName() + " has completed goal 1!");
-			card1.award(player);
-			mainController.updatePointsText(player);
-			mainController.updatePlayerPointTile1Label(player);
-			mainController.updateBoardPointTileLabel(card1.getPointTiles().lastElement(),
-					commonGameAreaFrame.getCard1PointTile());
-		}
-
-		if (card2Satisfied) {
-			System.out.println("BookshelfTileController.java " + player.getName() + " has completed goal 2!");
-			card2.award(player);
-			mainController.updatePointsText(player);
-			mainController.updatePlayerPointTile2Label(player);
-			mainController.updateBoardPointTileLabel(card2.getPointTiles().lastElement(),
-					commonGameAreaFrame.getCard2PointTile());
+		for (int i = 0; i < cards.length; i++) {
+			if (!player.hasCompletedCommonGoal(i)
+					&& cards[i].getRelatedCommonGoal().checkCommonGoal(player.bookshelf)) {
+				cards[i].award(player);
+				mainController.updatePointsText(player);
+				mainController.updatePlayerPointTileLabel(player, i);
+				System.out.println(cards[i].getLastPointTile()); //TODO remove this line
+				mainController.updateBoardPointTileLabel(cards[i].getLastPointTile(),
+						commonGameAreaFrame.getPointTile(i));
+			}
 		}
 	}
 

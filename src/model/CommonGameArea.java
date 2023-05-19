@@ -8,8 +8,7 @@ import model.shared.IdGenerator;
 public class CommonGameArea {
 
 	private Board board;
-	private CommonObjectiveCard card1;
-	private CommonObjectiveCard card2;
+	private CommonObjectiveCard[] commonObjectiveCards;
 	private GameEndTile gameEndTile;
 	private boolean[][] currentBlockedTiles;
 
@@ -19,20 +18,19 @@ public class CommonGameArea {
 		currentBlockedTiles = board.getCurrentBlockedTiles();
 
 		IdGenerator idGenerator = new IdGenerator();
-		this.card1 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers);
-		this.card2 = new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers);
+		
+		this.commonObjectiveCards = new CommonObjectiveCard[] {
+				new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers),
+				new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers)
+		};
 	}
 
 	public Board getBoard() {
 		return this.board;
 	}
-
-	public CommonObjectiveCard getCard1() {
-		return this.card1;
-	}
-
-	public CommonObjectiveCard getCard2() {
-		return this.card2;
+	
+	public CommonObjectiveCard[] getCommonObjectiveCards() {
+		return commonObjectiveCards;
 	}
 
 	public boolean[][] getCurrentBlockedTiles() {
