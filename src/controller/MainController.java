@@ -138,9 +138,6 @@ public class MainController {
 
 		
 		updateBookshelfLabel();
-
-		//TODO remove
-		System.out.println("Matches: " + players[0].getObjectiveCard().countSatisfiedGoals(players[0].bookshelf));
 	}
 
 	/**

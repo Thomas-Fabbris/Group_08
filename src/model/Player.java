@@ -20,13 +20,16 @@ public class Player {
 
 	private String name;
 	public final int id;
-	private int points;
+	private int points = 0;
 	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
 	private boolean hasCompletedCommonGoal1 = false;
 	private boolean hasCompletedCommonGoal2 = false;
-
-	private int selectedColumn = -1; // Identifies which the column on the bookshelf the player is adding the tiles
+	
+	private int previousObjectiveCardMatches = 0;
+	private int previousObjetiveCardPoints = 0;
+	
+	private int selectedColumn = -1; // Identifies which column on the bookshelf the player is adding the tiles
 										// to (value -1 means no column has been decided yet)
 
 	private List<BoardTile> selectedTiles; // List of tiles selected from the board (can have max 3 tiles at a time)
@@ -51,7 +54,6 @@ public class Player {
 		}
 		this.name = name;
 		this.id = idGenerator.getNewId();
-		this.points = 0;
 		this.selectedTiles = new LinkedList<BoardTile>();
 		objectiveCard = new PersonalObjectiveCard(idGenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
@@ -293,4 +295,22 @@ public class Player {
 	public boolean hasSelectedColumn() {
 		return this.selectedColumn != -1;
 	}
+
+	public int getPreviousObjectiveCardMatches() {
+		return previousObjectiveCardMatches;
+	}
+
+	public void setPreviousObjectiveCardMatches(int matchesOnPersonalObjectiveCard) {
+		this.previousObjectiveCardMatches = matchesOnPersonalObjectiveCard;
+	}
+
+	public int getPreviousObjetiveCardPoints() {
+		return previousObjetiveCardPoints;
+	}
+
+	public void setPreviousObjetiveCardPoints(int previousObjetiveCardPoints) {
+		this.previousObjetiveCardPoints = previousObjetiveCardPoints;
+	}
+	
+	
 }

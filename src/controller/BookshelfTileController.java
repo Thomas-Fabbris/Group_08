@@ -66,11 +66,13 @@ public class BookshelfTileController implements MouseListener {
 			}
 		}
 
-		// When the player has inserted all the selected tiles in the bookshelf, check if a
+		// When the player has inserted all the selected tiles in the bookshelf, check
+		// if a
 		// goal is satisfied
 		if (selectedTiles.size() == 0) {
 			try {
 				checkCommonObjectives(currentPlayer);
+				checkPersonalObjective(currentPlayer);
 			} catch (IllegalArgumentException e2) {
 				e2.printStackTrace();
 			} catch (Exception e3) {
@@ -136,7 +138,7 @@ public class BookshelfTileController implements MouseListener {
 		mainController.updateSelectedTileLabels();
 	}
 
-	private void checkCommonObjectives(Player currentPlayer) {
+	private void checkCommonObjectives(Player player) {
 		CommonObjectiveCard card1 = commonGameArea.getCard1();
 		CommonObjectiveCard card2 = commonGameArea.getCard2();
 
@@ -145,30 +147,88 @@ public class BookshelfTileController implements MouseListener {
 
 		// If the player has already been awarded a point tile from this card, we don't
 		// have to check again the card's goal condition
-		if (!currentPlayer.hasCompletedCommonGoal1()) {
-			card1Satisfied = card1.getRelatedCommonGoal().checkCommonGoal(currentPlayer.bookshelf);
+		if (!player.hasCompletedCommonGoal1()) {
+			card1Satisfied = card1.getRelatedCommonGoal().checkCommonGoal(player.bookshelf);
 		}
 
-		if (!currentPlayer.hasCompletedCommonGoal2()) {
-			card2Satisfied = card2.getRelatedCommonGoal().checkCommonGoal(currentPlayer.bookshelf);
+		if (!player.hasCompletedCommonGoal2()) {
+			card2Satisfied = card2.getRelatedCommonGoal().checkCommonGoal(player.bookshelf);
 		}
 
 		if (card1Satisfied) {
-			System.out.println("BookshelfTileController.java " + currentPlayer.getName() + " has completed goal 1!");
-			card1.award(currentPlayer);
-			mainController.updatePointsText(currentPlayer);
-			mainController.updatePlayerPointTile1Label(currentPlayer);
+			System.out.println("BookshelfTileController.java " + player.getName() + " has completed goal 1!");
+			card1.award(player);
+			mainController.updatePointsText(player);
+			mainController.updatePlayerPointTile1Label(player);
 			mainController.updateBoardPointTileLabel(card1.getPointTiles().lastElement(),
 					commonGameAreaFrame.getCard1PointTile());
 		}
 
 		if (card2Satisfied) {
-			System.out.println("BookshelfTileController.java " + currentPlayer.getName() + " has completed goal 2!");
-			card2.award(currentPlayer);
-			mainController.updatePointsText(currentPlayer);
-			mainController.updatePlayerPointTile2Label(currentPlayer);
+			System.out.println("BookshelfTileController.java " + player.getName() + " has completed goal 2!");
+			card2.award(player);
+			mainController.updatePointsText(player);
+			mainController.updatePlayerPointTile2Label(player);
 			mainController.updateBoardPointTileLabel(card2.getPointTiles().lastElement(),
 					commonGameAreaFrame.getCard2PointTile());
 		}
+	}
+
+	private void checkPersonalObjective(Player player) {
+		int matches = player.getObjectiveCard().countSatisfiedGoals(player.getBookshelf());
+
+		// We check how many tiles in the bookshelf match the personal objective card
+
+		// If the player has 0 matches, award the first match; if the player has 1
+		// match, award the second match and so on
+
+		switch (matches) {
+		case 1:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(1);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		case 2:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(1);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		case 3:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(2);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		case 4:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(2);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		case 5:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(3);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		case 6:
+			if (player.getPreviousObjectiveCardMatches() < matches) {
+				player.addPoints(3);
+				player.setPreviousObjectiveCardMatches(matches);
+			}
+			break;
+
+		default:
+			return;
+		}
+
+		mainController.updatePointsText(player);
 	}
 }

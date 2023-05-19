@@ -116,9 +116,11 @@ public class PersonalObjectiveCard {
 		int goalsCount = 0;
 
 		for (BookshelfTileGoal tileGoal : tileGoals) {
-			System.out.println("Row: "+tileGoal.row+ " col: "+tileGoal.column+" type:"+tileGoal.tileType);
+			//TODO: remove comments
+//			System.out.println("Row: "+tileGoal.row+ " col: "+tileGoal.column+" type:"+tileGoal.tileType);
 			if (bookshelf.tiles[tileGoal.row][tileGoal.column].getType() == tileGoal.tileType) {
-				System.out.println("Matched: " + tileGoal.tileType);
+//				System.out.println("Matched: " + tileGoal.tileType);
+//				System.out.println("------------");
 				goalsCount++;
 			}
 		}
