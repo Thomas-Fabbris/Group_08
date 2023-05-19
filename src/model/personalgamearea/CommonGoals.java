@@ -102,6 +102,7 @@ public enum CommonGoals {
 
 				TileType[] current_col = pshelf.getColumn(col);
 				int nulls = Math.min(1, Count_NULL(current_col));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_col));
 				if (set.size() - nulls <= 3) {
 
@@ -377,6 +378,7 @@ public enum CommonGoals {
 
 				TileType[] current_row = pshelf.getRow(row);
 				int nulls = Math.min(1, Count_NULL(current_row));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls == 5)
 				{
@@ -406,6 +408,7 @@ public enum CommonGoals {
 
 				TileType[] current_row = pshelf.getRow(row);
 				int nulls = Math.min(1, Count_NULL(current_row));
+				if (nulls > 0) continue;
 				Set<TileType> set = new HashSet<>(Arrays.asList(current_row));
 				if (set.size() - nulls <= 3)
 				{
