@@ -48,7 +48,7 @@ public class GameEndFrame extends JFrame {
 		winnerName.setFont(winnerNameFont);
 
 		this.winnerText = new JLabel(
-				"<html>is the <font color='#ffcc00'>winnner</font><font color='#ffffff'>!</font></html>",
+				"<html>is the <font color='#ffcc00'>winner</font><font color='#ffffff'>!</font></html>",
 				JLabel.CENTER);
 		winnerText.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		winnerText.setForeground(Color.WHITE);
