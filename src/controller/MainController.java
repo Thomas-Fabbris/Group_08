@@ -115,26 +115,26 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 1);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 1);
 		
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 2);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 2);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 2);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 2);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 2);	
-		
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
-		
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 2);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 2);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 2);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 2);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 2);
+//
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 3);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 3);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 3);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 3);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 3);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
+//
+////		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
+//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
 
 		
 		updateBookshelfLabel();
