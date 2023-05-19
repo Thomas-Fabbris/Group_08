@@ -279,8 +279,8 @@ public enum CommonGoals {
 
 				int count = 0;
 
-				for (int row = 0; row <= Bookshelf.ROWS; row++) {
-					for (int col = 0; col <= Bookshelf.COLUMNS; col++) {
+				for (int row = 0; row <= 5; row++) {
+					for (int col = 0; col <= 4; col++) {
 						if (pshelf.getTile(row, col).getType() == type) {
 							count++;
 							if (count == 8) {
@@ -350,7 +350,7 @@ public enum CommonGoals {
 						continue;
 
 					boolean t1 = checktile == pshelf.getTile(1 + dshift, 1 + (2 * inverse)).getType();
-					boolean t2 = checktile == pshelf.getTile(2 + dshift, 2).getType();
+					boolean t2 = checktile == pshelf.getTile(2 + dshift, 2                ).getType();
 					boolean t3 = checktile == pshelf.getTile(3 + dshift, 3 - (2 * inverse)).getType();
 					boolean t4 = checktile == pshelf.getTile(4 + dshift, 4 - (4 * inverse)).getType();
 
