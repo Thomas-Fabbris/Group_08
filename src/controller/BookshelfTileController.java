@@ -66,7 +66,7 @@ public class BookshelfTileController implements MouseListener {
 			}
 		}
 
-		// When the player has inserted all three tiles in the bookshelf, check if a
+		// When the player has inserted all the selected tiles in the bookshelf, check if a
 		// goal is satisfied
 		if (selectedTiles.size() == 0) {
 			try {
@@ -81,6 +81,7 @@ public class BookshelfTileController implements MouseListener {
 		// Check to decide if the current player should get the GameEndTile
 		if (!commonGameArea.getGameEndTile().hasBeenAwarded() && currentPlayer.bookshelf.isFull()) {
 			commonGameArea.getGameEndTile().award(currentPlayer);
+			mainController.updatePointsText(currentPlayer);
 			mainController.updatePlayerGameEndTileLabel(currentPlayer);
 			commonGameAreaFrame.getEndOfGameTile().setVisible(false);
 			mainController.setGameState(GameState.LAST_TURN);

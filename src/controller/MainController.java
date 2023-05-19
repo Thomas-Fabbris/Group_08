@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
 import javax.swing.ImageIcon;
@@ -21,6 +23,7 @@ import model.personalgamearea.CommonGoals;
 import model.personalgamearea.PathFind;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
+import model.shared.PlayerScoreComparator;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
@@ -292,6 +295,25 @@ public class MainController {
 	public GameEndFrame displayGameEndScreen() {
 		personalGameAreaFrame.dispose();
 		GameEndFrame gameEndScreen = new GameEndFrame();
+		
+		// Sort the array based on the players' score
+		Arrays.sort(players, new PlayerScoreComparator());
+		
+		List<JLabel> playerNames = gameEndScreen.getPlayerNames();
+		
+		// Display on the leaderbord the name of each player in order
+		for (int i = 0; i < playerNames.size(); i++) {
+			try {
+				playerNames.get(i).setText(players[i].getName() +" - Points: "+ players[i].getPoints());
+			} catch (Exception e) {
+				playerNames.get(i).setText(null);
+			}
+		}
+		
+		// the array is sorted: players[0] is the winner
+		gameEndScreen.getWinnerName().setText(players[0].getName());
+		
+		gameEndScreen.setVisible(true);
 		return gameEndScreen;
 	}
 

@@ -104,14 +104,13 @@ public class NextPlayerButtonController implements MouseListener {
 
 		// Check to decide if the game ends when the nextPlayerButton is pressed
 		if (mainController.getGameState() == GameState.LAST_TURN && currentPlayerId == mainController.getLastPlayer().getId()) {
-			//TODO: end game, display JFrame with leaderboards
 			System.out.println("NextPlayerButtonController.java Game ended!");
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
 	}
 
-	// Returns to the board the selected tile that have not been moved to the
+	// Returns to the board selected tiles that have not been moved to the
 	// bookshelf
 	private void clearSelectedTiles(List<BoardTile> tiles) {
 		for (BoardTile boardTile : tiles) {

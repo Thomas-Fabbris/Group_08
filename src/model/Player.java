@@ -51,9 +51,13 @@ public class Player {
 		}
 		this.name = name;
 		this.id = idGenerator.getNewId();
+		this.points = 0;
 		this.selectedTiles = new LinkedList<BoardTile>();
 		objectiveCard = new PersonalObjectiveCard(idGenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
+		
+		//TODO this line assigns a random value to this player's points (used for debug, should be remove)
+//		this.points = idGenerator.getNewPersonalObjectiveCardId();
 	}
 
 	/**
