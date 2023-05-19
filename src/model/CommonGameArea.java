@@ -20,8 +20,8 @@ public class CommonGameArea {
 		IdGenerator idGenerator = new IdGenerator();
 		
 		this.commonObjectiveCards = new CommonObjectiveCard[] {
-				new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers),
-				new CommonObjectiveCard(idGenerator.getNewCommonObjectiveCardId(), numberOfPlayers)
+				new CommonObjectiveCard(idGenerator, numberOfPlayers),
+				new CommonObjectiveCard(idGenerator, numberOfPlayers)
 		};
 	}
 

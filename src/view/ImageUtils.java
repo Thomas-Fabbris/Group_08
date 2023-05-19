@@ -35,7 +35,7 @@ public class ImageUtils {
 	 */
 	public static ImageIcon loadImageAsIcon(Dimension size, String imagePath) {
 		if(size == null) {
-			throw new NullPointerException("size cannot be set to null when calling ImageUtils:loadImageAsIcon() method!");
+			throw new NullPointerException("size cannot be set to null when calling ImageUtils.loadImageAsIcon() method!");
 		}
 		ImageIcon icon = new ImageIcon(imagePath);
 		Image tmp_image = icon.getImage();

@@ -200,39 +200,10 @@ public class MainController {
 		if(player.getPointTile(pointTileId) == null) {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
-//			tileLabel.setVisible(true);
+			tileLabel.setVisible(true);
 			updatePlayerPointTileLabel(player.getPointTile(pointTileId), tileLabel);
 		}
 	}
-
-	/**
-	 * updates the point tile to reflect the player's point tile
-	 */
-//	public void updatePlayerPointTile1Label(Player player) {
-//		JLabel tileLabel = personalGameAreaFrame.getPointTile1();
-//
-//		// If the player has not completed this goal, don't show the point tile
-//		if (player.getPointTile(1) == null) {
-//			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
-//		} else {
-//			tileLabel.setVisible(true);
-//			updatePlayerPointTileLabel(player.getPointTile(1), tileLabel);
-//		}
-//	}
-
-	/**
-	 * updates the point tile to reflect the player's point tile
-	 */
-//	public void updatePlayerPointTile2Label(Player player) {
-//		JLabel tileLabel = personalGameAreaFrame.getPointTile2();
-//
-//		if (player.getPointTile(2) == null) {
-//			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
-//		} else {
-//			tileLabel.setVisible(true);
-//			updatePlayerPointTileLabel(player.getPointTile(2), tileLabel);
-//		}
-//	}
 
 	private void assignBookshelfTiles() {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
@@ -375,10 +346,8 @@ public class MainController {
 	 */
 	private void assignPointTiles() {
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
-		
-		 //TODO add lastPointTile() method
 		for (int i = 0; i < cards.length; i++) {
-			updateBoardPointTileLabel(cards[i].getPointTiles().lastElement(), commonGameAreaFrame.getPointTile(i));
+			updateBoardPointTileLabel(cards[i].getLastPointTile(), commonGameAreaFrame.getPointTile(i));
 		}
 	}
 
@@ -387,6 +356,12 @@ public class MainController {
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
+		
+		if(tile == null) {
+			label.setIcon(null);
+			return;
+		}
+		
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" +tile.getPoints()+ "p.jpg", rotation);
 	}
 
@@ -456,7 +431,7 @@ public class MainController {
 		tileLabel.setIcon(icon);
 	}
 
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {		
 		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
 
 		if (iconRotation != 0 && iconRotation != 360)

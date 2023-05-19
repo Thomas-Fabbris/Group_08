@@ -74,25 +74,11 @@ public class Player {
 		if(tile == null) {
 			throw new NullPointerException("tile cannot be set to null while calling Player:awardPointTile() method!");
 		}
-
-		// If both spots are empty, then fill pointTile1
-		if (pointTiles[0] == null && pointTiles[1] == null) {
-			pointTiles[0] = tile;
-			this.completedCommonGoals[0] = true;
-			this.addPoints(tile.getPoints());
-			return;
-		}
-
-		// If pointTile1 already has a tile from this card, then don't award anything
-		if (pointTiles[0].getCardId() == tile.getCardId())
-			return;
-
-		// If pointTile2 is empty and pointTile1 doesn't come from the same card, then
-		// fill pointTile2
-		if (pointTiles[1] == null && pointTiles[0].getCardId() != tile.getCardId()) {
-			pointTiles[1] = tile;
-			this.completedCommonGoals[1] = true;
-			this.addPoints(tile.getPoints());
+		
+		// The player can receive this point tile if the slot with the same Roman number as the card is empty
+		if(pointTiles[tile.getRomanNumber()] == null) {
+			pointTiles[tile.getRomanNumber()] = tile;
+			addPoints(tile.getPoints());
 		}
 	}
 
