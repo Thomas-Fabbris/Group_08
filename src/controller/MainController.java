@@ -32,7 +32,7 @@ import view.personalgamearea.GameEndScreen;
 
 public class MainController {
 
-	public static GameState gameState;
+	private GameState gameState;
 
 	private Player[] players;
 	private Player currentPlayer;
@@ -60,7 +60,8 @@ public class MainController {
 		if(personalGameAreaFrame == null) {
 			throw new NullPointerException("personalGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		MainController.gameState = GameState.RUNNING;
+		
+		setGameState(GameState.RUNNING);
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.personalGameAreaFrame = personalGameAreaFrame;
@@ -418,7 +419,7 @@ public class MainController {
 	private void checkEndOfGame() {
 		if (this.currentPlayer.getBookshelf().isFull()) {
 			this.currentPlayer.setEndOfGameToken(true);
-			MainController.gameState = GameState.ENDED;
+			setGameState(GameState.ENDED);
 			this.setLastPlayer(determineLastPlayer());
 			this.gameEndTile = new GameEndTile(this.commonGameArea.getBoard());
 			this.gameEndTile.award(this.currentPlayer);
@@ -443,7 +444,7 @@ public class MainController {
 			if (!nextPlayer.equals(this.lastPlayer)) {
 				this.gameToken.setCurrentOwner(currentPlayer);
 				setCurrentPlayer(nextPlayer);
-			} else if (MainController.gameState.equals(GameState.ENDED)) {
+			} else if (getGameState().equals(GameState.ENDED)) {
 				computePersonalGoalsPoints();
 				computePointsFromTilesGroup();
 				this.winner = determineWinner();
@@ -610,5 +611,13 @@ public class MainController {
 	 */
 	public PersonalGameAreaFrame getPersonalGameAreaFrame() {
 		return personalGameAreaFrame;
+	}
+
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 }
