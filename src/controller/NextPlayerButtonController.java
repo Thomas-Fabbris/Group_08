@@ -105,6 +105,11 @@ public class NextPlayerButtonController implements MouseListener {
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
+		
+		if(commonGameArea.getBoard().refillCheck()) {
+			System.out.println("Refilling board");
+			mainController.updateAllBoardTileLabels();
+		}
 	}
 
 	// Returns to the board selected tiles that have not been moved to the

@@ -103,11 +103,6 @@ public class MainController {
 		 * Used for debug players[0].bookshelf.fillRandom();
 		 */
 		setCurrentPlayer(players[0]);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
-
 		updateBookshelfLabel();
 	}
 
@@ -345,6 +340,11 @@ public class MainController {
 	 */
 	public void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
+	}
+	
+	public void updateAllBoardTileLabels() {
+		commonGameAreaFrame.getBoardLabel().revalidate();
+		commonGameAreaFrame.getBoardLabel().repaint();;
 	}
 
 	/**
