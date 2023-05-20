@@ -15,14 +15,14 @@ public class CommonObjectiveCard {
 	private Stack<PointTile> pointTiles = new Stack<>();
 
 	public CommonObjectiveCard(IdGenerator idGenerator, int numberOfPlayers) {
-		if (idGenerator == null) {
-			throw new NullPointerException(
-					"idGenerator must not be set to null while creating a CommonObjectiveCard instance!");
+		if(idGenerator == null) {
+			throw new NullPointerException("idGenerator must not be set to null while creating a CommonObjectiveCard instance!");
 		}
+		
 		this.romanNumber = CommonObjectiveCard.ROMAN_NUMBER++;
-
 		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
 //		this.cardId = 11; // debug
+
 
 		initRelatedCommonGoal();
 		initPointsList(numberOfPlayers);
@@ -118,9 +118,9 @@ public class CommonObjectiveCard {
 	}
 
 	/**
-	 * Gives the first available point tile on the card to the specified player
+	 * Give the points displayed on the first available tile to the player
 	 * 
-	 * @param player to give the point tile to
+	 * @param player to give the points to
 	 */
 	public void award(Player player) {
 		// If there are no points left, don't give any
@@ -129,7 +129,8 @@ public class CommonObjectiveCard {
 		}
 
 		// Give points and remove the value of points awarded to the player
-		player.awardPointTile(pointTiles.pop());
+		player.awardPointTile(pointTiles.lastElement());
+		pointTiles.pop();
 	}
 
 	public Stack<PointTile> getPointTiles() {

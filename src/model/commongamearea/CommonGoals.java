@@ -225,15 +225,15 @@ public enum CommonGoals {
 				int[] already_checked = new int[30];
 				Arrays.fill(already_checked, -99);
 
-				for (int dshift = 0; dshift <= 4; dshift++) {
+				for (int row = 0; row <= 4; row++) {
 
-					for (int rshift = 0; rshift <= 3; rshift++) {
+					for (int col = 0; col <= 3; col++) {
 
 						// non andiamo a prendere il quadrato che abbiamo già trovato
-						if (Coords_Check(already_checked, dshift, rshift, 1))
+						if (Coords_Check(already_checked, row, col, 1))
 							continue;
 
-						TileType checktile = pshelf.getTile(0 + rshift, 0 + dshift).getType();
+						TileType checktile = pshelf.getTile(0 + row, 0 + col).getType();
 
 						// se la prima tile del quadrato è diversa da quella che stiamo effettivamente
 						// cercando andiamo oltre
@@ -241,12 +241,12 @@ public enum CommonGoals {
 						if (checktile != type)
 							continue;
 
-						boolean t1 = checktile == pshelf.getTile(1 + rshift, 0 + dshift).getType();
-						boolean t2 = checktile == pshelf.getTile(0 + rshift, 1 + dshift).getType();
-						boolean t3 = checktile == pshelf.getTile(1 + rshift, 1 + dshift).getType();
+						boolean t1 = checktile == pshelf.getTile(1 + row, 0 + col).getType();
+						boolean t2 = checktile == pshelf.getTile(0 + row, 1 + col).getType();
+						boolean t3 = checktile == pshelf.getTile(1 + row, 1 + col).getType();
 
 						if (t1 && t2 && t3) {
-							already_checked[index] = (dshift * 10 + rshift);
+							already_checked[index] = (row * 10 + col);
 							index++;
 							result++;
 
