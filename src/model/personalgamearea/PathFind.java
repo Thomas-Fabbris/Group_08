@@ -182,7 +182,32 @@ public class PathFind {
                 Pathfinder(tile, row, col - 1);
             }
         }
-
     }
+    
+
+	/**
+	 * Returns the number of points rewarded for having x adjacent tiles on the bookshelf
+	 * @param numberOfAdjacentTiles number of adjacent tiles in a group on the bookshelf
+	 * @return
+	 */
+	public int mapTilesGroupSizeToPoints(int numberOfAdjacentTiles) {
+		// player gets 2 points total
+		if(numberOfAdjacentTiles == 3)
+			return 2;
+		
+		// player gets 3 points total
+		if(numberOfAdjacentTiles == 4)
+			return 3; 
+		
+		// player gets 5 points total
+		if(numberOfAdjacentTiles == 5)
+			return 5;
+		
+		//player gets 8 points total
+		if(numberOfAdjacentTiles >= 6)
+			return 8;
+		
+		return 0;
+	}
 
 }

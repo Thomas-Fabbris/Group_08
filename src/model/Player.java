@@ -1,12 +1,15 @@
 package model;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.commongamearea.BoardTile;
+import model.commongamearea.CommonGoals;
 import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
+import model.personalgamearea.PathFind;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 
@@ -24,10 +27,10 @@ public class Player {
 	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
 	private boolean[] completedCommonGoals;
-	
+
 	private int previousObjectiveCardMatches = 0;
 	private int previousObjetiveCardPoints = 0;
-	
+
 	private int selectedColumn = -1; // Identifies which column on the bookshelf the player is adding the tiles
 										// to (value -1 means no column has been decided yet)
 
@@ -44,21 +47,22 @@ public class Player {
 	 */
 
 	public Player(String name, IdGenerator idGenerator) {
-		if(name == null) {
+		if (name == null) {
 			throw new NullPointerException("name cannot be set to null when creating a Player instance!");
 		}
-		if(idGenerator == null) {
+		if (idGenerator == null) {
 			throw new NullPointerException("players cannot be set to null when calling GameToken:shiftRound method!");
 		}
 		this.name = name;
 		this.id = idGenerator.getNewId();
-		this.completedCommonGoals = new boolean[] {false, false};
+		this.completedCommonGoals = new boolean[] { false, false };
 		this.pointTiles = new PointTile[2];
 		this.selectedTiles = new LinkedList<BoardTile>();
 		objectiveCard = new PersonalObjectiveCard(idGenerator.getNewPersonalObjectiveCardId());
 		bookshelf = new Bookshelf(this);
-		
-		//TODO this line assigns a random value to this player's points (used for debug, should be remove)
+
+		// TODO this line assigns a random value to this player's points (used for
+		// debug, should be remove)
 //		this.points = idGenerator.getNewPersonalObjectiveCardId();
 	}
 
@@ -71,15 +75,49 @@ public class Player {
 	 * @param tile {@link PointTile PointTile} da assegnare al giocatore
 	 */
 	public void awardPointTile(PointTile tile) {
-		if(tile == null) {
+		if (tile == null) {
 			throw new NullPointerException("tile cannot be set to null while calling Player:awardPointTile() method!");
 		}
-		
-		// The player can receive this point tile if the slot with the same Roman number as the card is empty
-		if(pointTiles[tile.getRomanNumber()] == null) {
+
+		// The player can receive this point tile if the slot with the same Roman number
+		// as the card is empty
+		if (pointTiles[tile.getRomanNumber()] == null) {
 			pointTiles[tile.getRomanNumber()] = tile;
 			addPoints(tile.getPoints());
 		}
+	}
+
+	/**
+	 * Reward the player with points computer from each group of adjacent tiles in
+	 * the player's bookshelf. This method should be run only once for each player
+	 * before the game ends.
+	 * 
+	 * @param player
+	 * @return pointsTotal total number of points the player received from this
+	 *         method
+	 */
+	public int awardPointsForTileGroups() {
+		// TODO: access the methods without going through the enum (and without using
+		// reflection)
+
+		// Each element of this array is a group of adjacent tiles in the bookshelf, in
+		// particular the int value specifies the number of tiles in said group.
+		// {3, 4, 4, 3} means 4 groups, two with 3 tiles and two with 4 tiles.
+		PathFind pf = new PathFind(bookshelf);
+		int[] tileGroups = pf.PointsPathfinding();
+
+		int points = 0;
+		int pointsTotal = 0;
+
+		System.out.println(Arrays.toString(tileGroups));
+
+		for (int i = 0; i < tileGroups.length; i++) {
+			points = pf.mapTilesGroupSizeToPoints(tileGroups[i]);
+			addPoints(points);
+			pointsTotal += points;
+		}
+
+		return pointsTotal;
 	}
 
 	/**
@@ -193,15 +231,17 @@ public class Player {
 
 	/**
 	 * Returns whether the player has completed the specified common goal (0 or 1)
+	 * 
 	 * @param id - 0 or 1
 	 * @return
 	 */
 	public boolean hasCompletedCommonGoal(int id) {
 		return completedCommonGoals[id];
 	}
-	
+
 	/**
 	 * Set the flag to true or false for the specified common goal (0 or 1)
+	 * 
 	 * @param id - 0 or 1
 	 * @return
 	 */
@@ -273,6 +313,5 @@ public class Player {
 	public void setPreviousObjetiveCardPoints(int previousObjetiveCardPoints) {
 		this.previousObjetiveCardPoints = previousObjetiveCardPoints;
 	}
-	
-	
+
 }

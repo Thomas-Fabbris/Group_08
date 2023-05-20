@@ -1,4 +1,4 @@
-package model.personalgamearea;
+package model.commongamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
+import model.personalgamearea.Bookshelf;
+import model.personalgamearea.PathFind;
 import model.shared.TileType;
 
 public enum CommonGoals {
@@ -661,5 +663,4 @@ public enum CommonGoals {
 			return pointsMap;
 		}
 	 }
-
 }

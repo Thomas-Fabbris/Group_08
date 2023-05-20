@@ -3,7 +3,6 @@ package model.commongamearea;
 import java.util.Stack;
 
 import model.Player;
-import model.personalgamearea.CommonGoals;
 import model.shared.IdGenerator;
 
 public class CommonObjectiveCard {

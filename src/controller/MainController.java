@@ -14,12 +14,13 @@ import model.GameToken;
 import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
+import model.commongamearea.CommonGoals;
 import model.commongamearea.CommonObjectiveCard;
 import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
+import model.dfs.DepthFirstSearch;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
-import model.personalgamearea.CommonGoals;
 import model.personalgamearea.PathFind;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
@@ -51,19 +52,22 @@ public class MainController {
 
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
-		if(playerNames == null) {
+		if (playerNames == null) {
 			throw new NullPointerException("players must not be set to null when creating a mainController instance!");
 		}
-		if(commonGameArea == null) {
-			throw new NullPointerException("commonGameArea must not be set to null when creating a MainController instance!");
+		if (commonGameArea == null) {
+			throw new NullPointerException(
+					"commonGameArea must not be set to null when creating a MainController instance!");
 		}
-		if(commonGameAreaFrame == null) {
-			throw new NullPointerException("commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		if (commonGameAreaFrame == null) {
+			throw new NullPointerException(
+					"commonGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		if(personalGameAreaFrame == null) {
-			throw new NullPointerException("personalGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
+		if (personalGameAreaFrame == null) {
+			throw new NullPointerException(
+					"personalGameAreaFrame cannot be set to null while creating a BookShelfTileController instance!");
 		}
-		
+
 		setGameState(GameState.RUNNING);
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
@@ -95,11 +99,10 @@ public class MainController {
 
 	private void startGame() {
 
-
 		players[0].setHasChair(true);
-		/*Used for debug
-		players[0].bookshelf.fillRandom();
-		*/
+		/*
+		 * Used for debug players[0].bookshelf.fillRandom();
+		 */
 		setCurrentPlayer(players[0]);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 0);
@@ -107,7 +110,7 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 0);
-		
+
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 1);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 1);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 1);
@@ -115,28 +118,30 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 1);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 1);
 		
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 2);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 2);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 2);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 2);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 2);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 2);
-//
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 3);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 3);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 3);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 3);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 3);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
-//
-////		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 4);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 4);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 4);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 4);
-//		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
-
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 0, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 1, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 2, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 3, 2);
+		currentPlayer.bookshelf.setTileType(TileType.CATS, 4, 2);
+		currentPlayer.bookshelf.setTileType(TileType.TROPHIES, 5, 2);
 		
+		currentPlayer.bookshelf.setTileType(TileType.GAMES, 0, 3);
+		currentPlayer.bookshelf.setTileType(TileType.GAMES, 1, 3);
+		currentPlayer.bookshelf.setTileType(TileType.GAMES, 2, 3);
+		currentPlayer.bookshelf.setTileType(TileType.GAMES, 3, 3);
+		currentPlayer.bookshelf.setTileType(TileType.GAMES, 4, 3);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
+		
+		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 1, 4);
+		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 2, 4);
+		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 3, 4);
+		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 4, 4);
+		currentPlayer.bookshelf.setTileType(TileType.TROPHIES, 5, 4);
+		
+//		DepthFirstSearch dfs = new DepthFirstSearch(currentPlayer.getBookshelf());
+//		dfs.printNodes();
+//		System.out.println(dfs.countAdjacentCells(0, 0));
+
 		updateBookshelfLabel();
 	}
 
@@ -159,8 +164,9 @@ public class MainController {
 	 * @param player
 	 */
 	public void setCurrentPlayer(Player player) {
-		if(player == null) {
-			throw new NullPointerException("currentPlayer cannot be set to null when calling MainController:setCurrentPlayer method!");
+		if (player == null) {
+			throw new NullPointerException(
+					"currentPlayer cannot be set to null when calling MainController:setCurrentPlayer method!");
 		}
 		this.currentPlayer = player;
 		updatePlayerNameText(player);
@@ -171,7 +177,7 @@ public class MainController {
 		updatePersonalObjectiveCardLabel(player.getObjectiveCard());
 		updatePlayerGameEndTileLabel(player);
 		personalGameAreaFrame.getChair().setVisible(player.hasChair());
-		
+
 		for (int i = 0; i < commonGameArea.getCommonObjectiveCards().length; i++) {
 			updatePlayerPointTileLabel(player, i);
 		}
@@ -180,24 +186,25 @@ public class MainController {
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-	
+
 	public void updatePlayerGameEndTileLabel(Player player) {
 		JLabel tileLabel = personalGameAreaFrame.getEndOfGameTile();
-		
-		if(player.hasEndOfGameToken()) {
+
+		if (player.hasEndOfGameToken()) {
 			tileLabel.setIcon(personalGameAreaFrame.getGameEndTileIcon());
 		} else {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyGameEndIcon());
 		}
 	}
-	
+
 	/**
-	 * updates the point tile's label to reflect the state of the player's point tile
+	 * updates the point tile's label to reflect the state of the player's point
+	 * tile
 	 */
 	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
 		JLabel tileLabel = personalGameAreaFrame.getPointTile(pointTileId);
-		
-		if(player.getPointTile(pointTileId) == null) {
+
+		if (player.getPointTile(pointTileId) == null) {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
 			tileLabel.setVisible(true);
@@ -277,32 +284,34 @@ public class MainController {
 	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 	}
-	
+
 	public GameEndFrame displayGameEndScreen() {
 		personalGameAreaFrame.dispose();
 		GameEndFrame gameEndScreen = new GameEndFrame();
-		
+
 		// Sort the array based on the players' score
 		Arrays.sort(players, new PlayerScoreComparator());
-		
+
 		List<JLabel> playerNames = gameEndScreen.getPlayerNames();
-		
+
 		// Display on the leaderbord the name of each player in order
 		for (int i = 0; i < playerNames.size(); i++) {
 			try {
-				playerNames.get(i).setText(players[i].getName() +" - Points: "+ players[i].getPoints());
+				int tileGroupPoints = players[i].awardPointsForTileGroups();
+				playerNames.get(i).setText(players[i].getName() + " > " + players[i].getPoints() + " points, " +tileGroupPoints+ " from tile groups");
 			} catch (Exception e) {
 				playerNames.get(i).setText(null);
 			}
 		}
-		
+
 		// the array is sorted: players[0] is the winner
 		gameEndScreen.getWinnerName().setText(players[0].getName());
-		
+
 		gameEndScreen.setVisible(true);
 		return gameEndScreen;
 	}
 
+	
 
 	// ----------- Common game area operations -----------
 
@@ -356,13 +365,13 @@ public class MainController {
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
-		
-		if(tile == null) {
+
+		if (tile == null) {
 			label.setIcon(null);
 			return;
 		}
-		
-		updateTileOnScreen(label, () -> "Assets/Point_tiles/" +tile.getPoints()+ "p.jpg", rotation);
+
+		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg", rotation);
 	}
 
 	/**
@@ -407,10 +416,11 @@ public class MainController {
 
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
 		JLabel label = null;
- 		
+
 		for (int i = 0; i < cards.length; i++) {
 			label = commonGameAreaFrame.getCommonObjectiveCard(i);
-			label.setIcon(ImageUtils.loadImageAsIcon(label.getSize(), "Assets/Carte_Obiettivo_Comune/Carta_" +cards[i].getId()+ ".png"));
+			label.setIcon(ImageUtils.loadImageAsIcon(label.getSize(),
+					"Assets/Carte_Obiettivo_Comune/Carta_" + cards[i].getId() + ".png"));
 		}
 	}
 
@@ -431,7 +441,7 @@ public class MainController {
 		tileLabel.setIcon(icon);
 	}
 
-	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {		
+	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage, int iconRotation) {
 		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
 
 		if (iconRotation != 0 && iconRotation != 360)
@@ -539,7 +549,7 @@ public class MainController {
 		for (Player p : this.players) {
 			pf = new PathFind(p.getBookshelf());
 			int[] groupList = pf.PointsPathfinding();
-			for(int k = 0; k < groupList.length; k++) {
+			for (int k = 0; k < groupList.length; k++) {
 				p.addPoints(CommonGoals.StaticFields.getPointsMap().get(k + 3) * groupList[k]);
 			}
 		}

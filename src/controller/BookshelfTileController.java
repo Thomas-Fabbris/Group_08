@@ -15,7 +15,9 @@ import javax.swing.KeyStroke;
 import model.CommonGameArea;
 import model.Player;
 import model.commongamearea.BoardTile;
+import model.commongamearea.CommonGoals;
 import model.commongamearea.CommonObjectiveCard;
+import model.personalgamearea.Bookshelf;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
@@ -101,8 +103,7 @@ public class BookshelfTileController implements MouseListener {
 		}
 
 		// When the player has inserted all the selected tiles in the bookshelf, check
-		// if a
-		// goal is satisfied
+		// if a goal is satisfied
 		if (selectedTiles.size() == 0) {
 			try {
 				checkCommonObjectives(currentPlayer);
