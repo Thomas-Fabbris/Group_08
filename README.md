@@ -17,6 +17,8 @@
 2. Apri la cartella con il tuo IDE di Java preferito 📁
 3. Premi Build, Run e divertiti 🥳
 
+  *(👉 Consigliamo di eseguire il progetto con la stessa verisone di Java con cui è stato sviluppato: Java 8).*
+
 ## 👷‍♂️ **Collaboratori (in ordine alfabetico)** 👷‍♂️
 - Fadi All Afas
 - Lorenzo Corbellini
