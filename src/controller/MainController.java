@@ -108,11 +108,6 @@ public class MainController {
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
 
-		players[1].bookshelf.setTileType(TileType.BOOKS, 0, 0);
-		players[1].bookshelf.setTileType(TileType.BOOKS, 5, 0);
-		players[1].bookshelf.setTileType(TileType.BOOKS, 0, 4);
-		players[1].bookshelf.setTileType(TileType.BOOKS, 5, 4);
-
 		updateBookshelfLabel();
 	}
 

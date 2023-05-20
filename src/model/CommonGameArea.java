@@ -21,7 +21,7 @@ public class CommonGameArea {
 		
 		this.commonObjectiveCards = new CommonObjectiveCard[] {
 				new CommonObjectiveCard(idGenerator, numberOfPlayers),
-//				new CommonObjectiveCard(idGenerator, numberOfPlayers)
+				new CommonObjectiveCard(idGenerator, numberOfPlayers)
 		};
 	}
 

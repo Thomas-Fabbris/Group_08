@@ -1,6 +1,7 @@
 package model.shared;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import model.commongamearea.Pouch;
 
@@ -25,4 +26,9 @@ public enum TileType {
 		}while(Pouch.extract(types[i]));
 		return types[i];
 	}
+	
+//	public static TileType randomType() {
+//		Random rd = new Random();
+//		return types[rd.nextInt(6)];
+//	}
 }

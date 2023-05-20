@@ -21,8 +21,8 @@ public class CommonObjectiveCard {
 		}
 		this.romanNumber = CommonObjectiveCard.ROMAN_NUMBER++;
 
-//		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
-		this.cardId = 12; // debug
+		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
+//		this.cardId = 11; // debug
 
 		initRelatedCommonGoal();
 		initPointsList(numberOfPlayers);

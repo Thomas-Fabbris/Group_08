@@ -8,6 +8,7 @@ import java.util.NavigableMap;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import model.shared.IdGenerator;
 import model.shared.TileType;
 public class PersonalObjectiveCard {
 
@@ -25,9 +26,10 @@ public class PersonalObjectiveCard {
 	private List<BookshelfTileGoal> tileGoals = new LinkedList<>(); // Stores the TileType and its position for
 	
 	//Important: pointsMap is initiliazed in the constructor even though it's a static field, because it has no reason for existing if no personal object card has been created before
-	public PersonalObjectiveCard(int card_id) {
-		this.cardId = card_id;
-		this.tileGoals = readTypePositionsFromFile(selectFile(card_id));
+	public PersonalObjectiveCard(IdGenerator idGenerator) {
+		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
+
+		this.tileGoals = readTypePositionsFromFile(selectFile(this.cardId));
 		if(PersonalObjectiveCard.pointsMap == null) {
 			PersonalObjectiveCard.pointsMap = readPersonalGoalPointsFromFile(new File("Assets/Carte_Obiettivo_Personale/Punteggi_Carte_Obiettivo_Personali.csv"));
 		}
