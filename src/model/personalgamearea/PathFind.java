@@ -1,10 +1,8 @@
 package model.personalgamearea;
 
-import model.shared.Tile;
-import model.shared.TileType;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
+
+import model.shared.TileType;
 
 public class PathFind {
 
@@ -100,6 +98,10 @@ public class PathFind {
                 // Prendiamo il tipo della tile da cui iniziamo a fare pathfinding
                 TileType tile = this.pshelf.getTile(row, col).getType();
 
+                // Non eseguire l'operazione se il tipo della tile è NULL
+                if(tile == TileType.NULL)
+                	continue;
+                
                 // Comincia a cercare a partire dalla tile di tipo _tile_ e
                 // in posizione row e col
                 this.Pathfinder(tile, row, col);

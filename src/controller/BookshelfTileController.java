@@ -15,9 +15,7 @@ import javax.swing.KeyStroke;
 import model.CommonGameArea;
 import model.Player;
 import model.commongamearea.BoardTile;
-import model.commongamearea.CommonGoals;
 import model.commongamearea.CommonObjectiveCard;
-import model.personalgamearea.Bookshelf;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
@@ -187,6 +185,7 @@ public class BookshelfTileController implements MouseListener {
 		for (int i = 0; i < cards.length; i++) {
 			if (!player.hasCompletedCommonGoal(i)
 					&& cards[i].getRelatedCommonGoal().checkCommonGoal(player.bookshelf)) {
+				
 				cards[i].award(player);
 				mainController.updatePointsText(player);
 				mainController.updatePlayerPointTileLabel(player, i);

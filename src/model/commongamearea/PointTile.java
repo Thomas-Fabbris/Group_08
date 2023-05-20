@@ -34,4 +34,9 @@ public class PointTile extends Tile {
 	public int getRomanNumber() {
 		return romanNumber;
 	}
+	
+	@Override
+	public String toString() {
+		return "CardId: " +this.cardId+ " RomandNum: " +this.romanNumber+ " Points: " +this.points;
+	}
 }

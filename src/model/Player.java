@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.commongamearea.BoardTile;
-import model.commongamearea.CommonGoals;
 import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
 import model.personalgamearea.Bookshelf;
@@ -83,6 +82,7 @@ public class Player {
 		// as the card is empty
 		if (pointTiles[tile.getRomanNumber()] == null) {
 			pointTiles[tile.getRomanNumber()] = tile;
+			setCompletedCommonGoal(tile.getRomanNumber(), true);
 			addPoints(tile.getPoints());
 		}
 	}
@@ -97,9 +97,6 @@ public class Player {
 	 *         method
 	 */
 	public int awardPointsForTileGroups() {
-		// TODO: access the methods without going through the enum (and without using
-		// reflection)
-
 		// Each element of this array is a group of adjacent tiles in the bookshelf, in
 		// particular the int value specifies the number of tiles in said group.
 		// {3, 4, 4, 3} means 4 groups, two with 3 tiles and two with 4 tiles.

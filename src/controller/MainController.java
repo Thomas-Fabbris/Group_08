@@ -18,7 +18,6 @@ import model.commongamearea.CommonGoals;
 import model.commongamearea.CommonObjectiveCard;
 import model.commongamearea.GameEndTile;
 import model.commongamearea.PointTile;
-import model.dfs.DepthFirstSearch;
 import model.personalgamearea.Bookshelf;
 import model.personalgamearea.BookshelfTile;
 import model.personalgamearea.PathFind;
@@ -105,42 +104,14 @@ public class MainController {
 		 */
 		setCurrentPlayer(players[0]);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 0);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 0);
 		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 0);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 4);
+		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 4);
 
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 0, 1);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 1, 1);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 2, 1);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 3, 1);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 4, 1);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 1);
-		
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 0, 2);
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 1, 2);
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 2, 2);
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 3, 2);
-		currentPlayer.bookshelf.setTileType(TileType.CATS, 4, 2);
-		currentPlayer.bookshelf.setTileType(TileType.TROPHIES, 5, 2);
-		
-		currentPlayer.bookshelf.setTileType(TileType.GAMES, 0, 3);
-		currentPlayer.bookshelf.setTileType(TileType.GAMES, 1, 3);
-		currentPlayer.bookshelf.setTileType(TileType.GAMES, 2, 3);
-		currentPlayer.bookshelf.setTileType(TileType.GAMES, 3, 3);
-		currentPlayer.bookshelf.setTileType(TileType.GAMES, 4, 3);
-		currentPlayer.bookshelf.setTileType(TileType.BOOKS, 5, 3);
-		
-		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 1, 4);
-		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 2, 4);
-		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 3, 4);
-		currentPlayer.bookshelf.setTileType(TileType.FRAMES, 4, 4);
-		currentPlayer.bookshelf.setTileType(TileType.TROPHIES, 5, 4);
-		
-//		DepthFirstSearch dfs = new DepthFirstSearch(currentPlayer.getBookshelf());
-//		dfs.printNodes();
-//		System.out.println(dfs.countAdjacentCells(0, 0));
+		players[1].bookshelf.setTileType(TileType.BOOKS, 0, 0);
+		players[1].bookshelf.setTileType(TileType.BOOKS, 5, 0);
+		players[1].bookshelf.setTileType(TileType.BOOKS, 0, 4);
+		players[1].bookshelf.setTileType(TileType.BOOKS, 5, 4);
 
 		updateBookshelfLabel();
 	}
@@ -172,8 +143,6 @@ public class MainController {
 		updatePlayerNameText(player);
 		updatePointsText(player);
 		updateBookshelfLabel(player.bookshelf);
-//		updatePlayerPointTile1Label(player);
-//		updatePlayerPointTile2Label(player);
 		updatePersonalObjectiveCardLabel(player.getObjectiveCard());
 		updatePlayerGameEndTileLabel(player);
 		personalGameAreaFrame.getChair().setVisible(player.hasChair());
@@ -203,7 +172,7 @@ public class MainController {
 	 */
 	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
 		JLabel tileLabel = personalGameAreaFrame.getPointTile(pointTileId);
-
+		
 		if (player.getPointTile(pointTileId) == null) {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
@@ -298,7 +267,7 @@ public class MainController {
 		for (int i = 0; i < playerNames.size(); i++) {
 			try {
 				int tileGroupPoints = players[i].awardPointsForTileGroups();
-				playerNames.get(i).setText(players[i].getName() + " > " + players[i].getPoints() + " points, " +tileGroupPoints+ " from tile groups");
+				playerNames.get(i).setText(players[i].getName() + ": [" + players[i].getPoints() + "] points, " +tileGroupPoints+ " from tile groups");
 			} catch (Exception e) {
 				playerNames.get(i).setText(null);
 			}
@@ -365,7 +334,9 @@ public class MainController {
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
-
+		
+//		System.out.println(tile.toString());
+		
 		if (tile == null) {
 			label.setIcon(null);
 			return;
