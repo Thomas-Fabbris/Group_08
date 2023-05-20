@@ -1,6 +1,10 @@
 package model.personalgamearea;
 
+import model.shared.Tile;
 import model.shared.TileType;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class PathFind {
 
@@ -19,6 +23,7 @@ public class PathFind {
     	}
         this.pshelf = bookshelf;
         this.checked_places = new int[30];
+        Arrays.fill(checked_places, -99);
         this.checked_index = 0;
         this.groups = new int[30];
         this.groups_index = -1;
@@ -84,29 +89,29 @@ public class PathFind {
         // Il suo compito è quello di decidere la tile da cui partire a cercare
         // e gestire variabili utili per contare il numero di gruppi
 
-        for (TileType tile : TileType.types)
+        for (int row = 0; row <= 5; row++)
         {
-            for (int row = 0; row <= 5; row++)
+            for (int col = 0; col <= 4; col++)
             {
-                for (int col = 0; col <= 4; col++)
-                {
 
-                    // Saltiamo le tile che abbiamo già controllato
-                    if (inCoords(row, col)) continue;
+                // Saltiamo le tile che abbiamo già controllato
+                if (inCoords(row, col)) continue;
 
-                    // Comincia a cercare a partire dalla tile di tipo _tile_ e
-                    // in posizione row e col
-                    Pathfinder(tile, row, col);
-                    // Una volta hce il pathfinder non è più in grado di trovare
-                    // tiles adiacenti la "ricerca" viene messa in pausa
-                    this.started_search = false;
-                    // Il numero di componenti nel gruppo viene aggiunto nell'array
-                    // dei gruppi
-                    this.groups[this.groups_index] = this.group_count;
-                    // E il conteggio dei gruppi e ri-portato a zero
-                    this.group_count = 0;
+                // Prendiamo il tipo della tile da cui iniziamo a fare pathfinding
+                TileType tile = this.pshelf.getTile(row, col).getType();
 
-                }
+                // Comincia a cercare a partire dalla tile di tipo _tile_ e
+                // in posizione row e col
+                this.Pathfinder(tile, row, col);
+                // Una volta hce il pathfinder non è più in grado di trovare
+                // tiles adiacenti la "ricerca" viene messa in pausa
+                this.started_search = false;
+                // Il numero di componenti nel gruppo viene aggiunto nell'array
+                // dei gruppi
+                this.groups[this.groups_index] = this.group_count;
+                // E il conteggio dei gruppi e ri-portato a zero
+                this.group_count = 1;
+
             }
         }
 
@@ -144,7 +149,8 @@ public class PathFind {
             // CHECK DOWN
             // Se il tipo di tile è uguale a quella della tile da dove veniamo ci spostiamo
             // nella nuova tile
-            if (this.pshelf.getTile(row + 1, col).getType() == tile)
+            boolean t1 = inCoords(row + 1, col);
+            if (this.pshelf.getTile(row + 1, col).getType() == tile && !t1)
             {
                 // Aumentiamo di uno il numero di componenti del gruppo
                 this.group_count++;
@@ -157,7 +163,8 @@ public class PathFind {
         if (col != 4)
         {
             // CHECK RIGHT
-            if (this.pshelf.getTile(row, col + 1).getType() == tile)
+            boolean t1 = inCoords(row, col + 1);
+            if (this.pshelf.getTile(row, col + 1).getType() == tile && !t1)
             {
                 this.group_count++;
                 Pathfinder(tile, row, col + 1);
@@ -168,7 +175,8 @@ public class PathFind {
         if (row != 0)
         {
             // CHECK UP
-            if (this.pshelf.getTile(row - 1, col).getType() == tile)
+            boolean t1 = inCoords(row - 1, col);
+            if (this.pshelf.getTile(row - 1, col).getType() == tile && !t1)
             {
                 this.group_count++;
                 Pathfinder(tile,row - 1, col);
@@ -179,7 +187,8 @@ public class PathFind {
         if (col != 0)
         {
             // CHECK LEFT
-            if (this.pshelf.getTile(row, col - 1).getType() == tile)
+            boolean t1 = inCoords(row, col - 1);
+            if (this.pshelf.getTile(row, col - 1).getType() == tile && !t1)
             {
                 this.group_count++;
                 Pathfinder(tile, row, col - 1);
