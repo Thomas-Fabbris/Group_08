@@ -40,6 +40,7 @@ public class NextPlayerButtonController implements MouseListener {
 		// tiles that are still in the list when the turn ends will return to the
 		// board
 		try {
+			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(false);
 			List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
 			clearSelectedTiles(tiles);
 			commonGameArea.updateCurrentBlockedTiles();
@@ -82,12 +83,9 @@ public class NextPlayerButtonController implements MouseListener {
 
 	// Advances the turn
 	private void nextTurn() throws IllegalActionException {
-		/*
-		 * TODO Delete comment when BookShelf is completely implementated if
-		 * (!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
-		 * throw new
-		 * IllegalActionException("Warning, you have to make your move before you can pass your turn!"
-		 * ); }
+		/*if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
+			throw new IllegalActionException("Warning, you have to make your move before you can pass your turn!"); 
+		 }
 		 */
 		this.mainController.getCurrentPlayer().resetSelectedColumn();
 

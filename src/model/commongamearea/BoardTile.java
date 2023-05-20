@@ -13,6 +13,9 @@ public class BoardTile extends Tile {
 
 	public BoardTile(TileType tile_type, int row, int column, Board board) {
 		super(tile_type);
+		if(board == null) {
+			throw new NullPointerException("board must no be set to null while creating a BoardTile instance!");
+		}
 		this.row = row;
 		this.column = column;
 		this.board = board;

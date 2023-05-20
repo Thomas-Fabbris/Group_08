@@ -13,6 +13,10 @@ public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 	
 	public BookshelfTile(TileType tile_type, int row, int column, Bookshelf shelf) {
 		super(tile_type);
+		if(shelf == null) {
+			throw new NullPointerException("shelf cannot be set to null while creating a BookshelfTile instance!");
+		}
+		
 		this.row = row;
 		this.column = column;
 		this.shelf = shelf;

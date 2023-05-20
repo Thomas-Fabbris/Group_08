@@ -14,6 +14,9 @@ public class PathFind {
 
     public PathFind(Bookshelf bookshelf)
     {
+    	if(bookshelf == null) {
+    		throw new NullPointerException("pshelf cannot be set to null while creating a PathFind instance!");
+    	}
         this.pshelf = bookshelf;
         this.checked_places = new int[30];
         this.checked_index = 0;

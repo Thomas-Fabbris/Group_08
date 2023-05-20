@@ -11,6 +11,7 @@ import model.Player;
 import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.InvalidMoveException;
+import model.personalgamearea.IllegalActionException;
 import model.shared.TileSides;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
@@ -70,7 +71,7 @@ public class BoardTileController implements MouseListener {
 		try {
 			this.personalGameAreaFrame.getWarnings().setVisible(false);
 			if (!this.tile.isInteractible()) {
-				throw new InvalidMoveException("Warning, you cannot interact with this tile!");
+				throw new IllegalActionException("Warning, you cannot interact with this tile!");
 			}
 			
 			Player currentPlayer = mainController.getCurrentPlayer();
@@ -96,6 +97,11 @@ public class BoardTileController implements MouseListener {
 			}
 		}
 		catch(InvalidMoveException ex){
+			this.personalGameAreaFrame.getWarnings().setText(ex.getMessage());			
+			this.personalGameAreaFrame.getWarnings().setVisible(true);
+			this.label.setIcon(grayIcon);
+		}
+		catch(IllegalActionException ex){
 			this.personalGameAreaFrame.getWarnings().setText(ex.getMessage());			
 			this.personalGameAreaFrame.getWarnings().setVisible(true);
 		}
@@ -153,7 +159,7 @@ public class BoardTileController implements MouseListener {
 			this.tile.setActive(false);
 			this.label.setVisible(false);
 		} else {
-			this.label.setIcon(grayIcon);
+			throw new InvalidMoveException("Warning, you cannot pick up this tile!");
 		}
 	}
 
@@ -182,7 +188,7 @@ public class BoardTileController implements MouseListener {
 			this.tile.setActive(false);
 			this.label.setVisible(false);
 		} else {
-			this.label.setIcon(grayIcon);
+			throw new InvalidMoveException("Warning, you cannot pick up this tile!");
 		}
 	}
 
