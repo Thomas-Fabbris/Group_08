@@ -166,7 +166,7 @@ public class Board {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {
 				if (validPositions[i][j])
-					tiles[i][j] = new BoardTile(TileType.randomType(), i, j, this);
+					tiles[i][j] = new BoardTile(Pouch.getInstance().extractRandom(), i, j, this);
 				else {
 					tiles[i][j] = new BoardTile(TileType.NULL, i, j, this);
 					tiles[i][j].disable();
@@ -205,7 +205,7 @@ public class Board {
 
 				// svuota tutte le tessere rimaste e le rimette nella pouch
 				if (tiles[i][j].getType() != TileType.NULL && tiles[i][j].isActive()) {
-					Pouch.add(tiles[i][j].getType());
+					Pouch.getInstance().add(tiles[i][j].getType());
 					tiles[i][j].disable();
 
 				}
@@ -215,7 +215,7 @@ public class Board {
 			for (int j = 0; j < tiles.length; j++) {
 
 				if (tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isActive()) {
-					tiles[i][j].setType(TileType.randomType());
+					tiles[i][j].setType(Pouch.getInstance().extractRandom());
 					showTile(i, j);
 				}
 			}

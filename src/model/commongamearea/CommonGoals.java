@@ -219,7 +219,7 @@ public enum CommonGoals {
 
 			int result = 0;
 
-			for (TileType type : TileType.types) {
+			for (TileType type : TileType.values) {
 
 				int index = 0;
 				int[] already_checked = new int[30];
@@ -276,7 +276,7 @@ public enum CommonGoals {
 			// ci sono restrizioni sulla posizione
 			// di queste tessere.
 
-			for (TileType type : TileType.types) {
+			for (TileType type : TileType.values) {
 
 				int count = 0;
 
@@ -554,7 +554,7 @@ public enum CommonGoals {
 		int count = 0;
 
 		for (TileType tile : row_col) {
-			for (TileType type : TileType.types) {
+			for (TileType type : TileType.values) {
 				if (tile == type) {
 					count++;
 				}

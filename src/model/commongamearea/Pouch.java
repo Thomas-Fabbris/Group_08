@@ -1,84 +1,71 @@
 package model.commongamearea;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import model.shared.TileType;
 
+// This class is a Singleton i.e. it can only be instantiated once
 public class Pouch {
-	private static int TYLE_COUNTER = 22;
-	private static int BOOKS_COUNTER = TYLE_COUNTER;
-	private static int CATS_COUNTER = TYLE_COUNTER;
-	private static int FRAMES_COUNTER =TYLE_COUNTER;
-	private static int GAMES_COUNTER = TYLE_COUNTER;
-	private static int PLANTS_COUNTER  = TYLE_COUNTER;
-	private static int TROPHIES_COUNTER  = TYLE_COUNTER;
-	
-	public static boolean extract(TileType tyle_id) {
-		switch(tyle_id) {
+
+	private static Pouch instance = null;
+
+	private final int initialTileCount = 22;
+	private final int totalNumberOfTiles;
+	private Map<TileType, Integer> tileCounter = new HashMap<TileType, Integer>();
+
+	private Pouch() {
+		tileCounter.put(TileType.BOOKS, initialTileCount);
+		tileCounter.put(TileType.CATS, initialTileCount);
+		tileCounter.put(TileType.FRAMES, initialTileCount);
+		tileCounter.put(TileType.GAMES, initialTileCount);
+		tileCounter.put(TileType.PLANTS, initialTileCount);
+		tileCounter.put(TileType.TROPHIES, initialTileCount);
 		
-		case BOOKS:
-			if(BOOKS_COUNTER > 0) {
-			BOOKS_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		case CATS:
-			if(CATS_COUNTER > 0) {
-				CATS_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		case FRAMES:
-			if(FRAMES_COUNTER > 0) {
-				FRAMES_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		case GAMES:
-			if(GAMES_COUNTER > 0) {
-				GAMES_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		case PLANTS:
-			if(PLANTS_COUNTER > 0) {
-				PLANTS_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		case TROPHIES:
-			if(TROPHIES_COUNTER > 0) {
-				TROPHIES_COUNTER--;
-				return true;
-			}
-			return false;
-			
-		default:
-			return false;
-		}
+		this.totalNumberOfTiles = initialTileCount * tileCounter.size();
 	}
-		
+
+	public static Pouch getInstance() {
+		if (instance == null)
+			instance = new Pouch();
+
+		return instance;
+	}
+
+	public TileType extractRandom() {
+
+		TileType tileToExtract = TileType.randomType();
+		int iteration = 0;
+
+		// Select a new tile if the selected one is not available
+		while(!isTileAvailable(tileToExtract)) {
+			tileToExtract = TileType.randomType();
 			
-	public static void add(TileType tyle_id) {
-		switch(tyle_id) {
-			case BOOKS:
-				BOOKS_COUNTER++;
-			case CATS:
-				CATS_COUNTER++;
-			case FRAMES:
-				FRAMES_COUNTER++;
-			case GAMES:
-				GAMES_COUNTER++;
-			case PLANTS:
-				PLANTS_COUNTER++;
-			case TROPHIES:
-				TROPHIES_COUNTER++;
-			default:
-				break;
+			iteration++;
+			if(iteration >= totalNumberOfTiles) {
+				throw new IllegalStateException("The pouch has been completely emptied!");
+			}
 		}
+		
+		tileCounter.put(tileToExtract, tileCounter.get(tileToExtract) - 1); // decrease the value by one
+		return tileToExtract;
+	}
+
+	/**
+	 * Returns whether there are still tiles of the specified type inside the pouch
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private boolean isTileAvailable(TileType type) {
+		return tileCounter.get(type) > 0;
+	}
+
+	/**
+	 * Adds the tile back to the pouch (increases the count by one)
+	 * @param type
+	 */
+	public void add(TileType type) {
+		tileCounter.put(type, tileCounter.get(type) + 1);
 	}
 }
-
