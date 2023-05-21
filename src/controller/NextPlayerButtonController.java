@@ -128,18 +128,18 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 
 		// Check to decide if the game ends when the nextPlayerButton is pressed
 		if (mainController.getGameState() == GameState.LAST_TURN && currentPlayerId == mainController.getLastPlayer().getId()) {
-			System.out.println("NextPlayerButtonController.java Game ended!");
+			System.out.println("[" +this.getClass().getSimpleName()+ "] Game ended!");
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
 		
 		// Check if the board needs to be refilled
 		if(commonGameArea.getBoard().isFull()) {
-			System.out.println("Refilling board");
+			System.out.println("[" +this.getClass().getSimpleName()+ "] Refilling board");
 			commonGameArea.getBoard().refill();
-			commonGameArea.getBoard().printTiles(); //TODO remove this sysout
-			notify(new Object[] {commonGameArea.getBoard().getBoardTiles(), commonGameAreaFrame.getBoardTilesLabels()});
+			commonGameArea.updateCurrentBlockedTiles();
 			mainController.updateAllBoardTileLabels();
+			notify(new Object[] {commonGameArea.getBoard().getBoardTiles(), commonGameAreaFrame.getBoardTilesLabels()});
 		}
 	}
 

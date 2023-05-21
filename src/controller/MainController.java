@@ -49,6 +49,8 @@ public class MainController {
 	private GameToken gameToken = null;
 	private GameEndTile gameEndTile = null;
 
+	private List<BoardTileController> observers = new ArrayList<>();
+
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
 		if (playerNames == null) {
@@ -112,7 +114,8 @@ public class MainController {
 	private void createPlayers(ArrayList<String> names, IdGenerator idGenerator) {
 		for (int i = 0; i < names.size(); i++) {
 			this.players[i] = new Player(names.get(i), idGenerator);
-			System.out.println("Created player with name '" + players[i].getName() + "' and id " + players[i].id);
+			System.out.println("[" + this.getClass().getSimpleName() + "] Created player with name '"
+					+ players[i].getName() + "' and id " + players[i].id);
 		}
 	}
 
@@ -162,7 +165,7 @@ public class MainController {
 	 */
 	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
 		JLabel tileLabel = personalGameAreaFrame.getPointTile(pointTileId);
-		
+
 		if (player.getPointTile(pointTileId) == null) {
 			tileLabel.setIcon(personalGameAreaFrame.getEmptyPointTileIcon());
 		} else {
@@ -180,7 +183,7 @@ public class MainController {
 				tileLabel.addMouseListener(
 						new BookshelfTileController(tileLabel, commonGameArea, commonGameAreaFrame, this));
 				bookshelfLabel.tiles[row][column] = tileLabel;
-				bookshelfLabel.tilesContainer.add(tileLabel);			
+				bookshelfLabel.tilesContainer.add(tileLabel);
 			}
 		}
 	}
@@ -217,7 +220,10 @@ public class MainController {
 
 	private void assignNextPlayerButtonController() {
 		JLabel button = personalGameAreaFrame.getNextPlayerButton();
-		button.addMouseListener(new NextPlayerButtonController(button, commonGameArea, commonGameAreaFrame, this));
+		NextPlayerButtonController controller = new NextPlayerButtonController(button, commonGameArea,
+				commonGameAreaFrame, this);
+		observers.forEach((o) -> controller.addObserver(o));
+		button.addMouseListener(controller);
 	}
 
 	private void updatePlayerNameText(Player player) {
@@ -257,7 +263,8 @@ public class MainController {
 		for (int i = 0; i < playerNames.size(); i++) {
 			try {
 				int tileGroupPoints = players[i].awardPointsForTileGroups();
-				playerNames.get(i).setText(players[i].getName() + ": [" + players[i].getPoints() + "] points, " +tileGroupPoints+ " from tile groups");
+				playerNames.get(i).setText(players[i].getName() + ": [" + players[i].getPoints() + "] points, "
+						+ tileGroupPoints + " from tile groups");
 			} catch (Exception e) {
 				playerNames.get(i).setText(null);
 			}
@@ -269,8 +276,6 @@ public class MainController {
 		gameEndScreen.setVisible(true);
 		return gameEndScreen;
 	}
-
-	
 
 	// ----------- Common game area operations -----------
 
@@ -324,9 +329,9 @@ public class MainController {
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
-		
+
 //		System.out.println(tile.toString());
-		
+
 		if (tile == null) {
 			label.setIcon(null);
 			return;
@@ -341,14 +346,17 @@ public class MainController {
 	public void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
 	}
-	
+
+	/**
+	 * Updates the label of each tile on the board to reflect the tile's type
+	 */
 	public void updateAllBoardTileLabels() {
 		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTilesLabels();
 		Board board = commonGameArea.getBoard();
 
 		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
 			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
-				if(board.isValidPosition(row, col)) {					
+				if (board.isValidPosition(row, col)) {
 					updateBoardTileLabel(board.getTile(row, col), boardTileLabels[row][col]);
 					boardTileLabels[row][col].setVisible(true);
 				}
@@ -358,8 +366,7 @@ public class MainController {
 
 	/**
 	 * Assigns a Label to each Tile on the board and saves it in
-	 * commonGameAreaFrame.boardTileLabels.
-	 * To be used for initialisation only.
+	 * commonGameAreaFrame.boardTileLabels. To be used for initialisation only.
 	 */
 	public void assignBoardTiles() {
 
@@ -375,8 +382,11 @@ public class MainController {
 				if (board.getValidPositions()[row][column]) {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 
-					label.addMouseListener(new BoardTileController(board.getTile(row, column), label,
-							commonGameArea, commonGameAreaFrame, this, personalGameAreaFrame));
+					BoardTileController listener = new BoardTileController(board.getTile(row, column), label,
+							commonGameArea, commonGameAreaFrame, this, personalGameAreaFrame);
+
+					observers.add(listener);
+					label.addMouseListener(listener);
 
 					boardLabel.add(label);
 					boardTileLabels[row][column] = label;

@@ -104,7 +104,7 @@ public class Player {
 		int points = 0;
 		int pointsTotal = 0;
 
-		System.out.println(Arrays.toString(tileGroups));
+		System.out.println("[" +this.getClass().getSimpleName()+ "] "+ name+ "'s points from tile groups: " +Arrays.toString(tileGroups));
 
 		for (int i = 0; i < tileGroups.length; i++) {
 			points = pf.mapTilesGroupSizeToPoints(tileGroups[i]);

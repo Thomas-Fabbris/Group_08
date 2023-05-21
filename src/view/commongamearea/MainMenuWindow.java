@@ -82,7 +82,7 @@ public class MainMenuWindow extends JDialog {
 	}
 	
 	private void startGame() {
-		System.out.println("Closing main menu...");
+		System.out.println("[" +this.getClass().getSimpleName()+ "] Closing main menu...");
 		
 		//fill the list with player names
 		this.getPlayers(this.players);

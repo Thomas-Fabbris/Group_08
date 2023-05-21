@@ -60,15 +60,11 @@ public class BoardTileController implements MouseListener, Observer {
 		this.mainController = mainController;
 		
 		mainController.updateBoardTileLabel(tile, label);
-		this.coloredIcon = (ImageIcon) label.getIcon();
-		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
+		updateIcons();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		//TODO remove this line
-		System.out.println("Clicked on " +tile.getType());
 		
 		try {
 			this.personalGameAreaFrame.getWarnings().setVisible(false);
