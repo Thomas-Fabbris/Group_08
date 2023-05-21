@@ -42,35 +42,6 @@ public class BookshelfTileController implements MouseListener {
 		this.label = label;
 		this.mainController = mainController;
 
-		// TODO DEBUG REMOVE THIS
-		// -------------------------- remove --------------------------
-		/*
-		InputMap im = label.getInputMap(JLabel.WHEN_FOCUSED);
-		ActionMap am = label.getActionMap();
-
-		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_1, 0), "onOne");
-
-		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "onTwo");
-
-		am.put("onOne", new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				forceCommonObjectiveCompletion(mainController.getCurrentPlayer(), 0);
-			}
-		});
-
-		am.put("onTwo", new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				forceCommonObjectiveCompletion(mainController.getCurrentPlayer(), 1);
-			}
-		});
-
-		// -------------------------- remove --------------------------
-	*/
 	}
 
 	@Override
@@ -248,21 +219,4 @@ public class BookshelfTileController implements MouseListener {
 
 		mainController.updatePointsText(player);
 	}
-
-	// TODO: remove this method
-	/*
-	private void forceCommonObjectiveCompletion(Player player, int objId) {
-		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
-
-		cards[objId].award(player);
-		mainController.updatePointsText(player);
-		mainController.updatePlayerPointTileLabel(player, objId);
-		mainController.updateBoardPointTileLabel(cards[objId].getLastPointTile(),
-				commonGameAreaFrame.getPointTile(objId));
-
-		System.out.println("[BookshelfTileController.java] player point tile 0: " + player.getPointTile(0));
-		System.out.println("[BookshelfTileController.java] player point tile 1: " + player.getPointTile(1));
-		System.out.println("----------------------------------------------------------------------------");
-	}
-	*/
 }
