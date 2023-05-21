@@ -101,10 +101,35 @@ public class MainController {
 	private void startGame() {
 
 		players[0].setHasChair(true);
-		/*
-		 * Used for debug players[0].bookshelf.fillRandom();
-		 */
+
+		players[0].getBookshelf().setTileType(TileType.randomType(), 2, 0);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 3, 0);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 4, 0);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 5, 0);
+		
+		players[0].getBookshelf().setTileType(TileType.randomType(), 2, 1);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 3, 1);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 4, 1);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 5, 1);
+
+		players[0].getBookshelf().setTileType(TileType.randomType(), 2, 2);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 3, 2);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 4, 2);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 5, 2);
+
+		players[0].getBookshelf().setTileType(TileType.randomType(), 2, 3);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 3, 3);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 4, 3);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 5, 3);
+
+		players[0].getBookshelf().setTileType(TileType.randomType(), 2, 4);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 3, 4);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 4, 4);
+		players[0].getBookshelf().setTileType(TileType.randomType(), 5, 4);
+		
 		setCurrentPlayer(players[0]);
+		
+		
 		updateBookshelfLabel();
 	}
 

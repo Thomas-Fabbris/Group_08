@@ -1,5 +1,6 @@
 package model.personalgamearea;
 
+import java.awt.print.Book;
 import java.util.Iterator;
 
 import model.Player;
@@ -167,5 +168,37 @@ public class Bookshelf implements Iterable<Bookshelf>{
 		}
 		
 		return -1;
+	}
+	
+	/**
+	 * Returns whether the bookshelf has enough space to insert x tiles
+	 * @param tiles the number of tiles to add to the bookshelf
+	 * @return
+	 */
+	public boolean hasAvaibleSpaceFor(int tiles) {
+		
+		if(tiles == 0) { // There is always available space to fit zero tiles
+			return true;
+		}
+		
+		// For each column
+		for (int col = 0; col < Bookshelf.COLUMNS; col++) {
+			int freeCells = 0;
+
+			// Check if the first x cells are free
+			for (int row = 0; row < 3; row++) {
+				if(this.tiles[row][col].getType() == TileType.NULL) // If a cell is occupied, increment the counter
+					freeCells++;
+				
+				System.out.println(this.tiles[row][col].getType());
+			}
+			
+			System.out.println(freeCells);
+			
+			if(freeCells >= tiles) {				
+				return true;
+			}
+		}
+		return false;
 	}
 }

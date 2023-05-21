@@ -77,32 +77,45 @@ public class BoardTileController implements MouseListener, Observer {
 			this.personalGameAreaFrame.getWarnings().setVisible(false);
 
 			Player currentPlayer = mainController.getCurrentPlayer();
+			List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
 
-			// Check if the player can pick up the tile
-			if (!currentPlayer.hasSelectedColumn() && commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
-				List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
-
-				switch (selectedTiles.size()) {
-				case 0:
-					pickupFirstTile(selectedTiles);
-					return;
-
-				case 1:
-					pickupSecondTile(selectedTiles);
-					return;
-
-				case 2:
-					pickupThirdTile(selectedTiles);
-					return;
-
-				default:
-					this.label.setIcon(grayIcon);
-					throw new IllegalActionException("You cannot pick up this tile!");
-				}
+			// Does the bookshelf have enough space available to insert the selected tiles?
+			if (!currentPlayer.getBookshelf().hasAvaibleSpaceFor(selectedTiles.size()+1)) {
+				this.label.setIcon(grayIcon);
+				throw new IllegalActionException("Not enough space in the bookshelf!");
 			}
-			
-			this.label.setIcon(grayIcon);
-			throw new IllegalActionException("You cannot pick up this tile!");
+
+			// Has the player already inserted a tile in the bookshelf?
+			if (currentPlayer.hasSelectedColumn()) {
+				this.label.setIcon(grayIcon);
+				throw new IllegalActionException("You cannot pick up tiles after adding one to the bookshelf!");
+			}
+
+			// Can the tile be picked up?
+			if (!commonGameArea.isTileFree(tile.getRow(), tile.getColumn())) {
+				this.label.setIcon(grayIcon);
+				throw new IllegalActionException("This tile is blocked!");
+			}
+
+			// Use a different check for tile pickup based on the amount of tiles already
+			// selected
+			switch (selectedTiles.size()) {
+			case 0:
+				pickupFirstTile(selectedTiles);
+				return;
+
+			case 1:
+				pickupSecondTile(selectedTiles);
+				return;
+
+			case 2:
+				pickupThirdTile(selectedTiles);
+				return;
+
+			default:
+				this.label.setIcon(grayIcon);
+				throw new IllegalActionException("You cannot pick up this tile!");
+			}
 		}
 
 		catch (InvalidMoveException ex) {
