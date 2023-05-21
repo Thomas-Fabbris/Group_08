@@ -121,6 +121,7 @@ public class BookshelfTileController implements MouseListener {
 		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
 
 		currentPlayer.getSelectedTiles().remove(0);
+		currentPlayer.getBookshelf().setStateChanged(true);
 		mainController.updateSelectedTileLabels();
 	}
 
@@ -134,6 +135,7 @@ public class BookshelfTileController implements MouseListener {
 		currentPlayer.getBookshelf().setTileType(selectedTiles.get(0).getType(), row, column);
 
 		currentPlayer.getSelectedTiles().remove(0);
+		currentPlayer.getBookshelf().setStateChanged(true);
 		mainController.updateSelectedTileLabels();
 	}
 

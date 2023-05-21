@@ -21,11 +21,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class MainMenuWindow extends JDialog {
-	
-	private static final long serialVersionUID = -3919760497868695631L;
+
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
-	private JComboBox<Integer> number_of_players_seletion = new JComboBox<Integer>(new Integer[] {2, 3, 4});
+	private JComboBox<Integer> number_of_players_selection = new JComboBox<Integer>(new Integer[] {2, 3, 4});
 	private JLabel number_of_players_text = new JLabel("Set the number of players");
 	private JTextField[] player_names = new JTextField[4];
 	private int number_of_players;
@@ -46,9 +45,9 @@ public class MainMenuWindow extends JDialog {
 	
 	private void initActionListeners() {
 		
-		number_of_players_seletion.addActionListener(new ActionListener() {
+		number_of_players_selection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int count = (int)number_of_players_seletion.getSelectedItem();
+				int count = (int)number_of_players_selection.getSelectedItem();
 				number_of_players = count;
 				hideUnusedTextFields(count);
 			}
@@ -162,14 +161,14 @@ public class MainMenuWindow extends JDialog {
 		number_of_players_text.setForeground(Color.WHITE);
 		number_of_players_text.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		number_of_players_seletion.setMaximumSize(new Dimension(500, 30));
-		number_of_players_seletion.setSize(new Dimension(500, 30));
-		number_of_players_seletion.setToolTipText("Number of players");
-		number_of_players_seletion.setFont(new Font("Dialog", Font.PLAIN, 16));
-		number_of_players_seletion.setSelectedIndex(-1);
+		number_of_players_selection.setMaximumSize(new Dimension(500, 30));
+		number_of_players_selection.setSize(new Dimension(500, 30));
+		number_of_players_selection.setToolTipText("Number of players");
+		number_of_players_selection.setFont(new Font("Dialog", Font.PLAIN, 16));
+		number_of_players_selection.setSelectedIndex(-1);
 		
 		this.add(number_of_players_text);
-		this.add(number_of_players_seletion);
+		this.add(number_of_players_selection);
 		
 		//create empty spaces
 		empty_space1.setBackground(Color.DARK_GRAY);
@@ -190,9 +189,12 @@ public class MainMenuWindow extends JDialog {
 			throw new NullPointerException("txt cannot be set to null when calling MainMenuWindow.changeButtonState() method!");
 		}
 		if(!start.isEnabled()) {
-			if(txt.getText().length() > 0) {
-				start.setEnabled(true);
+			if(number_of_players_selection.getSelectedIndex() != -1) {
+				if(txt.getText().length() > 0) {
+					start.setEnabled(true);
+				}
 			}
+			
 		}
 		
 	}
