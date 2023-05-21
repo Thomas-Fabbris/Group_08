@@ -1,19 +1,17 @@
 package view.commongamearea;
 
 import java.awt.Dimension;
-
 import javax.swing.JLabel;
 
 public class BoardTileLabel extends JLabel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5349661031097838790L;
 	private int offset;
 	private int tileCellLength;
 	
 	public BoardTileLabel(int row, int column, Dimension boardLabelSize) {
+		if(boardLabelSize == null) {
+			throw new NullPointerException("boardLabelSize cannot be set to null while creating a BoardTileLabel instance!");
+		}
 		this.offset = (int)(boardLabelSize.height / 17);
 		this.tileCellLength = boardLabelSize.width / 10;
 

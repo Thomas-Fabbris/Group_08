@@ -21,6 +21,9 @@ public class ImageUtils {
 	 * @return ImageIcon
 	 */
 	public static ImageIcon loadImageAsIcon(int width, int height, String imagePath) {
+		if(imagePath == null) {
+			throw new NullPointerException("imagePath cannot be set to null while creating an ImageIcon instance!");
+		}
 		ImageIcon icon = new ImageIcon(imagePath);
 		Image tmp_image = icon.getImage();
 		tmp_image = tmp_image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
@@ -50,6 +53,9 @@ public class ImageUtils {
 	 * @return
 	 */
 	public static ImageIcon rotateIcon(ImageIcon icon, int angle) {
+		if(icon == null) {
+			throw new NullPointerException("icon cannot be set to null when calling ImageUtils.rotateIcon() method!");
+		}
 		BufferedImage originalImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB); //load the icon as a buffered image
 		
 		Graphics g = originalImage.createGraphics();
@@ -71,6 +77,9 @@ public class ImageUtils {
 	 * @return
 	 */
 	public static ImageIcon getGrayImage(ImageIcon icon) {
+		if(icon == null) {
+			throw new NullPointerException("icon cannot be set to null when calling ImageUtils.getGrayImage() method!");
+		}
 		BufferedImage iconToImage = imageIconToBufferedImage(icon);
 		ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
 		BufferedImage tmp = op.filter(iconToImage, iconToImage);
@@ -79,7 +88,7 @@ public class ImageUtils {
 	
 	private static BufferedImage imageIconToBufferedImage(ImageIcon icon) {
         if(icon == null) {
-        	throw new NullPointerException("ImageIcon icon is null!");
+        	throw new NullPointerException("icon cannot be set to null when calling ImageUtils.BufferedImage() method!");
         }
 		BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = bufferedImage.createGraphics();

@@ -11,15 +11,14 @@ import view.ImageUtils;
 
 public class BookshelfLabel extends JLabel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2080265389523747344L;
 	private ImageIcon image;
 	public final BookshelfTileLabel[][] tiles;
 	public final JPanel tilesContainer = new JPanel(); //This contains the tile labels displayed on the bookshelf
 	
 	public BookshelfLabel(Dimension windowSize) {
+		if(windowSize == null) {
+			throw new NullPointerException("windowSize cannot be set to null when creating a BookShelfLabel instance!");
+		}
 		this.setSize(windowSize.height*3/5, windowSize.height*3/5);
 		image = ImageUtils.loadImageAsIcon(this.getWidth(), this.getHeight(), "Assets/Bookshelf.png");
 		this.setIcon(image);

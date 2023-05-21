@@ -29,6 +29,18 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 
 	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
+		if(mainController == null) {
+			throw new NullPointerException("mainController cannot be set to null when creating a NextPlayerButtonController instance!");
+		}
+		if(commonGameArea == null) {
+			throw new NullPointerException("commonGameArea cannot be set to null when creating a NextPlayerButtonController instance!");
+		}
+		if(commonGameAreaFrame == null) {
+			throw new NullPointerException("commonGameAreaFrame cannot be set to null when creating a NextPlayerButtonController instance!");
+		}
+		if(button == null) {
+			throw new NullPointerException("button cannot be set to null when creating a NextPlayerButtonController instance!");
+		}
 		this.button = button;
 		this.defaultStateIcon = (ImageIcon) button.getIcon();
 		this.pressedStateIcon = ImageUtils.loadImageAsIcon(defaultStateIcon.getIconWidth(),
@@ -107,12 +119,10 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 
 	// Advances the turn
 	private void nextTurn() throws IllegalActionException {
-		/*
-		 * if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
-		 * throw new
-		 * IllegalActionException("Warning, you have to make your move before you can pass your turn!"
-		 * ); }
-		 */
+		if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
+			throw new IllegalActionException("Warning, you have to make your move before you can pass your turn!"); 
+		 }
+	
 		this.mainController.getCurrentPlayer().resetSelectedColumn();
 
 		int currentPlayerId = mainController.getCurrentPlayer().getId();

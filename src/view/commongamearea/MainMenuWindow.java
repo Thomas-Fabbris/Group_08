@@ -21,9 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class MainMenuWindow extends JDialog {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3919760497868695631L;
 	private JPanel empty_space1 = new JPanel();
 	private JPanel empty_space2 = new JPanel();
@@ -36,6 +34,9 @@ public class MainMenuWindow extends JDialog {
 	private JButton start = new JButton("Start Game");
 	
 	public MainMenuWindow(ArrayList<String> players) {
+		if(players == null) {
+			throw new NullPointerException("players cannot be set to null when creating a MainMenuWindow instance!");
+		}
 		this.players = players;
 		this.setModal(true);
 		InitWindow();
@@ -47,7 +48,7 @@ public class MainMenuWindow extends JDialog {
 		
 		number_of_players_seletion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int count = (int)number_of_players_seletion.getSelectedItem(); //where should we store this?
+				int count = (int)number_of_players_seletion.getSelectedItem();
 				number_of_players = count;
 				hideUnusedTextFields(count);
 			}
@@ -122,6 +123,9 @@ public class MainMenuWindow extends JDialog {
 	}
 	
 	private void getPlayers(ArrayList<String> players) {	
+		if(players == null) {
+			throw new NullPointerException("players cannot be set to null when calling MainMenuWindow.getPlayers() method!");
+		}
 		for(int i = 0; i < number_of_players; i++) {
 			players.add(player_names[i].getText());
 		}
@@ -132,8 +136,13 @@ public class MainMenuWindow extends JDialog {
 	 * @return the name specified text field
 	 */
 	public String getPlayerNameInTextfield(int text_field) {
-		if(!player_names[text_field].isVisible()) throw new IndexOutOfBoundsException();
-		return player_names[text_field].getText();
+		if(text_field >= 0 && text_field <=4) {
+			if(!player_names[text_field].isVisible()) {
+				throw new IndexOutOfBoundsException();
+			}
+			return player_names[text_field].getText();
+		}
+		throw new IllegalArgumentException("text_field must be between 0 and 4 when calling MainMenuWindow.getPlayerNameInTextField() method!");
 	}
 	
 	private void InitWindow() {
@@ -177,6 +186,9 @@ public class MainMenuWindow extends JDialog {
 	}
 	
 	private void changeButtonState(JTextField txt) {
+		if(txt == null) {
+			throw new NullPointerException("txt cannot be set to null when calling MainMenuWindow.changeButtonState() method!");
+		}
 		if(!start.isEnabled()) {
 			if(txt.getText().length() > 0) {
 				start.setEnabled(true);

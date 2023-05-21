@@ -38,8 +38,6 @@ public class GameEndFrame extends JFrame {
 
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-//		this.setLayout(new GridLayout(9,0));
-
 		this.winnerName = new JLabel("Gamer", JLabel.CENTER);
 		winnerName.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		winnerName.setForeground(Color.WHITE);
@@ -94,6 +92,9 @@ public class GameEndFrame extends JFrame {
 	}
 
 	private void init(Dimension screenSize) {
+		if(screenSize == null) {
+			throw new NullPointerException("screenSize cannot be set to null when calling GameEndFrame.inti() method!");
+		}
 		this.setResizable(false);
 		this.setSize(screenSize.width / 2, screenSize.height - 40);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

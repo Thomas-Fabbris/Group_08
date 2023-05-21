@@ -1,16 +1,8 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JLabel;
-import javax.swing.KeyStroke;
 
 import model.CommonGameArea;
 import model.Player;
@@ -52,7 +44,7 @@ public class BookshelfTileController implements MouseListener {
 
 		// TODO DEBUG REMOVE THIS
 		// -------------------------- remove --------------------------
-
+		/*
 		InputMap im = label.getInputMap(JLabel.WHEN_FOCUSED);
 		ActionMap am = label.getActionMap();
 
@@ -61,8 +53,6 @@ public class BookshelfTileController implements MouseListener {
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "onTwo");
 
 		am.put("onOne", new AbstractAction() {
-			
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -80,7 +70,7 @@ public class BookshelfTileController implements MouseListener {
 		});
 
 		// -------------------------- remove --------------------------
-
+	*/
 	}
 
 	@Override
@@ -177,6 +167,9 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	private void checkCommonObjectives(Player player) {
+		if(player == null) {
+			throw new NullPointerException("player cannot be set to null when calling BookShelfTileController.checkCommonObjectives() method!");
+		}
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
 
 		// The first condition checks whether the player already has a point tile from
@@ -196,6 +189,9 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	private void checkPersonalObjective(Player player) {
+		if(player == null) {
+			throw new NullPointerException("player cannot be set to null when calling BookShelfTileController.checkPersonalObjective() method!");
+		}
 		int matches = player.getObjectiveCard().countSatisfiedGoals(player.getBookshelf());
 
 		// We check how many tiles in the bookshelf match the personal objective card
@@ -254,6 +250,7 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	// TODO: remove this method
+	/*
 	private void forceCommonObjectiveCompletion(Player player, int objId) {
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
 
@@ -267,4 +264,5 @@ public class BookshelfTileController implements MouseListener {
 		System.out.println("[BookshelfTileController.java] player point tile 1: " + player.getPointTile(1));
 		System.out.println("----------------------------------------------------------------------------");
 	}
+	*/
 }

@@ -35,7 +35,9 @@ public class CommonGameAreaFrame extends JFrame {
 
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
-
+		if(screenSize == null) {
+			throw new NullPointerException("screenSize cannot be set to null while creating a CommonGameAreaFrame instance!");
+		}
 		this.screenSize = screenSize;
 		this.setLayout(new FlowLayout());
 		Init();
@@ -119,7 +121,10 @@ public class CommonGameAreaFrame extends JFrame {
 	}
 	
 	public JLabel getPointTile(int index) {
-		return pointTiles[index];
+		if(index == 0 || index == 1) {
+				return pointTiles[index];
+		}
+		throw new IllegalArgumentException("index can be either 0 or 1 while calling CommonGameAreaFrame.getPointTile() method!");
 	}
 
 	public BoardTileLabel[][] getBoardTilesLabels() {
@@ -136,7 +141,10 @@ public class CommonGameAreaFrame extends JFrame {
 	 * @return
 	 */
 	public JLabel getCommonObjectiveCard(int index) {
-		return commonObjectiveCards[index];
+		if(index == 0 || index == 1) {
+			return commonObjectiveCards[index];
+	}
+	throw new IllegalArgumentException("index can be either 0 or 1 while calling CommonGameAreaFrame.getCommonObjectiveCard() method!");
 	}
 
 	public JPanel getSelectedTiles() {

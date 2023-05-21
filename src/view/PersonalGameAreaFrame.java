@@ -44,6 +44,9 @@ public class PersonalGameAreaFrame extends JFrame {
 	
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
+		if(screenSize == null) {
+			throw new NullPointerException("screenSize cannot be set to null while creating a PersonalGameAreaFrame instance!");
+		}
 		this.screenSize = screenSize;
 		Init();
 		
@@ -179,7 +182,10 @@ public class PersonalGameAreaFrame extends JFrame {
 	 * @return
 	 */
 	public JLabel getPointTile(int id) {
-		return pointTiles[id];
+		if(id == 0 || id == 1) {
+			return pointTiles[id];
+		}
+		throw new IllegalArgumentException("index can be either 0 or 1 while calling PersonalGameAreaFrame.getPointTile() method!");
 	}
 
 	public JLabel getPoints() {

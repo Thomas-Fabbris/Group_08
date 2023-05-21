@@ -5,12 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 
 public class BookshelfTileLabel extends JLabel {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7047995230385435718L;
-	
 	private int row;
 	private int column;
 	
@@ -19,6 +13,10 @@ public class BookshelfTileLabel extends JLabel {
 	private int yOffset;
 	
 	public BookshelfTileLabel(int row, int column, Dimension shelfLabelSize) {
+		
+		if(shelfLabelSize == null) {
+			throw new NullPointerException("shelfLabelSize cannot be set to null when creating a BookShelfTileLAbel instance!");
+		}
 		
 		this.row = row;
 		this.column = column;

@@ -1,6 +1,5 @@
 package model.personalgamearea;
 
-import java.awt.print.Book;
 import java.util.Iterator;
 
 import model.Player;

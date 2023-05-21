@@ -2,7 +2,6 @@ package model.commongamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import model.shared.TileType;

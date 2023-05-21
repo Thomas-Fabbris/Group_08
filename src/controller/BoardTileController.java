@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 
 import model.CommonGameArea;
 import model.Player;
-import model.commongamearea.Board;
 import model.commongamearea.BoardTile;
 import model.commongamearea.InvalidMoveException;
 import model.personalgamearea.IllegalActionException;
