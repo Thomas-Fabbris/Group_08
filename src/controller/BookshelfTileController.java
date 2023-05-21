@@ -93,7 +93,7 @@ public class BookshelfTileController implements MouseListener {
 		int row = label.getRow();
 		int column = label.getColumn();
 
-		if (selectedTiles.size() > 0 && currentPlayer.bookshelf.getTile(row, column).getType() == TileType.NULL) {
+		if (selectedTiles.size() > 0 && currentPlayer.getBookshelf().getTile(row, column).getType() == TileType.NULL) {
 
 			// If this is the first tile added to the bookshelf on this turn, do not enforce
 			// a column

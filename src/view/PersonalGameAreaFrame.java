@@ -80,8 +80,7 @@ public class PersonalGameAreaFrame extends JFrame {
 		warningsPanel.setLayout(new BoxLayout(warningsPanel, BoxLayout.X_AXIS));
 		
 		warnings = new JLabel();
-		warnings.setForeground(Color.white);
-		warnings.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/36));
+		warnings.setFont(new Font(Font.DIALOG, Font.BOLD, this.getHeight()/40));
 		warnings.setForeground(Color.RED);
 		warnings.setVisible(false);
 		warningsPanel.add(warnings);

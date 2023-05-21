@@ -223,6 +223,7 @@ public class MainController {
 		NextPlayerButtonController controller = new NextPlayerButtonController(button, commonGameArea,
 				commonGameAreaFrame, this);
 		observers.forEach((o) -> controller.addObserver(o));
+		observers.clear();
 		button.addMouseListener(controller);
 	}
 

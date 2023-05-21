@@ -13,13 +13,13 @@ public class BoardTile extends Tile {
 
 	public BoardTile(TileType tile_type, int row, int column, Board board) {
 		super(tile_type);
-		if(board == null) {
+		if (board == null) {
 			throw new NullPointerException("board must no be set to null while creating a BoardTile instance!");
 		}
 		this.row = row;
 		this.column = column;
 		this.board = board;
-		this.isActive = true;
+		this.setActive(true);
 	}
 
 	public void setType(TileType type) {
@@ -42,7 +42,7 @@ public class BoardTile extends Tile {
 		return board.getTile(row + 1, column);
 	}
 
-	public BoardTile tileRigth() {
+	public BoardTile tileRight() {
 		return board.getTile(row, column + 1);
 	}
 
@@ -83,7 +83,7 @@ public class BoardTile extends Tile {
 		if (tileLeft() != null && tileLeft().isInteractible())
 			contatore++;
 
-		if (tileRigth() != null && tileRigth().isInteractible())
+		if (tileRight() != null && tileRight().isInteractible())
 			contatore++;
 
 		return contatore > 0 && contatore < 4;
@@ -98,16 +98,16 @@ public class BoardTile extends Tile {
 	public TileSides getBlockedSides() {
 		int blockedSides = 0;
 
-		if (tileUp() != null && tileUp().isInteractible())
+		if (tileUp() != null && tileUp().isActive)
 			blockedSides++;
 
-		if (tileDown() != null && tileDown().isInteractible())
+		if (tileDown() != null && tileDown().isActive)
 			blockedSides++;
 
-		if (tileLeft() != null && tileLeft().isInteractible())
+		if (tileLeft() != null && tileLeft().isActive)
 			blockedSides++;
 
-		if (tileRigth() != null && tileRigth().isInteractible())
+		if (tileRight() != null && tileRight().isActive)
 			blockedSides++;
 
 		if (blockedSides == 0) {
@@ -128,15 +128,15 @@ public class BoardTile extends Tile {
 	public ArrayList<BoardTile> Choices() {
 		ArrayList<BoardTile> choices = new ArrayList<BoardTile>();// si crea un arraylist per salvare le varie opzioni
 		if (this.canBePickedUp()) {
-			if ((this.tileRigth().canBePickedUp()) && (this.tileRigth().getType().equals(this.getType()))) {
-				if ((this.tileRigth().tileRigth().canBePickedUp())
-						&& (this.tileRigth().tileRigth().getType().equals(this.getType()))) {
+			if ((this.tileRight().canBePickedUp()) && (this.tileRight().getType().equals(this.getType()))) {
+				if ((this.tileRight().tileRight().canBePickedUp())
+						&& (this.tileRight().tileRight().getType().equals(this.getType()))) {
 					choices.add(this);
-					choices.add(this.tileRigth());
-					choices.add(this.tileRigth().tileRigth());
+					choices.add(this.tileRight());
+					choices.add(this.tileRight().tileRight());
 				} else {
 					choices.add(this);
-					choices.add(this.tileRigth());
+					choices.add(this.tileRight());
 				}
 			} else {
 				choices.add(this);// si creeranno dei duplicati della prima tile, ma servono per distinguere i
@@ -197,7 +197,7 @@ public class BoardTile extends Tile {
 
 		return choices;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getType().toString();

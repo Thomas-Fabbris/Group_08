@@ -24,7 +24,7 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
-	
+
 	private List<Observer> boardTileControllers;
 
 	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
@@ -36,7 +36,7 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
-		
+
 		this.boardTileControllers = new ArrayList<>();
 	}
 
@@ -48,24 +48,23 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		// board
 		try {
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(false);
-			List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();
-			clearSelectedTiles(tiles);
-			commonGameArea.updateCurrentBlockedTiles();
+			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
 
+			// Check for the case in which the player picks up three tiles and tries to
+			// return the middle one to the board
+			if (selectedTiles.size() == 2 && !selectedTiles.get(0).isAdjacent(selectedTiles.get(1))) {
+				throw new IllegalActionException("Please place all tiles in the bookshelf before ending your turn!");
+			}
+
+			clearSelectedTiles(selectedTiles);
+			commonGameArea.updateCurrentBlockedTiles();
 			nextTurn();
-//			fillInBoard();
+
 		} catch (IllegalActionException ex) {
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setText(ex.getMessage());
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(true);
 		}
 	}
-
-//	private void fillInBoard() {
-//		if (this.commonGameArea.getBoard().isFull()) {
-//			this.commonGameArea.getBoard().refill();
-//			this.mainController.assignBoardTiles(); // assignBoardTiles() should be used only for initialisation
-//		}
-//	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -86,7 +85,7 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	public void mouseExited(MouseEvent e) {
 
 	}
-	
+
 	@Override
 	public void addObserver(Observer o) {
 		boardTileControllers.add(o);
@@ -94,7 +93,7 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 
 	@Override
 	public void removeObserver(Observer o) {
-		if(boardTileControllers.contains(o)) {
+		if (boardTileControllers.contains(o)) {
 			boardTileControllers.remove(o);
 		}
 	}
@@ -105,14 +104,14 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 			boardTileControllers.get(i).update(data);
 		}
 	}
-	
-
 
 	// Advances the turn
 	private void nextTurn() throws IllegalActionException {
-		/*if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
-			throw new IllegalActionException("Warning, you have to make your move before you can pass your turn!"); 
-		 }
+		/*
+		 * if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
+		 * throw new
+		 * IllegalActionException("Warning, you have to make your move before you can pass your turn!"
+		 * ); }
 		 */
 		this.mainController.getCurrentPlayer().resetSelectedColumn();
 
@@ -127,19 +126,21 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		this.mainController.getGameToken().setCurrentOwner(this.mainController.getCurrentPlayer());
 
 		// Check to decide if the game ends when the nextPlayerButton is pressed
-		if (mainController.getGameState() == GameState.LAST_TURN && currentPlayerId == mainController.getLastPlayer().getId()) {
-			System.out.println("[" +this.getClass().getSimpleName()+ "] Game ended!");
+		if (mainController.getGameState() == GameState.LAST_TURN
+				&& currentPlayerId == mainController.getLastPlayer().getId()) {
+			System.out.println("[" + this.getClass().getSimpleName() + "] Game ended!");
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
-		
+
 		// Check if the board needs to be refilled
-		if(commonGameArea.getBoard().isFull()) {
-			System.out.println("[" +this.getClass().getSimpleName()+ "] Refilling board");
+		if (commonGameArea.getBoard().isFull()) {
+			System.out.println("[" + this.getClass().getSimpleName() + "] Refilling board");
 			commonGameArea.getBoard().refill();
 			commonGameArea.updateCurrentBlockedTiles();
 			mainController.updateAllBoardTileLabels();
-			notify(new Object[] {commonGameArea.getBoard().getBoardTiles(), commonGameAreaFrame.getBoardTilesLabels()});
+			notify(new Object[] { commonGameArea.getBoard().getBoardTiles(),
+					commonGameAreaFrame.getBoardTilesLabels() });
 		}
 	}
 
