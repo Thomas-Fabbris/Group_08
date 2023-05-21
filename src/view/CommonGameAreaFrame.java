@@ -122,7 +122,7 @@ public class CommonGameAreaFrame extends JFrame {
 		return pointTiles[index];
 	}
 
-	public BoardTileLabel[][] getBoardTiles() {
+	public BoardTileLabel[][] getBoardTilesLabels() {
 		return this.boardTileLabels;
 	}
 

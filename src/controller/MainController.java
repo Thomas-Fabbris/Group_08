@@ -343,29 +343,39 @@ public class MainController {
 	}
 	
 	public void updateAllBoardTileLabels() {
-		commonGameAreaFrame.getBoardLabel().revalidate();
-		commonGameAreaFrame.getBoardLabel().repaint();;
+		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTilesLabels();
+		Board board = commonGameArea.getBoard();
+
+		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
+			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
+				if(board.isValidPosition(row, col)) {					
+					updateBoardTileLabel(board.getTile(row, col), boardTileLabels[row][col]);
+					boardTileLabels[row][col].setVisible(true);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Assigns a Label to each Tile on the board and saves it in
-	 * commonGameAreaFrame.boardTileLabels
+	 * commonGameAreaFrame.boardTileLabels.
+	 * To be used for initialisation only.
 	 */
 	public void assignBoardTiles() {
 
-		int ROWS = commonGameArea.getBoard().getTiles()[0].length;
-		int COLUMNS = commonGameArea.getBoard().getTiles().length;
+		int ROWS = commonGameArea.getBoard().getBoardTiles().length;
+		int COLUMNS = commonGameArea.getBoard().getBoardTiles()[0].length;
 
 		Board board = commonGameArea.getBoard();
 		JLabel boardLabel = commonGameAreaFrame.getBoardLabel();
-		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTiles();
+		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTilesLabels();
 
 		for (int row = 0; row < ROWS; row++) {
 			for (int column = 0; column < COLUMNS; column++) {
 				if (board.getValidPositions()[row][column]) {
 					BoardTileLabel label = new BoardTileLabel(row, column, boardLabel.getSize());
 
-					label.addMouseListener(new BoardTileController(board, board.getTile(row, column), label,
+					label.addMouseListener(new BoardTileController(board.getTile(row, column), label,
 							commonGameArea, commonGameAreaFrame, this, personalGameAreaFrame));
 
 					boardLabel.add(label);

@@ -197,4 +197,9 @@ public class BoardTile extends Tile {
 
 		return choices;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getType().toString();
+	}
 }

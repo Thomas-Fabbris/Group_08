@@ -13,14 +13,14 @@ import model.commongamearea.BoardTile;
 import model.commongamearea.InvalidMoveException;
 import model.personalgamearea.IllegalActionException;
 import model.shared.TileSides;
+import observer.Observer;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
 import view.commongamearea.BoardTileLabel;
 
-public class BoardTileController implements MouseListener {
+public class BoardTileController implements MouseListener, Observer {
 
-	private Board board;
 	private BoardTile tile;
 	private BoardTileLabel label;
 	private ImageIcon coloredIcon;
@@ -30,11 +30,9 @@ public class BoardTileController implements MouseListener {
 	private MainController mainController;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 
-	public BoardTileController(Board board, BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
+	public BoardTileController(BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController, PersonalGameAreaFrame personalGameAreaFrame) {
-		if(board == null) {
-			throw new NullPointerException("Warning, board must not be set to null while creating a BoardTileController instance!");
-		}
+
 		if(tile == null) {
 			throw new NullPointerException("Warning, tile must not be set to null while creating a BoardTileController instance!");
 		}
@@ -53,7 +51,7 @@ public class BoardTileController implements MouseListener {
 		if(personalGameAreaFrame == null) {
 			throw new NullPointerException("Warning, personalGameAreaFrame must not be set to null while creating a BoardTileController instance!");
 		}
-		this.board = board;
+		
 		this.tile = tile;
 		this.label = label;
 		this.commonGameArea = commonGameArea;
@@ -68,6 +66,10 @@ public class BoardTileController implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
+		//TODO remove this line
+		System.out.println("Clicked on " +tile.getType());
+		
 		try {
 			this.personalGameAreaFrame.getWarnings().setVisible(false);
 			if (!this.tile.isInteractible()) {
@@ -126,7 +128,27 @@ public class BoardTileController implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		this.label.setIcon(this.coloredIcon);
 	}
+	
 
+	/**
+	 * Updates this.tile, this.label, this.coloredIcon, this.grayIcon
+	 */
+	@Override
+	public void update(Object[] data) {
+		BoardTile[][] tiles = (BoardTile[][])data[0];
+		BoardTileLabel[][] tileLabels = (BoardTileLabel[][])data[1];
+		
+		this.tile = tiles[tile.getRow()][tile.getColumn()];
+		this.label = tileLabels[tile.getRow()][tile.getColumn()];
+		
+		updateIcons();
+	}
+
+	private void updateIcons() {
+		this.coloredIcon = (ImageIcon) label.getIcon();
+		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);
+	}
+	
 	/**
 	 * Picks up the selected tile
 	 * 
@@ -139,7 +161,7 @@ public class BoardTileController implements MouseListener {
 		}
 		commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
 		selectedTiles.add(tile);
-		this.tile.setActive(false);
+		this.tile.disable();
 		this.label.setVisible(false);
 	}
 
@@ -191,23 +213,4 @@ public class BoardTileController implements MouseListener {
 			throw new InvalidMoveException("Warning, you cannot pick up this tile!");
 		}
 	}
-
-	/*
-	 * shows by using colours if the selected tiles can be picked up
-	 */
-	public void globalCheckIfTilesCanBePickedUp() {
-
-		BoardTileLabel[][] tileLabels = commonGameAreaFrame.getBoardTiles();
-
-		for (int i = 0; i < board.getTiles().length; i++) {
-			for (int j = 0; j < board.getTiles().length; j++) {
-				if (!(board.getTiles()[i][j].canBePickedUp())) {
-					ImageIcon ogIcon = (ImageIcon) tileLabels[i][j].getIcon();
-					ImageIcon greyIcon = ImageUtils.getGrayImage(ogIcon);
-					tileLabels[i][j].setIcon(greyIcon);
-				}
-			}
-		}
-	}
-
 }

@@ -21,7 +21,7 @@ public class Pouch {
 		tileCounter.put(TileType.GAMES, initialTileCount);
 		tileCounter.put(TileType.PLANTS, initialTileCount);
 		tileCounter.put(TileType.TROPHIES, initialTileCount);
-		
+
 		this.totalNumberOfTiles = initialTileCount * tileCounter.size();
 	}
 
@@ -38,15 +38,15 @@ public class Pouch {
 		int iteration = 0;
 
 		// Select a new tile if the selected one is not available
-		while(!isTileAvailable(tileToExtract)) {
+		while (!isTileAvailable(tileToExtract)) {
 			tileToExtract = TileType.randomType();
-			
+
 			iteration++;
-			if(iteration >= totalNumberOfTiles) {
+			if (iteration >= totalNumberOfTiles) {
 				throw new IllegalStateException("The pouch has been completely emptied!");
 			}
 		}
-		
+
 		tileCounter.put(tileToExtract, tileCounter.get(tileToExtract) - 1); // decrease the value by one
 		return tileToExtract;
 	}
@@ -63,9 +63,10 @@ public class Pouch {
 
 	/**
 	 * Adds the tile back to the pouch (increases the count by one)
+	 * 
 	 * @param type
 	 */
-	public void add(TileType type) {
-		tileCounter.put(type, tileCounter.get(type) + 1);
-	}
+//	public void add(TileType type) {
+//		tileCounter.put(type, tileCounter.get(type) + 1);
+//	}
 }

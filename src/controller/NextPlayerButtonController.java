@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -10,10 +11,12 @@ import javax.swing.JLabel;
 import model.CommonGameArea;
 import model.commongamearea.BoardTile;
 import model.personalgamearea.IllegalActionException;
+import observer.Observable;
+import observer.Observer;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 
-public class NextPlayerButtonController implements MouseListener {
+public class NextPlayerButtonController implements MouseListener, Observable {
 
 	private JLabel button;
 	private ImageIcon defaultStateIcon;
@@ -21,6 +24,8 @@ public class NextPlayerButtonController implements MouseListener {
 	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
+	
+	private List<Observer> boardTileControllers;
 
 	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
@@ -31,6 +36,8 @@ public class NextPlayerButtonController implements MouseListener {
 		this.commonGameArea = commonGameArea;
 		this.commonGameAreaFrame = commonGameAreaFrame;
 		this.mainController = mainController;
+		
+		this.boardTileControllers = new ArrayList<>();
 	}
 
 	@Override
@@ -46,20 +53,19 @@ public class NextPlayerButtonController implements MouseListener {
 			commonGameArea.updateCurrentBlockedTiles();
 
 			nextTurn();
-			fillInBoard();
+//			fillInBoard();
 		} catch (IllegalActionException ex) {
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setText(ex.getMessage());
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(true);
 		}
 	}
 
-	private void fillInBoard() {
-		if (this.commonGameArea.getBoard().refillCheck()) {
-			this.commonGameArea.getBoard().refill();
-			this.mainController.assignBoardTiles();
-		}
-
-	}
+//	private void fillInBoard() {
+//		if (this.commonGameArea.getBoard().isFull()) {
+//			this.commonGameArea.getBoard().refill();
+//			this.mainController.assignBoardTiles(); // assignBoardTiles() should be used only for initialisation
+//		}
+//	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -80,6 +86,27 @@ public class NextPlayerButtonController implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
+	
+	@Override
+	public void addObserver(Observer o) {
+		boardTileControllers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		if(boardTileControllers.contains(o)) {
+			boardTileControllers.remove(o);
+		}
+	}
+
+	@Override
+	public void notify(Object[] data) {
+		for (int i = 0; i < boardTileControllers.size(); i++) {
+			boardTileControllers.get(i).update(data);
+		}
+	}
+	
+
 
 	// Advances the turn
 	private void nextTurn() throws IllegalActionException {
@@ -106,8 +133,12 @@ public class NextPlayerButtonController implements MouseListener {
 			mainController.displayGameEndScreen();
 		}
 		
-		if(commonGameArea.getBoard().refillCheck()) {
+		// Check if the board needs to be refilled
+		if(commonGameArea.getBoard().isFull()) {
 			System.out.println("Refilling board");
+			commonGameArea.getBoard().refill();
+			commonGameArea.getBoard().printTiles(); //TODO remove this sysout
+			notify(new Object[] {commonGameArea.getBoard().getBoardTiles(), commonGameAreaFrame.getBoardTilesLabels()});
 			mainController.updateAllBoardTileLabels();
 		}
 	}
@@ -129,7 +160,6 @@ public class NextPlayerButtonController implements MouseListener {
 		tile.setActive(true);
 		int row = tile.getRow();
 		int column = tile.getColumn();
-		commonGameAreaFrame.getBoardTiles()[row][column].setVisible(true);
+		commonGameAreaFrame.getBoardTilesLabels()[row][column].setVisible(true);
 	}
-
 }

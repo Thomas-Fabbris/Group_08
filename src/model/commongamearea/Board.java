@@ -2,6 +2,7 @@ package model.commongamearea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import model.shared.TileType;
@@ -14,7 +15,7 @@ public class Board {
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
 
 	public Board(int numberOfPlayers) {
-		if(numberOfPlayers < 2) {
+		if (numberOfPlayers < 2) {
 			throw new IllegalArgumentException("The number of players selected for a math must be at least 2!");
 		}
 		validPositions = readValidBoardPositionsFile(selectValidPositionsFile(numberOfPlayers));
@@ -25,7 +26,7 @@ public class Board {
 		return this.validPositions;
 	}
 
-	public BoardTile[][] getTiles() {
+	public BoardTile[][] getBoardTiles() {
 		return this.tiles;
 	}
 
@@ -95,19 +96,6 @@ public class Board {
 			throw new InvalidBoardPositionException(row, column);
 
 		tiles[row][column].disable();
-	}
-
-	/**
-	 * Tile becomes visible on the board (will not change TileType)
-	 * 
-	 * @param row
-	 * @param column
-	 */
-	public void showTile(int row, int column) {
-		if (!isValidPosition(row, column))
-			throw new InvalidBoardPositionException(row, column);
-
-		tiles[row][column].enable();
 	}
 
 	public boolean isTileVisible(int row, int column) {
@@ -200,40 +188,25 @@ public class Board {
 	}
 
 	public void refill() {
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles.length; j++) {
-
-				// svuota tutte le tessere rimaste e le rimette nella pouch
-				if (tiles[i][j].getType() != TileType.NULL && tiles[i][j].isActive()) {
-					Pouch.getInstance().add(tiles[i][j].getType());
-					tiles[i][j].disable();
-
-				}
-			}
-		}
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles.length; j++) {
-
-				if (tiles[i][j].getType() != TileType.NULL && !tiles[i][j].isActive()) {
-					tiles[i][j].setType(Pouch.getInstance().extractRandom());
-					showTile(i, j);
+		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
+			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
+				if (isValidPosition(row, col) && !tiles[row][col].isActive()) {
+					this.setTileType(row, col, Pouch.getInstance().extractRandom());
+					tiles[row][col].enable();
 				}
 			}
 		}
 	}
 
-	public boolean refillCheck() {
-		boolean check = true;
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles.length; j++) {
-				if (tiles[i][j].isActive() && tiles[i][j].canBePickedUp()) {
-					check = false;
-					break; // interrompe sono il primo for, sarebbe meglio implementare un modo che li
-							// fermi entrambi
+	public boolean isFull() {
+		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
+			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
+				if (tiles[row][col].isActive() && tiles[row][col].canBePickedUp()) {
+					return false;
 				}
 			}
 		}
-		return check;
+		return true;
 	}
 
 	public void hideAllTiles() {
@@ -244,4 +217,16 @@ public class Board {
 		}
 	}
 
+	public void printTiles() {
+		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
+			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
+				if(tiles[row][col].getType() == TileType.NULL) {
+					System.out.print("* ");
+				} else {					
+					System.out.print(tiles[row][col].toString().charAt(0) + " ");
+				}
+			}
+			System.out.println();
+		}
+	}
 }
