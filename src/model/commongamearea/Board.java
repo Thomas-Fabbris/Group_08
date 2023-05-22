@@ -14,8 +14,9 @@ public class Board {
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
 
 	public Board(int numberOfPlayers) {
+		//condizione di uscita dal programma
 		if (numberOfPlayers < 2) {
-			throw new IllegalArgumentException("The number of players selected for a math must be at least 2!");
+			System.exit(0);
 		}
 		validPositions = readValidBoardPositionsFile(selectValidPositionsFile(numberOfPlayers));
 		this.initTiles();
