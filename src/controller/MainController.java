@@ -100,7 +100,7 @@ public class MainController {
 
 	private void startGame() {
 		players[0].setHasChair(true);
-		setCurrentPlayer(players[0]);		
+		setCurrentPlayer(players[0]);
 		updateBookshelfLabel();
 	}
 
