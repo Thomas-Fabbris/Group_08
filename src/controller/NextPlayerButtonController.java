@@ -120,7 +120,7 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	// Advances the turn
 	private void nextTurn() throws IllegalActionException {
 		if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
-			throw new IllegalActionException("Warning, you have to make your move before you can pass your turn!"); 
+			throw new IllegalActionException("You have to make your move before you can proceed to the next turn!"); 
 		 }
 	
 		this.mainController.getCurrentPlayer().resetSelectedColumn();

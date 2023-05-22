@@ -8,6 +8,7 @@ import model.CommonGameArea;
 import model.Player;
 import model.commongamearea.BoardTile;
 import model.commongamearea.CommonObjectiveCard;
+import model.personalgamearea.IllegalActionException;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
@@ -54,38 +55,51 @@ public class BookshelfTileController implements MouseListener {
 		int row = label.getRow();
 		int column = label.getColumn();
 
-		if (selectedTiles.size() > 0 && currentPlayer.getBookshelf().getTile(row, column).getType() == TileType.NULL) {
+		try {
 
-			// If this is the first tile added to the bookshelf on this turn, do not enforce
-			// a column
-			if (!currentPlayer.hasSelectedColumn()) {
-				moveFirstSelectedTileToBookshelf(column);
-				currentPlayer.setSelectedColumn(column);
-			} else if (currentPlayer.getSelectedColumn() == column) {
-				moveSelectedTileToBookshelf();
+			// Check for the case in which the player tries to insert more tiles in a column
+			// than there are free cells
+			if (!currentPlayer.getBookshelf().columnHasSpaceAvailable(column, selectedTiles.size())) {
+				currentPlayer.resetSelectedColumn();
+				throw new IllegalActionException("Not enough space in this column!");
 			}
-		}
 
-		// When the player has inserted all the selected tiles in the bookshelf, check
-		// if a goal is satisfied
-		if (selectedTiles.size() == 0) {
-			try {
-				checkCommonObjectives(currentPlayer);
-				checkPersonalObjective(currentPlayer);
-			} catch (IllegalArgumentException e2) {
-				e2.printStackTrace();
-			} catch (Exception e3) {
-				e3.printStackTrace();
+			if (selectedTiles.size() > 0) {
+				// If this is the first tile added to the bookshelf on this turn, do not enforce
+				// a column
+				if (!currentPlayer.hasSelectedColumn()) {
+					moveFirstSelectedTileToBookshelf(column);
+					currentPlayer.setSelectedColumn(column);
+				} else if (currentPlayer.getSelectedColumn() == column) {
+					moveSelectedTileToBookshelf();
+				}
 			}
-		}
 
-		// Check to decide if the current player should get the GameEndTile
-		if (!commonGameArea.getGameEndTile().hasBeenAwarded() && currentPlayer.bookshelf.isFull()) {
-			commonGameArea.getGameEndTile().award(currentPlayer);
-			mainController.updatePointsText(currentPlayer);
-			mainController.updatePlayerGameEndTileLabel(currentPlayer);
-			commonGameAreaFrame.getEndOfGameTile().setVisible(false);
-			mainController.setGameState(GameState.LAST_TURN);
+			// When the player has inserted all the selected tiles in the bookshelf, check
+			// if a goal is satisfied
+			if (selectedTiles.size() == 0) {
+				try {
+					checkCommonObjectives(currentPlayer);
+					checkPersonalObjective(currentPlayer);
+				} catch (IllegalArgumentException e2) {
+					e2.printStackTrace();
+				} catch (Exception e3) {
+					e3.printStackTrace();
+				}
+			}
+
+			// Check to decide if the current player should get the GameEndTile
+			if (!commonGameArea.getGameEndTile().hasBeenAwarded() && currentPlayer.bookshelf.isFull()) {
+				commonGameArea.getGameEndTile().award(currentPlayer);
+				mainController.updatePointsText(currentPlayer);
+				mainController.updatePlayerGameEndTileLabel(currentPlayer);
+				commonGameAreaFrame.getEndOfGameTile().setVisible(false);
+				mainController.setGameState(GameState.LAST_TURN);
+			}
+
+		} catch (IllegalActionException e2) {
+			this.mainController.getPersonalGameAreaFrame().getWarnings().setText(e2.getMessage());
+			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(true);
 		}
 
 		mainController.updateBookshelfLabel();
@@ -140,8 +154,9 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	private void checkCommonObjectives(Player player) {
-		if(player == null) {
-			throw new NullPointerException("player cannot be set to null when calling BookShelfTileController.checkCommonObjectives() method!");
+		if (player == null) {
+			throw new NullPointerException(
+					"player cannot be set to null when calling BookShelfTileController.checkCommonObjectives() method!");
 		}
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
 
@@ -151,7 +166,7 @@ public class BookshelfTileController implements MouseListener {
 		for (int i = 0; i < cards.length; i++) {
 			if (!player.hasCompletedCommonGoal(i)
 					&& cards[i].getRelatedCommonGoal().checkCommonGoal(player.bookshelf)) {
-				
+
 				cards[i].award(player);
 				mainController.updatePointsText(player);
 				mainController.updatePlayerPointTileLabel(player, i);
@@ -162,8 +177,9 @@ public class BookshelfTileController implements MouseListener {
 	}
 
 	private void checkPersonalObjective(Player player) {
-		if(player == null) {
-			throw new NullPointerException("player cannot be set to null when calling BookShelfTileController.checkPersonalObjective() method!");
+		if (player == null) {
+			throw new NullPointerException(
+					"player cannot be set to null when calling BookShelfTileController.checkPersonalObjective() method!");
 		}
 		int matches = player.getObjectiveCard().countSatisfiedGoals(player.getBookshelf());
 

@@ -233,7 +233,7 @@ public class BoardTileController implements MouseListener, Observer {
 			this.label.setVisible(false);
 		} else {
 			this.label.setIcon(grayIcon);
-			throw new InvalidMoveException("6 You cannot pick up this tile!");
+			throw new InvalidMoveException("You cannot pick up this tile!");
 		}
 	}
 }

@@ -6,13 +6,14 @@ import model.Player;
 import model.commongamearea.BoardTile;
 import model.shared.TileType;
 
-public class Bookshelf implements Iterable<Bookshelf>{
+public class Bookshelf implements Iterable<Bookshelf> {
 
 	public static final int ROWS = 6;
 	public static final int COLUMNS = 5;
 	public final BookshelfTile[][] tiles = new BookshelfTile[ROWS][COLUMNS];
 	private Player player;
-	public boolean stateChanged = false; //stateChanged is a flag determining if the player has updated his bookshelf during the turn
+	public boolean stateChanged = false; // stateChanged is a flag determining if the player has updated his bookshelf
+											// during the turn
 
 	public Bookshelf(Player player) {
 		initTiles();
@@ -45,11 +46,11 @@ public class Bookshelf implements Iterable<Bookshelf>{
 	public void addTile(BoardTile tile, int row, int column) {
 		tiles[row][column].setType(tile.getType());
 	}
-	
+
 	public boolean isFull() {
-		for(int row = 0; row < ROWS; row++) {
-			for(int col = 0; col < COLUMNS; col++) {
-				if(this.tiles[row][col] != null && this.tiles[row][col].getType() == TileType.NULL) {
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLUMNS; col++) {
+				if (this.tiles[row][col] != null && this.tiles[row][col].getType() == TileType.NULL) {
 					return false;
 				}
 			}
@@ -71,13 +72,11 @@ public class Bookshelf implements Iterable<Bookshelf>{
 		return tiles[row][column];
 	}
 
-	public TileType[] getRow(int row)
-	{
+	public TileType[] getRow(int row) {
 
 		TileType[] res_row = new TileType[5];
 
-		for (int col = 0; col < 5; col++)
-		{
+		for (int col = 0; col < 5; col++) {
 			res_row[col] = tiles[row][col].getType();
 		}
 
@@ -85,13 +84,11 @@ public class Bookshelf implements Iterable<Bookshelf>{
 
 	}
 
-	public TileType[] getColumn(int column)
-	{
+	public TileType[] getColumn(int column) {
 
 		TileType[] res_col = new TileType[6];
 
-		for (int row = 0; row < 6; row++)
-		{
+		for (int row = 0; row < 6; row++) {
 			res_col[row] = tiles[row][column].getType();
 		}
 
@@ -125,78 +122,97 @@ public class Bookshelf implements Iterable<Bookshelf>{
 	public void setStateChanged(boolean stateChanged) {
 		this.stateChanged = stateChanged;
 	}
-	
+
 	public void addTile(BookshelfTile tile, int col) {
-		if(col > COLUMNS) {
+		if (col > COLUMNS) {
 			throw new IllegalArgumentException("Unable to add a tile in a non-existing column in the bookshelf!");
 		}
 		for (int row = ROWS - 1; row >= 0; row--) {
-			if(this.tiles[row][col].getType() == TileType.NULL) {
+			if (this.tiles[row][col].getType() == TileType.NULL) {
 				this.tiles[row][col] = tile;
 				this.stateChanged = true;
 				return;
 			}
 		}
-		
+
 	}
-	
+
 	/**
-	 * Finds the first available (free) row on a specified column. Returns -1 if the column is full
+	 * Finds the first available (free) row on a specified column. Returns -1 if the
+	 * column is full
+	 * 
 	 * @param column
 	 * @return
 	 */
 	public int getFirstFreeRow(int column) {
 		int row = 0;
-		
-		//Check if the column is full before looping through it
-		if(tiles[0][column].getType() != TileType.NULL) {
+
+		// Check if the column is full before looping through it
+		if (tiles[0][column].getType() != TileType.NULL) {
 			return -1;
 		}
-		
+
 		for (; row < Bookshelf.ROWS; row++) {
-			
+
 			// If we get to the end of the column, return the last possible row position
-			if(row+1 >= Bookshelf.ROWS) {
-				return Bookshelf.ROWS-1;
+			if (row + 1 >= Bookshelf.ROWS) {
+				return Bookshelf.ROWS - 1;
 			}
-			
-			// 
-			if(tiles[row+1][column].getType() != TileType.NULL) {
+
+			//
+			if (tiles[row + 1][column].getType() != TileType.NULL) {
 				return row;
 			}
 		}
-		
+
 		return -1;
 	}
-	
+
 	/**
 	 * Returns whether the bookshelf has enough space to insert x tiles
+	 * 
 	 * @param tiles the number of tiles to add to the bookshelf
 	 * @return
 	 */
 	public boolean hasAvaibleSpaceFor(int tiles) {
-		
-		if(tiles == 0) { // There is always available space to fit zero tiles
+
+		if (tiles == 0) { // There is always available space to fit zero tiles
 			return true;
 		}
-		
+
 		// For each column
 		for (int col = 0; col < Bookshelf.COLUMNS; col++) {
 			int freeCells = 0;
 
-			// Check if the first x cells are free
+			// Check if the first 3 cells going downwards are free
 			for (int row = 0; row < 3; row++) {
-				if(this.tiles[row][col].getType() == TileType.NULL) // If a cell is occupied, increment the counter
+				if (this.tiles[row][col].getType() == TileType.NULL) // If a cell is occupied, increment the counter
 					freeCells++;
-				
-				System.out.println(this.tiles[row][col].getType());
 			}
-			
-			System.out.println(freeCells);
-			
-			if(freeCells >= tiles) {				
+			if (freeCells >= tiles) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Returns whether a single column has enough free cells to insert x amount of tiles
+	 * @param column column to check
+	 * @param tiles the number of tiles to add to the column
+	 * @return
+	 */
+	public boolean columnHasSpaceAvailable(int column, int tiles) {
+		int freeCells = 0;
+		int col = column;
+
+		// Check if the first 3 cells going downwards are free
+		for (int row = 0; row < 3; row++) {
+			if (this.tiles[row][col].getType() == TileType.NULL) // If a cell is occupied, increment the counter
+				freeCells++;
+		}
+		if (freeCells >= tiles) {
+			return true;
 		}
 		return false;
 	}
