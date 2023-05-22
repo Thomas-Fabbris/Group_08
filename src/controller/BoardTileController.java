@@ -179,7 +179,7 @@ public class BoardTileController implements MouseListener, Observer {
 			this.label.setIcon(grayIcon);
 			throw new InvalidMoveException("You cannot pick up this tile!");
 		}
-		commonGameAreaFrame.getSelectedTile1().setIcon(label.getIcon());
+		commonGameAreaFrame.getSelectedTile(0).setIcon(label.getIcon());
 		selectedTiles.add(tile);
 		this.tile.disable();
 		this.label.setVisible(false);
@@ -196,7 +196,7 @@ public class BoardTileController implements MouseListener, Observer {
 		// adjacent
 
 		if (tile.isAdjacent(selectedTiles.get(0)) && tile.getBlockedSides() != TileSides.ALL_SIDES_BLOCKED) {
-			commonGameAreaFrame.getSelectedTile2().setIcon(label.getIcon());
+			commonGameAreaFrame.getSelectedTile(1).setIcon(label.getIcon());
 			selectedTiles.add(tile);
 			this.tile.setActive(false);
 			this.label.setVisible(false);
@@ -227,7 +227,7 @@ public class BoardTileController implements MouseListener, Observer {
 
 		if ((adjacentToFirst || adjacentToSecond) && checkRowColumn
 				&& tile.getBlockedSides() != TileSides.ALL_SIDES_BLOCKED) {
-			commonGameAreaFrame.getSelectedTile3().setIcon(label.getIcon());
+			commonGameAreaFrame.getSelectedTile(2).setIcon(label.getIcon());
 			selectedTiles.add(tile);
 			this.tile.setActive(false);
 			this.label.setVisible(false);

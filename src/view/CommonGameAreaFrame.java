@@ -28,10 +28,8 @@ public class CommonGameAreaFrame extends JFrame {
 	private JLabel[] pointTiles;
 
 	// Elements to display the tiles selected by the player
-	private JPanel selectedTiles;
-	private JLabel selectedTile1;
-	private JLabel selectedTile2;
-	private JLabel selectedTile3;
+	private JPanel selectedTilesPanel;
+	private JLabel[] selectedTiles;
 
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
@@ -83,25 +81,27 @@ public class CommonGameAreaFrame extends JFrame {
 				(int) (this.commonObjectiveCards[1].getWidth() / 3.55), (int) (this.commonObjectiveCards[1].getWidth() / 3.55));
 
 		// Initialise selected tiles elements
-		this.selectedTiles = new JPanel();
-		this.selectedTiles.setLayout(new GridLayout(3, 0));
-		this.selectedTiles.setSize(endOfGameTile.getWidth(), endOfGameTile.getHeight() * 3);
-		this.selectedTiles.setOpaque(false);
+		this.selectedTilesPanel = new JPanel();
+		this.selectedTilesPanel.setLayout(new GridLayout(3, 2));
+		this.selectedTilesPanel.setSize(endOfGameTile.getWidth(), endOfGameTile.getHeight() * 3);
+		this.selectedTilesPanel.setOpaque(false);
 
-		this.selectedTile1 = new JLabel();
-		this.selectedTile2 = new JLabel();
-		this.selectedTile3 = new JLabel();
-		this.selectedTile1.setSize(endOfGameTile.getSize());
-		this.selectedTile2.setSize(endOfGameTile.getSize());
-		this.selectedTile3.setSize(endOfGameTile.getSize());
+		this.selectedTiles = new JLabel[3];
+		
+		this.selectedTiles[0] = new JLabel();
+		this.selectedTiles[1] = new JLabel();
+		this.selectedTiles[2] = new JLabel();
+		this.selectedTiles[0].setSize(endOfGameTile.getSize());
+		this.selectedTiles[1].setSize(endOfGameTile.getSize());
+		this.selectedTiles[2].setSize(endOfGameTile.getSize());
 
 		// Add all elements
-		this.selectedTiles.add(selectedTile1);
-		this.selectedTiles.add(selectedTile2);
-		this.selectedTiles.add(selectedTile3);
+		this.selectedTilesPanel.add(selectedTiles[0]);
+		this.selectedTilesPanel.add(selectedTiles[1]);
+		this.selectedTilesPanel.add(selectedTiles[2]);
 
 		this.add(boardLabel);
-		this.add(selectedTiles);
+		this.add(selectedTilesPanel);
 		this.commonObjectiveCards[0].add(pointTiles[0]);
 		this.commonObjectiveCards[1].add(pointTiles[1]);
 		this.add(commonObjectiveCards[0]);
@@ -148,7 +148,7 @@ public class CommonGameAreaFrame extends JFrame {
 	}
 
 	public JPanel getSelectedTiles() {
-		return selectedTiles;
+		return selectedTilesPanel;
 	}
 	
 	/**
@@ -156,32 +156,37 @@ public class CommonGameAreaFrame extends JFrame {
 	 * @param id
 	 * @return
 	 */
-	public JLabel getSelectedTile(int id) {
-		switch(id) {
-		case 0:
-			return selectedTile1;
-			
-		case 1:
-			return selectedTile2;
-			
-		case 2:
-			return selectedTile3;
+//	public JLabel getSelectedTile(int id) {
+//		switch(id) {
+//		case 0:
+//			return selectedTiles[0];
+//			
+//		case 1:
+//			return selectedTiles[1];
+//			
+//		case 2:
+//			return selectedTiles[2];
+//
+//		default:
+//			throw new IndexOutOfBoundsException("Selected tile with id (index) " +id+ " doesn't exist!");
+//		}
+//	}
 
-		default:
+	/**
+	 * Returns the selected tile 1, 2 or 3
+	 * @param id
+	 * @return
+	 */
+	public JLabel getSelectedTile(int id) {
+		if(id < 0 || id > 2) {
 			throw new IndexOutOfBoundsException("Selected tile with id (index) " +id+ " doesn't exist!");
 		}
+			
+		return selectedTiles[id];
 	}
-
-	public JLabel getSelectedTile1() {
-		return selectedTile1;
-	}
-
-	public JLabel getSelectedTile2() {
-		return selectedTile2;
-	}
-
-	public JLabel getSelectedTile3() {
-		return selectedTile3;
+	
+	public int getSelectedTilesLength() {
+		return selectedTiles.length;
 	}
 
 	public JLabel getEndOfGameTile() {

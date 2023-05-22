@@ -100,34 +100,7 @@ public class MainController {
 
 	private void startGame() {
 		players[0].setHasChair(true);
-		setCurrentPlayer(players[0]);
-
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 1, 0);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 2, 0);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 3, 0);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 4, 0);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 5, 0);
-
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 1, 1);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 2, 1);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 3, 1);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 4, 1);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 5, 1);
-
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 1, 2);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 2, 2);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 3, 2);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 4, 2);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 5, 2);
-		
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 4, 3);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 5, 3);
-		
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 2, 4);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 3, 4);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 4, 4);
-		currentPlayer.getBookshelf().setTileType(TileType.randomType(), 5, 4);
-		
+		setCurrentPlayer(players[0]);		
 		updateBookshelfLabel();
 	}
 
@@ -325,17 +298,14 @@ public class MainController {
 	 */
 	public void updateSelectedTileLabel(int id) {
 		String path = "Assets/tiles/" + currentPlayer.getSelectedTiles().get(id).getType() + ".png";
-		Dimension size = commonGameAreaFrame.getSelectedTile1().getSize();
+		Dimension size = commonGameAreaFrame.getSelectedTile(0).getSize();
 		commonGameAreaFrame.getSelectedTile(id).setIcon(ImageUtils.loadImageAsIcon(size, path));
 	}
 
 	private void assignSelectedTilesController() {
-		commonGameAreaFrame.getSelectedTile1()
-				.addMouseListener(new SelectedTileController(0, commonGameAreaFrame, personalGameAreaFrame, this));
-		commonGameAreaFrame.getSelectedTile2()
-				.addMouseListener(new SelectedTileController(1, commonGameAreaFrame, personalGameAreaFrame, this));
-		commonGameAreaFrame.getSelectedTile3()
-				.addMouseListener(new SelectedTileController(2, commonGameAreaFrame, personalGameAreaFrame, this));
+		for (int i = 0; i < commonGameAreaFrame.getSelectedTilesLength(); i++) {
+			commonGameAreaFrame.getSelectedTile(i).addMouseListener(new SelectedTileController(i, commonGameAreaFrame, personalGameAreaFrame, this));
+		}
 	}
 
 	/**

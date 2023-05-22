@@ -162,9 +162,9 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		}
 
 		tiles.clear();
-		commonGameAreaFrame.getSelectedTile1().setIcon(null);
-		commonGameAreaFrame.getSelectedTile2().setIcon(null);
-		commonGameAreaFrame.getSelectedTile3().setIcon(null);
+		for (int i = 0; i < commonGameAreaFrame.getSelectedTilesLength(); i++) {
+			commonGameAreaFrame.getSelectedTile(i).setIcon(null);
+		}
 	}
 
 	private void returnTileToBoard(BoardTile tile) {
