@@ -19,7 +19,7 @@ import javax.swing.JLabel;
  */
 public class TileSelectionHintDialog extends JDialog {
 
-	public static boolean enabled = true; // Disable this to prevent the tutorial from appearing
+	public static boolean enabled = false; // Disable this to prevent the tutorial from appearing
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	ImageIcon gif;
 	JLabel imageDisplay;
@@ -35,7 +35,7 @@ public class TileSelectionHintDialog extends JDialog {
 		this.setModal(true);
 		int imgWidth = screenSize.height;
 		int imgHeight = imgWidth * 10 / 16;
-		this.setSize(imgWidth, screenSize.height - 40);
+		this.setSize(imgWidth, screenSize.height - 50);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
 		// Load the gif and resize it through some black magic
