@@ -16,10 +16,12 @@ import observer.Observer;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
+import view.TileSelectionHintDialog;
 import view.commongamearea.BoardTileLabel;
 
 public class BoardTileController implements MouseListener, Observer {
 
+	private static boolean showSelectionHint = true;
 	private BoardTile tile;
 	private BoardTileLabel label;
 	private ImageIcon coloredIcon;
@@ -79,7 +81,7 @@ public class BoardTileController implements MouseListener, Observer {
 			List<BoardTile> selectedTiles = currentPlayer.getSelectedTiles();
 
 			// Does the bookshelf have enough space available to insert the selected tiles?
-			if (!currentPlayer.getBookshelf().hasAvaibleSpaceFor(selectedTiles.size()+1)) {
+			if (!currentPlayer.getBookshelf().hasAvaibleSpaceFor(selectedTiles.size() + 1)) {
 				this.label.setIcon(grayIcon);
 				throw new IllegalActionException("Not enough space in the bookshelf!");
 			}
@@ -183,6 +185,8 @@ public class BoardTileController implements MouseListener, Observer {
 		selectedTiles.add(tile);
 		this.tile.disable();
 		this.label.setVisible(false);
+		
+		displayHintWindow();
 	}
 
 	/**
@@ -234,6 +238,16 @@ public class BoardTileController implements MouseListener, Observer {
 		} else {
 			this.label.setIcon(grayIcon);
 			throw new InvalidMoveException("You cannot pick up this tile!");
+		}
+	}
+
+	/**
+	 * If it's the first time a player is picking up a tile, display the tutorial
+	 */
+	private void displayHintWindow() {
+		if (BoardTileController.showSelectionHint) {
+			BoardTileController.showSelectionHint = false;
+			TileSelectionHintDialog hint = new TileSelectionHintDialog();
 		}
 	}
 }
