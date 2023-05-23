@@ -97,6 +97,12 @@ public class BoardTileController implements MouseListener, Observer {
 				this.label.setIcon(grayIcon);
 				throw new IllegalActionException("This tile is blocked!");
 			}
+			
+			if(TileSelectionHintDialog.enabled) {
+				displayHintWindow();
+				TileSelectionHintDialog.enabled = false;
+				return;
+			}
 
 			// Use a different check for tile pickup based on the amount of tiles already
 			// selected
@@ -185,8 +191,6 @@ public class BoardTileController implements MouseListener, Observer {
 		selectedTiles.add(tile);
 		this.tile.disable();
 		this.label.setVisible(false);
-		
-		displayHintWindow();
 	}
 
 	/**

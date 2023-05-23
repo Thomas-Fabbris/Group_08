@@ -30,7 +30,6 @@ public class Bookshelf implements Iterable<Bookshelf> {
 		}
 	}
 
-	// TODO: remove this method, used for debug
 	public void fillRandom() {
 		for (int row = 0; row < ROWS; row++) {
 			for (int column = 0; column < COLUMNS; column++) {
