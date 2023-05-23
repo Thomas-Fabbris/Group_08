@@ -23,7 +23,7 @@ public class TileSelectionHintDialog extends JDialog {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	ImageIcon gif;
 	JLabel imageDisplay;
-	JLabel[] textHints = new JLabel[4];
+	JLabel[] textHints = new JLabel[5];
 
 	public TileSelectionHintDialog() {
 
@@ -51,19 +51,22 @@ public class TileSelectionHintDialog extends JDialog {
 		imageDisplay.setBorder(BorderFactory.createLineBorder(Color.CYAN, screenSize.height / 120));
 
 		// Create text
-		textHints[0] = new JLabel("Click on tiles to select them: they will appear to the right of the board.");
-		textHints[1] = new JLabel("The tile on top will always be the first to go in the bookshelf.");
-		textHints[2] = new JLabel("You can move a tile to the top by clicking on it.");
-		textHints[3] = new JLabel("[Close this window to keep playing]");
+		textHints[0] = new JLabel("HOW TO SELECT TILES:");
+		textHints[1] = new JLabel("> Click on tiles to select them: they will appear to the right of the board.");
+		textHints[2] = new JLabel("> The tile on top will always be the first to go in the bookshelf.");
+		textHints[3] = new JLabel("> You can move a tile to the top by clicking on it.");
+		textHints[4] = new JLabel("[Close this window to keep playing]");
 
 		// Create fonts and set each label's font
+		Font f0 = new Font("Dialog", Font.BOLD, (int) (this.getHeight() / 30));
 		Font f1 = new Font("Dialog", Font.BOLD, (int) (this.getHeight() / 35));
 		Font f2 = new Font("Dialog", Font.ITALIC, (int) (this.getHeight() / 35));
 
-		textHints[0].setFont(f1);
+		textHints[0].setFont(f0);
 		textHints[1].setFont(f1);
 		textHints[2].setFont(f1);
-		textHints[3].setFont(f2);
+		textHints[3].setFont(f1);
+		textHints[4].setFont(f2);
 		setTextColor(textHints, Color.WHITE);
 		
 		// Add all elements in order
@@ -71,6 +74,7 @@ public class TileSelectionHintDialog extends JDialog {
 		this.add(textHints[1]);
 		this.add(textHints[2]);
 		this.add(textHints[3]);
+		this.add(textHints[4]);
 		this.add(Box.createVerticalGlue());
 		this.add(imageDisplay);
 
