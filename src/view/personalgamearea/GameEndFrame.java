@@ -9,8 +9,11 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import controller.QuitButtonController;
 
 public class GameEndFrame extends JFrame {
 
@@ -23,6 +26,7 @@ public class GameEndFrame extends JFrame {
 	private JLabel player3Name;
 	private JLabel player4Name;
 	private List<JLabel> playerNames;
+	private JButton quitButton;
 
 	public GameEndFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -80,7 +84,17 @@ public class GameEndFrame extends JFrame {
 		this.playerNames.add(player2Name);
 		this.playerNames.add(player3Name);
 		this.playerNames.add(player4Name);
-
+		
+		this.quitButton = new JButton("Quit game");
+		this.quitButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		this.quitButton.setFont(playerNamesFont);
+		this.quitButton.addMouseListener(new QuitButtonController());
+		
+		// Change the button's size
+		Dimension quitButtonSize = new Dimension(this.getWidth() / 4, this.getHeight() / 15);
+		this.quitButton.setPreferredSize(quitButtonSize);
+		this.quitButton.setMaximumSize(quitButtonSize);
+		
 		this.add(winnerName);
 		this.add(winnerText);
 		this.add(Box.createRigidArea(new Dimension(screenWidth, (int) (screenHeight / 20))));
@@ -89,6 +103,8 @@ public class GameEndFrame extends JFrame {
 		this.add(player2Name);
 		this.add(player3Name);
 		this.add(player4Name);
+		this.add(Box.createRigidArea(new Dimension(this.getWidth(), this.getHeight()/2)));
+		this.add(quitButton);
 	}
 
 	private void init(Dimension screenSize) {

@@ -142,6 +142,8 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
+		
+		
 
 		// Check if the board needs to be refilled
 		if (commonGameArea.getBoard().isFull()) {
