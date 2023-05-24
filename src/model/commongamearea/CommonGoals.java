@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import model.personalgamearea.Bookshelf;
-import model.personalgamearea.PathFind;
 import model.shared.TileType;
 
 public enum CommonGoals {
@@ -58,7 +57,7 @@ public enum CommonGoals {
 
 				for (int col = 0; col <= 4; col++) {
 
-					if (Coords_Check(already_checked, row, col, 3))
+					if (Coords_Check(already_checked, row, col))
 						continue;
 
 					if (pshelf.getTile(row, col).getType() == TileType.NULL)
@@ -68,14 +67,26 @@ public enum CommonGoals {
 					boolean c2 = CheckCol(pshelf, row, col, 4);
 
 					if (c1 || c2) {
-						already_checked[index] = row * 10 + col;
-						index++;
-						result++;
 
-						if (result == 4)
+						if (c1)
 						{
-							return true;
+							already_checked[index+0] = toCoords(row, col + 0);
+							already_checked[index+1] = toCoords(row, col + 1);
+							already_checked[index+2] = toCoords(row, col + 2);
+							already_checked[index+3] = toCoords(row, col + 3);
+							index += 4;
 						}
+
+						else {
+							already_checked[index+0] = toCoords(row + 0, col);
+							already_checked[index+1] = toCoords(row + 1, col);
+							already_checked[index+2] = toCoords(row + 2, col);
+							already_checked[index+3] = toCoords(row + 3, col);
+							index += 4;
+						}
+
+						result++;
+						if (result == 4) return true;
 
 					}
 
@@ -178,7 +189,7 @@ public enum CommonGoals {
 
 				for (int col = 0; col <= 4; col++) {
 
-					if (Coords_Check(already_checked, row, col, 2))
+					if (Coords_Check(already_checked, row, col))
 						continue;
 
 					if (pshelf.getTile(row, col).getType() == TileType.NULL)
@@ -189,14 +200,22 @@ public enum CommonGoals {
 
 					if (c1 || c2) {
 
-						already_checked[index] = row * 10 + col;
-						index++;
-						result++;
-
-						if (result == 6)
+						if (c1)
 						{
-							return true;
+							already_checked[index+0] = toCoords(row, col + 0);
+							already_checked[index+1] = toCoords(row, col + 1);
+							index += 2;
 						}
+
+						else
+						{
+							already_checked[index+0] = toCoords(row + 0, col);
+							already_checked[index+1] = toCoords(row + 1, col);
+							index += 2;
+						}
+
+						result++;
+						if (result == 6) return true;
 
 					}
 
@@ -230,7 +249,7 @@ public enum CommonGoals {
 					for (int col = 0; col <= 3; col++) {
 
 						// non andiamo a prendere il quadrato che abbiamo già trovato
-						if (Coords_Check(already_checked, row, col, 1))
+						if (Coords_Check(already_checked, row, col))
 							continue;
 
 						TileType checktile = pshelf.getTile(0 + row, 0 + col).getType();
@@ -246,8 +265,12 @@ public enum CommonGoals {
 						boolean t3 = checktile == pshelf.getTile(1 + row, 1 + col).getType();
 
 						if (t1 && t2 && t3) {
-							already_checked[index] = (row * 10 + col);
-							index++;
+
+							already_checked[index+0] = toCoords(row + 0, col + 0);
+							already_checked[index+1] = toCoords(row + 0, col + 1);
+							already_checked[index+2] = toCoords(row + 1, col + 0);
+							already_checked[index+3] = toCoords(row + 1, col + 1);
+							index += 4;
 							result++;
 
 							if (result == 2)
@@ -505,7 +528,12 @@ public enum CommonGoals {
 
 	}
 
-	public boolean Coords_Check(int[] coords, int row, int col, int mode) {
+	public int toCoords(int row, int col)
+	{
+		return row * 10 + col;
+	}
+
+	public boolean Coords_Check(int[] coords, int row, int col) {
 
 		// Metodo unico (mode cambia il modo in cui funziona) per
 		// controllare se una tile è già presente in un gruppo
@@ -513,34 +541,8 @@ public enum CommonGoals {
 
 		for (int coord : coords) {
 
-			switch (mode) {
+			if (coord == toCoords(row, col)) return true;
 
-				// Gruppo di grandezza 2x2
-				case 1 : {
-					boolean t1 = (row - 1) * 10 + col == coord;
-					boolean t2 = row * 10 + (col - 1) == coord;
-					boolean t3 = (row - 1) * 10 + (col - 1) == coord;
-					return t1 || t2 || t3;
-				}
-
-				// Gruppo di lunghezza 2
-				case 2 : {
-					boolean h1 = (row - 1) * 10 + col == coord;
-					boolean v1 = row * 10 + (col - 1) == coord;
-					return h1 || v1;
-				}
-
-				// Gruppo di lunghezza 4
-				case 3 : {
-					boolean h1 = (row - 1) * 10 + col == coord;
-					boolean h2 = (row - 2) * 10 + col == coord;
-					boolean h3 = (row - 3) * 10 + col == coord;
-					boolean v1 = row * 10 + (col - 1) == coord;
-					boolean v2 = row * 10 + (col - 2) == coord;
-					boolean v3 = row * 10 + (col - 3) == coord;
-					return (h1 || h2 || h3 || v1 || v2 || v3);
-				}
-			}
 		}
 
 		return false;
@@ -645,12 +647,6 @@ public enum CommonGoals {
 
 		return false;
 
-	}
-
-	public int[] PointsPathfinder(Bookshelf pshelf)
-	{
-		PathFind pathfinder = new PathFind(pshelf);
-		return pathfinder.PointsPathfinding();
 	}
 
 	public static final class StaticFields {
