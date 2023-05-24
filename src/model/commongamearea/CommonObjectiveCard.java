@@ -21,7 +21,7 @@ public class CommonObjectiveCard {
 		
 		this.romanNumber = CommonObjectiveCard.ROMAN_NUMBER++;
 		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
-//		this.cardId = 2; // debug
+//		this.cardId = 6; // debug
 
 
 		initRelatedCommonGoal();

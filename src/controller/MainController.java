@@ -101,27 +101,27 @@ public class MainController {
 	private void startGame() {
 		players[0].setHasChair(true);
 		
-
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 0, 0);
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 1, 0);
+//
+//		players[0].bookshelf.setTileType(TileType.BOOKS, 4, 0);
+//		players[0].bookshelf.setTileType(TileType.BOOKS, 5, 0);
 //		players[0].bookshelf.setTileType(TileType.BOOKS, 2, 0);
 //		players[0].bookshelf.setTileType(TileType.BOOKS, 3, 0);
 //
-//		players[0].bookshelf.setTileType(TileType.TROPHIES, 0, 1);
-//		players[0].bookshelf.setTileType(TileType.TROPHIES, 1, 1);
+//		players[0].bookshelf.setTileType(TileType.BOOKS, 4, 1);
+//		players[0].bookshelf.setTileType(TileType.BOOKS, 5, 1);
 //		players[0].bookshelf.setTileType(TileType.TROPHIES, 2, 1);
 //		players[0].bookshelf.setTileType(TileType.TROPHIES, 3, 1);
 //
-//		players[0].bookshelf.setTileType(TileType.GAMES, 0, 2);
-//		players[0].bookshelf.setTileType(TileType.GAMES, 1, 2);
+//		players[0].bookshelf.setTileType(TileType.FRAMES, 4, 2);
+//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 2);
 //		players[0].bookshelf.setTileType(TileType.GAMES, 2, 2);
 //		players[0].bookshelf.setTileType(TileType.GAMES, 3, 2);
 //
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 0, 3);
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 1, 3);
+//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 3);
+//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 3);
 //		players[0].bookshelf.setTileType(TileType.FRAMES, 2, 3);
 //		players[0].bookshelf.setTileType(TileType.FRAMES, 3, 3);
-		
+//
 		setCurrentPlayer(players[0]);
 		updateBookshelfLabel();
 	}
