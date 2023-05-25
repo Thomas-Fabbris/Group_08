@@ -273,6 +273,10 @@ public class MainController {
 		personalGameAreaFrame.dispose();
 		GameEndFrame gameEndScreen = new GameEndFrame();
 
+		for (int i = 0; i < players.length; i++) {
+			players[i].awardPointsForTileGroups();
+		}
+		
 		// Sort the array based on the players' score
 		Arrays.sort(players, new PlayerScoreComparator());
 
@@ -281,9 +285,8 @@ public class MainController {
 		// Display on the leaderbord the name of each player in order
 		for (int i = 0; i < playerNames.size(); i++) {
 			try {
-				int tileGroupPoints = players[i].awardPointsForTileGroups();
 				playerNames.get(i).setText(players[i].getName() + ": [" + players[i].getPoints() + "] points, "
-						+ tileGroupPoints + " from tile groups");
+						+ players[i].getPointsFromTileGroups() + " from tile groups");
 			} catch (Exception e) {
 				playerNames.get(i).setText(null);
 			}

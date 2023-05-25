@@ -23,6 +23,7 @@ public class Player {
 	private String name;
 	public final int id;
 	private int points = 0;
+	private int pointsFromTileGroups = 0;
 	private boolean hasChair = false;
 	private boolean hasEndOfGameToken = false;
 	private boolean[] completedCommonGoals;
@@ -112,6 +113,7 @@ public class Player {
 			pointsTotal += points;
 		}
 
+		this.pointsFromTileGroups = pointsTotal;
 		return pointsTotal;
 	}
 
@@ -307,6 +309,10 @@ public class Player {
 
 	public void setPreviousObjetiveCardPoints(int previousObjetiveCardPoints) {
 		this.previousObjetiveCardPoints = previousObjetiveCardPoints;
+	}
+
+	public int getPointsFromTileGroups() {
+		return pointsFromTileGroups;
 	}
 
 }
