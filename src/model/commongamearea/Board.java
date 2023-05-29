@@ -5,14 +5,21 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import model.shared.TileType;
-
+/**
+ *The class {@code Board} models the logic part of the playable board
+ * 
+ *
+ */
 public class Board {
 	public final static int BOARD_LENGTH = 11;
 
 	private BoardTile[][] tiles = new BoardTile[BOARD_LENGTH][BOARD_LENGTH];
 	private boolean[][] validPositions = new boolean[BOARD_LENGTH][BOARD_LENGTH];
 	private final String VALID_POSITIONS_FILE_PATH = "./Assets/valid_board_positions_Xplayers.txt";
-
+/**
+ * The constructor defines a new instance of the class {@code Board}
+ * @param numberOfPlayers the number of the players
+ */
 	public Board(int numberOfPlayers) {
 		//condizione di uscita dal programma
 		if (numberOfPlayers < 2) {
@@ -31,7 +38,7 @@ public class Board {
 	}
 
 	/***
-	 * Adds a tile
+	 * The method {@code setTileType} adds a tile
 	 * 
 	 * @param tile_type type of tile to add
 	 * @param row       1 to 9
@@ -48,7 +55,7 @@ public class Board {
 	}
 
 	/***
-	 * Gets the TileType of the tile at the specified position
+	 * The method {@code getTileType}Gets the TileType of the tile at the specified position
 	 * 
 	 * @param row
 	 * @param column
@@ -62,7 +69,7 @@ public class Board {
 	}
 
 	/***
-	 * Gets the tile at the specified position
+	 * The method {@code getTile} gets the tile at the specified position
 	 * 
 	 * @param row
 	 * @param column
@@ -77,6 +84,7 @@ public class Board {
 	}
 
 	/**
+	 * The method {@code isValidPosition} returns whether the specified row/col position is valid
 	 * @param row
 	 * @param column
 	 * @return Returns whether the specified row/col position is valid
@@ -86,7 +94,7 @@ public class Board {
 	}
 
 	/**
-	 * Hides the tile on the board (will not affect TileType)
+	 * The method {@code hideTile} hides the tile on the board (will not affect TileType)
 	 * 
 	 * @param row
 	 * @param column
@@ -112,7 +120,7 @@ public class Board {
 	}
 
 	/**
-	 * Fills the valid_positions array according to the contents of the file
+	 * The method {@code readValidBoardPositionsFile} fills the valid_positions array according to the contents of the file
 	 * 
 	 * @param file with positions: 1 for valid, 0 for non valid
 	 * @return
@@ -147,7 +155,7 @@ public class Board {
 	}
 
 	/***
-	 * Fills every cell on the board with a tile (non valid positions are set to
+	 * The method {@code initTiles} fills every cell on the board with a tile (non valid positions are set to
 	 * TileType.NULL)
 	 */
 	private void initTiles() {
@@ -164,7 +172,7 @@ public class Board {
 	}
 
 	/**
-	 * Returns an array of booleans where each [true] represents a tile that can be
+	 * The method {@code getCurrentBlockedTiles} returns an array of booleans where each [true] represents a tile that can be
 	 * picked up and each [false] represents a tile that cannot be picked up. This
 	 * is used to decide if a tile is blocked by other tiles at the start of each
 	 * turn.
@@ -187,6 +195,9 @@ public class Board {
 		return currentBoardState;
 	}
 
+	/**
+	 * The method {@code refill} takes tile from the pouch and puts them into the board
+	 */
 	public void refill() {
 		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
 			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
@@ -197,7 +208,10 @@ public class Board {
 			}
 		}
 	}
-
+/**
+ * The method {@code isFull} checks if the the board is completely full or not
+ * @return true if the board is full, false if not
+ */
 	public boolean isFull() {
 		for (int row = 0; row < Board.BOARD_LENGTH; row++) {
 			for (int col = 0; col < Board.BOARD_LENGTH; col++) {
@@ -208,7 +222,9 @@ public class Board {
 		}
 		return true;
 	}
-
+/**
+ * The method {@code hideAllTiles} disables all the tiles
+ */
 	public void hideAllTiles() {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles.length; j++) {

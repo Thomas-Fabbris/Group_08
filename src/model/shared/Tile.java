@@ -1,5 +1,8 @@
 package model.shared;
-
+/**
+ * This abstract class models a Tile
+ *
+ */
 public abstract class Tile{
 	protected TileType type;
 	protected boolean isActive;

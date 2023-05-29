@@ -12,7 +12,11 @@ import model.personalgamearea.IllegalActionException;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
-
+/**
+ * The class {@code BookshelfTileController} controls
+ * 
+ *
+ */
 public class BookshelfTileController implements MouseListener {
 
 	private BookshelfTileLabel label;

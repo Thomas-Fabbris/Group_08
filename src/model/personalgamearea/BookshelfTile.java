@@ -5,7 +5,7 @@ import java.util.Iterator;
 import model.shared.Tile;
 import model.shared.TileType;
 /**
- * This Class models the Tiles of the Bookshelves
+ * The class {@code BookshelfTile} models the tiles of the Bookshelves
  * 
  *
  */
@@ -31,7 +31,7 @@ public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 		super.setType(type);
 	}
 	/**
-	 * This method returns the adjacent tile in north position
+	 * The method {@code tileUp} returns the adjacent tile in north position
 	 *  
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 		return shelf.getTile(row-1, column);
 	}
 	/**
-	 * This method returns the adjacent tile in south position
+	 * The method {@code tileDown} returns the adjacent tile in south position
 	 *  
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 		return shelf.getTile(row+1, column);
 	}
 	/**
-	 * This method returns the adjacent tile in east position
+	 * The method {@code tileRigth} returnsh the adjacent tile in east position
 	 *  
 	 * @return
 	 */
@@ -55,7 +55,7 @@ public class BookshelfTile extends Tile implements Iterable<BookshelfTile> {
 		return shelf.getTile(row, column+1);
 	}
 	/**
-	 * This method returns the adjacent tile in west position
+	 * The method {@code tileLeft} returns the adjacent tile in west position
 	 *  
 	 * @return
 	 */

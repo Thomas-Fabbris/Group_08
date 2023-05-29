@@ -1,7 +1,11 @@
 package model.shared;
 
 import java.util.Random;
-
+/**
+ * This Enum Class contains all the different types which a tile can be
+ * 
+ *
+ */
 public enum TileType {
 	BOOKS, CATS, FRAMES, GAMES, PLANTS, TROPHIES, POINTS, GAME_END, NULL;
 
