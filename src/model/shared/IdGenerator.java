@@ -4,7 +4,10 @@ import java.util.Random;
 
 import model.commongamearea.CommonObjectiveCard;
 import model.personalgamearea.PersonalObjectiveCard;
-
+/**
+ * The class {@code IdGenerator} generates a random objective card
+ *
+ */
 public class IdGenerator {
 	private static int COUNTER = 0;
 	private static int[] available_common_objective_card_ids = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
@@ -18,7 +21,7 @@ public class IdGenerator {
 	}
 
 	/**
-	 * Generates a number between 1 and 12 that hans't been extracted yet to obtain
+	 * The method {@code getNewCommonObjectiveCardId} generates a number between 1 and 12 that hans't been extracted yet to obtain
 	 * a unique id for the new card
 	 * 
 	 * @return a new unique card id
@@ -38,7 +41,7 @@ public class IdGenerator {
 	}
 
 	/**
-	 * Generates a number between 1 and 12 that hans't been extracted yet to obtain
+	 * The method {@code getNewPersonalObjectiveCardId} generates a number between 1 and 12 that hans't been extracted yet to obtain
 	 * a unique id for the new card
 	 * 
 	 * @return a new unique card id

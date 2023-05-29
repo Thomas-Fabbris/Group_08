@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.shared.TileType;
-
+/**
+ * The class {@code Pouch} contains all the tiles and it keeps track when they get extracted
+ * 
+ *
+ */
 // This class is a Singleton i.e. it can only be instantiated once
 public class Pouch {
 
@@ -31,7 +35,10 @@ public class Pouch {
 
 		return instance;
 	}
-
+/**
+ * The method {@code extractRandom} extracts a random tile from the pouch
+ * @return		the tile extracted
+ */
 	public TileType extractRandom() {
 
 		TileType tileToExtract = TileType.randomType();
@@ -52,7 +59,7 @@ public class Pouch {
 	}
 
 	/**
-	 * Returns whether there are still tiles of the specified type inside the pouch
+	 * The method {@code isTileAvailable} returns whether there are still tiles of the specified type inside the pouch
 	 * 
 	 * @param type
 	 * @return

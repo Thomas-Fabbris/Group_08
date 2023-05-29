@@ -1,9 +1,15 @@
 package model;
-
+/**
+ * The class {@code GameToken} models an imaginary token that goes from a player to another and identifies the turns
+ *
+ */
 public class GameToken {
 	private int roundNumber;
 	private Player currentOwner;
-	
+	/**
+	 * The constructor defines a new instance of the class {@code GameToken}
+	 * @param player		first player
+	 */
 	public GameToken(Player player){
 		if(player == null) {
 			throw new NullPointerException("player cannot be set to null while creating a GameToken instance!");
@@ -16,7 +22,10 @@ public class GameToken {
 		this.roundNumber ++;
 		this.moveToNextPlayer(players);
 	}
-	
+	/**
+	 * The method {@code moveToNextPlayer} moves the game token to the next player
+	 * @param players		the array that contains all the players
+	 */
 	private void moveToNextPlayer(Player players[]) {
 	
 		for(int k = 0; k < players.length; k++) {

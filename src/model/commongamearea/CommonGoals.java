@@ -11,7 +11,11 @@ import java.util.TreeMap;
 
 import model.personalgamearea.Bookshelf;
 import model.shared.TileType;
-
+/**
+ * 
+ * The class {@code checkCommonGoal} check all the 12 common goals
+ *
+ */
 public enum CommonGoals {
 
 	CommonGoal1(1) {
@@ -487,7 +491,7 @@ public enum CommonGoals {
 		}
 	}
 
-	/* This method reads the csv file containing the number of points assigned if the player has groups of 3/4/5/6+ tiles of the same type in his bookshelf
+	/** The method {@code readGroupPointsFromFile} reads the csv file containing the number of points assigned if the player has groups of 3/4/5/6+ tiles of the same type in his bookshelf
 	 * @param file
 	 * @return
 	 */
@@ -511,7 +515,11 @@ public enum CommonGoals {
 		}
 		return pointsMap;
 	}
-
+/**
+ * The method {@code tileUpCount_NULL} counts all the tile with type NULL thath you can find in a row/column
+ * @param 		the row or column where you want to search
+ * @return		the count of null tiles
+ */
 	private static int Count_NULL(TileType[] row_col) {
 
 		// Metodo per contare quante tile di tipo NULL ci sono
@@ -532,7 +540,13 @@ public enum CommonGoals {
 	{
 		return row * 10 + col;
 	}
-
+/**
+ * The method {@code Coords_Check} controls if a tile is already in a group checked before
+ * @param coords
+ * @param row
+ * @param col
+ * @return
+ */
 	public boolean Coords_Check(int[] coords, int row, int col) {
 
 		// Metodo unico (mode cambia il modo in cui funziona) per
@@ -548,7 +562,11 @@ public enum CommonGoals {
 		return false;
 
 	}
-
+/**
+ * The method {@code Count_Tiles} counts the tiles in a row/column
+ * @param row_col
+ * @return
+ */
 	private static int Count_Tiles(TileType[] row_col) {
 
 		// Metodo per contare le tile di una riga/colonna
@@ -566,7 +584,14 @@ public enum CommonGoals {
 		return count;
 
 	}
-
+/**
+ * The method {@code CheckRow} checks if there are 2 or 4 tiles of the same type adjacent in the same row
+ * @param pshelf
+ * @param row
+ * @param col
+ * @param length
+ * @return
+ */
 	private static boolean CheckRow(Bookshelf pshelf, int row, int col, int length) {
 
 		// Metodo unico (length cambia la lunghezza che si vuole cercare) per
@@ -606,7 +631,14 @@ public enum CommonGoals {
 		return false;
 
 	}
-
+	/**
+	 * The method {@code CheckCol} checks if there are 2 or 4 tiles of the same type adjacent in the same column
+	 * @param pshelf
+	 * @param row
+	 * @param col
+	 * @param length
+	 * @return
+	 */
 	private static boolean CheckCol(Bookshelf pshelf, int row, int col, int length) {
 
 		// Metodo unico (length cambia la lunghezza che si vuole cercare) per
