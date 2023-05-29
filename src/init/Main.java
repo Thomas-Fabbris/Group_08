@@ -10,7 +10,11 @@ import model.CommonGameArea;
 import view.CommonGameAreaFrame;
 import view.PersonalGameAreaFrame;
 import view.commongamearea.MainMenuWindow;
-
+/**
+ * 
+ * The class {@code Main} is the core part of the program, it initializes all the class for the game
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
