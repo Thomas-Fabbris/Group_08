@@ -26,7 +26,15 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	private MainController mainController;
 
 	private List<Observer> boardTileControllers;
-
+	
+	/**
+	 * This is the constructor of NextPlayerButtonController class
+	 * @param button
+	 * @param commonGameArea
+	 * @param commonGameAreaFrame
+	 * @param mainController
+	 */
+	
 	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
 		if(mainController == null) {
@@ -51,13 +59,17 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 
 		this.boardTileControllers = new ArrayList<>();
 	}
-
+	
+	/**
+	 * Thanks to this method each time the player moves a tile to the bookshelf,
+	 * the tile is removed from the list.
+	 * When the turn ends, the tiles that are still in he list will return on the board
+	 * 
+	 * @param e (MouseEvent)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// each time the player moves a tile to the bookshelf, the tile is removed from
-		// the list,
-		// tiles that are still in the list when the turn ends will return to the
-		// board
+		
 		try {
 			this.mainController.getPersonalGameAreaFrame().getWarnings().setVisible(false);
 			List<BoardTile> selectedTiles = mainController.getCurrentPlayer().getSelectedTiles();
@@ -78,11 +90,22 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		}
 	}
 
+	/**
+	 * 	This method allows to graphically show the "pressed" icon of the button.
+	 * 
+	 * 	@param e (MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		button.setIcon(pressedStateIcon);
 	}
-
+	
+	/**
+	 * 	This method allows to graphically show the default icon of the button when the click
+	 * 	from the user ends.
+	 * 
+	 *	@param e (MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		button.setIcon(defaultStateIcon);
@@ -97,19 +120,32 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	public void mouseExited(MouseEvent e) {
 
 	}
-
+	
+	/**
+	 *  This method adds an observer.
+	 *  
+	 *  @param o
+	 */
 	@Override
 	public void addObserver(Observer o) {
 		boardTileControllers.add(o);
 	}
-
+	
+	/**
+	 * This method removes an observer if it is contained.
+	 * 
+	 * @param o
+	 */
 	@Override
 	public void removeObserver(Observer o) {
 		if (boardTileControllers.contains(o)) {
 			boardTileControllers.remove(o);
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void notify(Object[] data) {
 		for (int i = 0; i < boardTileControllers.size(); i++) {
@@ -117,7 +153,13 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		}
 	}
 
-	// Advances the turn
+	/**
+	 * This method allows to continue with the turns of the game.
+	 * It checks if the game has to end when the NextPlayerButton is clicked.
+	 * It checks if the board has to be refilled with new tiles.
+	 * 
+	 * @throws IllegalActionException
+	 */
 	private void nextTurn() throws IllegalActionException {
 		if(!this.mainController.getCurrentPlayer().getBookshelf().isStateChanged()) {
 			throw new IllegalActionException("You have to make your move before you can proceed to the next turn!"); 
@@ -135,15 +177,13 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		this.mainController.getCurrentPlayer().getBookshelf().setStateChanged(false);
 		this.mainController.getGameToken().setCurrentOwner(this.mainController.getCurrentPlayer());
 
-		// Check to decide if the game ends when the nextPlayerButton is pressed
+		// Checks if the game is ended when the NextPlayerButton is pressed
 		if (mainController.getGameState() == GameState.LAST_TURN
 				&& currentPlayerId == mainController.getLastPlayer().getId()) {
 			System.out.println("[" + this.getClass().getSimpleName() + "] Game ended!");
 			mainController.setGameState(GameState.ENDED);
 			mainController.displayGameEndScreen();
 		}
-		
-		
 
 		// Check if the board needs to be refilled
 		if (commonGameArea.getBoard().isFull()) {
@@ -156,8 +196,11 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 		}
 	}
 
-	// Returns to the board selected tiles that have not been moved to the
-	// bookshelf
+	/** 
+	 * This method returns to the board the selected tiles that have not been moved to the bookshelf
+	 * 
+	 * @param tiles
+	 */
 	private void clearSelectedTiles(List<BoardTile> tiles) {
 		for (BoardTile boardTile : tiles) {
 			returnTileToBoard(boardTile);
@@ -168,7 +211,12 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 			commonGameAreaFrame.getSelectedTile(i).setIcon(null);
 		}
 	}
-
+	
+	/**
+	 * This method returns the tiles that were not moved to the bookshelf to the board
+	 * 
+	 * @param tile
+	 */
 	private void returnTileToBoard(BoardTile tile) {
 		tile.setActive(true);
 		int row = tile.getRow();

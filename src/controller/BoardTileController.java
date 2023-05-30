@@ -31,6 +31,15 @@ public class BoardTileController implements MouseListener, Observer {
 	private MainController mainController;
 	private PersonalGameAreaFrame personalGameAreaFrame;
 
+	/**
+	 * BoardTileController is a constructor 
+	 * @param tile
+	 * @param label
+	 * @param commonGameArea
+	 * @param commonGameAreaFrame
+	 * @param mainController
+	 * @param personalGameAreaFrame
+	 */
 	public BoardTileController(BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController,
 			PersonalGameAreaFrame personalGameAreaFrame) {
@@ -71,7 +80,16 @@ public class BoardTileController implements MouseListener, Observer {
 		updateIcons();
 	}
 
-	@Override
+	/**
+	 *  This method controls the click event on a tile of the board. 
+	 *  It allows to select the tiles on the board, depending on:
+	 *  	the space available on the bookshelf;
+	 *  	the condition of the player's turn;
+	 *  	the condition of the tile on the board;
+	 *  	the number of tiles already selected;
+	 *  @param e (MouseEvent)
+	 */
+	
 	public void mouseClicked(MouseEvent e) {
 
 		try {
@@ -150,14 +168,19 @@ public class BoardTileController implements MouseListener, Observer {
 	public void mouseEntered(MouseEvent e) {
 
 	}
-
+	
+	/**
+	 * This method sets the icon of the tile colored when the mouseExit event verifies
+	 * @param e (MouseEvent)
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		this.label.setIcon(this.coloredIcon);
 	}
 
 	/**
-	 * Updates this.tile, this.label, this.coloredIcon, this.grayIcon
+	 * This method updates this.tile, this.label, this.coloredIcon, this.grayIcon
+	 * @param data
 	 */
 	@Override
 	public void update(Object[] data) {
@@ -169,6 +192,10 @@ public class BoardTileController implements MouseListener, Observer {
 
 		updateIcons();
 	}
+	
+	/**
+	 * This method updates the tiles' icon state
+	 */
 
 	private void updateIcons() {
 		this.coloredIcon = (ImageIcon) label.getIcon();
@@ -176,8 +203,7 @@ public class BoardTileController implements MouseListener, Observer {
 	}
 
 	/**
-	 * Picks up the selected tile
-	 * 
+	 * This method picks up the selected tile
 	 * @param selectedTiles
 	 */
 	private void pickupFirstTile(List<BoardTile> selectedTiles) {
@@ -194,15 +220,15 @@ public class BoardTileController implements MouseListener, Observer {
 	}
 
 	/**
-	 * Checks whether the selected tile can be picked up. The tile must be adjacent
-	 * to the previous selected tile and it must have at least one free side
+	 * This method checks whether the selected tile can be picked up. The tile must be adjacent
+	 * to the previous selected tile and it must have at least one free side.
+	 * 
+	 * If one tile has been selected, the current tile can be picked up if it is adjacent
 	 * 
 	 * @param selectedTiles
 	 */
 	private void pickupSecondTile(List<BoardTile> selectedTiles) {
-		// If one tile has been selected, the current tile can be picked up if it is
-		// adjacent
-
+	
 		if (tile.isAdjacent(selectedTiles.get(0)) && tile.getBlockedSides() != TileSides.ALL_SIDES_BLOCKED) {
 			commonGameAreaFrame.getSelectedTile(1).setIcon(label.getIcon());
 			selectedTiles.add(tile);
@@ -215,7 +241,7 @@ public class BoardTileController implements MouseListener, Observer {
 	}
 
 	/**
-	 * Checks whether the selected tile can be picked up. First it finds the vector
+	 * This method checks whether the selected tile can be picked up. First it finds the vector
 	 * that gives the direction between the first two selected tiles, then it
 	 * enforces that the third tile has to be either on the same row or on the same
 	 * column.
@@ -246,7 +272,8 @@ public class BoardTileController implements MouseListener, Observer {
 	}
 
 	/**
-	 * If it's the first time a player is picking up a tile, display the tutorial
+	 * This method allows to display the tutorial if it's the first time
+	 * a player is picking up a tile.
 	 */
 	private void displayHintWindow() {
 		if (BoardTileController.showSelectionHint) {

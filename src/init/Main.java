@@ -12,7 +12,7 @@ import view.PersonalGameAreaFrame;
 import view.commongamearea.MainMenuWindow;
 /**
  * 
- * The class {@code Main} is the core part of the program, it initializes all the class for the game
+ * The class {@code Main} is the core part of the program, it initializes all the classes of the game
  *
  */
 public class Main {

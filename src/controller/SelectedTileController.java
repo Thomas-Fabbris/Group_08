@@ -13,6 +13,14 @@ public class SelectedTileController implements MouseListener {
 	private int id; // Used to identify which selected tile the user is interacting with
 	private MainController mainController;
 
+	/**
+	 * This is the constructor of the class
+	 * 
+	 * @param id
+	 * @param commonGameAreaFrame
+	 * @param personalGameAreaFrame
+	 * @param mainController
+	 */
 	public SelectedTileController(int id, CommonGameAreaFrame commonGameAreaFrame,
 			PersonalGameAreaFrame personalGameAreaFrame, MainController mainController) {
 		if(mainController == null) {
@@ -24,7 +32,12 @@ public class SelectedTileController implements MouseListener {
 			throw new IllegalArgumentException("A SelectedTileController must have an id < 0 and >= 3!");
 		this.id = id;
 	}
-
+	
+	/**
+	 * This method brings the clicked tile to the top, being the first to be placed in the bookshelf
+	 * 
+	 * @param e
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();		
@@ -52,7 +65,10 @@ public class SelectedTileController implements MouseListener {
 	}
 	
 	/**
-	 * Swaps the clicked tile with the first tile
+	 * This method swaps the clicked tile with the first tile, setting it to be the first to go
+	 * in the bookshelf
+	 * 
+	 * @param selectedTiles
 	 */
 	private void swapTiles(List<BoardTile> selectedTiles) {
 		BoardTile tmp = selectedTiles.get(0);
