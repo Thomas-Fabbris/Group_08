@@ -11,7 +11,12 @@ public class CommonGameArea {
 	private CommonObjectiveCard[] commonObjectiveCards;
 	private GameEndTile gameEndTile;
 	private boolean[][] currentBlockedTiles;
-
+	
+	/**
+	 * This is the constructor of the CommonGameArea class
+	 *  
+	 * @param numberOfPlayers
+	 */
 	public CommonGameArea(int numberOfPlayers) {
 		this.board = new Board(numberOfPlayers);
 		this.gameEndTile = new GameEndTile(board);
@@ -24,37 +29,58 @@ public class CommonGameArea {
 				new CommonObjectiveCard(idGenerator, numberOfPlayers)
 		};
 	}
-
+	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return this.board
+	 */
 	public Board getBoard() {
 		return this.board;
 	}
 	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return commonObjectiveCards
+	 */
 	public CommonObjectiveCard[] getCommonObjectiveCards() {
 		return commonObjectiveCards;
 	}
-
+	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return currentBlockedTiles
+	 */
 	public boolean[][] getCurrentBlockedTiles() {
 		return currentBlockedTiles;
 	}
 
 	/**
-	 * Returns whether, at the start of the round, the tile had at least one free side 
+	 * This method returns a boolean that indicates whether the tile had at least one free side,
+	 * by observing her position at the beginning of the round,
 	 * 
 	 * @param row
 	 * @param column
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isTileFree(int row, int column) {
 		return currentBlockedTiles[row][column];
 	}
 
 	/**
-	 * Calculates the current blocked tiles array
+	 * This method calculates the current blocked tiles array
 	 */
 	public void updateCurrentBlockedTiles() {
 		this.currentBlockedTiles = board.getCurrentBlockedTiles();
 	}
-
+	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return gameEndTile
+	 */
 	public GameEndTile getGameEndTile() {
 		return gameEndTile;
 	}

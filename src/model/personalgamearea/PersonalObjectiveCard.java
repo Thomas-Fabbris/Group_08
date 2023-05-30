@@ -25,7 +25,16 @@ public class PersonalObjectiveCard {
 	 */
 	private List<BookshelfTileGoal> tileGoals = new LinkedList<>(); // Stores the TileType and its position for
 	
-	//Important: pointsMap is initiliazed in the constructor even though it's a static field, because it has no reason for existing if no personal object card has been created before
+	/*
+	 * Important: pointsMap is initialized in the constructor even though it's a static field
+	 * as it has no reason to exist if no personal object card has been created before
+	 */
+		
+	/**
+	 * This is the constructor of the PersonalObjectiveCard class
+	 *   
+	 * @param idGenerator
+	 */
 	public PersonalObjectiveCard(IdGenerator idGenerator) {
 		this.cardId = idGenerator.getNewPersonalObjectiveCardId();
 
@@ -34,14 +43,23 @@ public class PersonalObjectiveCard {
 			PersonalObjectiveCard.pointsMap = readPersonalGoalPointsFromFile(new File("Assets/Carte_Obiettivo_Personale/Punteggi_Carte_Obiettivo_Personali.csv"));
 		}
 	}
-
+	
+	/**
+	 * This method allows to get the file path to the personal objective card by using its id as parameter
+	 * 
+	 * @param card_id
+	 * @return new File(path)
+	 */
 	private File selectFile(int card_id) {
 		String path = "Assets/Carte_Obiettivo_Personale/Carta_X.txt".replaceAll("X",
 				Integer.valueOf(card_id).toString());
 		return new File(path);
 	}
 	
-	/* This method reads the csv file containing the number of points assigned if the player has tiles in its bookshelf in the exact position illustrated by its personal goal card
+	/** 
+	 * This method reads the csv file containing the number of points assigned if the player 
+	 * has tiles in its bookshelf in the exact position illustrated by its own goal card
+	 * 
 	 * @param file
 	 * @return
 	 */
@@ -65,8 +83,13 @@ public class PersonalObjectiveCard {
 		}
 		return pointsMap;
 	}
-
-	// Read the file with the positions of each TileType on the card
+	
+	/**
+	 * This method reads the file with the positions of each TileType on the card
+	 * 
+	 * @param file
+	 * @return coords
+	 */
 	private List<BookshelfTileGoal> readTypePositionsFromFile(File file) {
 
 		Scanner scanner = null;
@@ -87,9 +110,14 @@ public class PersonalObjectiveCard {
 
 		return coords;
 	}
-
-	// Parse a line in the format 'x, y, TileType' and create a new
-	// TileTypeCoordinate with the parsed data
+	
+	/**
+	 * This method parses a line in the format 'x, y, TileType' and creates a new
+	 * TileTypeCoordinate with the parsed data
+	 * 
+	 * @param line 
+	 * @return new BookshelfTileGoal(x, y, tile_type)  
+	 */
 	private BookshelfTileGoal parseStringToCoordinates(String line) {
 
 		String[] line_elements = line.split(" "); // x, y, TileType
@@ -112,30 +140,45 @@ public class PersonalObjectiveCard {
 		return new BookshelfTileGoal(x, y, tile_type);
 	}
 
-	// Returns the number of tiles in the bookshelf that match this personal
-	// objective card
+	/**
+	 * This method returns the number of tiles in the bookshelf that match this personal
+	 * objective card
+	 * 
+	 * @param bookshelf
+	 * @return goalsCount
+	 */
 	public int countSatisfiedGoals(Bookshelf bookshelf) {
 		int goalsCount = 0;
 
 		for (BookshelfTileGoal tileGoal : tileGoals) {
-			//TODO: remove comments
-//			System.out.println("Row: "+tileGoal.row+ " col: "+tileGoal.column+" type:"+tileGoal.tileType);
+
 			if (bookshelf.tiles[tileGoal.row][tileGoal.column].getType() == tileGoal.tileType) {
-//				System.out.println("Matched: " + tileGoal.tileType);
-//				System.out.println("------------");
+
 				goalsCount++;
 			}
 		}
 
 		return goalsCount;
 	}
-
+	
+	/**
+	 * This is a private class created in the PersonalObjectiveCard class.
+	 * It represents a single objective of a personal objective card.
+	 *
+	 */
 	private class BookshelfTileGoal {
 
 		public final int row;
 		public final int column;
 		public final TileType tileType;
-
+		
+		/**
+		 * This is the constructor of the private class BookshelfTileGoal
+		 *  
+		 * @param x
+		 * @param y
+		 * @param tile_type
+		 */
 		BookshelfTileGoal(int x, int y, TileType tile_type) {
 			this.row = y;
 			this.column = x;

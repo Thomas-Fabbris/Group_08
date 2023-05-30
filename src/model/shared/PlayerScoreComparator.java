@@ -6,12 +6,18 @@ import model.Player;
 
 public class PlayerScoreComparator implements Comparator<Player> {
 
-	/*
-	 * Returns a negative integer,zero, or a positive integer as the first argument
+	/**
+	 * This method returns a negative integer, zero, or a positive integer as the first argument
 	 * is less than, equal to, or greater than the second.
-
+	 * 
+	 * @param p1
+	 * @param p2
+	 * 
+	 * @throws NullPointerException
+	 * @return -1
+	 * @return 0 
+	 * @return +1
 	 */
-
 	@Override
 	public int compare(Player p1, Player p2) {
 		if(p1 == null) {

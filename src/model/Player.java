@@ -13,10 +13,8 @@ import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 
 /**
- * La classe {@code Player} modella un giocatore che partecipa alla partita.
- * 
- * @since 1.0
- *
+ * 	The class {@code Player} creates an object Player that is a user of the game.
+ *  
  */
 public class Player {
 
@@ -40,10 +38,10 @@ public class Player {
 	private PointTile[] pointTiles;
 
 	/**
-	 * Il costruttore definisce una nuova istanza della classe {@code Player}
+	 * This is the constructor of the class Player. 
 	 * 
-	 * @param name        nome del giocatore
-	 * @param idgenerator istanza della classe {@link IdGenerator}
+	 * @param name        (name of the player)
+	 * @param idgenerator (instance of the class) {@link IdGenerator}
 	 */
 
 	public Player(String name, IdGenerator idGenerator) {
@@ -65,20 +63,21 @@ public class Player {
 	}
 
 	/**
-	 * Il metodo {@code awardPointTile} controlla se il {@link model.Player
-	 * giocatore} può ricevere la {@link PointTile PointTile}.<br/>
-	 * Se il {@link model.Player giocatore} può riceverla, allora gli vengono
-	 * assegnati i punti corrispondenti
+	 * This method checks if the model.Player can receive the PointTile. 
+	 * If the player can effectively receive the PointTile, he receives the 
+	 * corresponding amount of points.
 	 * 
-	 * @param tile {@link PointTile PointTile} da assegnare al giocatore
+	 * The player can receive this point tile if the slot with the same Roman number
+	 * as the card is empty. 
+	 * 
+	 * @param tile {@link PointTile PointTile} (to be assigned to the player)
+	 * 
 	 */
 	public void awardPointTile(PointTile tile) {
 		if (tile == null) {
 			throw new NullPointerException("tile cannot be set to null while calling Player:awardPointTile() method!");
 		}
 
-		// The player can receive this point tile if the slot with the same Roman number
-		// as the card is empty
 		if (pointTiles[tile.getRomanNumber()] == null) {
 			pointTiles[tile.getRomanNumber()] = tile;
 			setCompletedCommonGoal(tile.getRomanNumber(), true);
@@ -87,17 +86,17 @@ public class Player {
 	}
 
 	/**
-	 * Reward the player with points computer from each group of adjacent tiles in
-	 * the player's bookshelf. This method should be run only once for each player
-	 * before the game ends.
+	 * This method allows to reward the player with the points get from each group of adjacent tiles in
+	 * the player's bookshelf.  
+	 * This method should be run only once for each player before the end of the game. 
 	 * 
 	 * @param player
-	 * @return pointsTotal total number of points the player received from this
-	 *         method
+	 * @return pointsTotal (total number of points the player received from this method)
+	 *         
 	 */
 	public int awardPointsForTileGroups() {
 		// Each element of this array is a group of adjacent tiles in the bookshelf, in
-		// particular the int value specifies the number of tiles in said group.
+		// particular the integer value specifies the number of tiles in said group.
 		// {3, 4, 4, 3} means 4 groups, two with 3 tiles and two with 4 tiles.
 		PathFind pf = new PathFind(bookshelf);
 		int[] tileGroups = pf.PointsPathfinding();
@@ -118,154 +117,173 @@ public class Player {
 	}
 
 	/**
-	 * Il metodo {@code getPointTile} restituisce la {@link PointTile PointTile} da
-	 * ritornare.
+	 * This method {@code getPointTile} returns the {@link PointTile PointTile}
 	 * 
-	 * @param tileNumber, numero della {@code PointTile PointTile} da ritornare (0
-	 *                    oppure 1)
-	 * @return pointTile, la {@link PointTile PointTile} richiesta
+	 * @param tileNumber (number of the {@code PointTile PointTile} to be returned it can be 0 or 1)
+	 * 
+	 * @return pointTile (the {@link PointTile PointTile} requested) 
 	 */
 	public PointTile getPointTile(int tileNumber) {
 		return pointTiles[tileNumber];
 	}
 
 	/**
-	 * Il metodo {@code equals} permette di confrontare tra loro due giocatori,
-	 * sulla base dell'{@code id} ad essi assegnato automaticamente all'inizio della
-	 * partita
+	 * This method {@code equals} allows to compare two players by checking their id {@code id}. 
+	 * The id is assigned to a player at the beginning of the game. 
 	 * 
-	 * @param player il {@link Player giocatore} da confrontare con l'istanza
-	 *               dell'oggetto che chiama questo metodo
-	 * @return {@code true} se i due giocatori confrontati sono gli stessi,
-	 *         {@code false} in tutti gli altri casi
+	 * @param player ( the {@link Player player} to be compared with the instance of the object
+	 * 					that calls this method)
+	 * 
+	 * @return {@code true} (if the two players are the same)
+	 *         {@code false} (in all the other cases possibles)
 	 */
 	public boolean equals(Player player) {
 		return this.id == player.id;
 	}
 
 	/**
-	 * Il metodo {@code getName} restituisce il nome del {@link model.Player
-	 * giocatore} che lo ha invocato
+	 * This method is a getter. 
 	 * 
-	 * @return il nome del {@link model.Player giocatore}
+	 * @return name (of the {@link model.Player player} that called this method)
 	 */
-
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * Il metodo{@code addPoints} serve per assegnare {@link model.Player giocatore}
-	 * dei nuovi punti
+	 * This method assigns to the player new points.
 	 * 
-	 * @param points i punti da assegnare al {@link model.Player giocatore}
+	 * @param points (to be assigned to {@link model.Player player})
 	 */
-
 	public void addPoints(int points) {
 		this.points += points;
 	}
 
 	/**
-	 * Il metodo {@code getPoints} restituisce i punti del {@link model.Player
-	 * giocatore} che lo ha invocato
-	 * 
-	 * @return i punti correnti del {@link model.Player giocatore}
+	 * This method is a getter
+	 *  
+	 * @return points  (current points of the {@link model.Player player})
 	 */
 	public int getPoints() {
 		return this.points;
 	}
 
 	/**
-	 * Il metodo {@code hasEndOfGameToken} serve per vedere se il
-	 * {@link model.Player giocatore} che ha invocato il metodo è stato lui ad
-	 * innescare la fine della partita
+	 * This method verifies if the {@link model.Player player} who called the method
+	 * caused the end of the game. 
 	 * 
-	 * @return {@code true} se il {@link model.Player giocatore} possiede il
-	 *         {@link GameEndTile gettone di fine partita}
+	 * @return {@code true} if the {@link model.Player player} owns the {@link GameEndTile EndOfGameToken}
 	 */
 	public boolean hasEndOfGameToken() {
 		return this.hasEndOfGameToken;
 	}
-
+	
+	/**
+	 * This method assigns the EndOfGameToken
+	 * 
+	 * @param hasEndOfGameToken
+	 */
 	public void setEndOfGameToken(boolean hasEndOfGameToken) {
 		this.hasEndOfGameToken = hasEndOfGameToken;
 	}
 
 	/**
-	 * Il metodo {@code getObjectiveCard} restituisce la
-	 * {@link PersonalObjectiveCard} posseduta {@link model.Player giocatore}
-	 * durante la partita corrente
+	 * This method {@code getObjectiveCard} returns the {@link PersonalObjectiveCard} owned by the 
+	 * {@link model.Player player} during the current game. 
 	 * 
-	 * @return la {@link PersonalObjectiveCard} del {@link model.Player giocatore}
+	 * @return {@link PersonalObjectiveCard} of {@link model.Player player}
 	 */
 	public PersonalObjectiveCard getObjectiveCard() {
 		return objectiveCard;
 	}
 
 	/**
-	 * Il metodo {@code hasEndOfGameToken} serve per vedere se il
-	 * {@link model.Player giocatore} che ha invocato il metodo è il primo a
-	 * cominciare la partita
+	 * The method {@code hasEndOfGameToken} checks if  the {@link model.Player giocatore} 
+	 * who called the method itself, is the one who started the game. 
 	 * 
-	 * @return {@code true} se il {@link model.Player giocatore} ha cominciato la
-	 *         partita attuale
+	 * @return {@code true} if the {@link model.Player player} began the current game
 	 */
 	public boolean hasChair() {
 		return hasChair;
 	}
 
+	/**
+	 * This method assigns the chair to a player.
+	 * 
+	 * @param hasChair
+	 */
 	public void setHasChair(boolean hasChair) {
 		this.hasChair = hasChair;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return id (of the current player)
+	 */
 	public int getId() {
 		return id;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return bookshelf (of the current player)
+	 */
 	public Bookshelf getBookshelf() {
 		return bookshelf;
 	}
 
 	/**
-	 * Returns whether the player has completed the specified common goal (0 or 1)
+	 * This method returns whether the player has completed the specified common goal (0 or 1)
 	 * 
 	 * @param id - 0 or 1
-	 * @return
+	 * @return completedCommonGoals[id]
 	 */
 	public boolean hasCompletedCommonGoal(int id) {
 		return completedCommonGoals[id];
 	}
 
 	/**
-	 * Set the flag to true or false for the specified common goal (0 or 1)
+	 * This method sets the flag to true or false for the specified common goal (0 or 1)
 	 * 
 	 * @param id - 0 or 1
-	 * @return
+	 * @return completedCommonGoals[id]
 	 */
 	public void setCompletedCommonGoal(int id, boolean completed) {
 		completedCommonGoals[id] = completed;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return selectedTiles
+	 */
 	public List<BoardTile> getSelectedTiles() {
 		return selectedTiles;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * @param id
+	 * @return selectedTiles (from the specified id)
+	 */
 	public BoardTile getSelectedTile(int id) {
 		return selectedTiles.get(id);
 	}
 
 	/**
-	 * Returns the column selected by the player while inserting the tiles in the
+	 * This method returns the column selected by the player while inserting the tiles in the
 	 * bookshelf. Value -1 means that the player has not yet selected a column.
 	 * 
-	 * @return
+	 * @return selectedColumn
 	 */
 	public int getSelectedColumn() {
 		return selectedColumn;
 	}
 
 	/**
-	 * Set the column selected by the player when inserting a tile in the bookshelf.
+	 * This method sets the column selected by the player when inserting a tile in the bookshelf.
 	 * 
 	 * @param bookshelfColumn which column the player is inserting the tiles into.
 	 *                        Must be 0, 1, 2, 3 or 4.
@@ -279,38 +297,63 @@ public class Player {
 	}
 
 	/**
-	 * Reset the flag to -1, which means that the player has not yet selected a row
+	 * This method resets the flag to -1, which means that the player has not yet selected a row. 
 	 */
 	public void resetSelectedColumn() {
 		this.selectedColumn = -1;
 	}
 
 	/**
-	 * Returns true if the player has already added a tile to the bookshelf (which
-	 * means the player has selected a column to insert the tiles into)
+	 * This method returns true if the player has already added a tile to the bookshelf (which
+	 * means the player has selected a column to insert the tiles into). 
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean hasSelectedColumn() {
 		return this.selectedColumn != -1;
 	}
 
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return previousObjectiveCardMatches
+	 */
 	public int getPreviousObjectiveCardMatches() {
 		return previousObjectiveCardMatches;
 	}
-
+	
+	/**
+	 * This method is a setter. 
+	 * 
+	 * @param matchesOnPersonalObjectiveCard
+	 */
 	public void setPreviousObjectiveCardMatches(int matchesOnPersonalObjectiveCard) {
 		this.previousObjectiveCardMatches = matchesOnPersonalObjectiveCard;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return getPreviousObjetiveCardPoints
+	 */
 	public int getPreviousObjetiveCardPoints() {
 		return previousObjetiveCardPoints;
 	}
-
+	
+	/**
+	 * This method is a setter. 
+	 * 
+	 * @param previousObjetiveCardPoints
+	 */
 	public void setPreviousObjetiveCardPoints(int previousObjetiveCardPoints) {
 		this.previousObjetiveCardPoints = previousObjetiveCardPoints;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return pointsFromTileGroups
+	 */
 	public int getPointsFromTileGroups() {
 		return pointsFromTileGroups;
 	}
