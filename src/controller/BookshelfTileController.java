@@ -12,18 +12,20 @@ import model.personalgamearea.IllegalActionException;
 import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.personalgamearea.BookshelfTileLabel;
-/**
- * The class {@code BookshelfTileController} controls
- * 
- *
- */
+
 public class BookshelfTileController implements MouseListener {
 
 	private BookshelfTileLabel label;
 	private CommonGameArea commonGameArea;
 	private CommonGameAreaFrame commonGameAreaFrame;
 	private MainController mainController;
-
+/**
+ * The constructor defines a new instance of the class {@code BookshelfTileController}
+ * @param label
+ * @param commonGameArea
+ * @param commonGameAreaFrame
+ * @param mainController
+ */
 	public BookshelfTileController(BookshelfTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
 		if (commonGameArea == null) {
@@ -129,7 +131,10 @@ public class BookshelfTileController implements MouseListener {
 
 	}
 
-	// Moves the first selected tile to the bookshelf and then removes it
+	/**
+	 * The method {@code moveFirstSelectedTileToBookshelf} moves the first selected tile to the bookshelf and then removes it
+	 * @param column
+	 */
 	private void moveFirstSelectedTileToBookshelf(int column) {
 
 		Player currentPlayer = mainController.getCurrentPlayer();

@@ -127,7 +127,7 @@ public class MainController {
 	}
 
 	/**
-	 * Create players from the names entered in the main menu
+	 * The method {@code createPlayers} create players from the names entered in the main menu
 	 */
 	private void createPlayers(ArrayList<String> names, IdGenerator idGenerator) {
 		for (int i = 0; i < names.size(); i++) {
@@ -140,7 +140,7 @@ public class MainController {
 	// ----------- Personal game area operations -----------
 
 	/**
-	 * Updates the info on the personal game area to reflect the current player's
+	 * The method {@code setCurrentPlayer} updates the info on the personal game area to reflect the current player's
 	 * info
 	 * 
 	 * @param player
@@ -178,7 +178,7 @@ public class MainController {
 	}
 
 	/**
-	 * updates the point tile's label to reflect the state of the player's point
+	 * The method {@code updatePlayerPointTileLabel} updates the point tile's label to reflect the state of the player's point
 	 * tile
 	 */
 	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
@@ -207,7 +207,7 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the type of each tile displayed on the GUI
+	 * The method {@code updateBookshelfLabel} updates the type of each tile displayed on the GUI
 	 */
 	public void updateBookshelfLabel(Bookshelf bookshelf) {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
@@ -256,14 +256,14 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the image of the label to reflect the TileType of the BookshelfTile
+	 * The method {@code updateBookshelfTileLabel} updates the image of the label to reflect the TileType of the BookshelfTile
 	 */
 	private void updateBookshelfTileLabel(BookshelfTile tile, BookshelfTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
 	}
 
 	/**
-	 * Updates the image of the label to reflect the points of the PointTile
+	 * The method {@code updatePlayerPointTileLabel} updates the image of the label to reflect the points of the PointTile
 	 */
 	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
@@ -302,7 +302,7 @@ public class MainController {
 	// ----------- Common game area operations -----------
 
 	/**
-	 * Updates the label on each selected tile
+	 * The method {@code updateSelectedTileLabels} updates the label on each selected tile
 	 */
 	public void updateSelectedTileLabels() {
 		int selectedTilesMaxCount = 3;
@@ -317,7 +317,7 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the label on the selected tile with the specified id
+	 * The method {@code updateSelectedTileLabel} updates the label on the selected tile with the specified id
 	 * 
 	 * @param id
 	 */
@@ -334,7 +334,7 @@ public class MainController {
 	}
 
 	/**
-	 * Updates each common objective card's point tile
+	 * The method {@code assignPointTiles} updates each common objective card's point tile
 	 */
 	private void assignPointTiles() {
 		CommonObjectiveCard[] cards = commonGameArea.getCommonObjectiveCards();
@@ -344,7 +344,7 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the amount of points shown on the tile
+	 * The method {@code updateBoardPointTileLabel} updates the amount of points shown on the tile
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
@@ -360,14 +360,14 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the image of the label to reflect the TileType of the BoardTile
+	 * The method {@code updateBoardTileLabel} updates the image of the label to reflect the TileType of the BoardTile
 	 */
 	public void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
 	}
 
 	/**
-	 * Updates the label of each tile on the board to reflect the tile's type
+	 * The method {@code updateAllBoardTileLabels} updates the label of each tile on the board to reflect the tile's type
 	 */
 	public void updateAllBoardTileLabels() {
 		BoardTileLabel[][] boardTileLabels = commonGameAreaFrame.getBoardTilesLabels();
@@ -384,7 +384,7 @@ public class MainController {
 	}
 
 	/**
-	 * Assigns a Label to each Tile on the board and saves it in
+	 * The method {@code assignBoardTiles} assigns a Label to each Tile on the board and saves it in
 	 * commonGameAreaFrame.boardTileLabels. To be used for initialisation only.
 	 */
 	public void assignBoardTiles() {
@@ -415,7 +415,7 @@ public class MainController {
 	}
 
 	/**
-	 * Assign a Label to each common objective card based on the card's id
+	 * The method {@code assignCommonObjectiveCards} assign a Label to each common objective card based on the card's id
 	 */
 	private void assignCommonObjectiveCards() {
 
@@ -430,7 +430,7 @@ public class MainController {
 	}
 
 	/**
-	 * Updates the Label's icon; gets the path of the new image from the Supplier
+	 * The method {@code updateTileOnScreen} updates the Label's icon; gets the path of the new image from the Supplier
 	 */
 	private void updateTileOnScreen(JLabel tileLabel, Supplier<String> pathToNewImage) {
 		ImageIcon icon = ImageUtils.loadImageAsIcon(tileLabel.getSize(), pathToNewImage.get());
@@ -458,7 +458,7 @@ public class MainController {
 	// ----------- General-purpose game operations -----------
 
 	/**
-	 * This method checks if the game has finished and if so sets all the necessary
+	 * The method {@code checkEndOfGame} checks if the game has finished and if so sets all the necessary
 	 * parameters of the game
 	 */
 	private void checkEndOfGame() {
@@ -473,7 +473,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method allows to skip to the next turn of the game
+	 * The method {@code nextTurn} allows to skip to the next turn of the game
 	 */
 
 	private void nextTurn() {
@@ -534,7 +534,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method computes the points which will be assigned to each player for
+	 * The method {@code computePersonalGoalsPoints} computes the points which will be assigned to each player for
 	 * fulfilling their personal goals
 	 */
 	private void computePersonalGoalsPoints() {
@@ -545,7 +545,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method computes the points which will be assigned to each player for
+	 * The method {@code computePointsFromTilesGroup} computes the points which will be assigned to each player for
 	 * having created group of 3/4/5/6+ adjacent tiles of the same type in his own
 	 * bookshelf
 	 */
@@ -594,7 +594,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method is used to decide the winner of the math in case of a tie
+	 * The method {@code determineDistanceFromFirstPlayer} is used to decide the winner of the math in case of a tie
 	 * 
 	 * @param player
 	 * @return
@@ -629,7 +629,7 @@ public class MainController {
 	}
 
 	/**
-	 * Returns the player with the specified id (if such player exists)
+	 * The method {@code getPlayer} returns the player with the specified id (if such player exists)
 	 * 
 	 * @param playerId
 	 * @return Player with id PlayerId

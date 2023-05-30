@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class ImageUtils {
 	
 	/**
-	 * Returns an ImageIcon loaded from the specified path
+	 * The method {@code loadImageAsIcon} returns an ImageIcon loaded from the specified path
 	 * @param width
 	 * @param height
 	 * @param imagePath
@@ -31,7 +31,7 @@ public class ImageUtils {
 	}
 	
 	/**
-	 * Returns an ImageIcon loaded from the specified path
+	 * The method {@code loadImageAsIcon} returns an ImageIcon loaded from the specified path
 	 * @param size
 	 * @param imagePath
 	 * @return ImageIcon
@@ -47,7 +47,7 @@ public class ImageUtils {
 	}
 	
 	/**
-	 * Returns a rotated ImageIcon
+	 * The method {@code rotateIcon}  returns a rotated ImageIcon
 	 * @param icon
 	 * @param angle (degrees)
 	 * @return
@@ -72,7 +72,7 @@ public class ImageUtils {
 	}
 	
 	/**
-	 * Returns a grayscale version of the icon 
+	 * The method {@code getGrayImage} returns a grayscale version of the icon 
 	 * @param icon
 	 * @return
 	 */

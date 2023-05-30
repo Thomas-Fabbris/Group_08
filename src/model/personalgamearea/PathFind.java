@@ -3,7 +3,10 @@ package model.personalgamearea;
 import java.util.Arrays;
 
 import model.shared.TileType;
-
+/**
+ * The class {@code PathFind} finds groups of tiles of the same type in the bookshelf
+ * 
+ */
 public class PathFind {
 
     private Bookshelf pshelf;
@@ -200,7 +203,7 @@ public class PathFind {
     
 
 	/**
-	 * Returns the number of points rewarded for having x adjacent tiles on the bookshelf
+	 * The method {@code mapTilesGroupSizeToPoints} returns the number of points rewarded for having x adjacent tiles on the bookshelf
 	 * @param numberOfAdjacentTiles number of adjacent tiles in a group on the bookshelf
 	 * @return
 	 */

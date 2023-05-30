@@ -1,6 +1,6 @@
 package model.shared;
 /**
- * This abstract class models a Tile
+ * The class {@code BookshelfTile} models the tile object
  *
  */
 public abstract class Tile{
