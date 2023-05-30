@@ -11,6 +11,13 @@ public class BoardTile extends Tile {
 	private int row;
 	private Board board;
 
+	/**
+	 * This is the constructor of the class
+	 * @param tile_type
+	 * @param row
+	 * @param column
+	 * @param board
+	 */
 	public BoardTile(TileType tile_type, int row, int column, Board board) {
 		super(tile_type);
 		if (board == null) {
@@ -21,37 +28,72 @@ public class BoardTile extends Tile {
 		this.board = board;
 		this.setActive(true);
 	}
-
+	
+	/**
+	 * Sets the the type of the BoardTile
+	 * 
+	 * @param type
+	 */
 	public void setType(TileType type) {
 		super.setType(type);
 	}
-
+	
+	/**
+	 * Getter of this.row
+	 * 
+	 * @return row
+	 */
 	public int getRow() {
 		return this.row;
 	}
-
+	
+	/**
+	 * Getter of this.column
+	 * 
+	 * @return column
+	 */
 	public int getColumn() {
 		return this.column;
 	}
 
+	/**
+	 * This method allows to get the upper Tile from the selected one
+	 * 
+	 * @return Tile
+	 */
 	public BoardTile tileUp() {
 		return board.getTile(row - 1, column);
 	}
-
+	
+	/**
+	 * This method allows to get the lower Tile from the selected one
+	 * 
+	 * @return Tile
+	 */
 	public BoardTile tileDown() {
 		return board.getTile(row + 1, column);
 	}
 
+	/**
+	 * This method allows to get the right Tile from the selected one
+	 * 
+	 * @return Tile
+	 */
 	public BoardTile tileRight() {
 		return board.getTile(row, column + 1);
 	}
 
+	/**
+	 * This method allows to get the left Tile from the selected one
+	 * 
+	 * @return Tile
+	 */
 	public BoardTile tileLeft() {
 		return board.getTile(row, column - 1);
 	}
 
 	/**
-	 * Returns whether the two tiles are adjacent on the board
+	 * This method returns whether the two tiles are adjacent on the board
 	 * 
 	 * @param adjacent tile
 	 * @return
@@ -60,17 +102,32 @@ public class BoardTile extends Tile {
 		return getDistance(tile) <= 1;
 	}
 
+	/**
+	 * This method returns the distance between two tiles
+	 *  
+	 * @param tile
+	 * @return
+	 */
 	public double getDistance(BoardTile tile) {
 		// Pythagora's theorem
 		return Math.pow(this.getRow() - tile.getRow(), 2) + Math.pow(this.getColumn() - tile.getColumn(), 2);
 	}
 
-	// checks if the tile exists on the board
+	/**
+	 * This method checks if the tile exists on the board
+	 * 
+	 * @return
+	 */
 	public boolean isInteractible() {
 		return (!this.getType().equals(TileType.NULL) && this.isActive());
 	}
 
-	// assigns the boolean (isSelectable) to the checked tile
+	/**
+	 * This method assigns checks the boolean (isSelectable)
+	 * and verifies if the tile can be picked up from the board
+	 * 
+	 * @return
+	 */
 	public boolean canBePickedUp() {
 		int contatore = 0;
 
@@ -90,7 +147,7 @@ public class BoardTile extends Tile {
 	}
 
 	/**
-	 * Returns whether all sides al blocked, all sides are free, or at least on side
+	 * This method returns whether all sides are blocked, all sides are free, or at least on side
 	 * is free
 	 * 
 	 * @return
@@ -121,10 +178,13 @@ public class BoardTile extends Tile {
 		return TileSides.AT_LEAST_ONE_SIDE_FREE;
 	}
 
-	// serve, dopo aver verificato se una tile può essere presa, per capire quali
-	// altre tile possono essere prese insieme a lei
-	// il senso è quello di creare una lista di opzioni tra le quali il giocatore
-	// può scegliere quali gruppi di tile prendere
+	/**
+	 * This method helps to understand which tiles can be picked at the same time of the selected one.
+	 * The purpose is to create a list of option with the possible choices of Tiles that the
+	 * player can pick up from the board.
+	 * 
+	 * @return
+	 */
 	public ArrayList<BoardTile> Choices() {
 		ArrayList<BoardTile> choices = new ArrayList<BoardTile>();// si crea un arraylist per salvare le varie opzioni
 		if (this.canBePickedUp()) {
@@ -143,18 +203,7 @@ public class BoardTile extends Tile {
 									// vari gruppi che possono essere scelti, poichè si possono prendere solo tile
 									// adiacenti
 			}
-			if ((this.tileDown().canBePickedUp()) && (this.tileDown().getType().equals(this.getType()))) {// non mi è
-																											// venuto in
-																											// mente
-																											// come
-																											// ottimizzare
-																											// il ciclo
-																											// perciò ho
-																											// semplicemente
-																											// reiterato
-																											// lo stesso
-																											// processo
-																											// più volte
+			if ((this.tileDown().canBePickedUp()) && (this.tileDown().getType().equals(this.getType()))) {
 				if ((this.tileDown().tileDown().canBePickedUp())
 						&& (this.tileDown().tileDown().getType().equals(this.getType()))) {
 					choices.add(this);

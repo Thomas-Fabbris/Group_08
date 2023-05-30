@@ -9,6 +9,12 @@ public class PointTile extends Tile {
 	private int romanNumber;
 	private int points;
 	
+	/**
+	 * This is the constructor of the class
+	 * 
+	 * @param card
+	 * @param points
+	 */
 	public PointTile(CommonObjectiveCard card, int points) {
 		super(TileType.POINTS);
 		if(card == null) {
@@ -19,18 +25,38 @@ public class PointTile extends Tile {
 		this.points = points;
 	}
 	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return cardId
+	 */
 	public int getCardId() {
 		return cardId;
 	}
 
+	/**
+	 * This method is a setter
+	 * 
+	 * @param cardId
+	 */
 	public void setCardId(int cardId) {
 		this.cardId = cardId;
 	}
 	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return points
+	 */
 	public int getPoints() {
 		return points;
 	}
 
+	/**
+	 * This method is a getter
+	 * 
+	 * @return romanNumber
+	 */
 	public int getRomanNumber() {
 		return romanNumber;
 	}

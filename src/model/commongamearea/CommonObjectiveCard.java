@@ -7,13 +7,19 @@ import model.shared.IdGenerator;
 
 public class CommonObjectiveCard {
 
-	private int cardId; // This is identifies which operation this common objective card has to perform.
+	private int cardId; // This id identifies which operation this common objective card has to perform.
 	private int romanNumber; // This identifies which point tiles the card holds.
 	private CommonGoals relatedCommonGoal;
 	public static final int MAX_CARD_ID = 12;
 	private static int ROMAN_NUMBER = 0;
 	private Stack<PointTile> pointTiles = new Stack<>();
 
+	/**
+	 * This is the constructor of the class
+	 * 
+	 * @param idGenerator
+	 * @param numberOfPlayers
+	 */
 	public CommonObjectiveCard(IdGenerator idGenerator, int numberOfPlayers) {
 		if(idGenerator == null) {
 			throw new NullPointerException("idGenerator must not be set to null while creating a CommonObjectiveCard instance!");
@@ -28,10 +34,22 @@ public class CommonObjectiveCard {
 		initPointsList(numberOfPlayers);
 	}
 
+	/**
+	 * This method is an id getter for the CommonObjectiveCard
+	 * 
+	 * @return
+	 */
 	public int getId() {
 		return this.cardId;
 	}
 
+	/**
+	 * This method allows to assign different number of points for a common objective.
+	 * The number of points and objectives that can be collected change according to
+	 * the different number of players in the game.
+	 * 
+	 * @param numberOfPlayers
+	 */
 	private void initPointsList(int numberOfPlayers) {
 
 		switch (numberOfPlayers) {
@@ -59,7 +77,10 @@ public class CommonObjectiveCard {
 					"Something went wrong while initializing common objective card with id " + this.cardId);
 		}
 	}
-
+	
+	/**
+	 * This method assigns the common goals according to the number of the id selected
+	 */
 	private void initRelatedCommonGoal() {
 		switch (this.getId()) {
 
@@ -118,12 +139,13 @@ public class CommonObjectiveCard {
 	}
 
 	/**
-	 * Give the points displayed on the first available tile to the player
+	 * This method gives the points displayed on the first available tile to the player
+	 * If there are no points left, the player doesn't receive anything even if he completes the goal
 	 * 
-	 * @param player to give the points to
+	 * @param player (the one who receives the points)
 	 */
 	public void award(Player player) {
-		// If there are no points left, don't give any
+		
 		if (pointTiles.size() <= 0) {
 			return;
 		}
@@ -138,8 +160,8 @@ public class CommonObjectiveCard {
 	}
 
 	/**
-	 * Returns pointTiles.lastElement() if the stack is not empty, else it returns
-	 * null
+	 * This method returns pointTiles.lastElement() if the stack is not empty.
+	 * Else it returns null
 	 * 
 	 * @return
 	 */
@@ -152,12 +174,19 @@ public class CommonObjectiveCard {
 	}
 
 	/**
+	 * This method is a getter
+	 * 
 	 * @return the relatedCommonGoal
 	 */
 	public CommonGoals getRelatedCommonGoal() {
 		return relatedCommonGoal;
 	}
-
+	
+	/**
+	 * This method is a getter
+	 * 
+	 * @return romanNumber
+	 */
 	public int getRomanNumber() {
 		return romanNumber;
 	}
