@@ -30,7 +30,12 @@ public class CommonGameAreaFrame extends JFrame {
 	// Elements to display the tiles selected by the player
 	private JPanel selectedTilesPanel;
 	private JLabel[] selectedTiles;
-
+	
+	/**
+	 * This is the constructor of the CommonGameAreaFrame class. 
+	 * 
+	 * @param screenSize
+	 */
 	public CommonGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
 		if(screenSize == null) {
@@ -107,7 +112,10 @@ public class CommonGameAreaFrame extends JFrame {
 		this.add(commonObjectiveCards[0]);
 		this.add(commonObjectiveCards[1]);
 	}
-
+	
+	/**
+	 * This method initializes graphically the common game area.
+	 */
 	private void Init() {
 		this.setResizable(false);
 		this.setSize(screenSize.width / 2, screenSize.height - 40);
@@ -120,25 +128,43 @@ public class CommonGameAreaFrame extends JFrame {
 		
 	}
 	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @param index
+	 * @return pointTiles[index]
+	 * @throws IllegalArgumentException
+	 */
 	public JLabel getPointTile(int index) {
 		if(index == 0 || index == 1) {
 				return pointTiles[index];
 		}
 		throw new IllegalArgumentException("index can be either 0 or 1 while calling CommonGameAreaFrame.getPointTile() method!");
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return boardTileLabel
+	 */
 	public BoardTileLabel[][] getBoardTilesLabels() {
 		return this.boardTileLabels;
 	}
-
+	
+	/**
+	 * This method is a getter.
+	 * 
+	 * @return boardLabel
+	 */
 	public JLabel getBoardLabel() {
 		return this.boardLabel;
 	}
 	
 	/**
-	 * Returns the associated label to the specified common objective card (either 0 or 1)
+	 * This method returns the associated label to the specified common objective card (either 0 or 1)
 	 * @param index 0 or 1
-	 * @return
+	 * @return commonObjectiveCards [index]
+	 * @throws IllegalArgumentException
 	 */
 	public JLabel getCommonObjectiveCard(int index) {
 		if(index == 0 || index == 1) {
@@ -146,7 +172,12 @@ public class CommonGameAreaFrame extends JFrame {
 	}
 	throw new IllegalArgumentException("index can be either 0 or 1 while calling CommonGameAreaFrame.getCommonObjectiveCard() method!");
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return selectedTilesPanel
+	 */
 	public JPanel getSelectedTiles() {
 		return selectedTilesPanel;
 	}
@@ -173,9 +204,10 @@ public class CommonGameAreaFrame extends JFrame {
 //	}
 
 	/**
-	 * Returns the selected tile 1, 2 or 3
+	 * This method returns the selected tile 1, 2 or 3
 	 * @param id
-	 * @return
+	 * @return selectedTiles[id]
+	 * @throws IndexOutOfBoundsException 
 	 */
 	public JLabel getSelectedTile(int id) {
 		if(id < 0 || id > 2) {
@@ -185,10 +217,20 @@ public class CommonGameAreaFrame extends JFrame {
 		return selectedTiles[id];
 	}
 	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return selectedTiles.length
+	 */
 	public int getSelectedTilesLength() {
 		return selectedTiles.length;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return endOfGameTile
+	 */
 	public JLabel getEndOfGameTile() {
 		return endOfGameTile;
 	}

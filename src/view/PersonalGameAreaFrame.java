@@ -41,7 +41,12 @@ public class PersonalGameAreaFrame extends JFrame {
 	private ImageIcon emptyPointTileIcon;
 	private ImageIcon emptyGameEndIcon;
 	private ImageIcon gameEndTileIcon;
-
+	
+	/**
+	 * This is the constructor of the PersonalGameAreaFrame class.
+	 * 
+	 * @param screenSize
+	 */
 	public PersonalGameAreaFrame(Dimension screenSize) {
 		super("MyShelfie");
 		if (screenSize == null) {
@@ -154,6 +159,9 @@ public class PersonalGameAreaFrame extends JFrame {
 		add(playerInfoPanel);
 	}
 
+	/**
+	 * This method initializes graphically the Personal Game area frame.  
+	 */
 	private void Init() {
 		this.setResizable(false);
 		this.setSize(screenSize.width / 2, screenSize.height - 40);
@@ -178,12 +186,13 @@ public class PersonalGameAreaFrame extends JFrame {
 	}
 
 	/**
-	 * Returns the label of the associated point tile taken from the card with the
+	 * This method returns the label of the associated point tile taken from the card with the
 	 * specified id (either 0 or 1).
 	 * 
 	 * @param id id of the common objective card with this point tile, can be either
 	 *           0 or 1.
-	 * @return
+	 * @return pointTiles[id]
+	 * @throws IllegalArgumentException
 	 */
 	public JLabel getPointTile(int id) {
 		if (id == 0 || id == 1) {

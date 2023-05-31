@@ -8,6 +8,13 @@ public class BoardTileLabel extends JLabel {
 	private int offset;
 	private int tileCellLength;
 	
+	/**
+	 * This is the constructor of the BoardTileLabel class
+	 *  
+	 * @param row
+	 * @param column
+	 * @param boardLabelSize
+	 */
 	public BoardTileLabel(int row, int column, Dimension boardLabelSize) {
 		if(boardLabelSize == null) {
 			throw new NullPointerException("boardLabelSize cannot be set to null while creating a BoardTileLabel instance!");
@@ -23,7 +30,7 @@ public class BoardTileLabel extends JLabel {
 	}
 	
 	/***
-	 * Converts the row number to the actual y coordinate
+	 * This method converts the row number to the actual y coordinate
 	 * @param row
 	 * @return the location in pixels of the row on the GUI
 	 */
@@ -32,7 +39,7 @@ public class BoardTileLabel extends JLabel {
 	}
 	
 	/***
-	 * Converts the column number to the actual x coordinate
+	 * This method converts the column number to the actual x coordinate
 	 * @param column
 	 * @return the location in pixels of the column on the GUI
 	 */

@@ -15,6 +15,11 @@ public class BookshelfLabel extends JLabel {
 	public final BookshelfTileLabel[][] tiles;
 	public final JPanel tilesContainer = new JPanel(); //This contains the tile labels displayed on the bookshelf
 	
+	/**
+	 * This is the constructor of the BookshelfLabel class
+	 * 
+	 * @param windowSize
+	 */
 	public BookshelfLabel(Dimension windowSize) {
 		if(windowSize == null) {
 			throw new NullPointerException("windowSize cannot be set to null when creating a BookShelfLabel instance!");

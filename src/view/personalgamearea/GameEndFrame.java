@@ -28,6 +28,10 @@ public class GameEndFrame extends JFrame {
 	private List<JLabel> playerNames;
 	private JButton quitButton;
 
+	/**
+	 * This is the constructor of GameEndFrame class
+	 * 
+	 */
 	public GameEndFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int) screenSize.getWidth();
@@ -106,7 +110,13 @@ public class GameEndFrame extends JFrame {
 		this.add(Box.createRigidArea(new Dimension(this.getWidth(), this.getHeight()/2)));
 		this.add(quitButton);
 	}
-
+	
+	/**
+	 * This method initializes graphically the end game frame, based on the screen size.
+	 * 
+	 * @throws NullPointerException
+	 * @param screenSize
+	 */
 	private void init(Dimension screenSize) {
 		if(screenSize == null) {
 			throw new NullPointerException("screenSize cannot be set to null when calling GameEndFrame.inti() method!");
@@ -119,11 +129,21 @@ public class GameEndFrame extends JFrame {
 		this.setTitle("MyShelfie - Game End Screen");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./Assets/Icon.png"));
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return winnerName
+	 */
 	public JLabel getWinnerName() {
 		return this.winnerName;
 	}
-
+	
+	/**
+	 * This method is a getter. 
+	 * 
+	 * @return playerNames
+	 */
 	public List<JLabel> getPlayerNames() {
 		return this.playerNames;
 	}
