@@ -19,9 +19,14 @@ import model.shared.TileType;
 public enum CommonGoals {
 
 	CommonGoal1(1) {
+		/**
+		 * Due colonne formate ciascuna da 6 diversi tipi di tessere.
+		 *
+		 * @param pshelf
+		 * @return boolean (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Due colonne formate ciascuna da 6 diversi tipi di tessere.
 
 			int count = 0;
 
@@ -42,15 +47,19 @@ public enum CommonGoals {
 	},
 
 	CommonGoal2(2) {
-
+		/**
+		 * Quattro gruppi separati formati ciascuno
+		 * da quattro tessere adiacenti dello stesso tipo
+		 * (non necessariamente come mostrato in figura).
+		 * Le tessere di un gruppo possono essere
+		 * diverse da quelle di un altro gruppo.
+		 *
+		 * @param pshelf
+		 * @return boolean (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Quattro gruppi separati formati ciascuno
-			// da quattro tessere adiacenti dello stesso tipo
-			// (non necessariamente come mostrato in figura).
-			// Le tessere di un gruppo possono essere
-			// diverse da quelle di un altro gruppo.
 
 			int result = 0;
 			int index = 0;
@@ -104,13 +113,17 @@ public enum CommonGoals {
 	},
 
 	CommonGoal3(3) {
-
+		/**
+		 * Tre colonne formate ciascuna da 6 tessere di uno,
+		 * due o tre tipi differenti. Colonne diverse
+		 * possono avere combinazioni diverse di tipi di tessere
+		 *
+		 * @param pshelf
+		 * @return boolean (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Tre colonne formate ciascuna da 6 tessere di uno,
-			// due o tre tipi differenti. Colonne diverse
-			// possono avere combinazioni diverse di tipi di tessere,
 
 			int result = 0;
 
@@ -137,14 +150,18 @@ public enum CommonGoals {
 	},
 
 	CommonGoal4(4) {
-
+		/**
+		 * Cinque colonne di altezza crescente o decrescente:
+		 * a partire dalla prima colonna a sinistra o a destra,
+		 * ogni colonna successiva deve essere formata da una
+		 * tessera in più. Le tessere possono essere di qualsiasi tipo.
+		 *
+		 * @param pshelf
+		 * @return boolean (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Cinque colonne di altezza crescente o decrescente:
-			// a partire dalla prima colonna a sinistra o a destra,
-			// ogni colonna successiva deve essere formata da una
-			// tessera in più. Le tessere possono essere di qualsiasi tipo.
 
 			for (int inverse = 0; inverse <= 1; inverse++) {
 
@@ -175,14 +192,17 @@ public enum CommonGoals {
 	},
 
 	CommonGoal5(5) {
-
+		/**
+		 * Sei gruppi separati formati ciascuno da due tessere
+		 * adiacenti dello stesso tipo. Le tessere di un gruppo
+		 * possono essere diverse da quelle di un altro gruppo.
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Sei gruppi separati formati ciascuno da due tessere
-			// adiacenti dello stesso tipo (non necessariamente
-			// come mostrato in figura). Le tessere di un gruppo
-			// possono essere diverse da quelle di un altro gruppo.
 
 			int result = 0;
 			int index = 0;
@@ -234,11 +254,16 @@ public enum CommonGoals {
 	},
 
 	CommonGoal6(6) {
+		/**
+		 * Due gruppi separati di 4 tessere dello stesso
+		 * tipo che formano un quadrato 2x2. Le
+		 * tessere dei due gruppi devono essere dello stesso tipo.
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Due gruppi separati di 4 tessere dello stesso
-			// tipo che formano un quadrato 2x2. Le
-			// tessere dei due gruppi devono essere dello stesso tipo.
 
 			int result = 0;
 
@@ -295,13 +320,17 @@ public enum CommonGoals {
 	},
 
 	CommonGoal7(7) {
-
+		/**
+		 * Otto tessere dello stesso tipo. Non
+		 * ci sono restrizioni sulla posizione
+		 * di queste tessere.
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Otto tessere dello stesso tipo. Non
-			// ci sono restrizioni sulla posizione
-			// di queste tessere.
 
 			for (TileType type : TileType.values) {
 
@@ -327,11 +356,15 @@ public enum CommonGoals {
 	},
 
 	CommonGoal8(8) {
-
+		/**
+		 * Cinque tessere dello stesso tipo che formano una X
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Cinque tessere dello stesso tipo che formano una X
 
 			for (int rshift = 0; rshift <= 2; rshift++) {
 
@@ -361,12 +394,16 @@ public enum CommonGoals {
 	},
 
 	CommonGoal9(9) {
-
+		/**
+		 * Cinque tessere dello stesso tipo che formano
+		 * una diagonale
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Cinque tessere dello stesso tipo che formano
-			// una diagonale
 
 			for (int dshift = 0; dshift <= 1; dshift++) {
 
@@ -394,11 +431,15 @@ public enum CommonGoals {
 	},
 
 	CommonGoal10(10) {
-
+		/**
+		 * Due righe formate ciascuna da 5 diversi tipi di tessere
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Due righe formate ciascuna da 5 diversi tipi di tessere
 
 			int result = 0;
 
@@ -422,13 +463,18 @@ public enum CommonGoals {
 	},
 
 	CommonGoal11(11) {
-
+		/**
+		 * Quattro righe formate ciascuna da 5 tessere di
+		 * uno, due o tre tipi differenti. Righe
+		 * diverse possono avere combinazioni
+		 * diverse di tipi di tessere.
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-			// Quattro righe formate ciascuna da 5 tessere di
-			// uno, due o tre tipi differenti. Righe
-			// diverse possono avere combinazioni
-			// diverse di tipi di tessere.
 
 			int result = 0;
 
@@ -455,11 +501,15 @@ public enum CommonGoals {
 	},
 
 	CommonGoal12(12) {
-
+		/**
+		 * Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
+		 *
+		 * @param pshelf
+		 * @return (vero la shelf soddisfa la condizione,
+		 * falso se non la soddisfa)
+		 */
 		@Override
 		public boolean checkCommonGoal(Bookshelf pshelf) {
-
-			// Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
 
 			TileType checktile = pshelf.getTile(0, 0).getType();
 
@@ -517,8 +567,8 @@ public enum CommonGoals {
 	}
 /**
  * The method {@code tileUpCount_NULL} counts all the tile with type NULL thath you can find in a row/column
- * @param 		the row or column where you want to search
- * @return		the count of null tiles
+ * @param row_col
+ * @return the count of null tiles
  */
 	private static int Count_NULL(TileType[] row_col) {
 

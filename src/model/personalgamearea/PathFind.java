@@ -32,19 +32,29 @@ public class PathFind {
         this.started_search = false;
     }
 
+    /**
+     * Function that turns 2 numbers (row and col) into a single number
+     * easier to control {@code inCoords}
+     *
+     * @param row
+     * @param col
+     * @return row * 10 + col
+     */
     private int toCoords(int row, int col)
     {
-        // Funzione che trasforma 2 numeri (row e col) in un numero singolo
-        // più facile da controllare in inCoords
-
         return row * 10 + col;
     }
 
+    /**
+     * Check function to see whether the past coordinates have already
+     * been checked previously
+     *
+     * @param row
+     * @param col
+     * @return boolean (true -> already checked, false -> no)
+     */
     private boolean inCoords(int row, int col)
     {
-        // Funzione di check per vedere se le coordinate passate sono già
-        // state controllate in precedenza
-
         for (int tile : this.checked_places)
         {
             if (toCoords(row, col) == tile) return true;
@@ -52,15 +62,16 @@ public class PathFind {
         return false;
     }
 
+    /**
+     * This function is used to return an array consisting only of the number
+     * of groups with composed of more than 2 equal tiles. For example:
+     * INPUT: {1, 1, 2, 4, 5, 3, 2, 2} =>
+     * OUTPUT: {4, 5, 3}
+     *
+     * @return the beautified array
+     */
     private int[] Beautify()
     {
-        // Questa funzione serve per ritornare un array composto solamente dal numero
-        // di gruppi con composto da più di 2 tile uguali
-
-        // Esempio pratico:
-        // INPUT:  {1, 1, 2, 4, 5, 3, 2, 2}
-        // OUTPUT: {4, 5, 3}
-
         int count = 0;
 
         for (int group : this.groups)
@@ -84,11 +95,15 @@ public class PathFind {
 
     }
 
+    /**
+     * This function serves as the basis for the Pathfinder function.
+     * Its job is to decide the tile from which to start searching
+     * and handle useful variables for counting the number of groups
+     *
+     * @return the array of all the groups found in the shelf
+     */
     public int[] PointsPathfinding()
     {
-        // Questa funzione serve da base per la funziona Pathfinder
-        // Il suo compito è quello di decidere la tile da cui partire a cercare
-        // e gestire variabili utili per contare il numero di gruppi
 
         for (int row = 0; row <= 5; row++)
         {
@@ -125,12 +140,18 @@ public class PathFind {
 
     }
 
+    /**
+     * This function does pathfinding for all tiles in the array that are of the same type
+     * of the argument that is passed by {@code PointsPathfinding}.
+     * Pathfinder will check the tiles following this order:
+     * 1) below 2) right 3) above 4) left
+     *
+     * @param tile
+     * @param row
+     * @param col
+     */
     private void Pathfinder(TileType tile, int row, int col)
     {
-        // Questa funzione fa pathfinding per tutte le tessere dell'array che sono dello stesso tipo
-        // dell'argomento che viene passato da PointsPathfinding.
-        // Per come è stato scritto Pathfinder controllerà le tessere seguendo questo ordine:
-        // 1) sotto 2) destra 3) sopra 4) sinistra
 
         // Se la tile dove siamo è stata già controllata in un gruppo allora andiamo avanti
         if (inCoords(row, col)) return;
