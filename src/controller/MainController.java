@@ -24,7 +24,6 @@ import model.personalgamearea.PathFind;
 import model.personalgamearea.PersonalObjectiveCard;
 import model.shared.IdGenerator;
 import model.shared.PlayerScoreComparator;
-import model.shared.TileType;
 import view.CommonGameAreaFrame;
 import view.ImageUtils;
 import view.PersonalGameAreaFrame;
@@ -50,7 +49,13 @@ public class MainController {
 	private GameEndTile gameEndTile = null;
 
 	private List<BoardTileController> observers = new ArrayList<>();
-
+	/**
+	 * The constructor initialises a new MainController instance.
+	 * @param personalGameAreaFrame, displayed in the right-side of the program
+	 * @param commonGameAreaFrame, displayed in the left-side of the program
+	 * @param playerNames, containing the list of players' name
+	 * @param commonGameArea, part of the model for the game
+	 */
 	public MainController(PersonalGameAreaFrame personalGameAreaFrame, CommonGameAreaFrame commonGameAreaFrame,
 			ArrayList<String> playerNames, CommonGameArea commonGameArea) {
 		if (playerNames == null) {
@@ -100,34 +105,14 @@ public class MainController {
 
 	private void startGame() {
 		players[0].setHasChair(true);
-		
-//
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 4, 0);
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 5, 0);
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 2, 0);
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 3, 0);
-//
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 4, 1);
-//		players[0].bookshelf.setTileType(TileType.BOOKS, 5, 1);
-//		players[0].bookshelf.setTileType(TileType.TROPHIES, 2, 1);
-//		players[0].bookshelf.setTileType(TileType.TROPHIES, 3, 1);
-//
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 4, 2);
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 2);
-//		players[0].bookshelf.setTileType(TileType.GAMES, 2, 2);
-//		players[0].bookshelf.setTileType(TileType.GAMES, 3, 2);
-//
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 3);
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 5, 3);
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 2, 3);
-//		players[0].bookshelf.setTileType(TileType.FRAMES, 3, 3);
-//
 		setCurrentPlayer(players[0]);
 		updateBookshelfLabel();
 	}
 
 	/**
 	 * The method {@code createPlayers} create players from the names entered in the main menu
+	 * @param names
+	 * @param idGenerator
 	 */
 	private void createPlayers(ArrayList<String> names, IdGenerator idGenerator) {
 		for (int i = 0; i < names.size(); i++) {
@@ -142,8 +127,7 @@ public class MainController {
 	/**
 	 * The method {@code setCurrentPlayer} updates the info on the personal game area to reflect the current player's
 	 * info
-	 * 
-	 * @param player
+	 * @param player, the currentPlayer
 	 */
 	public void setCurrentPlayer(Player player) {
 		if (player == null) {
@@ -162,11 +146,17 @@ public class MainController {
 			updatePlayerPointTileLabel(player, i);
 		}
 	}
-
+	/**
+	 * The method {@code getCurrentPlayer} returns the player who is playing in the current turn of the match
+	 * @return the current player
+	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+	/**
+	 * The method {@code updatePlayerGameEndTile} updates the GUI whenever a player receives a {@code GameEndTile}
+	 * @param player, the player the {@code GameEndTile} is assigned to
+	 */
 	public void updatePlayerGameEndTileLabel(Player player) {
 		JLabel tileLabel = personalGameAreaFrame.getEndOfGameTile();
 
@@ -180,6 +170,8 @@ public class MainController {
 	/**
 	 * The method {@code updatePlayerPointTileLabel} updates the point tile's label to reflect the state of the player's point
 	 * tile
+	 * @param player¿the current player
+	 * @param pointTileId, the point tile
 	 */
 	public void updatePlayerPointTileLabel(Player player, int pointTileId) {
 		JLabel tileLabel = personalGameAreaFrame.getPointTile(pointTileId);
@@ -208,6 +200,7 @@ public class MainController {
 
 	/**
 	 * The method {@code updateBookshelfLabel} updates the type of each tile displayed on the GUI
+	 * @param bookshelf, the current player's bookshelf
 	 */
 	public void updateBookshelfLabel(Bookshelf bookshelf) {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
@@ -218,7 +211,9 @@ public class MainController {
 			}
 		}
 	}
-
+	/**
+	 * The method {@code updateBookShelfLabel} is used for refreshing the GUI of the board whenever it changes its state
+	 */
 	public void updateBookshelfLabel() {
 		BookshelfLabel bookshelfLabel = personalGameAreaFrame.getBookshelfLabel();
 		Bookshelf bookshelf = currentPlayer.getBookshelf();
@@ -249,7 +244,10 @@ public class MainController {
 		JLabel playerName = personalGameAreaFrame.getPlayerName();
 		playerName.setText(player.getName() + "'s turn");
 	}
-
+	/** The method {@code updatePointsText} allows to update the displayed points for a player
+	 * @param player, the player whose points have to be updated
+	 * 
+	 */
 	public void updatePointsText(Player player) {
 		JLabel points = personalGameAreaFrame.getPoints();
 		points.setText("Points: " + player.getPoints());
@@ -257,6 +255,8 @@ public class MainController {
 
 	/**
 	 * The method {@code updateBookshelfTileLabel} updates the image of the label to reflect the TileType of the BookshelfTile
+	 * @param tile
+	 * @param label
 	 */
 	private void updateBookshelfTileLabel(BookshelfTile tile, BookshelfTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
@@ -264,11 +264,17 @@ public class MainController {
 
 	/**
 	 * The method {@code updatePlayerPointTileLabel} updates the image of the label to reflect the points of the PointTile
+	 @param tile
+	 @param label
 	 */
 	private void updatePlayerPointTileLabel(PointTile tile, JLabel label) {
 		updateTileOnScreen(label, () -> "Assets/Point_tiles/" + tile.getPoints() + "p.jpg");
 	}
 
+	/**
+	 * The method {@code displayGameEndScreen} is responsible for displaying the frame, reporting players' standings when the ongoing game ends
+	 * @return
+	 */
 	public GameEndFrame displayGameEndScreen() {
 		personalGameAreaFrame.dispose();
 		GameEndFrame gameEndScreen = new GameEndFrame();
@@ -319,7 +325,7 @@ public class MainController {
 	/**
 	 * The method {@code updateSelectedTileLabel} updates the label on the selected tile with the specified id
 	 * 
-	 * @param id
+	 * @param id, the tile's id
 	 */
 	public void updateSelectedTileLabel(int id) {
 		String path = "Assets/tiles/" + currentPlayer.getSelectedTiles().get(id).getType() + ".png";
@@ -345,12 +351,11 @@ public class MainController {
 
 	/**
 	 * The method {@code updateBoardPointTileLabel} updates the amount of points shown on the tile
+	 * @param tile, the tile
+	 * @param label, the label we want to update
 	 */
 	public void updateBoardPointTileLabel(PointTile tile, JLabel label) {
 		int rotation = 352;
-
-//		System.out.println(tile.toString());
-
 		if (tile == null) {
 			label.setIcon(null);
 			return;
@@ -361,6 +366,8 @@ public class MainController {
 
 	/**
 	 * The method {@code updateBoardTileLabel} updates the image of the label to reflect the TileType of the BoardTile
+	 * @param tile, the tile
+	 * @param label, the label we want to update
 	 */
 	public void updateBoardTileLabel(BoardTile tile, BoardTileLabel label) {
 		updateTileOnScreen(label, () -> "Assets/tiles/" + tile.getType().toString() + ".png");
@@ -577,7 +584,10 @@ public class MainController {
 	private Player determineLastPlayer() {
 		return this.players[this.players.length - 1];
 	}
-
+	/**
+	 *The method {@code setLastPlayer} allows to set the player, which will make the last move of the match
+	 *@param lastPlayer, the last player to complete a turn before the game ends
+	 */
 	public void setLastPlayer(Player lastPlayer) {
 		this.lastPlayer = lastPlayer;
 	}
@@ -592,13 +602,7 @@ public class MainController {
 		}
 
 	}
-
-	/**
-	 * The method {@code determineDistanceFromFirstPlayer} is used to decide the winner of the math in case of a tie
-	 * 
-	 * @param player
-	 * @return
-	 */
+	
 	private int determineDistanceFromFirstPlayer(Player player) {
 		int distance = 0;
 
@@ -630,38 +634,48 @@ public class MainController {
 
 	/**
 	 * The method {@code getPlayer} returns the player with the specified id (if such player exists)
-	 * 
-	 * @param playerId
-	 * @return Player with id PlayerId
+	 * @param playerId, the id of the player we want to retrieve
+	 * @return Player whose id is PlayerId
 	 */
 	public Player getPlayer(int playerId) {
 		if (playerId < 0 || playerId > players.length)
 			throw new ArrayIndexOutOfBoundsException("Player with id " + playerId + " doesn't exist!");
 		return players[playerId];
 	}
-
+	/**
+	 * The method {@code getLastPlayer} returns the player, which will make the last move of the match
+	 * @return the last player to complete a turn before the game ends
+	 */
 	public Player getLastPlayer() {
 		return lastPlayer;
 	}
 
 	/**
-	 * @return the gameToken
+	 * The method {@code getGameToken} returns the {@code GameToken} instance used for the current game
+	 * @return the gameToken used in the current game
 	 */
 	public GameToken getGameToken() {
 		return gameToken;
 	}
 
 	/**
-	 * @return the personalGameAreaFrame
+	 *The method {@code getPersonalGameAreaFrame} returns the {@code PersonalGameAreaFrame} displayed in the GUI
+	 * @return the personalGameAreaFrame component
 	 */
 	public PersonalGameAreaFrame getPersonalGameAreaFrame() {
 		return personalGameAreaFrame;
 	}
-
+	/**
+	 *The method {@code getGameState} returns the current {@code GameState} of the match
+	 * @return the current gameState
+	 */
 	public GameState getGameState() {
 		return gameState;
 	}
-
+	/**
+	 *The method {@code getPersonalGameAreaFrame} allows to set the {@code GameState} of the match
+	 * @param gameState, the gameState to set
+	 */
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
 	}

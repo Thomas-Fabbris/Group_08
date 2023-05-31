@@ -29,10 +29,10 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	
 	/**
 	 * This is the constructor of NextPlayerButtonController class
-	 * @param button
-	 * @param commonGameArea
-	 * @param commonGameAreaFrame
-	 * @param mainController
+	 * @param button, the button to control 
+	 * @param commonGameArea, part of the game's model
+	 * @param commonGameAreaFrame, displayed in the left side of the GUI
+	 * @param mainController, the main controller of the game
 	 */
 	
 	public NextPlayerButtonController(JLabel button, CommonGameArea commonGameArea,
@@ -110,17 +110,20 @@ public class NextPlayerButtonController implements MouseListener, Observable {
 	public void mouseReleased(MouseEvent e) {
 		button.setIcon(defaultStateIcon);
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
-	
 	/**
 	 *  This method adds an observer.
 	 *  

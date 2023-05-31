@@ -16,7 +16,10 @@ import view.commongamearea.MainMenuWindow;
  *
  */
 public class Main {
-
+	/**
+	 * The driver's method of the program
+	 * @param args, list of arguments passed by command line
+	 */
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {

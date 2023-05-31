@@ -90,7 +90,7 @@ public class Player {
 	 * the player's bookshelf.  
 	 * This method should be run only once for each player before the end of the game. 
 	 * 
-	 * @param player
+	 * @param player which has to gain points
 	 * @return pointsTotal (total number of points the player received from this method)
 	 *         
 	 */
@@ -181,7 +181,7 @@ public class Player {
 	/**
 	 * This method assigns the EndOfGameToken
 	 * 
-	 * @param hasEndOfGameToken
+	 * @param hasEndOfGameToken to set
 	 */
 	public void setEndOfGameToken(boolean hasEndOfGameToken) {
 		this.hasEndOfGameToken = hasEndOfGameToken;
@@ -198,7 +198,7 @@ public class Player {
 	}
 
 	/**
-	 * The method {@code hasEndOfGameToken} checks if  the {@link model.Player giocatore} 
+	 * The method {@code hasEndOfGameToken} checks if  the {@link model.Player player} 
 	 * who called the method itself, is the one who started the game. 
 	 * 
 	 * @return {@code true} if the {@link model.Player player} began the current game
@@ -210,7 +210,7 @@ public class Player {
 	/**
 	 * This method assigns the chair to a player.
 	 * 
-	 * @param hasChair
+	 * @param hasChair to set
 	 */
 	public void setHasChair(boolean hasChair) {
 		this.hasChair = hasChair;
@@ -265,7 +265,7 @@ public class Player {
 	
 	/**
 	 * This method is a getter. 
-	 * @param id
+	 * @param id of the choosen tile
 	 * @return selectedTiles (from the specified id)
 	 */
 	public BoardTile getSelectedTile(int id) {
@@ -325,7 +325,7 @@ public class Player {
 	/**
 	 * This method is a setter. 
 	 * 
-	 * @param matchesOnPersonalObjectiveCard
+	 * @param matchesOnPersonalObjectiveCard to set
 	 */
 	public void setPreviousObjectiveCardMatches(int matchesOnPersonalObjectiveCard) {
 		this.previousObjectiveCardMatches = matchesOnPersonalObjectiveCard;
@@ -343,7 +343,7 @@ public class Player {
 	/**
 	 * This method is a setter. 
 	 * 
-	 * @param previousObjetiveCardPoints
+	 * @param previousObjetiveCardPoints to set
 	 */
 	public void setPreviousObjetiveCardPoints(int previousObjetiveCardPoints) {
 		this.previousObjetiveCardPoints = previousObjetiveCardPoints;

@@ -15,7 +15,7 @@ public class CommonGameArea {
 	/**
 	 * This is the constructor of the CommonGameArea class
 	 *  
-	 * @param numberOfPlayers
+	 * @param numberOfPlayers which will take part of the game
 	 */
 	public CommonGameArea(int numberOfPlayers) {
 		this.board = new Board(numberOfPlayers);
@@ -61,9 +61,9 @@ public class CommonGameArea {
 	 * This method returns a boolean that indicates whether the tile had at least one free side,
 	 * by observing her position at the beginning of the round,
 	 * 
-	 * @param row
-	 * @param column
-	 * @return boolean
+	 * @param row of the tile to be checked
+	 * @param column of the tile to be checked
+	 * @return boolean (true/false)
 	 */
 	public boolean isTileFree(int row, int column) {
 		return currentBlockedTiles[row][column];
@@ -78,7 +78,6 @@ public class CommonGameArea {
 	
 	/**
 	 * This method is a getter
-	 * 
 	 * @return gameEndTile
 	 */
 	public GameEndTile getGameEndTile() {

@@ -10,16 +10,16 @@ import view.PersonalGameAreaFrame;
 
 public class SelectedTileController implements MouseListener {
 
-	private int id; // Used to identify which selected tile the user is interacting with
+	private int id; 
 	private MainController mainController;
 
 	/**
 	 * This is the constructor of the class
 	 * 
-	 * @param id
-	 * @param commonGameAreaFrame
-	 * @param personalGameAreaFrame
-	 * @param mainController
+	 * @param id, identifying the tile the user is interacting with
+	 * @param commonGameAreaFrame, displayed in the left-side of the GUI
+	 * @param personalGameAreaFrame, displayed in the right-side of the GUI
+	 * @param mainController, the main controller of the program
 	 */
 	public SelectedTileController(int id, CommonGameAreaFrame commonGameAreaFrame,
 			PersonalGameAreaFrame personalGameAreaFrame, MainController mainController) {
@@ -36,29 +36,37 @@ public class SelectedTileController implements MouseListener {
 	/**
 	 * This method brings the clicked tile to the top, being the first to be placed in the bookshelf
 	 * 
-	 * @param e
+	 * @param e, representing the event which triggered this method
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		List<BoardTile> tiles = mainController.getCurrentPlayer().getSelectedTiles();		
 		swapTiles(tiles);
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 * @param e (MouseEvent)
+	 **/
 	@Override
 	public void mousePressed(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 * @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 * @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 * @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseExited(MouseEvent e) {
 

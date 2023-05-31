@@ -33,12 +33,12 @@ public class BoardTileController implements MouseListener, Observer {
 
 	/**
 	 * BoardTileController is a constructor 
-	 * @param tile
-	 * @param label
-	 * @param commonGameArea
-	 * @param commonGameAreaFrame
-	 * @param mainController
-	 * @param personalGameAreaFrame
+	 * @param tile, the tile to control
+	 * @param label, associated to the tile
+	 * @param commonGameArea, part of the program's model 
+	 * @param commonGameAreaFrame, displayed in the left side of the GUI 
+	 * @param mainController of the entire program
+	 * @param personalGameAreaFrame, displayed in the right side of the GUI
 	 */
 	public BoardTileController(BoardTile tile, BoardTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController,
@@ -153,22 +153,24 @@ public class BoardTileController implements MouseListener, Observer {
 			this.label.setIcon(grayIcon);
 		}
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 **/
 	@Override
 	public void mousePressed(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 **/
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 **/
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
-	
 	/**
 	 * This method sets the icon of the tile colored when the mouseExit event verifies
 	 * @param e (MouseEvent)
@@ -180,7 +182,7 @@ public class BoardTileController implements MouseListener, Observer {
 
 	/**
 	 * This method updates this.tile, this.label, this.coloredIcon, this.grayIcon
-	 * @param data
+	 * @param data, the new and updated data
 	 */
 	@Override
 	public void update(Object[] data) {
@@ -196,7 +198,6 @@ public class BoardTileController implements MouseListener, Observer {
 	/**
 	 * This method updates the tiles' icon state
 	 */
-
 	private void updateIcons() {
 		this.coloredIcon = (ImageIcon) label.getIcon();
 		this.grayIcon = ImageUtils.getGrayImage(coloredIcon);

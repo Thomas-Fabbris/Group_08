@@ -21,10 +21,10 @@ public class BookshelfTileController implements MouseListener {
 	private MainController mainController;
 /**
  * The constructor defines a new instance of the class {@code BookshelfTileController}
- * @param label
- * @param commonGameArea
- * @param commonGameAreaFrame
- * @param mainController
+ * @param label, the label
+ * @param commonGameArea, part of the program's model
+ * @param commonGameAreaFrame, displayed in the left side of the GUI
+ * @param mainController of the entire game
  */
 	public BookshelfTileController(BookshelfTileLabel label, CommonGameArea commonGameArea,
 			CommonGameAreaFrame commonGameAreaFrame, MainController mainController) {
@@ -50,7 +50,10 @@ public class BookshelfTileController implements MouseListener {
 		this.mainController = mainController;
 
 	}
-
+	/**
+	 * This method is responsible for controlling the flow of the game when a player insert some tiles in his bookshelf
+	 * @param e, representing the event which triggered this method
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Player currentPlayer = mainController.getCurrentPlayer();
@@ -110,30 +113,37 @@ public class BookshelfTileController implements MouseListener {
 
 		mainController.updateBookshelfLabel();
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mousePressed(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
-
+	/**This method has to be implemented according to the {@code MouseListener} interface
+	 *  @param e (MouseEvent)
+	 **/
 	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
-
 	/**
 	 * The method {@code moveFirstSelectedTileToBookshelf} moves the first selected tile to the bookshelf and then removes it
-	 * @param column
+	 * @param column, the colum in which we want to add the selected tiles
 	 */
 	private void moveFirstSelectedTileToBookshelf(int column) {
 
