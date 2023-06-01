@@ -20,7 +20,6 @@
   *(👉 Consigliamo di eseguire il progetto con la stessa verisone di Java con cui è stato sviluppato: Java 8)*
 
 ## 👷‍♂️ **Collaboratori (in ordine alfabetico)** 👷‍♂️
-- Fadi All Afas
 - Lorenzo Corbellini
 - Thomas Fabbris
 - Mattia Ferrari
